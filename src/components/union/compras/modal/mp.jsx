@@ -19,6 +19,7 @@ export default function ModalNewMp(){
         medida: null,
         unidad: 'mt2',
         peso: null,
+        calibre: null,
         criticidad: null,
         procedencia: null,
         volumen: null,
@@ -43,6 +44,7 @@ export default function ModalNewMp(){
                 medida: '',
                 unidad: 'mt2',
                 peso: '',
+                calibre: '',
                 criticidad: '',
                 procedencia: '',
                 volumen: '',
@@ -120,9 +122,18 @@ export default function ModalNewMp(){
                             <input type="text" placeholder="Escribe aquí" onChange={(e) => {
                                 setForm({
                                     ...form,
-                                    volumen: e.target.olumvolumenalue
+                                    volumen: e.target.value
                                 })
                             }} value={form.volumen}/>
+                        </div> 
+                        <div className="inputDiv">
+                            <label htmlFor="">Calibre</label><br />
+                            <input type="text" placeholder="Escribe aquí" onChange={(e) => {
+                                setForm({
+                                    ...form,
+                                    calibre: e.target.value
+                                })
+                            }} value={form.calibre}/>
                         </div> 
                         <div className="inputDiv">
                             <label htmlFor="">Procedencia</label><br />
