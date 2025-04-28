@@ -1,0 +1,41 @@
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import SelectMP from "./selectItems";
+import KitDescription from "./kitDescription";
+import { useDispatch, useSelector } from "react-redux";
+import * as actions from '../../../store/action/action';
+
+export default function ModalNewCotizacion(){
+    const [params, setParams] = useSearchParams();
+    const [page, setPage] = useState(null);
+
+    const kits = useSelector(store => store.kits);
+    const { kit, loadingKit } = kits;
+    const dispatch = useDispatch();
+    useEffect(() => {
+        // dispatch(actions.getKit(null))
+    }, [params.get('w')])
+    return (
+        <div className="modal">
+            <div className="containerModal Complete">
+                <div className="topBigModal">
+                    <h3>Nuevo kit</h3>
+                    <button onClick={() => {
+                        params.delete('w');
+                        setParams(params);
+                        dispatch(actions.getKit(null))
+                    }}>X</button>
+                </div>
+                <div className="bodyModalBig">
+                    <div className="page">
+                        {
+                            !kit ?
+                                <KitDescription />
+                            : <SelectMP kit={kit} />
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}

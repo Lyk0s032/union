@@ -1,0 +1,1609 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  scrollbar-width: thin;
+  scrollbar-color: #6F7E8C;
+}
+body {
+  box-sizing: border-box;
+  border: none;
+  font-family: "Roboto", serif;
+}
+body button {
+  cursor: pointer;
+}
+.loadingPanel {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.loadingPanel .containerLoading h1 {
+  font-weight: 400;
+  color: #046290;
+}
+.loadingPanel .containerLoading span {
+  font-size: 14px;
+  color: #525456;
+}
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(1, 1, 1, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.modal .hiddenModal {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 2;
+}
+.modal .containerModal {
+  z-index: 3;
+  width: 50%;
+  height: 90%;
+  margin: auto;
+  background-color: #FFF;
+  border-radius: 10px;
+}
+.modal .containerModal .top {
+  height: 10px;
+  height: 10%;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  padding: 0px 30px;
+  box-sizing: border-box;
+}
+.modal .containerModal .top h3 {
+  font-weight: 400;
+  color: #046290;
+}
+.modal .containerModal .top .divideTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.modal .containerModal .top .divideTop button {
+  background-color: transparent;
+  border: none;
+}
+.modal .containerModal .bodyModal {
+  height: 85%;
+  box-sizing: border-box;
+  overflow-y: auto;
+  padding: 20px 30px;
+  width: 100%;
+}
+.modal .containerModal .bodyModal .form {
+  width: 100%;
+}
+.modal .containerModal .bodyModal .form .inputDiv {
+  margin-bottom: 20px;
+}
+.modal .containerModal .bodyModal .form .inputDiv label {
+  font-size: 12px;
+  color: #454f5b;
+}
+.modal .containerModal .bodyModal .form .inputDiv input {
+  margin-top: 5px;
+  width: 100%;
+  border-radius: 5px;
+  box-sizing: border-box;
+  padding: 10px 5px;
+  border: 1px solid #ccc;
+  outline: 0px;
+  transition: 0.3s;
+}
+.modal .containerModal .bodyModal .form .inputDiv input:focus {
+  border: 1px solid #046290;
+}
+.modal .containerModal .bodyModal .form .inputDiv select {
+  margin-top: 5px;
+  width: 100%;
+  border-radius: 5px;
+  box-sizing: border-box;
+  padding: 10px 5px;
+  border: 1px solid #ccc;
+  outline: 0px;
+  transition: 0.3s;
+  background-color: #FFF;
+  cursor: pointer;
+}
+.modal .containerModal .bodyModal .form .inputDiv button {
+  background-color: #046290;
+  border: 1px solid #046290;
+  padding: 8px 20px;
+  border-radius: 10px;
+  margin-left: auto;
+}
+.modal .containerModal .bodyModal .form .inputDiv button span {
+  font-size: 14px;
+  color: #FFF;
+}
+.modal .containerModal .bodyModal .containerBody {
+  position: relative;
+}
+.modal .containerModal .bodyModal .containerBody .searchCat {
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.modal .containerModal .bodyModal .containerBody .searchCat input {
+  width: 100%;
+  padding: 8px 20px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+.modal .containerModal .bodyModal .containerBody .results {
+  margin-top: 10px;
+}
+.modal .containerModal .bodyModal .containerBody .results table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.modal .containerModal .bodyModal .containerBody .results table thead tr th {
+  text-align: left;
+  font-size: 12px;
+  color: #046290;
+  font-weight: 400;
+  border-bottom: 1px solid #046290;
+  padding: 15px 10px;
+}
+.modal .containerModal .bodyModal .containerBody .results table tbody .new {
+  border: 2px solid #046290;
+}
+.modal .containerModal .bodyModal .containerBody .results table tbody tr {
+  width: 100%;
+}
+.modal .containerModal .bodyModal .containerBody .results table tbody tr td {
+  width: 20%;
+  text-align: left;
+  font-size: 12px;
+  color: #454f5b;
+  font-weight: 400;
+  padding: 15px 10px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ccc;
+}
+.modal .containerModal .bodyModal .containerBody .results table tbody tr td input {
+  border: none;
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0px;
+  box-sizing: border-box;
+  outline: 0px;
+}
+.modal .containerModal .bodyModal .containerBody .results table tbody tr td input:focus {
+  border-bottom: 1px solid #046290;
+}
+.modal .containerModal .bodyModal .containerBody .results table tbody tr td select {
+  border: none;
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0px;
+  box-sizing: border-box;
+  font-size: 12px;
+  background-color: #FFF;
+  color: #046290;
+}
+.modal .containerModal .bodyModal .containerBody .results table tbody tr .closeItem {
+  width: 100%;
+  justify-content: space-between;
+}
+.modal .containerModal .bodyModal .containerBody .results table tbody tr .closeItem .flex {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+.modal .containerModal .bodyModal .containerBody .results table tbody tr .closeItem .flex button {
+  padding: 0px;
+  display: inline-block;
+  background-color: transparent;
+  width: 25px;
+  height: 25px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border: none;
+  color: #FFF;
+}
+.modal .containerModal .bodyModal .containerBody .results table tbody tr .closeItem .flex .cancel {
+  background-color: #dc3545;
+}
+.modal .containerModal .bodyModal .containerBody .results table tbody tr .closeItem .flex .great {
+  margin-right: 10px;
+  background-color: #388E3C;
+}
+.modal .containerModal .bodyModal .containerBody .results table tbody .ExtensionFila td .divideCode {
+  display: flex;
+  align-items: center;
+}
+.modal .containerModal .bodyModal .containerBody .results table tbody .ExtensionFila td .divideCode .color {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  padding: 1px;
+  background-color: #dc3545;
+}
+.modal .containerModal .bodyModal .containerBody .results table tbody .ExtensionFila td .divideCode .name {
+  margin-left: 10px;
+}
+.modal .containerModal .bodyModal .topSearch {
+  width: 100%;
+  height: 10%;
+  box-sizing: border-box;
+}
+.modal .containerModal .bodyModal .topSearch input {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  padding: 5px 10px;
+  outline: 0px;
+}
+.modal .containerModal .bodyModal .containerResults {
+  height: 80%;
+  box-sizing: border-box;
+  padding-top: 20px;
+  overflow-y: auto;
+}
+.modal .containerModal .bodyModal .containerResults .results {
+  width: 100%;
+  border-collapse: collapse;
+}
+.modal .containerModal .bodyModal .containerResults .results tbody tr {
+  cursor: pointer;
+  transition: 0.3s;
+}
+.modal .containerModal .bodyModal .containerResults .results tbody tr td {
+  font-weight: 500;
+  padding: 10px 0px;
+  border-bottom: 1px solid #ccc;
+  box-sizing: border-box;
+}
+.modal .containerModal .bodyModal .containerResults .results tbody tr:hover {
+  background-color: #ccc;
+}
+.modal .containerModal .bodyModal .containerResults .results tbody .Active {
+  border: 1px solid #046290;
+  background-color: #046290;
+}
+.modal .containerModal .bodyModal .containerResults .results tbody .Active td {
+  border-bottom: 1px solid #046290;
+}
+.modal .containerModal .bodyModal .containerResults .results tbody .Active td span {
+  color: #FFF;
+}
+.modal .containerModal .bodyModal .containerResults .results tbody .Active:hover {
+  background-color: #046290;
+}
+.modal .containerModal .bodyModal .bottomConfirm {
+  height: 10%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+.modal .containerModal .bodyModal .bottomConfirm button {
+  background-color: #046290;
+  cursor: pointer;
+  border: 1px solid #046290;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+.modal .containerModal .bodyModal .bottomConfirm button span {
+  font-size: 14px;
+  color: #FFF;
+}
+.modal .Complete {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border-radius: 0px;
+}
+.modal .Complete .topBigModal {
+  height: 10%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 95%;
+  margin: auto;
+}
+.modal .Complete .bodyModalBig {
+  height: 90%;
+  width: 100%;
+  box-sizing: border-box;
+}
+.modal .Complete .bodyModalBig .page {
+  width: 100%;
+  height: 100%;
+}
+.modal .Complete .bodyModalBig .page .kitDescription {
+  height: 100%;
+  box-sizing: border-box;
+}
+.modal .Complete .bodyModalBig .page .kitDescription .containerKitDescription {
+  height: 100%;
+}
+.modal .Complete .bodyModalBig .page .kitDescription .containerKitDescription .form {
+  height: 90%;
+  width: 100%;
+  overflow-y: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.modal .Complete .bodyModalBig .page .kitDescription .containerKitDescription .form .containerForm {
+  box-sizing: border-box;
+  width: 50%;
+}
+.modal .Complete .bodyModalBig .page .kitDescription .containerKitDescription .form .containerForm .inputDiv {
+  padding: 10px 0px;
+  box-sizing: border-box;
+  width: 100%;
+}
+.modal .Complete .bodyModalBig .page .kitDescription .containerKitDescription .form .containerForm .inputDiv h3 {
+  font-weight: 400;
+  color: #046290;
+  font-size: 14px;
+}
+.modal .Complete .bodyModalBig .page .kitDescription .containerKitDescription .form .containerForm .inputDiv input {
+  margin-top: 10px;
+  padding: 10px 5px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  width: 100%;
+}
+.modal .Complete .bodyModalBig .page .kitDescription .containerKitDescription .form .containerForm .inputDiv textarea {
+  margin-top: 10px;
+  padding: 10px 5px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  width: 100%;
+  height: 80px;
+  resize: none;
+}
+.modal .Complete .bodyModalBig .page .kitDescription .containerKitDescription .form .containerForm .inputDiv select {
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px 10px;
+  box-sizing: border-box;
+  background-color: #FFF;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  color: #666;
+  font-size: 12px;
+}
+.modal .Complete .bodyModalBig .page .kitDescription .containerKitDescription .form .containerForm .inputDiv .search {
+  position: relative;
+}
+.modal .Complete .bodyModalBig .page .kitDescription .containerKitDescription .form .containerForm .inputDiv .search input {
+  border-radius: 20px;
+  padding-left: 10px;
+}
+.modal .Complete .bodyModalBig .page .kitDescription .containerKitDescription .form .containerForm .inputDiv .search .results {
+  position: absolute;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 10px;
+}
+.modal .Complete .bodyModalBig .page .kitDescription .containerKitDescription .form .containerForm .inputDiv .search .results .searchClient {
+  cursor: pointer;
+  padding: 10px 10px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ccc;
+  transition: 0.3s;
+}
+.modal .Complete .bodyModalBig .page .kitDescription .containerKitDescription .form .containerForm .inputDiv .search .results .searchClient .divideData {
+  transition: 0.3s;
+}
+.modal .Complete .bodyModalBig .page .kitDescription .containerKitDescription .form .containerForm .inputDiv .search .results .searchClient .divideData .client {
+  transition: 0.3s;
+}
+.modal .Complete .bodyModalBig .page .kitDescription .containerKitDescription .form .containerForm .inputDiv .search .results .searchClient .divideData .client span {
+  font-size: 12px;
+  color: #046290;
+}
+.modal .Complete .bodyModalBig .page .kitDescription .containerKitDescription .form .containerForm .inputDiv .search .results .searchClient:hover {
+  transform: scale(1.02);
+  border-bottom: 1px solid #046290;
+}
+.modal .Complete .bodyModalBig .page .kitDescription .containerKitDescription .form .containerForm .Choosed {
+  padding: 10px 5px;
+  box-sizing: border-box;
+}
+.modal .Complete .bodyModalBig .page .kitDescription .containerKitDescription .form .containerForm .Choosed .divideData {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 5px;
+}
+.modal .Complete .bodyModalBig .page .kitDescription .containerKitDescription .form .containerForm .Choosed .divideData .client span {
+  font-size: 12px;
+  color: #046290;
+  font-weight: bold;
+}
+.modal .Complete .bodyModalBig .page .kitDescription .containerKitDescription .form .containerForm .Choosed .divideData button {
+  background-color: #FFF;
+  border: 1px solid #dc3545;
+  color: #dc3545;
+  font-size: 16px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 100%;
+  transition: 0.3s;
+}
+.modal .Complete .bodyModalBig .page .kitDescription .containerKitDescription .form .containerForm .Choosed .divideData button:hover {
+  background-color: #dc3545;
+  color: #FFF;
+}
+.modal .Complete .bodyModalBig .page .kitDescription .containerKitDescription .bottom {
+  height: 10%;
+  display: flex;
+  align-items: center;
+  width: 90%;
+  margin: auto;
+  text-align: right;
+}
+.modal .Complete .bodyModalBig .page .kitDescription .containerKitDescription .bottom button {
+  background-color: #046290;
+  border: 1px solid #046290;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: 0.3s;
+  margin-left: auto;
+}
+.modal .Complete .bodyModalBig .page .kitDescription .containerKitDescription .bottom button span {
+  color: #FFF;
+}
+.modal .Complete .bodyModalBig .page .kitDescription .containerKitDescription .bottom button:hover {
+  transform: scale(1.1);
+}
+.modal .Complete .bodyModalBig .page .selectItems {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit {
+  width: 40%;
+  border-right: 1px solid #ccc;
+  box-sizing: border-box;
+  height: 100%;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .topData {
+  height: 20%;
+  border-bottom: 1px solid #ccc;
+  box-sizing: border-box;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .topData .DataKit {
+  width: 90%;
+  margin: auto;
+  padding: 15px 0px;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .topData .DataKit h3 {
+  font-weight: 00;
+  font-size: 12px;
+  color: #046290;
+  margin-bottom: 5px;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .topData .DataKit span {
+  font-size: 12px;
+  color: #454f5b;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData {
+  height: 65%;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP {
+  width: 90%;
+  margin: auto;
+  padding: 10px 0px;
+  box-sizing: border-box;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table thead tr th {
+  font-size: 12px;
+  padding: 10px 0px;
+  box-sizing: border-box;
+  color: #046290;
+  text-align: left;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr td {
+  padding: 8px 0px;
+  box-sizing: border-box;
+  font-size: 12px;
+  color: #454f5b;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData {
+  height: 15%;
+  box-sizing: border-box;
+  border-top: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0px 20px;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .priceBox {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .priceBox div {
+  text-align: right;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .priceBox div span {
+  font-size: 12px;
+  color: #454f5b;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .priceBox div h3 {
+  font-weight: 400;
+  font-size: 22px;
+  color: #046290;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .priceBox div h3 span {
+  color: #046290;
+  font-size: 14px;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .buttonConfirm {
+  box-sizing: border-box;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .buttonConfirm button {
+  padding: 10px 20px;
+  background-color: #046290;
+  border: none;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .buttonConfirm button span {
+  font-size: 12px;
+  color: #FFF;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .buttonConfirm button:hover {
+  transform: scale(1.1);
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect {
+  width: 60%;
+  box-sizing: border-box;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect {
+  width: 100%;
+  height: 100%;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .topSelect {
+  height: 20%;
+  box-sizing: border-box;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .topSelect .titleSelect {
+  width: 90%;
+  margin: auto;
+  text-align: center;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .topSelect .titleSelect h3 {
+  font-weight: 400;
+  color: #046290;
+  font-size: 26px;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .topSelect .searchInput {
+  width: 90%;
+  margin: auto;
+  margin-top: 20px;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .topSelect .searchInput input {
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  width: 100%;
+  outline: 0px;
+  transition: 0.3s;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .topSelect .searchInput input:focus {
+  border: 1px solid #046290;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect {
+  height: 80%;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .filters {
+  width: 90%;
+  margin: auto;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .filters .divideFilters {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .filters .divideFilters div label {
+  font-size: 12px;
+  color: #454f5b;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .filters .divideFilters div select {
+  padding: 1px 10px;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla {
+  width: 90%;
+  margin: auto;
+  margin-top: 20px;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table thead tr th {
+  font-size: 12px;
+  padding: 10px 0px;
+  box-sizing: border-box;
+  color: #046290;
+  text-align: left;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody tr td {
+  padding: 8px 0px;
+  box-sizing: border-box;
+  font-size: 12px;
+  color: #454f5b;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody tr td button {
+  border: none;
+  background-color: #046290;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody .active td {
+  width: 25%;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody .active td .calibre {
+  width: 60%;
+  border-radius: 5px;
+  background-color: #F0f0f0;
+  border: 1px solid #666;
+  transition: 0.3s;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody .active td .calibre span {
+  color: #666;
+  font-size: 11px;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody .active td .calibre:hover {
+  transform: scale(1.1);
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody .active td .medida {
+  display: flex;
+  align-items: center;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody .active td .medida input {
+  width: 40%;
+  border: none;
+  border-bottom: 1px solid #046290;
+  text-align: center;
+  outline: 0px;
+  color: #046290;
+  font-weight: bold;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody .active td .medida h3 {
+  margin: 0px 5px;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody .active td .twoButtons {
+  display: flex;
+  align-items: center;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody .active td .twoButtons button {
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  border: none;
+  color: #FFF;
+  transition: 0.3s;
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody .active td .twoButtons button:hover {
+  transform: scale(1.1);
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody .active td .twoButtons .danger {
+  background-color: #dc3545;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody .active td .twoButtons .great {
+  background-color: #388E3C;
+}
+.compras {
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+}
+.compras .containerCompras {
+  width: 100%;
+  height: 100%;
+}
+.compras .containerCompras .divide {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.compras .containerCompras .divide .left {
+  width: 20%;
+  box-sizing: border-box;
+}
+.compras .containerCompras .divide .right {
+  width: 80%;
+  height: 100%;
+  overflow-y: auto;
+}
+.compras .containerCompras .divide .right .provider {
+  width: 100%;
+  box-sizing: border-box;
+  height: 100%;
+}
+.compras .containerCompras .divide .right .provider .containerProviders {
+  box-sizing: border-box;
+  padding: 20px 10px;
+  height: 100%;
+  position: relative;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .topSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .topSection .title h1 {
+  font-size: 26px;
+  font-weight: 400;
+  color: #454f5b;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .topSection .optionsFast nav ul li {
+  display: inline-block;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .topSection .optionsFast nav ul li button {
+  padding: 8px 10px;
+  border-radius: 5px;
+  background-color: #046290;
+  border: 1px solid #046290;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .topSection .optionsFast nav ul li button span {
+  color: #FFF;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders {
+  margin-top: 50px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders {
+  box-sizing: border-box;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearch {
+  width: 60%;
+  margin: auto;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearch input {
+  width: 100%;
+  padding: 10px 10px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  transition: 0.3s;
+  outline: 0px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearch input:focus {
+  border: 1px solid #046290;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .filters {
+  box-sizing: border-box;
+  margin-top: 20px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .filters .containerFilters {
+  width: 100%;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .filters .containerFilters .divideFilter {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .filters .containerFilters .divideFilter label {
+  font-size: 12px;
+  color: #454f5b;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .filters .containerFilters .divideFilter select {
+  margin-top: 5px;
+  padding: 2px 10px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .filters .containerFilters .state {
+  margin-top: 60px;
+  width: 100%;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .filters .containerFilters .state nav ul li {
+  width: 50%;
+  display: inline-block;
+  cursor: pointer;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .filters .containerFilters .state nav ul li div {
+  padding: 5px 20px;
+  box-sizing: border-box;
+  border-bottom: 2px solid #ccc;
+  text-align: center;
+  transition: 0.3s;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .filters .containerFilters .state nav ul li div span {
+  font-size: 12px;
+  color: #454f5b;
+  transition: 0.3s;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .filters .containerFilters .state nav ul li.Active div {
+  border-bottom: 2px solid #046290;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .filters .containerFilters .state nav ul li.Active div span {
+  color: #046290;
+  font-weight: 500;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table {
+  margin-top: 20px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table table thead tr th {
+  text-align: left;
+  font-size: 12px;
+  color: #046290;
+  font-weight: 400;
+  border-bottom: 1px solid #046290;
+  padding: 15px 10px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table table tbody tr td {
+  text-align: left;
+  font-size: 12px;
+  color: #454f5b;
+  font-weight: 400;
+  padding: 15px 10px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor {
+  position: fixed;
+  right: 0;
+  width: 80%;
+  height: 90%;
+  box-sizing: border-box;
+  bottom: 0;
+  background-color: #FFF;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow {
+  width: 100%;
+  height: 100%;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .topProvider {
+  height: 10%;
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+  box-sizing: border-box;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .topProvider .divideTop {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 95%;
+  margin: auto;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .topProvider .divideTop button {
+  background-color: #FFF;
+  border: none;
+  padding: 8px 10px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .topProvider .divideTop button span {
+  color: #454f5b;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .topProvider .divideTop .title {
+  margin-left: 20px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .topProvider .divideTop .title h3 {
+  font-weight: 400;
+  color: #046290;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider {
+  height: 90%;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider {
+  width: 95%;
+  margin: auto;
+  padding: 10px 0px;
+  box-sizing: border-box;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .navigationBody {
+  box-sizing: border-box;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .navigationBody nav ul li {
+  display: inline-block;
+  cursor: pointer;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .navigationBody nav ul li div {
+  padding: 10px 20px;
+  box-sizing: border-box;
+  text-align: center;
+  transition: 0.3s;
+  border-bottom: 2px solid #FFF;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .navigationBody nav ul li div span {
+  font-size: 12px;
+  color: #454f5b;
+  transition: 0.3s;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .navigationBody nav ul li.Active div {
+  border-bottom: 2px solid #046290;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .navigationBody nav ul li.Active div span {
+  color: #046290;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow {
+  padding-top: 20px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana {
+  box-sizing: border-box;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .general {
+  width: 100%;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .general .topRight {
+  width: 100%;
+  text-align: right;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .general .topRight button {
+  cursor: pointer;
+  background-color: #046290;
+  border: 1px solid #046290;
+  transition: 0.3s;
+  border-radius: 5px;
+  padding: 10px 20px;
+  box-sizing: border-box;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .general .topRight button span {
+  font-size: 12px;
+  color: #FFF;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .general .dataGeneral {
+  width: 100%;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .general .dataGeneral .boxGeneral h1 {
+  font-weight: 600;
+  font-size: 26px;
+  color: #046290;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .general .dataGeneral .boxGeneral h3 {
+  font-weight: 400;
+  color: #046290;
+  font-size: 18px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .general .dataGeneral .boxGeneral .optionsItem {
+  margin-top: 10px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .general .dataGeneral .boxGeneral .optionsItem span {
+  font-size: 13px;
+  color: #454f5b;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .general .dataGeneral .boxGeneral .optionsItem .title {
+  font-size: 12px;
+  font-weight: bold;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .messageForLastUpdate {
+  padding: 30px 0px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .messageForLastUpdate div h3 {
+  font-weight: 400;
+  color: #046290;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .messageForLastUpdate div span {
+  font-size: 12px;
+  color: #046290;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .messageForLastUpdate div .dataMateria {
+  margin-top: 20px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .messageForLastUpdate button {
+  background-color: #046290;
+  border: 1px solid #046290;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .messageForLastUpdate button span {
+  color: #FFF;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table {
+  margin-top: 20px;
+  width: 100%;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table thead tr th {
+  padding: 10px 0px;
+  width: auto;
+  font-size: 12px;
+  font-weight: 500;
+  color: #046290;
+  text-align: left;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table thead tr th .proveedorData {
+  text-align: center;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table thead tr th .proveedorData img {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table thead tr th .proveedorData h3 {
+  font-weight: 400;
+  font-size: 14px;
+  color: #046290;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody .input {
+  text-align: center;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody td {
+  padding: 10px 0px;
+  width: auto;
+  text-align: left;
+  font-size: 12px;
+  color: #454f5b;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody td input {
+  border: none;
+  border-bottom: 1px solid #ccc;
+  width: 70%;
+  margin: auto;
+  padding: 10px 5px;
+  outline: 0px;
+  transition: 0.3s;
+  text-align: center;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody td input:focus {
+  border-bottom: 1px solid #046290;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody td .data {
+  margin-top: 10px;
+  width: 60%;
+  margin-left: auto;
+  text-align: left;
+  transition: 0.3s;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody td .data .title {
+  text-align: left;
+  transition: 0.3s;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody td .data .title span {
+  transition: 0.3s;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody td .data .title .promedio {
+  margin: 5px 0px;
+  transition: 0.3s;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody td .data .title .promedio .porcentaje {
+  color: #388E3C;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody td .data .title .promedio .Danger {
+  color: #dc3545;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody td .data button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #388E3C;
+  border: none;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody td .data button span {
+  color: #FFF;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody td .data .div {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody td .data .confirm {
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0px;
+  margin-right: 10px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody td .data .cancel {
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  background-color: #dc3545;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody .save {
+  text-align: center;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody .save button {
+  width: 30px;
+  height: 30px;
+  background-color: #388E3C;
+  border: 1px solid #388E3C;
+  border-radius: 100%;
+  color: #FFF;
+  transition: 0.3s;
+  font-size: 16px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody .save button:hover {
+  transform: scale(1.1);
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table .confirmar {
+  margin-top: 40px;
+  width: 100%;
+  text-align: center;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table .confirmar button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: #046290;
+  border: 1px solid #046290;
+  transition: 0.3s;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table .confirmar button span {
+  transition: 0.3s;
+  font-size: 12px;
+  color: #FFF;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table .confirmar button:hover {
+  transform: scale(1.1);
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .newPriceOnProvider {
+  box-sizing: border-box;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .newPriceOnProvider .containerProvider .searchInput {
+  width: 50%;
+  text-align: center;
+  margin: auto;
+  box-sizing: border-box;
+  position: relative;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .newPriceOnProvider .containerProvider .searchInput h3 {
+  font-weight: 400;
+  color: #046290;
+  font-size: 22px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .newPriceOnProvider .containerProvider .searchInput .inputDiv {
+  margin-top: 10px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .newPriceOnProvider .containerProvider .searchInput .inputDiv input {
+  padding: 8px 10px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  width: 100%;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .newPriceOnProvider .containerProvider .searchInput .results {
+  margin-top: 30px;
+  position: absolute;
+  width: 100%;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .newPriceOnProvider .containerProvider .searchInput .results .itemChoose {
+  padding: 8px 10px;
+  box-sizing: border-box;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .newPriceOnProvider .containerProvider .searchInput .results .itemChoose span {
+  font-size: 12px;
+  color: #046290;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .newPriceOnProvider .containerProvider .searchInput .titles {
+  margin-bottom: 20px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .newPriceOnProvider .containerProvider .searchInput .titles button {
+  background-color: #046290;
+  border: none;
+  padding: 8px 20px;
+  box-sizing: border-box;
+  border-radius: 20px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .newPriceOnProvider .containerProvider .searchInput .titles button span {
+  font-size: 12px;
+  color: #FFF;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .newPriceOnProvider .containerProvider .searchInput .titles span {
+  font-weight: 400;
+  font-size: 12px;
+  color: #046290;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .newPriceOnProvider .containerProvider .searchInput .titles h3 {
+  font-size: 16px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .newPriceOnProvider .containerProvider .searchInput .inputValor {
+  text-align: left;
+  width: 40%;
+  margin: auto;
+  margin-top: 10px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .newPriceOnProvider .containerProvider .searchInput .inputValor label {
+  font-size: 12px;
+  color: #666;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .newPriceOnProvider .containerProvider .searchInput .inputValor input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0px;
+  box-sizing: border-box;
+  outline: 0px;
+  transition: 0.3s;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .newPriceOnProvider .containerProvider .searchInput .inputValor input:focus {
+  border-bottom: 1px solid #046290;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .newPriceOnProvider .containerProvider .searchInput .inputValor button {
+  margin-top: 10px;
+  width: 100%;
+  background-color: #388E3C;
+  border: none;
+  padding: 8px 10px;
+  border-radius: 20px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .newPriceOnProvider .containerProvider .searchInput .inputValor button span {
+  color: #FFF;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .newPriceOnProvider .containerProvider .searchInput .inputValor .back {
+  background-color: #FFF;
+  border: 1px solid #ccc;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .newPriceOnProvider .containerProvider .searchInput .inputValor .back span {
+  color: #046290;
+}
+.routerPanel {
+  width: 100%;
+  height: 100vh;
+}
+.routerPanel .containerRouter {
+  height: 100%;
+  width: 100%;
+}
+.routerPanel .containerRouter .optionsByPanel {
+  height: 90%;
+  width: 100%;
+  box-sizing: border-box;
+}
+.routerPanel .containerRouter .optionsByPanel .leftNav {
+  box-sizing: border-box;
+  height: 100%;
+  border-right: 1px solid #ccc;
+}
+.routerPanel .containerRouter .optionsByPanel .leftNav .containerLeftNavBig {
+  width: 100%;
+  height: 100%;
+}
+.routerPanel .containerRouter .optionsByPanel .leftNav .containerLeftNavBig .topTitle {
+  box-sizing: border-box;
+  height: 20%;
+  width: 90%;
+  margin: auto;
+}
+.routerPanel .containerRouter .optionsByPanel .leftNav .containerLeftNavBig .topTitle .container {
+  padding: 20px 10px;
+}
+.routerPanel .containerRouter .optionsByPanel .leftNav .containerLeftNavBig .topTitle .container h1 {
+  font-weight: 300;
+  font-size: 32px;
+  color: #046290;
+}
+.routerPanel .containerRouter .optionsByPanel .leftNav .containerLeftNavBig .topTitle .options {
+  width: 100%;
+  margin-top: 10px;
+}
+.routerPanel .containerRouter .optionsByPanel .leftNav .containerLeftNavBig .topTitle .options nav ul {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.routerPanel .containerRouter .optionsByPanel .leftNav .containerLeftNavBig .topTitle .options nav ul li {
+  display: inline-block;
+  background-color: #046290;
+  padding: 2px 8px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.routerPanel .containerRouter .optionsByPanel .leftNav .containerLeftNavBig .topTitle .options nav ul li span {
+  font-size: 12px;
+  color: #FFF;
+}
+.routerPanel .containerRouter .optionsByPanel .leftNav .containerLeftNavBig .topTitle .options nav ul li:hover {
+  transform: scale(1.1);
+}
+.routerPanel .containerRouter .optionsByPanel .leftNav .containerLeftNavBig .optionsLeftNav {
+  height: 80%;
+  box-sizing: border-box;
+}
+.routerPanel .containerRouter .optionsByPanel .leftNav .containerLeftNavBig .optionsLeftNav .containerLeftNav {
+  padding-top: 20px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+.routerPanel .containerRouter .optionsByPanel .leftNav .containerLeftNavBig .optionsLeftNav .containerLeftNav nav ul li {
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.routerPanel .containerRouter .optionsByPanel .leftNav .containerLeftNavBig .optionsLeftNav .containerLeftNav nav ul li div {
+  padding: 10px 15px;
+  box-sizing: border-box;
+  transition: 0.3s;
+}
+.routerPanel .containerRouter .optionsByPanel .leftNav .containerLeftNavBig .optionsLeftNav .containerLeftNav nav ul li div span {
+  font-size: 14px;
+  color: #046290;
+}
+.routerPanel .containerRouter .optionsByPanel .leftNav .containerLeftNavBig .optionsLeftNav .containerLeftNav nav ul li:hover div {
+  padding-left: 20px;
+}
+.routerPanel .containerRouter .optionsByPanel .leftNav .containerLeftNavBig .optionsLeftNav .containerLeftNav nav ul .Active {
+  background-color: #046290;
+}
+.routerPanel .containerRouter .optionsByPanel .leftNav .containerLeftNavBig .optionsLeftNav .containerLeftNav nav ul .Active div span {
+  color: #FFF;
+}
+.routerPanel .containerRouter .message {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin: 10px;
+  border-radius: 5px;
+  width: auto;
+  padding: 10px 10px;
+}
+.routerPanel .containerRouter .message .containerMessage {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.routerPanel .containerRouter .message .containerMessage .text span {
+  font-size: 14px;
+  color: #FFF;
+}
+.routerPanel .containerRouter .message .containerMessage button {
+  margin-left: 20px;
+  background-color: transparent;
+  border: none;
+  color: #FFF;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+.routerPanel .containerRouter .message.Positive {
+  background-color: #388E3C;
+}
+.routerPanel .containerRouter .message.Mistake {
+  background-color: #dc3545;
+}
+.routerPanel .containerRouter .loadingComponentes {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 100px 0px;
+  box-sizing: border-box;
+}
+.routerPanel .containerRouter .loadingComponentes .container h3 {
+  font-weight: 400;
+  color: #046290;
+}
+.loginComponent {
+  box-sizing: border-box;
+  height: 100vh;
+}
+.loginComponent .containerLogin {
+  width: 100%;
+  height: 100%;
+  background: url('https://logincdn.msftauth.net/shared/5/images/78_3a53c38a2dc671fb4daf.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.loginComponent .containerLogin .boxLogin {
+  width: 35%;
+  box-sizing: border-box;
+  background-color: #FFF;
+  margin: auto;
+  padding: 30px 40px;
+  border-radius: 5px;
+}
+.loginComponent .containerLogin .boxLogin .containerBoxLogin {
+  width: 100%;
+  height: 100%;
+}
+.loginComponent .containerLogin .boxLogin .containerBoxLogin .logo {
+  width: 20%;
+}
+.loginComponent .containerLogin .boxLogin .containerBoxLogin .logo img {
+  width: 100%;
+}
+.loginComponent .containerLogin .boxLogin .containerBoxLogin .titleMessage {
+  margin-top: 20px;
+}
+.loginComponent .containerLogin .boxLogin .containerBoxLogin .titleMessage h3 {
+  font-weight: 400;
+  color: #046290;
+}
+.loginComponent .containerLogin .boxLogin .containerBoxLogin .titleMessage span {
+  font-size: 12px;
+  color: #454f5b;
+}
+.loginComponent .containerLogin .boxLogin .containerBoxLogin .form {
+  margin-top: 20px;
+  width: 100%;
+}
+.loginComponent .containerLogin .boxLogin .containerBoxLogin .form .containerForm {
+  width: 100%;
+}
+.loginComponent .containerLogin .boxLogin .containerBoxLogin .form .containerForm .inputDiv {
+  width: 100%;
+}
+.loginComponent .containerLogin .boxLogin .containerBoxLogin .form .containerForm .inputDiv input {
+  border: none;
+  width: 100%;
+  padding: 10px 0px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #454f5b;
+  outline: 0px;
+  transition: 0.3s;
+}
+.loginComponent .containerLogin .boxLogin .containerBoxLogin .form .containerForm .inputDiv input:focus {
+  border-bottom: 1px solid #046290;
+}
+.loginComponent .containerLogin .boxLogin .containerBoxLogin .form .containerForm .buttonGo {
+  margin-top: 50px;
+  text-align: right;
+}
+.loginComponent .containerLogin .boxLogin .containerBoxLogin .form .containerForm .buttonGo button {
+  background-color: #046290;
+  border: 1px solid #046290;
+  padding: 10px 20px;
+  border-radius: 2px;
+}
+.loginComponent .containerLogin .boxLogin .containerBoxLogin .form .containerForm .buttonGo button span {
+  color: #FFF;
+}
+.loginComponent .containerLogin .boxLogin .containerBoxLogin .form .containerForm .buttonGo .change {
+  background-color: transparent;
+  border: none;
+  margin-right: 10px;
+}
+.loginComponent .containerLogin .boxLogin .containerBoxLogin .form .containerForm .buttonGo .change span {
+  color: #046290;
+}
+.mistake {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 30%;
+  background-color: #dc3545;
+  margin: 10px;
+  border-radius: 5px;
+}
+.mistake .containerMistake {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+}
+.mistake .containerMistake .text span {
+  color: #FFF;
+  font-size: 12px;
+}
+.navigation {
+  height: 10%;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+.navigation .containerNav {
+  box-sizing: border-box;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  margin: auto;
+}
+.navigation .containerNav .logo {
+  width: 10%;
+}
+.navigation .containerNav .logo img {
+  width: 100%;
+}
+.navigation .containerNav .optionsGeneral {
+  width: 50%;
+  height: 100%;
+}
+.navigation .containerNav .optionsGeneral nav {
+  width: 100%;
+  height: 100%;
+}
+.navigation .containerNav .optionsGeneral nav ul {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+.navigation .containerNav .optionsGeneral nav ul li {
+  display: inline-block;
+  cursor: pointer;
+  height: 100%;
+}
+.navigation .containerNav .optionsGeneral nav ul li div {
+  height: 100%;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #FFF;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+}
+.navigation .containerNav .optionsGeneral nav ul li div span {
+  font-size: 12px;
+  color: #454f5b;
+}
+.navigation .containerNav .optionsGeneral nav ul li:hover div {
+  border-bottom: 1px solid #454f5b;
+}
+.navigation .containerNav .user {
+  width: 10%;
+  text-align: center;
+}
+.navigation .containerNav .user .containerUser nav ul li {
+  display: inline-block;
+}
+.navigation .containerNav .user .containerUser nav ul li div {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 100%;
+}

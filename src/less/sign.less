@@ -1,0 +1,110 @@
+.loginComponent{
+    box-sizing: border-box;
+    height:100vh;
+
+    .containerLogin{
+        width:100%;
+        height:100%;
+        background: url('https://logincdn.msftauth.net/shared/5/images/78_3a53c38a2dc671fb4daf.jpg');
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        .boxLogin{
+            width:35%;
+            box-sizing: border-box;
+            background-color: @bgDefault;
+            margin:auto;
+            padding:30px 40px;
+            border-radius: 5px;
+            .containerBoxLogin{
+                width:100%;
+                height:100%;
+                .logo{
+                    width:20%;
+                    img{
+                        width:100%;
+                    }
+                }
+                .titleMessage{
+                    margin-top:20px;
+                    h3{
+                        font-weight: 400;
+                        color: @bgAzulDark;
+                    }
+                    span{
+                        font-size: 12px;
+                        color: @bgDark;
+                    }
+                }
+                .form{
+                    margin-top:20px;
+                    width:100%;
+                    .containerForm{
+                        width:100%;
+                        .inputDiv{
+                            width:100%;
+                            input{
+                                border: none;
+                                width:100%;
+                                padding:10px 0px;
+                                box-sizing: border-box;
+                                border-bottom: 1px solid @bgDark;
+                                outline: 0px;
+                                transition: .3s;
+                            }
+                            input:focus{
+                                border-bottom: 1px solid @bgAzulDark;
+                            }
+                        }
+
+                        .buttonGo{
+                            margin-top:50px;
+                            text-align: right;
+                            button{
+                                background-color: @bgAzulDark;
+                                border:1px solid @bgAzulDark;
+                                padding:10px 20px;
+                                border-radius: 2px;
+                                span{
+                                    color: @bgDefault;
+                                }
+                            }
+                            .change{
+                                background-color: transparent;
+                                border:none;
+                                margin-right: 10px;
+                                span{
+                                    color: @bgAzulDark;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+} 
+
+.mistake{
+    position:fixed;
+    bottom:0;
+    right:0;
+    width:30%;
+    background-color: @danger;
+    margin:10px;
+    border-radius: 5px;
+    .containerMistake{
+        width:100%;
+        padding:10px;
+        border-radius: 10px;
+        .text{
+            span{
+                color: @bgDefault;
+                font-size: 12px;
+            }
+        }
+    }
+}

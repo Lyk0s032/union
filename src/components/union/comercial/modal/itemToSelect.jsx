@@ -1,0 +1,155 @@
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { AiOutlineClose } from "react-icons/ai";
+import { MdArrowForward, MdCheck } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import * as actions from '../../../store/action/action';
+import { getPromedio } from "../../produccion/calculo";
+
+export default function ItemToSelect(props){
+    const [active, setActive] = useState(null);
+
+    const [form, setForm] = useState({
+        cantidad: 1
+    })
+    const [valor, setValor] = useState(0);
+
+    const cotizacions = useSelector(store => store.cotizacions);
+
+    const { cotizacion } = cotizacions;
+ 
+    const dispatch = useDispatch(); 
+    const option = props.kit;
+
+
+    const addItem = async () => {
+        const body = {
+            cotizacionId: cotizacion.id,
+            kitId: option.id,
+            cantidad: form.cantidad,
+            precio: valor * form.cantidad
+        }
+        if(!form.cantidad || form.cantidad == 0) return dispatch(actions.HandleAlerta('Debes ingresar una cantidad valida', 'mistake'));
+
+        const sendPetion = await axios.post('api/cotizacion/add/item', body )
+        .then((res) => {
+            dispatch(actions.axiosToGetCotizacion(false, cotizacion.id))
+            dispatch(actions.HandleAlerta('Kit agregado con éxito', 'positive'))
+
+        })
+        .catch(err => {
+            console.log(err);
+            dispatch(actions.HandleAlerta('No hemos logrado agregar este kit a la cotización', 'mistake'))
+        })
+        return sendPetion; 
+    }  
+    
+    const recibirValor = (data) => {
+        setValor(data);
+        console.log('LLega del componete Kits')
+    }
+    return ( 
+        active ?
+        <tr className="active" >
+            <td>{option.name}</td> 
+            <td> 
+                {
+
+                    <div className="medida">
+                        <input type="text" onChange={(e) => {
+                            setForm({
+                                ...form,
+                                cantidad: e.target.value
+                            })
+                        }} value={form.cantidad}/>
+                    </div>
+                }
+            </td>
+            <td>
+                <strong>
+ 
+                   {valor*form.cantidad}
+                </strong>
+            </td>
+            <td>
+                <div className="twoButtons">
+                    <button className="great" onClick={() => addItem()}>
+                        <MdCheck />
+                    </button>
+                    <button className="danger" onClick={() => setActive(null)}>
+                        <AiOutlineClose />
+                    </button>
+                </div> 
+            </td>
+        </tr>
+        :
+        <tr >
+            <td>{option.name}</td>
+            <td>
+                <strong>1 </strong>
+            </td>
+            <td> 
+                <strong>
+                    <AllKit kit={option} enviarAlPadre={recibirValor} />
+                </strong>
+            </td>
+
+            <td>
+                <button onClick={() => setActive('active')}>
+                    <MdArrowForward />
+                </button>
+            </td>
+        </tr>
+    )
+}
+
+function AllKit( { enviarAlPadre, kit } ){
+    const kitt = kit;
+    const [valor, setVal] = useState(0)
+
+    const Mensage = () => {
+        enviarAlPadre(valor)
+    }
+    const getTrueValor = (val) => {
+        setVal(val)
+    }
+
+    useEffect(() => {
+        if(valor){
+            Mensage()
+        }
+    })
+    return (
+        <div >
+            {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(valor)} COP
+            <GetSimilarPrice materia={kitt.materia} realValor={getTrueValor} />
+        </div>
+    )
+}
+
+
+function GetSimilarPrice({realValor, materia }){
+    const consumir = materia;
+
+    const [valor, setValor] = useState(0) 
+
+    const mapear = () => {
+        const a = consumir.map((c, i) => {
+            const getV  =  getPromedio(c);
+            return getV
+        })
+        const promedio = a && a.length ? Number(a.reduce((acc, p) => Number(acc) + Number(p), 0)) : null
+        realValor(promedio ? promedio.toFixed(0) : 0);
+        return setValor(promedio);
+    } 
+
+    
+    useEffect(() => {
+        mapear()
+
+    }, [])
+    return (
+        <div className="">
+        </div>
+    )
+}

@@ -1,0 +1,76 @@
+import React from "react";
+import { OneElement } from "../../produccion/calculo";
+import axios from "axios";
+import * as actions from '../../../store/action/action';
+import { useDispatch } from "react-redux";
+
+export default function SelectedKits(props){
+    const cotizacion = props.cotizacion;
+    const dispatch = useDispatch();
+
+    const deleteItem = async (itemId) => {
+        const body = {
+            kitId: itemId,
+            cotizacionId: cotizacion.id 
+        }
+
+        const sendPetion = await axios.delete('api/cotizacion/remove/item', { data: body} )
+        .then((res) => {
+            dispatch(actions.axiosToGetCotizacion(false, cotizacion.id))
+            dispatch(actions.HandleAlerta('Kit removido', 'positive'))
+ 
+        })
+        .catch(err => {
+            console.log(err);
+            dispatch(actions.HandleAlerta('No hemos logrado remover este kit', 'mistake'))
+        })
+        return sendPetion; 
+    }
+    return (
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
+                    <th>Val. Promedio</th>
+                    <th></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {
+                    cotizacion && cotizacion.kits && cotizacion.kits.length ? 
+                        cotizacion.kits.map((kt, i) => {
+                            return (
+                                <tr key={i+1}>
+                                    <td>{kt.name}</td>
+                                    <td>{kt.kitCotizacion.cantidad}</td>
+                                    <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(kt.kitCotizacion.precio)} COP</td>
+
+                                    <td>
+                                        {/* <strong>{<ValorSelected mt={materia} />}</strong> */}
+                                    </td> 
+                                    <td>
+                                        <button onClick={() => deleteItem(kt.id)}>
+                                            x
+                                        </button>
+                                    </td>
+                                </tr>
+                            )
+                        })
+                    : null
+                }
+
+
+            </tbody>
+        </table>
+    )
+}
+
+function ValorSelected(props){
+    const mt = props.mt;
+    const valor = OneElement(mt)
+    return (
+        <span>{Number(valor).toFixed(2)}</span>
+    )
+}
