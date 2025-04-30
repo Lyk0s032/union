@@ -38,9 +38,9 @@ export default function ModalNewProvider(){
             const body = {
                 type: form.type,
                 persona: form.persona,
-                nit:`${form.nit}-${form.code}`,
+                nit: form.code ? `${form.nit}-${form.code}` : `${form.nit}`,
                 email: form.email,
-                img:null,
+                img:null, 
                 nombre:form.persona == 'juridica' ? form.nombre : `${form.name} ${form.lastName}`,  
                 siglas:form.siglas,
                 direccion:form.direccion,
@@ -62,8 +62,8 @@ export default function ModalNewProvider(){
             });
 
             return sendPeticion;
-        }
-    }
+        } 
+    } 
     return(
         <div className="modal">
             <div className="hiddenModal" onClick={() => {
@@ -78,15 +78,7 @@ export default function ModalNewProvider(){
                 </div>
                 <div className="bodyModal">
                     <div className="form">
-                        <div className="inputDiv">
-                            <label htmlFor="">NIT {form.nit} - {form.code}</label><br />
-                            <input type="text" placeholder="Escribe aquí" onChange={(e) => {
-                                setForm({
-                                    ...form,
-                                    nit: e.target.value
-                                })
-                            }} value={form.nit} />
-                        </div>
+                        
                         <div className="inputDiv">
                             <label htmlFor="">Persona {form.persona}</label><br />
                             <select name="" id="" onChange={(e) => {
@@ -99,7 +91,16 @@ export default function ModalNewProvider(){
                                 <option value="natural">Natural</option>
                             </select>
                         </div>
-                        
+                        <div className="inputDiv">
+                            <label htmlFor="">NIT {form.nit} - {form.code}</label><br />
+                            <input type="text" placeholder="Escribe aquí" onChange={(e) => {
+                                setForm({
+                                    ...form,
+                                    nit: e.target.value
+                                })
+                            }} value={form.nit} />
+                        </div>
+
                         <div className="inputDiv">
                             <label htmlFor="">Nro seguridad </label><br />
                             <input type="text" placeholder="Escribe aquí" onChange={(e) => {
