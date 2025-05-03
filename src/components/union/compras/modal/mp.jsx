@@ -96,7 +96,8 @@ export default function ModalNewMp(){
                         <div className="inputDiv">
                             <label htmlFor="">Medida</label><br />
                             <input type="text" placeholder="Ejemplo: 30x2.2" onChange={(e) => {
-                                const nuevoValor = e.target.value.replace(/\s+/g, '').toUpperCase();
+                                const nuevoValor = e.target.value.replace(/\s+/g, '').replace(/,/g, '.').toUpperCase();
+
                                 setForm({
                                     ...form,
                                     medida: nuevoValor

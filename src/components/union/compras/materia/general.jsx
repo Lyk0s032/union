@@ -4,7 +4,7 @@ import ModaUpdateMp from '../modal/updateMp';
 
 export default function General(props){
     const prima = props.prima;
-
+    console.log(prima)
     const [params, setParams] = useSearchParams();
     return (
         <div className="pestana">
@@ -32,11 +32,11 @@ export default function General(props){
                             </div>
                             <div className="optionsItem">
                                 <span className='title'>Linea: </span><br />
-                                <span>{prima.volumen ? prima.volumen : 'Sin definir'}</span>
+                                <span>{prima.linea.name ? prima.linea.name : 'Sin definir'}</span>
                             </div> 
                             <div className="optionsItem">
                                 <span className='title'>Categoría: </span><br />
-                                <span>{prima.volumen ? prima.volumen : 'Sin definir'}</span>
+                                <span>{prima.categorium ? prima.categorium.name : 'Sin definir'}</span>
                             </div>
                         </div>
                     </div>

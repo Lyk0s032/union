@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 import ModaUpdateMp from '../modal/updateMp';
+import ModalUpdateProvider from '../modal/updateProvider';
  
 export default function GeneralPv(props){
     const provider = props.provider;
@@ -44,7 +45,7 @@ export default function GeneralPv(props){
             </div>
             {
                 params.get('u') ?
-                    <ModaUpdateMp prima={prima} />
+                    <ModalUpdateProvider provider={provider} />
                 : null
             }
         </div>

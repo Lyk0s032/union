@@ -97,9 +97,10 @@ export default function ModaUpdateMp(props){
                         <div className="inputDiv">
                             <label htmlFor="">Medida</label><br />
                             <input type="text" placeholder="Ejemplo: 30x2.2" onChange={(e) => {
+                                const nuevoValor = e.target.value.replace(/\s+/g, '').replace(/,/g, '.').toUpperCase();
                                 setForm({
                                     ...form,
-                                    medida: e.target.value
+                                    medida: nuevoValor
                                 })
                             }} value={form.medida}/>
                         </div>
