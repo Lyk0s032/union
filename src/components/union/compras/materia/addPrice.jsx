@@ -48,6 +48,7 @@ export default function AddPrice(props){
                                                                     <div className="proveedorData">
                                                                         <img src="https://isodoc.co/dashboard/wp-content/uploads/2018/08/iconos-isodoc-06.png" alt="" />
                                                                         <h3>{pm.proveedor.nombre}</h3>
+                                                                        <span style={{color: '#666', fontWeight:400,fontSize:11}}>Ult. {pm.createdAt.split('T')[0]}</span>
                                                                     </div>
                                                                 </th>
                                                         )

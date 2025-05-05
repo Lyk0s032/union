@@ -59,6 +59,7 @@ export default function ItemToSelect(props){
             { 
                 params.get('almacen') ? <ModalCalibre onEnviarValor={manejarValor} />  : null
             }
+            <td style={{width:'30px'}}>{option.id}</td>
             <td>{option.description.toUpperCase()}</td>  
             <td>
                 {
@@ -142,9 +143,10 @@ export default function ItemToSelect(props){
         </tr>
         :
         <tr >
+            <td>{option.id}</td>
             <td>{option.description.toUpperCase()}</td>
-            <td>  
-                {option.unidad}
+            <td style={{fontSize:10}}>  
+                {option.unidad.toUpperCase()}
             </td>
             <td>{option.medida}</td>
             <td>

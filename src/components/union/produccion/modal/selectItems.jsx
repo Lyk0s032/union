@@ -7,6 +7,8 @@ import Selected from './selected';
 import SearchKits from './searchKits';
 import { getPromedio } from '../calculo';
 import axios from 'axios';
+import { useSearchParams } from 'react-router-dom';
+import UpdateKit from './updated';
 
 export default function SelectMP(){
 
@@ -16,6 +18,7 @@ export default function SelectMP(){
     const system = useSelector(store => store.system);
     const { lineas, categorias, extensiones } = system;
     const dispatch = useDispatch();
+    const [params, setParams] = useSearchParams();
 
     const sendPeticion = async () => {
         const body = {
@@ -37,24 +40,42 @@ export default function SelectMP(){
                 <div className="leftKit">
                     <div className="topData">
                         <div className="DataKit">
-                            <h3>{kit.name}</h3>
+                            <h3>{kit.name}</h3> 
                             { kit && kit.linea ? <span>Linea: <strong>{kit.linea.name}</strong></span> : null  }<br />
                             { kit && kit.extension ? <span>Extensión: <strong>{kit.extension.name}</strong></span> : null  }<br />
                             { kit && kit.categoria ? <span>Categoría: <strong>{kit.categoria.name}</strong></span> : null  }<br />
+                            {
+                                !params.get('update') ?
+                                    <button onClick={() => {
+                                        params.set('update', 'true');
+                                        setParams(params);
+                                    }}>
+                                        <span>Editar</span>
+                                    </button>
+                                :null
+                            }
                         </div>
                     </div>
                     <div className="middleData">
                         <div className="tableItemsMP">
-                            <Selected kit={kit}/>
+                            {
+                                params.get('update') ?
+                                <UpdateKit kit={kit}/>
+                                :
+                                <Selected kit={kit}/>
+                            }
                         </div>
                     </div>
                     <div className="bottomData">
-                        <div className="priceBox">
-                            <div>
-                                <span>Precio promedio</span><br />
-                                <GetSimilarPrice materia={kit.materia} />
-                            </div>
-                        </div>
+                        {
+                            params.get('update') ? null :
+                            <div className="priceBox">
+                                <div>
+                                    <span>Precio promedio</span><br />
+                                    <GetSimilarPrice materia={kit.materia} />
+                                </div>
+                            </div> 
+                        }
                         <div className="buttonConfirm">
                             {
                                 kit.state == 'desarrollo' || !kit.state ?

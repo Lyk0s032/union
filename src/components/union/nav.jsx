@@ -1,8 +1,19 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import * as actions from '../store/action/action';
 
 export default function Nav(){
     const navigate = useNavigate();
+
+    const usuario = useSelector(store => store.usuario);
+    
+    const { user } = usuario;
+    const dispatch = useDispatch();
+    const logged = () => {
+        localStorage.removeItem('loggedPeople');
+        dispatch(actions.GET_USER(null))
+    }
     return (
         <div className="navigation">
             <div className="containerNav">
@@ -28,15 +39,20 @@ export default function Nav(){
                                 </div>
                             </li> */}
                         </ul>
-                    </nav>
+                    </nav> 
                 </div>
                 <div className="user">
                     <div className="containerUser">
                         <nav>
-                            <ul>
+                            <ul> 
                                 <li>
                                     <div>
-                                        <span>P</span>
+                                        <h3 className="person">
+                                            {user.user.name}
+                                        </h3>
+                                        <button onClick={() => logged()}>
+                                            <span>Cerrar sesión</span>
+                                        </button>
                                     </div>
                                 </li>
                             </ul>

@@ -51,7 +51,7 @@ export default function ItemAddPrice(props){
     }, [valor])
     return( 
         <td className='input' >
-            <input type="text" onChange={(e) => setValor(e.target.value)} value={valor}/><br />
+            <input type="text" id={precio.id} onChange={(e) => setValor(e.target.value)} value={valor}/><br />
             <div className="data">
                 <div className="title">
                     <span>Actual: <strong>{precio.valor} <span>COP</span></strong></span><br />

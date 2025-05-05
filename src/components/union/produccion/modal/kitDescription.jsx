@@ -52,7 +52,7 @@ export default function KitDescription(){
                             }} value={form.nombre}/>
                         </div>
                         <div className="inputDiv">
-                            <h3>Descripción</h3>
+                            <h3>Descripción {form.description ? `(${form.description.length})` : null}</h3>
                             <textarea name="" id="" onChange={(e) => {
                                 setForm({
                                     ...form,

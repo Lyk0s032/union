@@ -21,7 +21,7 @@ export default function ModalNewMp(){
         peso: null,
         calibre: null,
         criticidad: null,
-        procedencia: null,
+        procedencia: 'nacional',
         volumen: null,
         lineaId: null,
         categoriumId: null
@@ -46,7 +46,7 @@ export default function ModalNewMp(){
                 peso: '',
                 calibre: '',
                 criticidad: '',
-                procedencia: '',
+                procedencia: 'nacional',
                 volumen: '',
                 lineaId: null,
                 categoriumId: null
@@ -138,12 +138,16 @@ export default function ModalNewMp(){
                         </div> 
                         <div className="inputDiv">
                             <label htmlFor="">Procedencia</label><br />
-                            <input type="text" placeholder="Escribe aquí" onChange={(e) => {
+                            <select name="" id="" onChange={(e) => {
                                 setForm({
                                     ...form,
                                     procedencia: e.target.value
                                 })
-                            }} value={form.procedencia}/>
+                            }} value={form.procedencia}>
+                                <option value="nacional">NACIONAL</option>
+                                <option value="importado">IMPORTADO</option>
+                                <option value="kit">KIT</option>
+                            </select>
                         </div>
                         <div className="inputDiv">
                             <label htmlFor="">Criticidad</label><br />
@@ -168,7 +172,7 @@ export default function ModalNewMp(){
                                     !categorias || loadingFiltros ? null
                                     : categorias.map((cat, i) => {
                                         return (
-                                            <option key={i+1} value={cat.id}>{cat.name}</option>
+                                            <option key={i+1} value={cat.id}>{cat.name.toUpperCase()}</option>
                                         )
                                     }) 
                                 }
@@ -188,7 +192,7 @@ export default function ModalNewMp(){
                                     !lineas || loadingFiltros ? null
                                     : lineas.map((linea, i) => {
                                         return (
-                                            <option key={i+1} value={linea.id}>{linea.name}</option>
+                                            <option key={i+1} value={linea.id}>{linea.name.toUpperCase()}</option>
                                         )
                                     }) 
                                 }

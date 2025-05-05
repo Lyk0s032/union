@@ -31,8 +31,6 @@ export function OneElement(objeto){
         const precioCantidad = Number(promedio) / Number(medidaEnCantidad)
         const unidadesAConsumir = consumirMedida;
         const costo = precioCantidad *  unidadesAConsumir;
-        console.log(costo)
-        console.log('unidaaaaaaa')
 
         return costo
     }else if(unidad == 'kg'){
@@ -41,7 +39,6 @@ export function OneElement(objeto){
 
         const kgAConsumir = Number(consumirMedida);
         const costo = Number(precioKg) * Number(kgAConsumir);
-        console.log('CALCULANDO KG')
         return costo
 
     }
@@ -88,7 +85,6 @@ export function getPromedio(array){
         const precioCantidad = Number(promedio) / Number(medidaEnCantidad)
         const unidadesAConsumir = consumirMedida;
         const costo = precioCantidad *  unidadesAConsumir;
-        console.log('unidaaaaaaa')
         return costo
 
     }else if(unidad == 'kg'){
@@ -97,7 +93,6 @@ export function getPromedio(array){
 
         const kgAConsumir = Number(consumirMedida);
         const costo = Number(precioKg) * Number(kgAConsumir);
-        console.log('CALCULANDO KG')
         return costo
 
     }

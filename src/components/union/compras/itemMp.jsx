@@ -12,9 +12,9 @@ export default function ItemMP(props){
                 params.set('prima', MP.id) 
                 setParams(params);
             }}>{MP.item}</td>
-            <td >{MP.description}</td>
+            <td >{MP.description.toUpperCase()}</td>
             <td>{MP.medida}</td>
-            <td>{MP.unidad}</td> 
+            <td style={{fontSize:11}}>{MP.unidad.toUpperCase()}</td> 
             <td>{promedio ? new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(promedio/MP.prices.length).toFixed(0)) : 'No hay precios aun'}</td> 
             
             {/* <td>

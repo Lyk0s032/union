@@ -84,7 +84,7 @@ export default function MateriaPrima(){
                                                 categorias && categorias.length ?
                                                     categorias.map((c, i) => {
                                                         return (
-                                                            c.type == 'interna' ?
+                                                            c.type == 'MP' ?
                                                                 <option key={i+1} value={c.id}>{c.name}</option>
                                                             :null 
                                                         )
@@ -104,7 +104,7 @@ export default function MateriaPrima(){
                                                     lineas.map((l, i) => {
                                                         return (
                                                             l.type == 'MP' ?
-                                                                <option key={i+1} value={l.id}>{l.name}</option>
+                                                                <option key={i+1} value={l.id}>{l.name.toUpperCase()}</option>
                                                             :null 
                                                         )
                                                     })
@@ -139,7 +139,8 @@ export default function MateriaPrima(){
                                             primas && primas.length ?
                                                   word || cat || li?
                                                           primas.filter(m => {
-                                                            const porLetra = word ?  m.description.toLowerCase().includes(word.toLowerCase()) : true;
+                                                            const porLetra = word ?  m.description.toLowerCase().includes(word.toLowerCase()) ||
+                                                            m.item.toLowerCase().includes(word.toLowerCase()): true;
                                                             const porLinea = li ? m.lineaId == li : true;
                                                             const porCategoria = cat ? m.categoriumId == cat : true;
 

@@ -74,7 +74,7 @@ export default function KitsPanel(){
                                             categorias.map((c, i) => {
                                                 return (
                                                     c.type == 'comercial' ? 
-                                                        <option key={i+1} value={c.id}>{c.name}</option>
+                                                        <option key={i+1} value={c.id}>{c.name.toUpperCase()}</option>
                                                     : null
                                                 )
                                             })
@@ -93,7 +93,7 @@ export default function KitsPanel(){
                                                 extensiones && extensiones.length ?
                                                 extensiones.map((c, i) => {
                                                     return (
-                                                        <option value={c.id}>{c.name}</option>
+                                                        <option value={c.id}>{c.name.toUpperCase()}</option>
                                                     )
                                                 })
                                                 :null
@@ -112,7 +112,7 @@ export default function KitsPanel(){
                                                 lineas.map((c, i) => {
                                                     return (
                                                         c.type == 'comercial' ? 
-                                                            <option key={i+1} value={c.id}>{c.name}</option>
+                                                            <option key={i+1} value={c.id}>{c.name.toUpperCase()}</option>
                                                         : null
                                                     )
                                                 })

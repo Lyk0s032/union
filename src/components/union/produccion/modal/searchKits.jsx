@@ -53,7 +53,7 @@ export default function SearchKits(){
                                     categorias && categorias.length ?
                                     categorias.map((c, i) => {
                                         return (
-                                            <option key={i+1} value={c.id}>{c.name}</option>
+                                            <option key={i+1} value={c.id}>{c.name.toUpperCase()}</option>
                                         )
                                     })
                                     :null
@@ -71,7 +71,7 @@ export default function SearchKits(){
                                     lineas && lineas.length ? 
                                     lineas.map((c, i) => {
                                         return (
-                                            <option key={i+1} value={c.id}>{c.name}</option>
+                                            <option key={i+1} value={c.id}>{c.name.toUpperCase()}</option>
                                         )
                                     })
                                     :null
@@ -85,6 +85,7 @@ export default function SearchKits(){
                 <table>
                     <thead>
                         <tr>
+                            <th>Código</th>
                             <th>Nombre</th>
                             <th>Unidad</th>
                             <th>Medida / Cant.</th>
@@ -99,7 +100,7 @@ export default function SearchKits(){
                                 word || cat || li ?
                                     primas.filter(m => {
                                         const porTexto = word ? m.description.toLowerCase().includes(word.toLowerCase()) ||
-                                        m.item.toLowerCase().includes(word.toLowerCase())
+                                        m.id == Number(word)
                                         : true 
                                         const porCategoria = cat ? m.categoriumId == cat : true;
                                         const porLinea = li ? m.lineaId == li : true; 

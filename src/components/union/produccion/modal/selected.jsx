@@ -29,9 +29,10 @@ export default function Selected(props){
         <table>
             <thead>
                 <tr>
+                    <th>Código</th>
                     <th>Nombre</th>
                     <th>Medida</th>
-                    <th>Unidad</th>
+                    <th>Uni.</th>
                     <th>Val. Promedio</th>
                     <th></th>
 
@@ -43,7 +44,8 @@ export default function Selected(props){
                         kit.materia.map((materia, i) => {
                             return (
                                 <tr key={i+1}>
-                                    <td>{materia.description.toUpperCase()}</td>
+                                    <td>{materia.id}</td>
+                                    <td>{materia.description.toUpperCase().slice(0, 20) + '...'}</td>
                                     <td>{materia.itemKit.medida}</td>
 
                                     <td>
