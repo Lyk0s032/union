@@ -62,7 +62,7 @@ export default function UpdateKit(props){
 
                 {/* Descripción */}
                 <div className="inputDiv">
-                    <label htmlFor="description">Descripción</label><br />
+                    <label htmlFor="description">Descripción {form.description ? `(${form.description.length})` : null}</label><br />
                     <input
                     type="text"
                     id="description"
