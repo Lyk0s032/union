@@ -41,7 +41,14 @@ export default function LeftNav(){
                         <nav>
                             <ul>
                                 <li className={location.pathname === '/compras' ||  location.pathname === '/compras/' ? 'Active' : null } onClick={() => {
-                                    navigate('/compras')
+                                        navigate('/compras')
+                                    }}>
+                                    <div>
+                                        <span>Requisiciones</span>
+                                    </div>
+                                </li>
+                                <li className={location.pathname === '/compras/pv' ||  location.pathname === '/compras/pv/' ? 'Active' : null } onClick={() => {
+                                    navigate('/compras/pv')
                                 }}>
                                     <div>
                                         <span>Proveedores</span>

@@ -634,6 +634,120 @@
                                                 }
                                             }
                                         }
+
+                                        .requisicionDocument{
+                                            box-sizing: border-box;
+                                            .topHeader{
+                                                box-sizing: border-box;
+                                                .topTitle{
+                                                    background-color: @bgAzulDark;
+                                                    padding: 20px 20px;
+                                                    box-sizing: border-box;
+                                                    text-align: right;
+                                                    border-radius: 10px 10px 0px 0px;
+                                                    h1{
+                                                        font-weight: 300;
+                                                        color: @bgDefault;
+                                                        font-size: 18px;
+                                                    }
+                                                }
+                                                .fechaDiv{
+                                                    box-sizing: border-box;
+                                                    display: flex;
+                                                    align-items: center;
+                                                    margin-left:auto;
+                                                    width:40%;
+                                                    justify-content: space-between;
+                                                    padding:10px 20px;
+                                                    box-sizing: border-box;
+                                                    .left{
+                                                        text-align: right;
+                                                        width:40%;
+                                                        span{
+                                                            font-size: 12px;
+                                                            color: #666;
+                                                        }
+                                                        strong{
+                                                            color: @bgAzulDark;
+                                                            font-size: 13px;
+                                                            font-weight: 500;
+                                                        }
+                                                    }
+                                                    .right{
+                                                        text-align: right;
+                                                        width:40%;
+                                                        span{
+                                                            font-size: 12px;
+                                                            color: #666;
+                                                        }
+                                                        strong{
+                                                            color: @bgAzulDark;
+                                                            font-size: 13px;
+                                                            font-weight: 500;
+                                                        }
+                                                    }
+                                                }
+                                                
+                                            }
+                                            .bodyDocument{
+                                                box-sizing: border-box;
+                                                padding:30px 0px;
+                                                table{
+                                                    border-collapse: collapse;
+                                                    width:100%;
+                                                    thead{
+                                                        background-color: @bgAzulDark;
+                                                        padding:10px 5px;
+                                                        tr{
+                                                            box-sizing: border-box;
+                                                            text-align: left;
+                                                            th{
+                                                                padding:10px 10px;
+                                                                color: @bgDefault;
+                                                                font-size: 14px;
+                                                                font-weight: 400;
+                                                                width: auto;
+                                                            
+                                                            }
+                                                        }
+
+                                                    }
+                                                    tbody{
+                                                        tr{
+                                                            cursor: pointer;
+                                                            transition: .3s;
+                                                            background-color: @bgDefault;
+                                                            td{
+                                                                padding: 10px 10px;
+                                                                box-sizing: border-box;
+                                                                width:auto;
+                                                                .about{
+                                                                    span{
+                                                                        font-size: 11px;
+                                                                        color: #666;
+                                                                    }
+                                                                    strong{
+                                                                        color: @bgAzulDark;
+                                                                        font-size: 13px;
+                                                                        font-weight: 400;
+                                                                    }
+                                                                }
+                                                                .price{
+                                                                    span{
+                                                                        font-size: 12px;
+                                                                        color: @bgAzulDark;
+                                                                        font-weight: 400;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        tr:hover{
+                                                            background-color: #f8f8f8;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }

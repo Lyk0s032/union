@@ -33,11 +33,11 @@ export default function Nav(){
                                     <span>Producción</span>
                                 </div>
                             </li>
-                            {/* <li onClick={() => navigate('/comercial')}>
+                            <li onClick={() => navigate('/comercial')}>
                                 <div>
                                     <span>Comercial</span>
                                 </div>
-                            </li> */}
+                            </li>
                         </ul>
                     </nav> 
                 </div>

@@ -5,6 +5,7 @@ import * as actions from '../../../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
 import SelectedKits from './selected';
 import SearchKitsComercial from './searchKits';
+import axios from 'axios';
  
 export default function SelectKits(){
     const cotizacions = useSelector(store => store.cotizacions);
@@ -13,6 +14,18 @@ export default function SelectKits(){
     const system = useSelector(store => store.system);
     const dispatch = useDispatch();
 
+    const handleAprobar = async() => {
+        
+        const sendAprobation = await axios.get(`/api/cotizacion/accept/${cotizacion.id}`)
+        .then(res => {
+            dispatch(actions.HandleAlerta('Cotización aprobada', 'positive'))
+            dispatch(actions.axiosToGetCotizaciones(false))
+        })
+        .catch(err => {
+            dispatch(actions.HandleAlerta('Ha ocurrido un error', 'positive'))
+        })
+        return sendAprobation;
+    }
     return (
         <div className="page">
             <div className="selectItems">
@@ -42,6 +55,13 @@ export default function SelectKits(){
                                     }
                                 </h3>
                             </div>
+                            {
+                                cotizacion.state == 'desarrollo' ?
+                                <button style={{marginLeft:30, padding:10}} onClick={() => handleAprobar()}>
+                                    <span style={{fontSize:14}}>Aprobar cotización</span>
+                                </button>
+                                :null
+                            }
                         </div> 
                     </div> 
                 </div>  
@@ -57,15 +77,14 @@ export default function SelectKits(){
 function PriceCotizacion(props) { 
 
     const kits = props.cotizacion;
-    // const array =  kits.kitCotizacion.reduce((acc, p) => Number(acc) + Number(p.precio), 0)
+    const array =  kits ? kits.reduce((acc, p) => Number(acc) + Number(p.kitCotizacion.precio), 0) : 0
 
-   console.log(kits)
     // const array = !ktv ? 0 : ktv.kitCotizacion.reduce((acc, p) => Number(acc) + Number(p.precio), 0)
     // console.log(ktv)
 
     return (
         <div className="">
-            <span>1 COP</span>
+            <span>{array} COP</span>
         </div>
     )
 }

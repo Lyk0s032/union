@@ -6,6 +6,7 @@ import provider from "./provider";
 import prima from "./mp";
 import kits from "./kit";
 import cotizacions from "./cotizacion";
+import requisicion from "./requisicion";
 
 
 
@@ -15,7 +16,8 @@ const appReducer = combineReducers({
     provider,
     prima,
     kits,
-    cotizacions
+    cotizacions,
+    requisicion,
 });
 
 export default appReducer 

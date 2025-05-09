@@ -7,6 +7,7 @@ import ModalAddCat from './modal/categorias';
 import ModalAddExtensiones from './modal/extensiones';
 import * as actions from '../../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
+import RouteCompras from './compras/routeCompras';
 
 export default function RoutesCompras(){
     const [params, setParams] = useSearchParams();
@@ -26,8 +27,9 @@ export default function RoutesCompras(){
                     </div>
 
                     <div className="right">
-                        <Routes>
-                            <Route index element={<Providers />} />
+                        <Routes> 
+                            <Route index element={<RouteCompras /> } />
+                            <Route path="pv/*" element={<Providers />} />
                             <Route  path="mp/*" element={<MateriaPrima />} />
                         </Routes>
                     </div>

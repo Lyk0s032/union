@@ -20,6 +20,7 @@ export default function CotizacionItem(props){
             <td>
                 <strong>{<ValorKit cotizacion={cotizacion} />} COP</strong>
             </td>
+            <td>{cotizacion.state}</td>
             {/* <td> 
                 <button onClick={() => {
                     params.set('w', 'updateMp');

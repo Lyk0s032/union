@@ -410,3 +410,72 @@ export function axiosToGetCotizacion(carga, id){
         });
     }
 }
+
+
+
+// REQUISICIONES
+export function getRequisicions(data){
+    return {
+        type: types.GET_REQUISICIONS,
+        payload: data
+    }
+}
+export function gettingRequisicions(carga){
+    return {
+        type: types.GETTING_REQUISICIONS,
+        payload: carga
+    }
+}
+
+export function axiosToGetRequisicions(carga){
+    return function(dispatch){ 
+        dispatch(gettingRequisicions(carga))
+        axios.get(`/api/requisicion/getAll`)
+        .then((info) => info.data) 
+        .then(inf => {
+            return dispatch(getRequisicions(inf))
+        }) 
+        .catch((e) => { 
+            console.log(e)
+            if(e.request){
+                return dispatch(getRequisicions('notrequest'));
+            }else{
+                return dispatch(getRequisicions(404))
+
+            }
+        });
+    }
+}
+
+export function getRequisicion(data){
+    return {
+        type: types.GET_REQUISICION,
+        payload: data
+    }
+}
+export function gettingRequisicion(carga){
+    return {
+        type: types.GETTING_REQUISICION,
+        payload: carga
+    }
+}
+
+export function axiosToGetRequisicion(carga, reqId){
+    return function(dispatch){ 
+        dispatch(gettingRequisicion(carga))
+        axios.get(`/api/requisicion/get/${reqId}`)
+        .then((info) => info.data) 
+        .then(inf => {
+            return dispatch(getRequisicion(inf))
+        }) 
+        .catch((e) => { 
+            console.log(e)
+            if(e.request){
+                return dispatch(getRequisicion('notrequest'));
+            }else{
+                return dispatch(getRequisicion(404))
+
+            }
+        });
+    }
+}

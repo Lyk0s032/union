@@ -29,7 +29,7 @@ export default function RouterPanel(){
                         <Route path="/" element={<Navigate to="/compras" replace />} />
                         <Route path="/compras/*" element={<RoutesCompras />} />
                         <Route path="/produccion/*" element={<RoutesProduccion />} />
-                        {/* <Route path="/comercial/*" element={<RoutesComercial />} /> */}
+                        <Route path="/comercial/*" element={<RoutesComercial />} />
                     </Routes>
                 </div>
                 {
