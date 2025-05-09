@@ -11,7 +11,7 @@ export default function ItemMP(props){
             <td onClick={() => {
                 params.set('prima', MP.id) 
                 setParams(params);
-            }}>{MP.item}</td>
+            }}>{MP.id}</td>
             <td >{MP.description.toUpperCase()}</td>
             <td>{MP.medida}</td>
             <td style={{fontSize:11}}>{MP.unidad.toUpperCase()}</td> 
