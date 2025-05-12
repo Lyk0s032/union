@@ -52,7 +52,7 @@ export default function KitItem(props){
     return (
         <tr>
             <td onClick={() => {
-                dispatch(actions.getKit(kit))
+                dispatch(actions.axiosToGetKit(true, kit.id))
                 params.set('w', 'newKit')
                 setParams(params);
             }}>{kit.id}</td>
@@ -61,10 +61,10 @@ export default function KitItem(props){
                 params.set('w', 'newKit')
                 setParams(params);
             }}>{kit.name.toUpperCase()}</td>
-            <td style={{fontSize:11}}>{kit.categoria ? kit.categoria.name.toUpperCase() : 'SIN CATEGORíA'}</td>
+            <td style={{fontSize:11}}>{kit.categorium ? kit.categorium.name.toUpperCase() : 'SIN CATEGORíA'}</td>
             <td style={{fontSize:11}}>{kit.linea ? kit.linea.name.toUpperCase() : 'SIN CATEGORíA'}</td>
             <td style={{fontSize:11}}>{kit.extension ? kit.extension.name.toUpperCase() : 'SIN CATEGORíA'}</td>
-            <td style={{fontSize:11}}>{kit.materia ? <GetSimilarPrice materia={kit.materia} /> : null}</td>
+            {/* <td style={{fontSize:11}}>{kit.materia ? <GetSimilarPrice materia={kit.materia} /> : null}</td> */}
             <td className="btnKits">
                 {
                     loading ?

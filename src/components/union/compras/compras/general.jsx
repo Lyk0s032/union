@@ -5,6 +5,7 @@ import * as actions from './../../../store/action/action';
 import Loading from "../../loading";
 import ItemRequisicion from "./itemRequisicion";
 import ShowRequisicion from "./requisicion";
+import ReporteTable from "./reporte";
 
 
 export default function GeneralCompras(){
@@ -14,26 +15,11 @@ export default function GeneralCompras(){
     const req = useSelector(store => store.requisicion); 
     const { requisicions, loadingRequisicions } = req;
 
-    const system = useSelector(store => store.system); 
-    const { categorias, lineas } = system
-
     const [word, setWord] = useState(null);
-    const [metodo, setMetodo] = useState(null); // METODO DE BUSQUEDA LINEA O CATEGORIA
-    const [cat, setCat] = useState(null);
-    const [li, setLi] = useState(null);
+    const [reporte, setReporte] = useState(null);
 
-    const [filter, setFilter] = useState(requisicions);
-
-    const filterProviders = (val) => {
-        const filtrado = providers.filter(pv => pv.nombre.toLowerCase().includes(word.toLowerCase()))
-        return setFilter(filtrado)
-    }
-
-
-     
     useEffect(() => {
         dispatch(actions.axiosToGetRequisicions(true)) 
-        setFilter(requisicions)
     }, [])
     return (
         <div className="provider">
@@ -42,15 +28,21 @@ export default function GeneralCompras(){
                     <div className="title">
                         {
                             requisicions == 404 || requisicions == 'notrequest' ?
-                                <h1>¡Hola, Jessica! La bandeja de requisiciones esta limpia.</h1>
+                                <h1>¡Hola! La bandeja de requisiciones esta limpia.</h1>
                             :
                             requisicions && requisicions.length ?
-                                <h1>¡Hola, Jessica! Tenemos {requisicions.length } requisiciones</h1>
+                                <h1>¡Hola! Tenemos {requisicions.length } requisiciones</h1>
                             :
-                                <h1>¡Hola, Jessica! La bandeja de requisiciones esta limpia.</h1>
+                                <h1>¡Hola! La bandeja de requisiciones esta limpia.</h1>
                         }
                     </div>
-
+                    <div className="btnOptions">
+                        <button onClick={(e) => {
+                            setReporte(!reporte)
+                        }} className={!reporte ? `btnReporte Open` : 'btnReporte Close'}>
+                            <span>{!reporte ? 'Seleccionar' : 'Cancelar'}</span>
+                        </button>
+                    </div>
                 </div>
                 <div className="listProviders">
                     <div className="containerListProviders">
@@ -66,6 +58,9 @@ export default function GeneralCompras(){
                             {
                                 !requisicions || loadingRequisicions ?
                                     <Loading />
+                                :
+                                reporte ?
+                                    <ReporteTable requisicions={requisicions} />
                                 :
                                 <table>
                                     <thead> 

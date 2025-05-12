@@ -155,7 +155,7 @@ export default function KitsPanel(){
                                         <th>Categoría</th>
                                         <th>Línea</th>
                                         <th>Extensión</th>
-                                        <th>Precio promedio</th>
+                                        {/* <th>Precio promedio</th> */}
                                         <th></th>
                                     </tr>
                                 </thead>

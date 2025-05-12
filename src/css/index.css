@@ -952,6 +952,38 @@ body button {
   font-weight: 400;
   color: #454f5b;
 }
+.compras .containerCompras .divide .right .provider .containerProviders .topSection .btnOptions {
+  box-sizing: border-box;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .topSection .btnOptions .btnReporte {
+  padding: 5px 30px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .topSection .btnOptions .btnReporte span {
+  font-size: 14px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .topSection .btnOptions .btnReporte:hover {
+  transform: scale(1.1);
+}
+.compras .containerCompras .divide .right .provider .containerProviders .topSection .btnOptions .Open {
+  background-color: #046290;
+  border: 1px solid #046290;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .topSection .btnOptions .Open span {
+  color: #FFF;
+  font-size: 12px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .topSection .btnOptions .Close {
+  background-color: #dc3545;
+  border: 1px solid #dc3545;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .topSection .btnOptions .Close span {
+  color: #FFF;
+  font-size: 12px;
+}
 .compras .containerCompras .divide .right .provider .containerProviders .topSection .optionsFast nav ul li {
   display: inline-block;
 }
@@ -966,6 +998,7 @@ body button {
 }
 .compras .containerCompras .divide .right .provider .containerProviders .listProviders {
   margin-top: 50px;
+  position: relative;
 }
 .compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders {
   box-sizing: border-box;
@@ -1084,6 +1117,192 @@ body button {
 }
 .compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table table tbody tr .btnKits .basic button:hover {
   opacity: 0.8;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte {
+  box-sizing: border-box;
+  position: relative;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte table td {
+  transition: 0.3s;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte table td .check {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte table td .check button {
+  width: 25px;
+  height: 25px;
+  border-radius: 20px;
+  background-color: #FFF;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  transition: 0.3s;
+  justify-content: space-around;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte table td .check button .iconito {
+  vertical-align: middle;
+  font-size: 18px;
+  color: #ccc;
+  transition: 0.3s;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte table .active td {
+  background-color: #D0E4EC;
+  border-bottom: 1px solid #D0E4EC;
+  border-top: 1px solid #D0E4EC;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte table .active td button {
+  background-color: #046290;
+  border: 1px solid #046290;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte table .active td button span {
+  color: #FFF;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte .modalBottomHidden {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 78%;
+  background-color: #046290;
+  margin: 10px;
+  border-radius: 10px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte .modalBottomHidden button {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: #046290;
+  border: 1px solid #046290;
+  border-radius: 10px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte .modalBottomHidden button span {
+  color: #FFF;
+  font-size: 16px;
+  font-weight: 400;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte .analisisData {
+  background-color: rgba(1, 1, 1, 0.5);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  right: 0;
+  z-index: 1;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte .analisisData .hidden {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 2;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte .analisisData .containerAnalisisData {
+  width: 90%;
+  height: 90%;
+  z-index: 5;
+  margin: auto;
+  box-sizing: border-box;
+  background-color: #FFF;
+  border-radius: 5px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte .analisisData .containerAnalisisData .reqForDownload {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte .analisisData .containerAnalisisData .reqForDownload .scrollBottom {
+  width: 90%;
+  margin: auto;
+  padding: 30px;
+  box-sizing: border-box;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte .analisisData .containerAnalisisData .reqForDownload .scrollBottom .header {
+  border-bottom: 1px solid #ccc;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte .analisisData .containerAnalisisData .reqForDownload .scrollBottom .header h1 {
+  font-weight: 400;
+  font-size: 24px;
+  color: #046290;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte .analisisData .containerAnalisisData .reqForDownload .scrollBottom .header .logo {
+  width: 15%;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte .analisisData .containerAnalisisData .reqForDownload .scrollBottom .header .logo img {
+  width: 100%;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte .analisisData .containerAnalisisData .reqForDownload .scrollBottom .bodyDiv {
+  padding: 10px 0px;
+  box-sizing: border-box;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte .analisisData .containerAnalisisData .reqForDownload .scrollBottom .bodyDiv .topReqsDetails .reqData .title span {
+  font-size: 12px;
+  color: #046290;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte .analisisData .containerAnalisisData .reqForDownload .scrollBottom .bodyDiv .topReqsDetails .reqData .projects {
+  margin-top: 5px;
+  margin-left: 10px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte .analisisData .containerAnalisisData .reqForDownload .scrollBottom .bodyDiv .topReqsDetails .reqData .projects h4 {
+  font-weight: 400;
+  font-size: 12px;
+  margin-bottom: 5px;
+  color: #666;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte .analisisData .containerAnalisisData .reqForDownload .scrollBottom .bodyDiv .allMateriaPrima {
+  margin-top: 30px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte .analisisData .containerAnalisisData .reqForDownload .scrollBottom .bodyDiv .allMateriaPrima table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte .analisisData .containerAnalisisData .reqForDownload .scrollBottom .bodyDiv .allMateriaPrima table thead {
+  background-color: #046290;
+  padding: 10px 5px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte .analisisData .containerAnalisisData .reqForDownload .scrollBottom .bodyDiv .allMateriaPrima table thead tr {
+  box-sizing: border-box;
+  text-align: left;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte .analisisData .containerAnalisisData .reqForDownload .scrollBottom .bodyDiv .allMateriaPrima table thead tr th {
+  padding: 10px 10px;
+  color: #FFF;
+  font-size: 14px;
+  font-weight: 400;
+  width: auto;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte .analisisData .containerAnalisisData .reqForDownload .scrollBottom .bodyDiv .allMateriaPrima table tbody tr {
+  cursor: pointer;
+  transition: 0.3s;
+  background-color: #FFF;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte .analisisData .containerAnalisisData .reqForDownload .scrollBottom .bodyDiv .allMateriaPrima table tbody tr td {
+  padding: 10px 10px;
+  box-sizing: border-box;
+  width: auto;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte .analisisData .containerAnalisisData .reqForDownload .scrollBottom .bodyDiv .allMateriaPrima table tbody tr td .about span {
+  font-size: 11px;
+  color: #666;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte .analisisData .containerAnalisisData .reqForDownload .scrollBottom .bodyDiv .allMateriaPrima table tbody tr td .about strong {
+  color: #046290;
+  font-size: 13px;
+  font-weight: 400;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte .analisisData .containerAnalisisData .reqForDownload .scrollBottom .bodyDiv .allMateriaPrima table tbody tr td .price span {
+  font-size: 12px;
+  color: #046290;
+  font-weight: 400;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table .reporte .analisisData .containerAnalisisData .reqForDownload .scrollBottom .bodyDiv .allMateriaPrima table tbody tr:hover {
+  background-color: #f8f8f8;
 }
 .compras .containerCompras .divide .right .provider .containerProviders .showProveedor {
   position: fixed;

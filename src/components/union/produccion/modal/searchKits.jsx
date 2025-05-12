@@ -71,7 +71,9 @@ export default function SearchKits(){
                                     lineas && lineas.length ? 
                                     lineas.map((c, i) => {
                                         return (
+                                            c.type == 'MP' ?
                                             <option key={i+1} value={c.id}>{c.name.toUpperCase()}</option>
+                                            : null
                                         )
                                     })
                                     :null
@@ -95,16 +97,15 @@ export default function SearchKits(){
                         </tr>
                     </thead>
                     <tbody>
-                        {
-                            primas && primas.length ?
-                                word || cat || li ?
+                        {   
+                            primas && primas.length ? 
                                     primas.filter(m => {
                                         const porTexto = word ? m.description.toLowerCase().includes(word.toLowerCase()) ||
                                         m.id == Number(word)
                                         : true 
                                         const porCategoria = cat ? m.categoriumId == cat : true;
                                         const porLinea = li ? m.lineaId == li : true; 
-                                        const diferente = kit.materia && kit.materia.length ? kit.materia.find(l => l.id != m.id) : true;
+                                        const diferente = kit.materia && kit.materia.length ? !kit.materia.some(l => l.id === m.id) : true;
                                         return porTexto && porCategoria && porLinea && diferente;
                                     }
                                         ).map((pv, i) => { 
@@ -112,16 +113,8 @@ export default function SearchKits(){
                                                 <ItemToSelect kit={pv} key={i+1} />
                                             ) 
                                         })
-                                :
-                                primas.map((kt, i) => {
-                                    return (
-                                        kit.materia && kit.materia.length ?
-                                            kit.materia.find(k => k.id == kt.id) ? null :
-                                                <ItemToSelect kit={kt} key={i+1} />
-                                        :<ItemToSelect kit={kt} key={i+1} />
-                                    )
-                                })
-                            :null
+                                
+                            :<span>Noada</span>
                         }
                     </tbody>
                 </table>
