@@ -135,13 +135,13 @@ function ToFastEdit({materia, ParaElHijo, mt, kit}){
     }
  
     const updateKit = async () => {
-        if(option.unidad == 'mt2' && !form.mt2) return dispatch(actions.HandleAlerta('Ingresa una medida', 'mistake')) 
-        if(option.unidad == 'kg' &&!form.kg) return dispatch(actions.HandleAlerta('Ingresa una medida', 'mistake'))        
+        if(materia.unidad == 'mt2' && !form.mt2) return dispatch(actions.HandleAlerta('Ingresa una medida', 'mistake')) 
+        if(materia.unidad == 'kg' &&!form.kg) return dispatch(actions.HandleAlerta('Ingresa una medida', 'mistake'))        
         setLoading(true)
         let body = {
             kitId: kit.id,
             materiaId: materia.id,
-            medida: option.unidad == 'mt2' ? form.mt2 : option.unidad == 'kg' ? form.kg : form.other
+            medida: materia.unidad == 'mt2' ? form.mt2 : materia.unidad == 'kg' ? form.kg : form.other
         }
 
         const sendPetion = await axios.put('api/kit/add/item', body )
@@ -161,8 +161,6 @@ function ToFastEdit({materia, ParaElHijo, mt, kit}){
         }) 
         return sendPetion; 
     }
-    console.log(materia)
-    console.log(form)
     return (
         <tr className="forEdit">
             <td>{materia.id}</td>
