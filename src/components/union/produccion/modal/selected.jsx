@@ -54,7 +54,10 @@ export default function Selected({kit, openMenuId, toggleMenu}){
                                 <tr key={i+1}>
                                     <td>{materia.id}</td>
                                     <td>{materia.description}</td>
-                                    <td>{materia.itemKit.medida}</td>
+                                    <td onClick={() => {
+                                        toggleMenu(materia.id)
+                                        setFast(materia.id);
+                                    }}>{materia.itemKit.medida}</td>
                                     <td>
                                         {materia.unidad}
                                     </td>
@@ -123,10 +126,10 @@ function ToFastEdit({materia, ParaElHijo, mt, kit}){
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(null);
     const [form, setForm] = useState({
-        mt2: materia.unidad == 'mt2' ? Number(Number(materia.medida.split('X')[0]) * Number(materia.medida.split('X')[1])) : '1',
-        other: materia.unidad != 'mt2' ? materia.medida : materia.medida,
+        mt2: materia.unidad == 'mt2' ? materia.itemKit.medida : null,
+        other: materia.unidad != 'mt2' ? materia.itemKit.medida : materia.itemKit.medida,
         cantidad: materia.cantidad ? materia.cantidad : 0,
-        kg: materia.medida 
+        kg: materia.itemKit.medida
     });
 
     
