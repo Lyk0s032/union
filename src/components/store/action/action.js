@@ -338,6 +338,74 @@ export function axiosToGetKit(carga, id){
 }
 
 
+// SUPERKITS
+// ----------------------
+export function getSuperKits(data){
+    return {
+        type: types.GET_SUPERKITS,
+        payload: data
+    }
+}
+export function gettingSuperKits(carga){
+    return {
+        type: types.GETTING_SUPERKITS,
+        payload: carga
+    } 
+}
+
+export function axiosToGetSuperKits(carga){
+    return function(dispatch){ 
+        dispatch(gettingSuperKits(carga))
+        axios.get(`/api/superkit/getAll`)
+        .then((info) => info.data) 
+        .then(inf => { 
+            return dispatch(getSuperKits(inf))
+        }) 
+        .catch((e) => {
+            console.log(e)
+            if(e.request){
+                return dispatch(getSuperKits('notrequest'));
+            }else{
+                return dispatch(getSuperKits(404))
+            }
+        });
+    }
+}
+
+
+export function getSuperKit(data){
+    return {
+        type: types.GET_SUPERKIT,
+        payload: data
+    }
+}
+export function gettingSuperKit(carga){
+    return { 
+        type: types.GETTING_SUPERKIT,
+        payload: carga
+    } 
+}
+
+export function axiosToGetSuperKit(carga, spkit){
+    return function(dispatch){ 
+        dispatch(gettingSuperKit(carga))
+        axios.get(`/api/superkit/get/${spkit}`)
+        .then((info) => info.data) 
+        .then(inf => { 
+            return dispatch(getSuperKit(inf))
+        }) 
+        .catch((e) => {
+            console.log(e)
+            if(e.request){
+                return dispatch(getSuperKit('notrequest'));
+            }else{
+                return dispatch(getSuperKit(404))
+            }
+        });
+    }
+}
+
+
 
 
 

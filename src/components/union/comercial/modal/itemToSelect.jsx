@@ -134,10 +134,10 @@ function GetSimilarPrice({realValor, materia }){
     const [valor, setValor] = useState(0) 
 
     const mapear = () => {
-        const a = consumir.map((c, i) => {
+        const a = consumir ?consumir.map((c, i) => {
             const getV  =  getPromedio(c);
             return getV
-        })
+        }) : 0
         const promedio = a && a.length ? Number(a.reduce((acc, p) => Number(acc) + Number(p), 0)) : null
         realValor(promedio ? promedio.toFixed(0) : 0);
         return setValor(promedio);

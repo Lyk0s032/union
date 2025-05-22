@@ -39,13 +39,37 @@ export default function SelectedKits(props){
             </thead>
             <tbody>
                 {
-                    cotizacion && cotizacion.kits && cotizacion.kits.length ? 
-                        cotizacion.kits.map((kt, i) => {
+                    cotizacion && cotizacion.kits && cotizacion.kits.length || cotizacion.armados && cotizacion.armados.length ? 
+
+                        cotizacion.armados.concat(cotizacion.kits).map((kt, i) => {
                             return (
                                 <tr key={i+1}>
-                                    <td>{kt.name}</td>
-                                    <td>{kt.kitCotizacion.cantidad}</td>
-                                    <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(kt.kitCotizacion.precio)} COP</td>
+                                    <td>
+                                        {
+                                            kt.armadoCotizacion ?
+                                            <div>
+                                                <strong style={{fontSize:12}}>Superkit</strong><br />
+                                                <span>{kt.name}</span>
+                                            </div>
+                                            :
+                                            kt.name
+                                        }
+                                    </td>
+                                    
+                                    {
+                                        kt.kitCotizacion ?
+                                            <td>{kt.kitCotizacion.cantidad }</td>
+                                        :
+                                        <td>{kt.armadoCotizacion.cantidad}</td>
+                                    }
+
+{
+                                        kt.kitCotizacion ?
+                                            <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(kt.kitCotizacion.precio)} COP</td>
+                                        :
+                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(kt.armadoCotizacion.precio)} COP</td>
+                                    }
+                                    
 
                                     <td>
                                         {/* <strong>{<ValorSelected mt={materia} />}</strong> */}

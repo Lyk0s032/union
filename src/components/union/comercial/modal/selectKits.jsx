@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { MdCheck } from 'react-icons/md';
 import ItemToSelect from './itemToSelect';
 import * as actions from '../../../store/action/action';
@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import SelectedKits from './selected';
 import SearchKitsComercial from './searchKits';
 import axios from 'axios';
+import SearchSuperKitsComercial from './superKits';
  
 export default function SelectKits(){
     const cotizacions = useSelector(store => store.cotizacions);
@@ -14,6 +15,7 @@ export default function SelectKits(){
     const system = useSelector(store => store.system);
     const dispatch = useDispatch();
 
+    const [navCoti, setNav] = useState(null);
     const handleAprobar = async() => {
         
         const sendAprobation = await axios.get(`/api/cotizacion/accept/${cotizacion.id}`)
@@ -50,7 +52,7 @@ export default function SelectKits(){
                                 <h3>
                                     {
                                         cotizacion.kits && cotizacion.kits.length ?
-                                            <PriceCotizacion cotizacion={cotizacion.kits} />
+                                            <PriceCotizacion cotizacion={cotizacion.kits} coti={cotizacion.armados} />
                                         : null 
                                     }
                                 </h3>
@@ -66,7 +68,32 @@ export default function SelectKits(){
                     </div> 
                 </div>  
                 <div className="rightSelect">
-                    <SearchKitsComercial />
+                    <nav className='navToSelectFilter'>
+                        <ul>
+                            <li onClick={() => setNav(null)} className={!navCoti ? 'Active' : null}>
+                                <div>
+                                    <span>Kit's</span>
+                                </div>
+                            </li>
+                            <li onClick={() => setNav('terminado')} className={navCoti == 'terminado' ? 'Active' : null}>
+                                <div>
+                                    <span>Producto terminado</span>
+                                </div>
+                            </li>
+                            <li onClick={() => setNav('superkits')} className={navCoti == 'superkits' ? 'Active' : null}>
+                                <div>
+                                    <span>Superkit's</span>
+                                </div>
+                            </li> 
+                        </ul> 
+                    </nav> 
+                    {
+                        navCoti == 'terminado' ?
+                            <h1>Acá buscamos producto terminado</h1>
+                        : navCoti == 'superkits' ?
+                            <SearchSuperKitsComercial cotizacion={cotizacion} />
+                        : <SearchKitsComercial /> 
+                    }
                 </div>
             </div>
         </div>
@@ -75,16 +102,19 @@ export default function SelectKits(){
 
 
 function PriceCotizacion(props) { 
-
     const kits = props.cotizacion;
-    const array =  kits ? kits.reduce((acc, p) => Number(acc) + Number(p.kitCotizacion.precio), 0) : 0
+    const superK = props.coti;
 
+    const array =  kits ? kits.reduce((acc, p) => Number(acc) + Number(p.kitCotizacion.precio), 0) : 0
+    const ArrayDos = superK ? superK.reduce((acc, p) => Number(acc) + Number(p.armadoCotizacion.precio), 0) : 0
+
+    let suma = Number(array) + Number(ArrayDos)
     // const array = !ktv ? 0 : ktv.kitCotizacion.reduce((acc, p) => Number(acc) + Number(p.precio), 0)
     // console.log(ktv)
 
     return (
         <div className="">
-            <span>{array} COP</span>
+            <span>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(suma)} COP</span>
         </div>
     )
 }

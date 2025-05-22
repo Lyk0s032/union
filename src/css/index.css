@@ -307,6 +307,146 @@ body button {
   font-size: 14px;
   color: #FFF;
 }
+.modal .containerModal .cotizacionBody {
+  box-sizing: border-box;
+  height: 100%;
+  overflow-y: auto;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente {
+  padding: 20px;
+  box-sizing: border-box;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .title {
+  text-align: center;
+  padding: 5px 0px;
+  box-sizing: border-box;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .title span {
+  font-size: 14px;
+  color: #046290;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .topCoti {
+  padding: 10px 0px;
+  border-bottom: 1px solid #F8F8F8;
+  box-sizing: border-box;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .topCoti .divideTop {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  width: 95%;
+  margin: auto;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .topCoti .divideTop .left {
+  width: 30%;
+  text-align: left;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .topCoti .divideTop .left h1 {
+  font-weight: 500;
+  margin-bottom: 15px;
+  font-size: 12px;
+  color: #046290;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .topCoti .divideTop .left .item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .topCoti .divideTop .left .item h3 {
+  font-weight: 400;
+  font-size: 11px;
+  color: #046290;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .topCoti .divideTop .left .item h4 {
+  font-weight: 400;
+  font-size: 11px;
+  color: #666;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .clientTopData {
+  padding: 10px 0px;
+  border-bottom: 1px solid #F8F8F8;
+  box-sizing: border-box;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .clientTopData .divideTopData {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  width: 95%;
+  margin: auto;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .clientTopData .divideTopData .left {
+  width: 30%;
+  text-align: left;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .clientTopData .divideTopData .left h1 {
+  font-weight: 500;
+  margin-bottom: 15px;
+  color: #046290;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .clientTopData .divideTopData .left .item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .clientTopData .divideTopData .left .item h3 {
+  font-weight: 400;
+  font-size: 11px;
+  color: #046290;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .clientTopData .divideTopData .left .item h4 {
+  font-weight: 400;
+  font-size: 10px;
+  color: #666;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .referencias {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .referencias .titleHere {
+  padding: 10px 0px;
+  box-sizing: border-box;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .referencias .titleHere h3 {
+  font-weight: 400;
+  font-size: 12px;
+  color: #046290;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData {
+  width: 100%;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData table thead tr th {
+  padding: 10px 0px;
+  box-sizing: border-box;
+  font-weight: 500;
+  font-size: 11px;
+  color: #666;
+  border-bottom: 1px solid #ccc;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData table tbody tr {
+  cursor: pointer;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData table tbody tr td {
+  font-size: 11px;
+  padding: 15px 0px;
+  box-sizing: border-box;
+  color: #046290;
+  font-weight: 400;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData table tbody .total td {
+  font-weight: 5
+                                        00;
+  font-size: 12px;
+}
 .modal .Complete {
   width: 100%;
   height: 100%;
@@ -531,11 +671,104 @@ body button {
   color: #046290;
   text-align: left;
 }
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr {
+  position: relative;
+}
 .modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr td {
   padding: 8px 0px;
   box-sizing: border-box;
-  font-size: 12px;
+  font-size: 11px;
   color: #454f5b;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr .option button {
+  padding: 5px 5px;
+  margin-left: 10px;
+  background-color: white;
+  border: none;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr .option button .icon {
+  font-size: 16px;
+  color: #666;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr .option .menu-dropdown {
+  /* Posicionamiento y tamaño base */
+  right: 0;
+  top: 0;
+  padding: 10px 0px;
+  border-radius: 5px;
+  margin-right: 20px;
+  width: 30%;
+  position: absolute;
+  z-index: 5;
+  background-color: #FFF;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  /* Estado cuando el menú está abierto (anidado en Less) */
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr .option .menu-dropdown .panel {
+  padding: 10px 0px;
+  box-sizing: border-box;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr .option .menu-dropdown .panel .title {
+  margin-bottom: 10px;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr .option .menu-dropdown .panel .title strong {
+  padding: 0px 20px;
+  font-weight: 400;
+  font-size: 12px;
+  color: #046290;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr .option .menu-dropdown .panel nav ul li {
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  transition: 0.3s;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr .option .menu-dropdown .panel nav ul li div {
+  display: flex;
+  padding: 10px 20px;
+  align-items: center;
+  transition: 0.3s;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr .option .menu-dropdown .panel nav ul li div .icon {
+  margin-right: 10px;
+  font-size: 16px;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr .option .menu-dropdown .panel nav ul li:hover {
+  background-color: #f8f8f8;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr .option .menu-dropdown.menu-open {
+  opacity: 1;
+  max-height: 12rem;
+  /* Altura máxima suficiente para tu contenido (ajusta si es necesario) */
+  transform: scale(1);
+  /* Escala normal */
+  pointer-events: auto;
+  /* Habilita clics cuando está abierto */
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody .forEdit td {
+  font-size: 10px;
+  color: #046290;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody .forEdit button {
+  padding: 5px 5px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 10px;
+  margin: 0px 5px;
+  border: none;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody .forEdit .ok {
+  background-color: #046290;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody .forEdit .ok span {
+  color: #FFF;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody .forEdit .cancel {
+  background-color: #dc3545;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody .forEdit .cancel span {
+  color: #FFF;
 }
 .modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP .updateKit {
   box-sizing: border-box;
@@ -658,6 +891,31 @@ body button {
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect {
   width: 60%;
   box-sizing: border-box;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .navToSelectFilter {
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .navToSelectFilter ul li {
+  display: inline-block;
+  cursor: pointer;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .navToSelectFilter ul li div {
+  padding: 10px 20px;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .navToSelectFilter ul li div span {
+  color: #666;
+  font-weight: 400;
+  font-size: 12px;
+  transition: 0.3s;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .navToSelectFilter ul li.Active {
+  border-bottom: 2px solid #046290;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .navToSelectFilter ul li.Active div span {
+  font-weight: bold;
+  color: #046290;
 }
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect {
   width: 100%;
@@ -807,6 +1065,53 @@ body button {
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody .active td .twoButtons .great {
   background-color: #388E3C;
 }
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .containerResults {
+  box-sizing: border-box;
+  margin: auto;
+  width: 90%;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .containerResults .itemResults {
+  width: 100%;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .containerResults .itemResults .superKitItem {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .containerResults .itemResults .superKitItem .Divide {
+  display: flex;
+  align-items: center;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .containerResults .itemResults .superKitItem .Divide .leftImg {
+  width: 10%;
+  height: 80px;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .containerResults .itemResults .superKitItem .Divide .leftImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .containerResults .itemResults .superKitItem .Divide .titleData {
+  margin-left: 10px;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .containerResults .itemResults .superKitItem .Divide .titleData h3 {
+  font-weight: 400;
+  color: #046290;
+  font-size: 14px;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .containerResults .itemResults .superKitItem .Divide .titleData span {
+  font-size: 12px;
+  color: #666;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .containerResults .itemResults .superKitItem:hover {
+  padding-left: 5px;
+}
+.modal .Large {
+  width: 70%;
+}
 .modalQuestion {
   position: fixed;
   top: 0;
@@ -906,6 +1211,614 @@ body button {
 }
 .modalQuestion .containerModal .bodyContainer .buttons button:hover {
   opacity: 0.8;
+}
+.panelGaleria {
+  box-sizing: border-box;
+  height: 100%;
+}
+.panelGaleria .homeViewGaleria {
+  box-sizing: border-box;
+  height: 100%;
+}
+.panelGaleria .homeViewGaleria .containerHomeView {
+  height: 100%;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .topPage {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 95%;
+  margin: auto;
+  height: 10%;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .topPage .left {
+  width: 40%;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .topPage .left h3 {
+  font-weight: 400;
+  color: #046290;
+  font-size: 22px;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .topPage .rightOptions {
+  width: 50%;
+  text-align: right;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .topPage .rightOptions nav ul li {
+  display: inline-block;
+  vertical-align: bottom;
+  cursor: pointer;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .topPage .rightOptions nav ul li div {
+  padding: 10px 20px;
+  box-sizing: border-box;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .topPage .rightOptions nav ul li div span {
+  font-size: 14px;
+  color: #046290;
+  transition: 0.3s;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .topPage .rightOptions nav ul li button {
+  padding: 10px 10px;
+  box-sizing: border-box;
+  background-color: #046290;
+  border: 1px solid #046290;
+  border-radius: 5px;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .topPage .rightOptions nav ul li button span {
+  color: #FFF;
+  font-size: 14px;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .topPage .rightOptions nav ul li:hover span {
+  text-decoration: underline;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .topPage .rightOptions nav ul li:hover button span {
+  text-decoration: none;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork {
+  width: 100%;
+  height: 90%;
+  box-sizing: border-box;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide {
+  height: 100%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .leftParallax {
+  width: 70%;
+  box-sizing: border-box;
+  height: 100%;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .leftParallax .topSearch {
+  height: 10%;
+  width: 95%;
+  margin: auto;
+  border-bottom: 1px solid #ccc;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .leftParallax .topSearch .leftSearch {
+  width: 50%;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .leftParallax .topSearch .leftSearch input {
+  width: 80%;
+  padding: 8px 20px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  outline: 0px;
+  font-size: 12px;
+  transition: 0.3s;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .leftParallax .topSearch .leftSearch input:focus {
+  width: 100%;
+  border: 1px solid #046290;
+  color: #046290;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .leftParallax .topSearch .rightFilter {
+  width: 40%;
+  text-align: right;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .leftParallax .topSearch .rightFilter nav ul li {
+  display: inline-block;
+  text-align: left;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .leftParallax .topSearch .rightFilter nav ul li label {
+  font-size: 12px;
+  color: #666;
+  vertical-align: middle;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .leftParallax .topSearch .rightFilter nav ul li select {
+  padding: 3px 10px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .leftParallax .allComponentsDiv {
+  height: 90%;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .leftParallax .allComponentsDiv .containerAll {
+  width: 95%;
+  margin: auto;
+  padding-top: 20px;
+  box-sizing: border-box;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .leftParallax .allComponentsDiv .containerAll .title span {
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .leftParallax .allComponentsDiv .containerAll .listaComponents {
+  margin-top: 20px;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .leftParallax .allComponentsDiv .containerAll .listaComponents .containerLista {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .leftParallax .allComponentsDiv .containerAll .listaComponents .containerLista .component {
+  width: 30%;
+  height: 200px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  border-collapse: collapse;
+  transition: 0.3s;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .leftParallax .allComponentsDiv .containerAll .listaComponents .containerLista .component .img {
+  width: 100%;
+  height: 80%;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .leftParallax .allComponentsDiv .containerAll .listaComponents .containerLista .component .img img {
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .leftParallax .allComponentsDiv .containerAll .listaComponents .containerLista .component .nameComponente {
+  padding: 0px 0px;
+  margin: 0px;
+  width: 100%;
+  height: 15%;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  justify-content: space-around;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .leftParallax .allComponentsDiv .containerAll .listaComponents .containerLista .component .nameComponente span {
+  font-weight: 400;
+  font-size: 14px;
+  color: #046290;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .leftParallax .allComponentsDiv .containerAll .listaComponents .containerLista .component:hover {
+  transform: scale(1.05);
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .rightWatch {
+  width: 30%;
+  border-left: 1px solid #ccc;
+  box-sizing: border-box;
+  height: 100%;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .rightWatch .topTitle {
+  height: 10%;
+  display: flex;
+  align-items: center;
+  padding: 0px 10px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ccc;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .rightWatch .topTitle h3 {
+  font-weight: 300;
+  color: #046290;
+  font-size: 20px;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .rightWatch .boxVisualizarChoose {
+  height: 90%;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .rightWatch .boxVisualizarChoose .topImg {
+  width: 100%;
+  height: 200px;
+  border-top: 4px solid #046290;
+  border-bottom: 4px solid #046290;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .rightWatch .boxVisualizarChoose .topImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .rightWatch .boxVisualizarChoose .generalDetails {
+  border-bottom: 1px solid #ccc;
+  box-sizing: border-box;
+  padding: 10px 10px;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .rightWatch .boxVisualizarChoose .generalDetails .title {
+  padding: 10px 0px;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .rightWatch .boxVisualizarChoose .generalDetails .title span {
+  font-weight: 400;
+  color: #666;
+  font-size: 14px;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .rightWatch .boxVisualizarChoose .generalDetails .items {
+  margin-bottom: 10px;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .rightWatch .boxVisualizarChoose .generalDetails .items span {
+  font-size: 12px;
+  color: #666;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .rightWatch .boxVisualizarChoose .generalDetails .items h3 {
+  font-weight: 500;
+  font-size: 12px;
+  color: #046290;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .rightWatch .boxVisualizarChoose .kitsDetails {
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .rightWatch .boxVisualizarChoose .kitsDetails .title {
+  padding: 10px 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .rightWatch .boxVisualizarChoose .kitsDetails .title span {
+  font-size: 12px;
+  color: #666;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .rightWatch .boxVisualizarChoose .kitsDetails table {
+  width: 100%;
+  margin-top: 10px;
+  padding: 0px 10px;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .rightWatch .boxVisualizarChoose .kitsDetails table thead tr th {
+  text-align: left;
+  font-size: 12px;
+  color: #046290;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .rightWatch .boxVisualizarChoose .kitsDetails table tbody tr td {
+  padding: 10px 0px;
+  text-align: left;
+  font-size: 12px;
+  color: #046290;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance {
+  width: 80%;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .navTop {
+  height: 10%;
+  width: 100%;
+  border-bottom: 1px solid #046290;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .navTop nav {
+  width: 90%;
+  margin: auto;
+  height: 100%;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .navTop nav ul {
+  height: 100%;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .navTop nav ul li {
+  display: inline-block;
+  box-sizing: border-box;
+  height: 100%;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .navTop nav ul li div {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0px 20px;
+  box-sizing: border-box;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .navTop nav ul li div span {
+  font-size: 14px;
+  color: #666;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .navTop nav ul li .active span {
+  color: #046290;
+  font-weight: bold;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults {
+  box-sizing: border-box;
+  height: 90%;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerThat {
+  width: 50%;
+  height: 100%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerThat .form {
+  width: 100%;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerThat .form .title {
+  padding: 10px 0px;
+  box-sizing: border-box;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerThat .form .title h1 {
+  font-weight: 400;
+  color: #046290;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerThat .form .dataForm {
+  margin-top: 10px;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerThat .form .dataForm .divHorizontal {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerThat .form .dataForm .divHorizontal .inputDiv {
+  width: 40%;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerThat .form .dataForm .inputDiv {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerThat .form .dataForm .inputDiv label {
+  font-size: 12px;
+  color: #046290;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerThat .form .dataForm .inputDiv input {
+  margin-top: 0px;
+  width: 100%;
+  padding: 5px 10px;
+  box-sizing: border-box;
+  outline: 0px;
+  transition: 0.3s;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  margin-top: 5px;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerThat .form .dataForm .inputDiv input:focus {
+  border: 1px solid #046290;
+  border-radius: 0px;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerThat .form .dataForm .inputDiv textarea {
+  height: 100px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  transition: 0.3s;
+  resize: none;
+  outline: 0px;
+  margin-top: 5px;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerThat .form .dataForm .inputDiv textarea:focus {
+  border-radius: 0px;
+  border: 1px solid #046290;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerThat .form .dataForm .inputDiv select {
+  width: 100%;
+  padding: 5px 10px;
+  border-radius: 20px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  background-color: #FFF;
+  margin-top: 5px;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerThat .form .dataForm .inputDiv button {
+  width: 40%;
+  padding: 10px 0px;
+  box-sizing: border-box;
+  margin: auto;
+  background-color: #046290;
+  border: 1px solid #046290;
+  border-radius: 20px;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerThat .form .dataForm .inputDiv button span {
+  font-size: 14px;
+  color: #FFF;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits {
+  box-sizing: border-box;
+  height: 100%;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 95%;
+  margin: auto;
+  height: 100%;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .searchT {
+  overflow-y: auto;
+  padding-top: 30px;
+  height: 100%;
+  width: 45%;
+  box-sizing: border-box;
+  border-right: 1px solid #ccc;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .searchT .topSearch {
+  width: 95%;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .searchT .topSearch .title {
+  padding: 10px 0px;
+  box-sizing: border-box;
+  text-align: center;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .searchT .topSearch .title h1 {
+  color: #046290;
+  font-weight: 400;
+  font-size: 20px;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .searchT .topSearch .inputSearch {
+  margin-top: 10px;
+  width: 100%;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .searchT .topSearch .inputSearch input {
+  width: 100%;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  outline: 0px;
+  padding: 10px 10px;
+  border-radius: 20px;
+  transition: 0.3s;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .searchT .topSearch .inputSearch input:focus {
+  border-radius: 0px;
+  border: 1px solid #046290;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .searchT .table {
+  box-sizing: border-box;
+  margin-top: 20px;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .searchT .table .lista {
+  width: 100%;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .searchT .table .lista .kitItem {
+  width: 95%;
+  padding: 10px 0px;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .searchT .table .lista .kitItem .divideThat {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: default;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .searchT .table .lista .kitItem .divideThat .data {
+  padding: 0px 10px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 70%;
+  cursor: default;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .searchT .table .lista .kitItem .divideThat .data .number {
+  display: none;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .searchT .table .lista .kitItem .divideThat .data .number h3 {
+  font-size: 14px;
+  color: #046290;
+  font-weight: 400;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .searchT .table .lista .kitItem .divideThat .data .titleAndName {
+  margin-left: 10px;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .searchT .table .lista .kitItem .divideThat .data .titleAndName h3 {
+  font-weight: 400;
+  color: #046290;
+  font-size: 12px;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .searchT .table .lista .kitItem .divideThat .data .inputDiv {
+  box-sizing: border-box;
+  width: 100%;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .searchT .table .lista .kitItem .divideThat .data .inputDiv input {
+  padding: 10px 10px;
+  box-sizing: border-box;
+  width: 100%;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  outline: 0px;
+  font-size: 12px;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .searchT .table .lista .kitItem .divideThat .option button {
+  padding: 8px 20px;
+  box-sizing: border-box;
+  background-color: #046290;
+  border: 1px solid #046290;
+  border-radius: 10px;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .searchT .table .lista .kitItem .divideThat .option button span {
+  font-size: 12px;
+  color: #FFF;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .searchT .table .lista .kitItem .divideThat .option .btnChoose {
+  margin-left: 5px;
+  padding: 5px 15px;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .searchT .table .lista .kitItem .divideThat .option .Cancel {
+  background-color: #dc3545;
+  border: 1px solid #dc3545;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .searchT .table .lista .kitItem .divideThat .option .Go {
+  background-color: #388E3C;
+  border: 1px solid #388E3C;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .searchT .table .lista .kitItem:hover {
+  transform: scale(1.02);
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .myComponent {
+  height: 100%;
+  box-sizing: border-box;
+  width: 50%;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .myComponent .titleTop {
+  height: 10%;
+  padding: 10px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .myComponent .titleTop h3 {
+  font-weight: 400;
+  color: #046290;
+  font-size: 14px;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .myComponent .listaDeMyKits {
+  height: 80%;
+  overflow-y: auto;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .myComponent .listaDeMyKits .titleSmall {
+  padding: 10px;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .myComponent .listaDeMyKits .titleSmall span {
+  font-size: 12px;
+  color: #666;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .myComponent .listaDeMyKits .lista table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  margin-top: 30px;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .myComponent .listaDeMyKits .lista table thead tr th {
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 14px;
+  color: #046290;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .myComponent .listaDeMyKits .lista table tbody tr td {
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 12px;
+  color: #046290;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .myComponent .bottomAvance {
+  height: 10%;
+  box-sizing: border-box;
+  text-align: right;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .myComponent .bottomAvance button {
+  padding: 10px 30px;
+  transition: 0.3s;
+  background-color: #046290;
+  border: 1px solid #046290;
+  border-radius: 5px;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .myComponent .bottomAvance button span {
+  color: #FFF;
 }
 .compras {
   box-sizing: border-box;
@@ -1082,7 +1995,11 @@ body button {
   border-bottom: 1px solid #046290;
   padding: 15px 10px;
 }
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table table tbody tr {
+  position: relative;
+}
 .compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table table tbody tr td {
+  overflow: visible;
   text-align: left;
   font-size: 12px;
   color: #454f5b;
@@ -1091,6 +2008,81 @@ body button {
   box-sizing: border-box;
   border-bottom: 1px solid #ccc;
   cursor: pointer;
+  /* Estilos base para el contenedor del menú desplegable */
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table table tbody tr td .btnOptions {
+  box-sizing: border-box;
+  padding: 10px 5px 5px 5px;
+  background-color: transparent;
+  border: none;
+  transition: 0.3s;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table table tbody tr td .btnOptions .icon {
+  color: #666;
+  transition: 0.3s;
+  font-size: 18px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table table tbody tr td .btnOptions:hover {
+  transform: scale(1.05);
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table table tbody tr td .btnOptions:hover .icon {
+  color: #046290;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table table tbody tr td .menu-dropdown {
+  /* Posicionamiento y tamaño base */
+  right: 0;
+  padding: 10px 0px;
+  border-radius: 5px;
+  margin-top: 14px;
+  margin-right: 20px;
+  width: 30%;
+  position: absolute;
+  z-index: 5;
+  background-color: #FFF;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  /* Estado cuando el menú está abierto (anidado en Less) */
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table table tbody tr td .menu-dropdown .panel {
+  padding: 10px 0px;
+  box-sizing: border-box;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table table tbody tr td .menu-dropdown .panel .title {
+  margin-bottom: 10px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table table tbody tr td .menu-dropdown .panel .title strong {
+  padding: 0px 20px;
+  font-weight: 400;
+  font-size: 12px;
+  color: #046290;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table table tbody tr td .menu-dropdown .panel nav ul li {
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  transition: 0.3s;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table table tbody tr td .menu-dropdown .panel nav ul li div {
+  display: flex;
+  padding: 10px 20px;
+  align-items: center;
+  transition: 0.3s;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table table tbody tr td .menu-dropdown .panel nav ul li div .icon {
+  margin-right: 10px;
+  font-size: 16px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table table tbody tr td .menu-dropdown .panel nav ul li:hover {
+  background-color: #f8f8f8;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table table tbody tr td .menu-dropdown.menu-open {
+  opacity: 1;
+  max-height: 12rem;
+  /* Altura máxima suficiente para tu contenido (ajusta si es necesario) */
+  transform: scale(1);
+  /* Escala normal */
+  pointer-events: auto;
+  /* Habilita clics cuando está abierto */
 }
 .compras .containerCompras .divide .right .provider .containerProviders .listProviders .containerListProviders .table table tbody tr .btnKits .basic {
   box-sizing: border-box;

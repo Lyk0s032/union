@@ -34,6 +34,27 @@ export default function SelectMP(){
         })
         return send;
     }
+
+      const [openMenuId, setOpenMenuId] = useState(null);
+    
+    const toggleMenu = (id) => {
+        setOpenMenuId(openMenuId === id ? null : id); // Si ya está abierto, ciérralo; si no, ábrelo
+    };
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+          // Si hay un menú abierto y el clic no fue dentro de ningún menú (o su botón)
+          // Usamos event.target.closest('.menu-container') para verificar si el clic fue dentro del menú o su botón
+          if (openMenuId !== null && !event.target.closest('.menu-containerSelected')) {
+            setOpenMenuId(null); // Cierra el menú
+          }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+          document.removeEventListener('mousedown', handleClickOutside);
+        };
+      }, [openMenuId]); 
     return (
         <div className="page">
             <div className="selectItems">
@@ -60,9 +81,9 @@ export default function SelectMP(){
                         <div className="tableItemsMP">
                             {
                                 params.get('update') ?
-                                <UpdateKit kit={kit}/>
+                                <UpdateKit kit={kit} />
                                 :
-                                <Selected kit={kit}/>
+                                <Selected kit={kit} toggleMenu={toggleMenu} openMenuId={openMenuId}/>
                             }
                         </div>
                     </div>

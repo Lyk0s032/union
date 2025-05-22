@@ -1,0 +1,150 @@
+import React, { useEffect, useState } from "react";
+import { getPromedio } from "../../produccion/calculo";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import * as actions from './../../../store/action/action';
+
+export default function SuperKitItem(props){
+    const superkit = props.superkit;
+    const cotizacion = props.cotizacion;
+
+    const [active, setActive] = useState(null);
+    const [howMany, setHowMany] = useState(null);
+    const [valor, setValor] = useState(1);
+
+    const dispatch = useDispatch();
+    const recibirValor = (data) => {
+        setValor(data);
+        console.log('LLega del componete Kits')
+    }
+
+    const sendPeticion = async () => {
+        if(!howMany || howMany == 0) return dispatch(actions.HandleAlerta('Debes ingresar una cantidad', 'mistake'))
+        let body = {
+            superKitId: superkit.id,
+            cotizacionId: cotizacion.id,
+            cantidad: howMany,
+            precio: valor * howMany,
+        }
+        const sendPeticionVar = await axios.post('/api/cotizacion/add/superKit/item', body)
+        .then((res) => {
+            setActive(null);
+            dispatch(actions.HandleAlerta('Kit añadido con éxito', 'positive'))
+            dispatch(actions.axiosToGetCotizacion(false, cotizacion.id))
+        }).catch(err => {
+            console.log(err);
+            dispatch(actions.HandleAlerta('No hemos logrado crear esto', 'mistake'))
+        })
+        return sendPeticionVar;
+        
+    }
+    return ( 
+        <div className="superKitItem">
+            {
+                !active ?
+                <div className="Divide" onClick={() => setActive('active')}>
+                    <div className="leftImg">
+                        <img src={superkit.img} alt="" />
+                    </div>
+                    <div className="titleData">
+                        <h3>{superkit.name}</h3>
+                        <span>{superkit.description}</span>
+                    </div>
+                </div>
+                :
+                <div className="Divide" >
+                    <div className="leftImg">
+                        <img src={superkit.img} alt="" />
+                    </div>
+                    <div className="titleData">
+                        <h3>{superkit.name} {valor}</h3>
+                        <div className="form">
+                            <label htmlFor="">{valor * howMany}</label>
+                            <input type="text" placeholder="Cantidad" 
+                            onChange={(e) => {
+                                setHowMany(e.target.value)
+                            }} value={howMany}/>
+                            <button onClick={() => {
+                                sendPeticion()
+                            }}>
+                                <span>Guardar</span>
+                            </button>
+                            <button onClick={() => setActive(null)}>
+                                <span>Cancelar</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div className="div">
+                <GetaAllKit kits={superkit.kits} enviarAlAbuelo={recibirValor} />
+            </div>
+        </div>
+    )
+}
+
+
+
+function GetaAllKit({ enviarAlAbuelo, kits } ){
+    const kitss = kits;
+    const [valor, setValor] = useState(0);
+
+    const traerValor = (d) => {
+        setValor(Number(d)) 
+        return enviarAlAbuelo(d)
+    }
+
+    return(
+       <div className="">
+            <span>{valor}</span>
+            <WithAll  enviarAlPadre={traerValor} kits={kitss}/>
+       </div>
+    )
+}
+
+
+
+function WithAll({ enviarAlPadre, kits } ){
+    const kitss = kits;
+
+    
+    const [valor, setVal] = useState(0)
+    
+    const [numeros, setNumeros] = useState([])
+ 
+        const send = (va) => {
+            return enviarAlPadre(va)
+        }
+
+        const enviar = () => {
+
+            const data = [];
+            kitss && kitss.length ?
+                kitss.map((k, i) => {
+                    
+                        const a = k.materia.map((c, i) => {
+                            const getV  =  getPromedio(c);
+                            return getV
+                        })
+                        const promedio = a && a.length ? Number(a.reduce((acc, p) => Number(acc) + Number(p), 0)) : null
+                        setNumeros(...numeros, promedio)
+                        data.push(promedio)
+                        const v = data && data.length ? Number(data.reduce((acc, p) => Number(acc) + Number(p), 0)) : null
+                        send(v ? v.toFixed(0) : 0)
+                        return setVal(v);
+                })
+            : 0
+            
+            
+
+        }
+
+        useEffect(() => {
+            enviar()
+        }, [])
+    return (
+        <div className="div">
+            <h1>{ valor ? new Intl.NumberFormat('es-CO', {currency:'COP'}).format(valor.toFixed(0)) : 0} COP</h1>
+        </div>
+    )
+}

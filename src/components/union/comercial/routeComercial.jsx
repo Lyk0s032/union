@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Routes, useSearchParams } from 'react-router-dom';
 import LeftNav from './leftNav';
 import ComercialPanel from './comercial';
+import PanelGaleria from './galeria/panelGaleria';
 
 export default function RoutesComercial(){
     const [params, setParams] = useSearchParams();
@@ -16,6 +17,7 @@ export default function RoutesComercial(){
                     <div className="right">
                         <Routes>
                             <Route path="/*" element={<ComercialPanel />} />
+                            <Route path="/galeria/*" element={<PanelGaleria />} />
                         </Routes>
                     </div> 
                 </div>

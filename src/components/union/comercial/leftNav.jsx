@@ -37,6 +37,13 @@ export default function LeftNav(){
                     <div className="containerLeftNav">
                         <nav>
                             <ul>
+                                <li className='' onClick={() => {
+                                        navigate('/comercial/galeria')
+                                    }}>
+                                    <div>
+                                        <span>Galería</span>
+                                    </div>
+                                </li>
                                 <li className='Active' onClick={() => {
                                     navigate('/comercial/')
                                 }}>

@@ -30,7 +30,7 @@ export default function SearchKitsComercial(){
                     <h3>Selecciona un kit</h3>
                 </div>
                 <div className="searchInput">
-                    <input type="text" placeholder='Buscar aquí materia prima' onChange={(e) => {
+                    <input type="text" placeholder='Buscar aquí' onChange={(e) => {
                         setWord(e.target.value)
                     }}/>
                 </div>

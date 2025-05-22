@@ -5,6 +5,7 @@ import CotizacionItem from "./cotizacionItem";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from '../../store/action/action';
 import ModalNewCotizacion from "./modal/newCotizacion";
+import DocumentCotizacion from "./modal/documentCotizacion";
 
 export default function ComercialPanel(){
     const [params, setParams] = useSearchParams();
@@ -18,7 +19,28 @@ export default function ComercialPanel(){
     const [metodo, setMetodo] = useState(null); // METODO DE BUSQUEDA LINEA O CATEGORIA
     const [filter, setFilter] = useState(cotizaciones);
         
-    console.log(cotizaciones)
+
+    const [openMenuId, setOpenMenuId] = useState(null);
+
+    const toggleMenu = (id) => {
+        setOpenMenuId(openMenuId === id ? null : id); // Si ya está abierto, ciérralo; si no, ábrelo
+    };
+    
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+          // Si hay un menú abierto y el clic no fue dentro de ningún menú (o su botón)
+          // Usamos event.target.closest('.menu-container') para verificar si el clic fue dentro del menú o su botón
+          if (openMenuId !== null && !event.target.closest('.menu-container')) {
+            setOpenMenuId(null); // Cierra el menú
+          }
+        };
+    
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+          document.removeEventListener('mousedown', handleClickOutside);
+        };
+      }, [openMenuId]); 
+
 
     useEffect(() => {
         dispatch(actions.axiosToGetCotizaciones(true))
@@ -60,6 +82,7 @@ export default function ComercialPanel(){
                                         <th>Cliente</th>
                                         <th>fecha</th>
                                         <th>Valor</th>
+                                        <th>Estado</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -71,7 +94,7 @@ export default function ComercialPanel(){
                                         cotizaciones && cotizaciones.length ?
                                             cotizaciones.map((coti, i) => {
                                                 return (
-                                                    <CotizacionItem cotizacion={coti} key={i+1} />
+                                                    <CotizacionItem cotizacionn={coti} key={i+1} openMenuId={openMenuId} toggleMenu={toggleMenu} />
                                                 )
                                             })
                                         :null
@@ -92,6 +115,8 @@ export default function ComercialPanel(){
                     <ModalNewCotizacion />
                 // :params.get('w') == 'updateMp' ?
                 //     <ModaUpdateMp />    
+                : params.get('watch') == 'cotizacion' ?
+                    <DocumentCotizacion />
                 : null
             }
         </div>

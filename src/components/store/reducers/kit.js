@@ -6,6 +6,12 @@ const initialState = {
 
     kit: null,
     loadingKit: null,
+
+    superKits: null,
+    loadingSuperKits: false,
+
+    superKit: null,
+    loadingSuperKit: false
 }
 
 export default function (state = initialState, action) {
@@ -37,6 +43,33 @@ export default function (state = initialState, action) {
                 loadingKit: action.payload
             }
         } 
+        case types.GET_SUPERKITS: {
+            return {
+                ...state,
+                superKits: action.payload,
+                loadingSuperKits: false
+            }
+        }
+        case types.GETTING_SUPERKITS: {
+            return {
+                ...state,
+                loadingKits: action.payload
+            }
+        }
+        case types.GET_SUPERKIT: {
+            return {
+                ...state,
+                superKit: action.payload,
+                loadingSuperKit: false
+            }
+        }
+        case types.GETTING_SUPERKIT: {
+            return {
+                ...state,
+                loadingSuperKit: action.payload
+            }
+        }
+        
         default:
             return {...state}
     }

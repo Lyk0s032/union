@@ -109,11 +109,11 @@ export default function SearchKits(){
                                         return porTexto && porCategoria && porLinea && diferente;
                                     }
                                         ).map((pv, i) => { 
+                                            console.log(pv)
                                             return (
                                                 <ItemToSelect kit={pv} key={i+1} />
                                             ) 
                                         })
-                                
                             :<span>Noada</span>
                         }
                     </tbody>
