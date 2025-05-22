@@ -57,7 +57,7 @@ export default function KitItem(props){
                 setParams(params);
             }}>{kit.id}</td>
             <td onClick={() => {
-                dispatch(actions.getKit(kit))
+                dispatch(actions.axiosToGetKit(true, kit.id))
                 params.set('w', 'newKit')
                 setParams(params);
             }}>{kit.name.toUpperCase()}</td>
