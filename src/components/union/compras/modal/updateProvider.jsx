@@ -14,7 +14,7 @@ export default function ModalUpdateProvider(){
     const [form, setForm] = useState({
         proveedorId: provider.id,
         nit:provider.nit.split('-')[0],
-        code: provider.nit.split('-')[1],
+        code: provider.nit.includes('-') ? provider.nit.split('-')[1] : null,
         nombre: provider.nombre,
         siglas: provider.siglas,
         email:provider.email,
@@ -36,7 +36,7 @@ export default function ModalUpdateProvider(){
             const body = {
                 proveedorId: provider.id,
                 type: form.type,
-                nit:form.nit,
+                nit:`${form.nit}-${form.code}`, 
                 email: form.email,
                 img:null,
                 nombre:form.nombre,  
@@ -48,10 +48,11 @@ export default function ModalUpdateProvider(){
                 fijo:form.fijo,
                 phone:form.phone
             }
+            console.log(body)
 
             const sendPeticion = await axios.put('api/proveedores/new', body)
             .then((res) => {
-                dispatch(actions.HandleAlerta('Proveedor creado con éxito', 'positive'))
+                dispatch(actions.HandleAlerta('Proveedor actualizado con éxito', 'positive'))
                 dispatch(actions.axiosToGetProvider(false, provider.id))
                 dispatch(actions.axiosToGetProviders(false)) 
                 params.delete('w');
@@ -89,7 +90,7 @@ export default function ModalUpdateProvider(){
                             }} value={form.nit} />
                         </div>
                         <div className="inputDiv">
-                            <label htmlFor="">Nro seguridad </label><br />
+                            <label htmlFor="">CV {form.nit} {form.code} </label><br />
                             <input type="text" placeholder="Escribe aquí" onChange={(e) => {
                                 setForm({
                                     ...form,
