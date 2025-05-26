@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import * as actions from '../../../store/action/action';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 
 export default function ItemNewSuperKit(props){
@@ -11,6 +11,9 @@ export default function ItemNewSuperKit(props){
     const [state, setState] = useState(null);
     const [loading, setLoading] = useState(false);
 
+    const usuario = useSelector(store => store.usuario);
+    const { user } = usuario;
+    
 
     const dispatch = useDispatch();
     
@@ -18,7 +21,8 @@ export default function ItemNewSuperKit(props){
         let body = {
             kitId: kit.id,
             armadoId: idSuperKit,
-            cantidad: howMany
+            cantidad: howMany,
+            userId: user.user.id
         }
         const sendAdd = await axios.post('/api/superkit/post/addKit', body)
         .then((res) => {
@@ -28,7 +32,7 @@ export default function ItemNewSuperKit(props){
             console.log(err);
             dispatch(actions.HandleAlerta('No hemos logrado agregar este kit, intentalo más tarde.', 'mistake'))
         })
-        .finally(r => {
+        .finally(r => { 
             setLoading(false);
         })
 

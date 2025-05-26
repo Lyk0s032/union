@@ -12,6 +12,11 @@ export default function UpdateKit(props){
     const dispatch = useDispatch();
     const system = useSelector(store => store.system);
     const { lineas, categorias, extensiones } = system;
+    
+    const usuario = useSelector(store => store.usuario);
+    const { user } = usuario;
+            
+
     const [form, setForm] = useState({
         kitId: kit.id,
         nombre: kit.name,
@@ -19,6 +24,7 @@ export default function UpdateKit(props){
         categoriumId: kit.categoriumId,
         extensionId: kit.extensionId,
         lineaId: kit.lineaId,
+        userId: user.user.id
       });
 
     const handleUpdateKit = async () => {

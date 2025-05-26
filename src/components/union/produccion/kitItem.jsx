@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { getPromedio } from "./calculo";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as actions from '../../store/action/action';
 import { MdDeleteOutline, MdOutlineContentCopy } from "react-icons/md";
 import AreYouSecure from "./modal/secure";
@@ -13,12 +13,16 @@ export default function KitItem(props){
     const [remove, setRemove] = useState(false);
     const kit = props.kit;
 
+    const usuario = useSelector(store => store.usuario);
+    const { user } = usuario; 
+            
     const dispatch = useDispatch();
+
 
     const handleDeleteKit = async (kitId) => {
         try {
           setLoading(true); // Activa loading
-          const send = await axios.delete(`/api/kit/delete/${kitId}`)
+          const send = await axios.delete(`/api/kit/delete/${kitId}/${user.user.id}`)
           .then((res) => {
             setRemove(false)
             dispatch(actions.axiosToGetKits(false))
@@ -33,9 +37,9 @@ export default function KitItem(props){
     };
 
     const handleCloneKit = async (kitId) => {
-        try {
+        try { 
           setLoading(true); // Inicia el loading
-          const response = await axios.get(`/api/kit/clone/${kitId}`)
+          const response = await axios.get(`/api/kit/clone/${kitId}/${user.user.id}`)
           .then(res => {
             dispatch(actions.axiosToGetKits(false));
             return res;
@@ -64,7 +68,7 @@ export default function KitItem(props){
             <td style={{fontSize:11}}>{kit.categorium ? kit.categorium.name.toUpperCase() : 'SIN CATEGORíA'}</td>
             <td style={{fontSize:11}}>{kit.linea ? kit.linea.name.toUpperCase() : 'SIN CATEGORíA'}</td>
             <td style={{fontSize:11}}>{kit.extension ? kit.extension.name.toUpperCase() : 'SIN CATEGORíA'}</td>
-            {/* <td style={{fontSize:11}}>{kit.materia ? <GetSimilarPrice materia={kit.materia} /> : null}</td> */}
+            <td style={{fontSize:11}}>{kit.materia ? <GetSimilarPrice materia={kit.materia} /> : null}</td>
             <td className="btnKits">
                 {
                     loading ?

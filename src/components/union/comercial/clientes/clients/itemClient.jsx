@@ -55,11 +55,11 @@ export default function ItemClient({client, toggleMenu, openMenuId}){
                                         }}> 
                                             <div>
                                                 <BsPencil className="icon" />
-                                                <span>Editar</span>
+                                                <span>Editar cliente</span>
                                             </div>
                                         </li>
                                         <li> 
-                                            <div>
+                                            <div> 
                                                 <MdOutlineRemoveRedEye  className="icon" />
                                                 <span>Ver</span>
                                             </div>

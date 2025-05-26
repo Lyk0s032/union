@@ -15,6 +15,9 @@ export default function ItemToSelect(props){
     const kits = useSelector(store => store.kits);
     const { kit } = kits;
 
+    const usuario = useSelector(store => store.usuario);
+    const { user } = usuario;
+            
     const dispatch = useDispatch();
     const option = props.kit;
     const promedio = option.prices && option.prices.length ? Number(option.prices.reduce((acc, p) => Number(acc) + Number(p.valor), 0)) / option.prices.length : null
@@ -31,7 +34,8 @@ export default function ItemToSelect(props){
             calibre: valorDelHijo,
             mtId: option.id,
             cantidad: 1,
-            medida: option.unidad == 'mt2' ? form.mt2 : option.unidad == 'kg' ? form.kg : form.other
+            medida: option.unidad == 'mt2' ? form.mt2 : option.unidad == 'kg' ? form.kg : form.other,
+            userId: user.user.id
         }
         if(!form.other) return dispatch(actions.HandleAlerta('Debes ingresar una medida valida', 'mistake'));
 

@@ -11,14 +11,20 @@ export default function KitDescription(){
     const { lineas, categorias, extensiones } = system;
     const dispatch = useDispatch(); 
 
+    const usuario = useSelector(store => store.usuario);
+    const { user } = usuario;
+        
+
     const [form, setForm] = useState({
         code: kit ? kit.code : null,
         nombre: kit ? kit.nombre : null,
         description: kit ? kit.description : null,
         extension: kit ? kit.extensionId  : null,
         linea: kit ? kit.lineaId : null,
-        categoria: kit ?  kit.categorium  : null
+        categoria: kit ?  kit.categorium  : null,
+        userId: user.user.id
     });
+
 
     const createKit = async () => { 
         if(!form.nombre) return dispatch(actions.HandleAlerta('Debes llenar nombre del kit', 'mistake'))
@@ -32,7 +38,6 @@ export default function KitDescription(){
             return dispatch(actions.getKit(res.data)) 
         })
         .catch(err => {
-            
             dispatch(actions.HandleAlerta('No hemos logrado crear esto, intentalo más tarde', 'mistake'))
         })
         return sendPeticion;

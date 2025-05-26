@@ -34,7 +34,7 @@ export default function KitsPanel(){
             <div className="containerProviders">
                 <div className="topSection">
                     <div className="title">
-                        <h1>Kit's</h1>
+                        <h1>Kit's </h1>
                     </div>
                     <div className="optionsFast">
                         <nav>
@@ -131,7 +131,7 @@ export default function KitsPanel(){
                                                 setState('completa')
                                             }}>
                                                 <div>
-                                                    <span>Completos</span>
+                                                    <span>Completos {kits && kits.length ? `(${kits.length})` : null}</span>
                                                 </div>
                                             </li>
                                             <li className={state == 'desarrollo' ? 'Active' : null} onClick={() => {
@@ -155,7 +155,7 @@ export default function KitsPanel(){
                                         <th>Categoría</th>
                                         <th>Línea</th>
                                         <th>Extensión</th>
-                                        {/* <th>Precio promedio</th> */}
+                                        <th>Precio promedio</th>
                                         <th></th>
                                     </tr>
                                 </thead>

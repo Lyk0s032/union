@@ -9,6 +9,9 @@ export default function UpdateClient(){
     const dispatch = useDispatch();
     const clients = useSelector(store => store.clients);
     const { client, loadingClient } = clients;
+    
+    const usuario = useSelector(store => store.usuario);
+    const { user } = usuario;
 
     const [loading, setLoading] = useState(false);
     const [form, setForm] = useState({
@@ -40,7 +43,7 @@ export default function UpdateClient(){
         }else{
             setLoading(true);
             const body = {
-                clientId: client.id,
+                clientId: client.id, 
                 type: form.persona,
                 nit: form.code ? `${form.nit}-${form.code}` : `${form.nit}`,
                 email: form.email,
@@ -52,9 +55,10 @@ export default function UpdateClient(){
                 departamento: form.departamento,
                 pais:form.pais,
                 fijos:[form.fijo],
-                phone:form.phone
+                phone:form.phone,
+                userId: user.user.id
             }  
-
+ 
             const sendPeticion = await axios.put('api/client/new', body)
             .then((res) => {
                 dispatch(actions.HandleAlerta('Cliente actualizado con éxito', 'positive'))

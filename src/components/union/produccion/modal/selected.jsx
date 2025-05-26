@@ -2,17 +2,22 @@ import React, { useState } from "react";
 import { OneElement } from "../calculo";
 import axios from "axios";
 import * as actions from '../../../store/action/action';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BsPencil, BsThreeDots } from "react-icons/bs";
 import { MdDeleteOutline } from "react-icons/md";
 
 export default function Selected({kit, openMenuId, toggleMenu}){
     const dispatch = useDispatch();
     const [fast, setFast] = useState(null);
+
+    const usuario = useSelector(store => store.usuario);
+    const { user } = usuario;
+            
     const deleteItem = async (itemId) => {
         const body = {
             kitId: kit.id, 
-            itemId: itemId
+            itemId: itemId,
+            userId: user.user.id
         }
 
         const sendPetion = await axios.delete('api/kit/remove/item', { data: body} )
@@ -132,6 +137,9 @@ function ToFastEdit({materia, ParaElHijo, mt, kit}){
         kg: materia.itemKit.medida
     });
 
+    const usuario = useSelector(store => store.usuario);
+    const { user } = usuario;
+            
     
     const HandleClose = () => {
         ParaElHijo(null)
@@ -144,7 +152,8 @@ function ToFastEdit({materia, ParaElHijo, mt, kit}){
         let body = {
             kitId: kit.id,
             materiaId: materia.id,
-            medida: materia.unidad == 'mt2' ? form.mt2 : materia.unidad == 'kg' ? form.kg : form.other
+            medida: materia.unidad == 'mt2' ? form.mt2 : materia.unidad == 'kg' ? form.kg : form.other,
+            userId: user.user.id
         }
 
         const sendPetion = await axios.put('api/kit/add/item', body )

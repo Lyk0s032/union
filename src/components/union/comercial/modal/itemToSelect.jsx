@@ -34,6 +34,7 @@ export default function ItemToSelect(props){
         const sendPetion = await axios.post('api/cotizacion/add/item', body )
         .then((res) => {
             dispatch(actions.axiosToGetCotizacion(false, cotizacion.id))
+            dispatch(actions.axiosToGetCotizaciones(false))
             dispatch(actions.HandleAlerta('Kit agregado con éxito', 'positive'))
 
         })

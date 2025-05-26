@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import * as actions from '../../../../store/action/action';
 import axios from 'axios';
@@ -24,7 +24,8 @@ export default function NewClient(){
         fijo:null,
         phone:null,
     });
-
+    const usuario = useSelector(store => store.usuario);
+    const { user } = usuario;
 
     const createClient = async() => {
         if(form.persona == 'juridica' && !form.nombre) return dispatch(actions.HandleAlerta('Ingresa un nombre de empresa', 'negative'))
@@ -48,7 +49,8 @@ export default function NewClient(){
                 departamento: form.departamento,
                 pais:form.pais,
                 fijos:[form.fijo],
-                phone:form.phone
+                phone:form.phone,
+                userId: user.user.id
             }  
 
             const sendPeticion = await axios.post('api/client/new', body)
@@ -106,7 +108,7 @@ export default function NewClient(){
                         {
                             form.persona == 'juridica' ?
                                 <div className="inputDiv">
-                                    <label htmlFor="">Nro seguridad </label><br />
+                                    <label htmlFor="">Dígito de Verificación (DV) </label><br />
                                     <input type="text" placeholder="Escribe aquí" onChange={(e) => {
                                         setForm({
                                             ...form,

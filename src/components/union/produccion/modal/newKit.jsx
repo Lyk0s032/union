@@ -12,7 +12,9 @@ export default function ModalNewCotizacion(){
 
     const kits = useSelector(store => store.kits);
     const { kit, loadingKit } = kits;
-    const dispatch = useDispatch();
+    const usuario = useSelector(store => store.usuario);
+    const { user } = usuario;
+    
     useEffect(() => {
         // dispatch(actions.getKit(null))
     }, [params.get('w')])
