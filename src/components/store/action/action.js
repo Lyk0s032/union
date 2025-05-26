@@ -547,3 +547,77 @@ export function axiosToGetRequisicion(carga, reqId){
         });
     }
 }
+
+
+
+
+
+// PROVEEDORES
+// ----------------------
+export function getClients(data){
+    return {
+        type: types.GET_CLIENTS,
+        payload: data
+    }
+}
+export function gettingClients(carga){
+    return {
+        type: types.GETTING_CLIENTS,
+        payload: carga
+    }
+}
+
+export function axiosToGetClients(carga){
+    return function(dispatch){  
+        dispatch(gettingClients(carga))
+        axios.get(`/api/client/getAll`)
+        .then((info) => info.data) 
+        .then(inf => {
+            return dispatch(getClients(inf))
+        })
+        .catch((e) => {
+            console.log(e)
+            if(e.request){
+                return dispatch(getClients('notrequest'));
+            }else{
+                return dispatch(getClients(404))
+
+            }
+        });
+    }
+}
+
+// PROVEEDOR
+export function getClient(data){
+    return {
+        type: types.GET_CLIENT,
+        payload: data
+    }
+}
+export function gettingClient(carga){
+    return {
+        type: types.GETTING_CLIENT,
+        payload: carga
+    }
+}
+
+export function axiosToGetClient(carga, ruta){
+    return function(dispatch){ 
+        dispatch(gettingClient(carga))
+        axios.get(`/api/proveedores/getOne/${ruta}`)
+        .then((info) => info.data) 
+        .then(inf => {
+            return dispatch(getClient(inf))
+        })
+        .catch((e) => {
+            console.log(e)
+            if(e.request){
+                return dispatch(getClient('notrequest'));
+            }else{
+                return dispatch(getClient(404))
+
+            }
+        });
+    }
+}
+

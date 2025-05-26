@@ -12,7 +12,6 @@ export default function LeftNav(){
     }
     return (
         <div className="leftNav">
-        {console.log(location.pathname)}
 
             <div className="containerLeftNavBig">
                 <div className="topTitle">

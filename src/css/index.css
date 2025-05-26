@@ -1212,6 +1212,182 @@ body button {
 .modalQuestion .containerModal .bodyContainer .buttons button:hover {
   opacity: 0.8;
 }
+.panelClients {
+  box-sizing: border-box;
+}
+.panelClients .title {
+  padding: 20px 0px;
+  box-sizing: border-box;
+}
+.panelClients .title h3 {
+  font-weight: 400;
+  color: #046290;
+  font-weight: 300;
+  font-size: 24px;
+}
+.panelClients .homeClients .containerHomeClients {
+  box-sizing: border-box;
+}
+.panelClients .homeClients .containerHomeClients .navigationA {
+  box-sizing: border-box;
+  width: 100%;
+  border-bottom: 1px solid #f8f8f9;
+}
+.panelClients .homeClients .containerHomeClients .navigationA .containerNavigation {
+  display: flex;
+  align-items: center;
+}
+.panelClients .homeClients .containerHomeClients .navigationA .containerNavigation nav {
+  width: 40%;
+}
+.panelClients .homeClients .containerHomeClients .navigationA .containerNavigation nav ul li {
+  display: inline-block;
+  cursor: pointer;
+  transition: 0.3s;
+  border-bottom: 1px solid #FFF;
+}
+.panelClients .homeClients .containerHomeClients .navigationA .containerNavigation nav ul li div {
+  padding: 14px 25px;
+  box-sizing: border-box;
+}
+.panelClients .homeClients .containerHomeClients .navigationA .containerNavigation nav ul li div span {
+  font-size: 12px;
+  color: #046290;
+  transition: 0.3s;
+}
+.panelClients .homeClients .containerHomeClients .navigationA .containerNavigation nav ul li:hover {
+  border-bottom: 1px solid #046290;
+}
+.panelClients .homeClients .containerHomeClients .routeData {
+  width: 98%;
+  margin: auto;
+}
+.panelClients .homeClients .containerHomeClients .routeData .allClients {
+  width: 100%;
+}
+.panelClients .homeClients .containerHomeClients .routeData .allClients .dataClients .containerData .search {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.panelClients .homeClients .containerHomeClients .routeData .allClients .dataClients .containerData .search input {
+  width: 50%;
+  border: 1px solid #ccc;
+  padding: 8px 10px;
+  box-sizing: border-box;
+  outline: 0px;
+  font-size: 12px;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+.panelClients .homeClients .containerHomeClients .routeData .allClients .dataClients .containerData .search input:focus {
+  border: 1px solid #046290;
+  width: 60%;
+  padding: 10px;
+}
+.panelClients .homeClients .containerHomeClients .routeData .allClients .dataClients .containerData .search button {
+  padding: 10px 20px;
+  background-color: #046290;
+  border: 1px solid #046290;
+  transition: 0.3s;
+  border-radius: 5px;
+}
+.panelClients .homeClients .containerHomeClients .routeData .allClients .dataClients .containerData .search button span {
+  color: #FFF;
+  font-size: 12px;
+}
+.panelClients .homeClients .containerHomeClients .routeData .allClients .dataClients .containerData .clientLista {
+  margin-top: 40px;
+}
+.panelClients .homeClients .containerHomeClients .routeData .allClients .dataClients .containerData .clientLista table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.panelClients .homeClients .containerHomeClients .routeData .allClients .dataClients .containerData .clientLista table thead tr th {
+  color: #666;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 300;
+}
+.panelClients .homeClients .containerHomeClients .routeData .allClients .dataClients .containerData .clientLista table tbody tr {
+  position: relative;
+}
+.panelClients .homeClients .containerHomeClients .routeData .allClients .dataClients .containerData .clientLista table tbody tr td {
+  padding: 10px 0px;
+  box-sizing: border-box;
+  color: #046290;
+  font-size: 12px;
+  cursor: pointer;
+}
+.panelClients .homeClients .containerHomeClients .routeData .allClients .dataClients .containerData .clientLista table tbody tr td .btnOptions {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.panelClients .homeClients .containerHomeClients .routeData .allClients .dataClients .containerData .clientLista table tbody tr td .btnOptions .icon {
+  color: #666;
+  font-size: 16px;
+}
+.panelClients .homeClients .containerHomeClients .routeData .allClients .dataClients .containerData .clientLista table tbody tr td .menu-dropdown {
+  /* Posicionamiento y tamaño base */
+  right: 0;
+  padding: 10px 0px;
+  padding-top: 0px;
+  border-radius: 5px;
+  top: 0px;
+  margin-right: 50px;
+  width: 30%;
+  position: absolute;
+  z-index: 5;
+  cursor: default;
+  background-color: #FFF;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  /* Estado cuando el menú está abierto (anidado en Less) */
+}
+.panelClients .homeClients .containerHomeClients .routeData .allClients .dataClients .containerData .clientLista table tbody tr td .menu-dropdown .panel {
+  padding: 10px 0px;
+  box-sizing: border-box;
+}
+.panelClients .homeClients .containerHomeClients .routeData .allClients .dataClients .containerData .clientLista table tbody tr td .menu-dropdown .panel .title {
+  margin-bottom: 10px;
+}
+.panelClients .homeClients .containerHomeClients .routeData .allClients .dataClients .containerData .clientLista table tbody tr td .menu-dropdown .panel .title strong {
+  padding: 0px 20px;
+  font-weight: 400;
+  font-size: 12px;
+  color: #046290;
+}
+.panelClients .homeClients .containerHomeClients .routeData .allClients .dataClients .containerData .clientLista table tbody tr td .menu-dropdown .panel nav ul li {
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  transition: 0.3s;
+}
+.panelClients .homeClients .containerHomeClients .routeData .allClients .dataClients .containerData .clientLista table tbody tr td .menu-dropdown .panel nav ul li div {
+  display: flex;
+  padding: 10px 20px;
+  align-items: center;
+  transition: 0.3s;
+}
+.panelClients .homeClients .containerHomeClients .routeData .allClients .dataClients .containerData .clientLista table tbody tr td .menu-dropdown .panel nav ul li div .icon {
+  margin-right: 10px;
+  font-size: 16px;
+}
+.panelClients .homeClients .containerHomeClients .routeData .allClients .dataClients .containerData .clientLista table tbody tr td .menu-dropdown .panel nav ul li:hover {
+  background-color: #f8f8f8;
+}
+.panelClients .homeClients .containerHomeClients .routeData .allClients .dataClients .containerData .clientLista table tbody tr td .menu-dropdown.menu-open {
+  opacity: 1;
+  max-height: 12rem;
+  /* Altura máxima suficiente para tu contenido (ajusta si es necesario) */
+  transform: scale(1);
+  /* Escala normal */
+  pointer-events: auto;
+  /* Habilita clics cuando está abierto */
+}
 .panelGaleria {
   box-sizing: border-box;
   height: 100%;

@@ -7,6 +7,7 @@ import prima from "./mp";
 import kits from "./kit";
 import cotizacions from "./cotizacion";
 import requisicion from "./requisicion";
+import clients from "./clients";
 
 
 
@@ -18,6 +19,7 @@ const appReducer = combineReducers({
     kits,
     cotizacions,
     requisicion,
+    clients,
 });
 
 export default appReducer 
