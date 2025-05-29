@@ -54,9 +54,10 @@ export default function SelectMP(){
         return () => {
           document.removeEventListener('mousedown', handleClickOutside);
         };
-      }, [openMenuId]); 
+      }, [openMenuId]);  
     return (
         <div className="page">
+            {console.log(kit)}
             <div className="selectItems">
                 <div className="leftKit">
                     <div className="topData">
@@ -92,8 +93,12 @@ export default function SelectMP(){
                             params.get('update') ? null :
                             <div className="priceBox">
                                 <div>
-                                    <span>Precio promedio</span><br />
-                                    <GetSimilarPrice materia={kit.materia} />
+                                    <span>Distribuidor </span><br />
+                                    <GetSimilarPrice materia={kit.materia} linea={kit.linea} type='distribuidor' />
+                                </div>
+                                <div style={{marginLeft:100}}>
+                                    <span>Precio final</span><br />
+                                    <GetSimilarPrice materia={kit.materia} linea={kit.linea} type='final' />
                                 </div>
                             </div> 
                         }
@@ -118,6 +123,8 @@ export default function SelectMP(){
 
 function  GetSimilarPrice(props){
     const consumir = props.materia;
+    const linea = props.linea;
+    const type = props.type;
     const [valor, setValor] = useState(0) 
 
     const mapear = () => {
@@ -130,12 +137,21 @@ function  GetSimilarPrice(props){
         return setValor(promedio);
     } 
 
+    const distribuidor = linea.percentages && linea.percentages.length ? Number(valor * linea.percentages[0].distribuidor) : valor
+    const final = linea.percentages && linea.percentages.length ? Number(valor * linea.percentages[0].final) : valor
+    
     useEffect(() => {
         mapear()
     }, [consumir])
     return (
         <div className="similarPrice">
-            <h3>{valor > 0 ? new Intl.NumberFormat('es-CO', {currency:'COP'}).format(valor.toFixed(0)) : 0} <span>COP</span></h3>
+            {
+                type == 'distribuidor' ?
+                    <h3>{valor > 0 ? new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valor +Number(distribuidor)).toFixed(0)) : 0} <span>COP</span></h3>
+                :
+                    <h3>{valor > 0 ? new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valor +Number(final)).toFixed(0)) : 0} <span>COP</span></h3>
+
+            }
         </div>
     )
 }

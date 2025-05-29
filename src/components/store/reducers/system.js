@@ -16,7 +16,10 @@ const initialState = {
     lineas: null,
     extensiones: null,
 
-    loadingFiltros: null
+    loadingFiltros: null,
+
+    porcentajes: null,
+    loadingPorcentajes: false
 
 }
 
@@ -74,7 +77,7 @@ export default function (state = initialState, action) {
         case types.LOADING_SYSTEM: {
             return {
                 ...state,
-                loadingSystem: action.payload
+                loadingSystem: action.payload 
             }
         }
         case types.GET_SYSTEM:{
@@ -82,6 +85,21 @@ export default function (state = initialState, action) {
                 ...state,
                 system: action.payload,
                 loadingSystem:false
+            }
+        }
+
+        case types.GET_PORCENTAJES:{
+            return {
+                ...state,
+                porcentajes: action.payload,
+                loadingPorcentajes: false
+            }
+        }
+
+        case types.GETTING_PORCENTAJES: {
+            return {
+                ...state,
+                loadingPorcentajes: false
             }
         }
         default:

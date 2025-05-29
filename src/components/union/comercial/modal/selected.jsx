@@ -26,12 +26,32 @@ export default function SelectedKits(props){
         })
         return sendPetion; 
     }
+    
+    const deleteSuperKitItem = async (itemId) => {
+        const body = {
+            superKidId: itemId,
+            cotizacionId: cotizacion.id 
+        }
+
+        const sendPetion = await axios.delete('api/cotizacion/remove/superKit', { data: body} )
+        .then((res) => {
+            dispatch(actions.axiosToGetCotizacion(false, cotizacion.id))
+            dispatch(actions.HandleAlerta('Kit removido', 'positive'))
+ 
+        })
+        .catch(err => {
+            console.log(err);
+            dispatch(actions.HandleAlerta('No hemos logrado remover este Superkit', 'mistake'))
+        })
+        return sendPetion; 
+    }
     return (
         <table>
             <thead>
                 <tr>
                     <th>Nombre</th>
                     <th>Cantidad</th>
+                    <th>Descuento</th>
                     <th>Val. Promedio</th>
                     <th></th>
 
@@ -62,20 +82,35 @@ export default function SelectedKits(props){
                                         :
                                         <td>{kt.armadoCotizacion.cantidad}</td>
                                     }
+                                    {
+                                        kt.kitCotizacion ?
+                                            <td>{kt.kitCotizacion.descuento ? kt.kitCotizacion.descuento : 0 }</td>
+                                        :
+                                        <td>{null}</td>
+                                    }
 
-{
+                                    {
                                         kt.kitCotizacion ?
                                             <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(kt.kitCotizacion.precio)} COP</td>
                                         :
                                         <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(kt.armadoCotizacion.precio)} COP</td>
                                     }
                                     
-
+                                    <td>
+                                        
+                                    </td>
                                     <td>
                                         {/* <strong>{<ValorSelected mt={materia} />}</strong> */}
                                     </td> 
                                     <td>
-                                        <button onClick={() => deleteItem(kt.id)}>
+                                        <button onClick={() => {
+                                            if(kt.kitCotizacion){
+                                                deleteItem(kt.id)
+                                            }else if(kt.armadoCotizacion){
+
+                                                deleteSuperKitItem(kt.id)
+                                            }
+                                        } }>
                                             x
                                         </button>
                                     </td>

@@ -133,7 +133,7 @@ export default function Home(){
                                                 <div className="items">
                                                     <span>Creado el</span>
                                                     <h3>{superKit.createdAt.split('T')[0]}</h3>
-                                                </div>
+                                                </div> 
                                                 <div className="items">
                                                     <span>Creado por</span>
                                                     <h3>Kevin Andrés</h3>

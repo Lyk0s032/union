@@ -16,12 +16,8 @@ export default function SearchSuperKitsComercial(props){
     const cotizacions  = useSelector(store => store.cotizacions);
     const { cotizacion } = cotizacions;
 
-    const [word, setWord] = useState(null);
-    const [metodo, setMetodo] = useState(null); // METODO DE BUSQUEDA LINEA O CATEGORIA
-    const [filter, setFilter] = useState(kits);
     
     const [data, setData] = useState(null);
-    const [sp, setSp] = useState(null);
 
     const searchKitsAxios = async (searchTerm) => {
     
@@ -43,7 +39,6 @@ export default function SearchSuperKitsComercial(props){
 
     useEffect(() => {
         dispatch(actions.axiosToGetKitsCompleted(false))
-        setFilter(kits)
     }, [])
     return (
         <div className="containerRightSelect">
@@ -66,7 +61,7 @@ export default function SearchSuperKitsComercial(props){
                             : data && data.length ?
                                 data.map((m,i) => {
                                     return (
-                                        <SuperKitItem cotizacion={coti} superkit={m} />
+                                        <SuperKitItem key={i+1} cotizacion={coti} superkit={m} />
                                     )
                                 })
                             : null

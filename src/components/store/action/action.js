@@ -74,6 +74,42 @@ export function axiosToGetFiltros(carga){
 }
 
 
+// PORCENTAJES
+// ----------------------
+export function getPorcentajes(data){
+    return {
+        type: types.GET_PORCENTAJES,
+        payload: data
+    }
+}
+export function gettingPorcentajes(carga){
+    return {
+        type: types.GETTING_PORCENTAJES,
+        payload: carga
+    }
+}
+
+export function axiosToGetPorcentajes(carga){
+    return function(dispatch){ 
+        dispatch(gettingPorcentajes(carga))
+        axios.get(`/api/lineas/get/porcentajes`)
+        .then((info) => info.data) 
+        .then(inf => {
+            return dispatch(getPorcentajes(inf))
+        })
+        .catch((e) => {
+            console.log(e)
+            if(e.request){
+                return dispatch(getPorcentajes('notrequest'));
+            }else{
+                return dispatch(getPorcentajes(404))
+
+            }
+        });
+    }
+}
+
+
 
 // ALERTA
 export function HandleAlerta(data, type){

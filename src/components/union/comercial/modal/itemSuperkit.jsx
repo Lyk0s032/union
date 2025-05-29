@@ -9,7 +9,7 @@ export default function SuperKitItem(props){
     const cotizacion = props.cotizacion;
 
     const [active, setActive] = useState(null);
-    const [howMany, setHowMany] = useState(null);
+    const [howMany, setHowMany] = useState(1);
     const [valor, setValor] = useState(1);
 
     const dispatch = useDispatch();
@@ -48,7 +48,8 @@ export default function SuperKitItem(props){
                     </div>
                     <div className="titleData">
                         <h3>{superkit.name}</h3>
-                        <span>{superkit.description}</span>
+                        <span>{superkit.description}</span><br />
+                        <span>{ new Intl.NumberFormat('es-CO', {currency:'COP'}).format(valor.toFixed(0)) } COP</span>
                     </div>
                 </div>
                 :
@@ -57,19 +58,19 @@ export default function SuperKitItem(props){
                         <img src={superkit.img} alt="" />
                     </div>
                     <div className="titleData">
-                        <h3>{superkit.name} {valor}</h3>
+                        <h3>{superkit.name}</h3>
                         <div className="form">
-                            <label htmlFor="">{valor * howMany}</label>
+                            <label htmlFor="">{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valor * howMany).toFixed(0))} COP</label><br />
                             <input type="text" placeholder="Cantidad" 
                             onChange={(e) => {
                                 setHowMany(e.target.value)
                             }} value={howMany}/>
                             <button onClick={() => {
                                 sendPeticion()
-                            }}>
+                            }} className="save">
                                 <span>Guardar</span>
                             </button>
-                            <button onClick={() => setActive(null)}>
+                            <button onClick={() => setActive(null)} className="none">
                                 <span>Cancelar</span>
                             </button>
                         </div>
@@ -96,7 +97,7 @@ function GetaAllKit({ enviarAlAbuelo, kits } ){
 
     return(
        <div className="">
-            <span>{valor}</span>
+            {/* <span>{valor}</span> */}
             <WithAll  enviarAlPadre={traerValor} kits={kitss}/>
        </div>
     )
@@ -110,7 +111,6 @@ function WithAll({ enviarAlPadre, kits } ){
     
     const [valor, setVal] = useState(0)
     
-    const [numeros, setNumeros] = useState([])
  
         const send = (va) => {
             return enviarAlPadre(va)
@@ -120,31 +120,34 @@ function WithAll({ enviarAlPadre, kits } ){
 
             const data = [];
             kitss && kitss.length ?
-                kitss.map((k, i) => {
-                    
-                        const a = k.materia.map((c, i) => {
+                kitss.forEach((k, i) => {
+                        const linea = k.linea.percentages && k.linea.percentages.length ? k.linea.percentages[0].final : 0
+                        const a = k.materia.map((c) => {
                             const getV  =  getPromedio(c);
                             return getV
                         })
-                        const promedio = a && a.length ? Number(a.reduce((acc, p) => Number(acc) + Number(p), 0)) : null
-                        setNumeros(...numeros, promedio)
+                        const promedio = a && a.length ? Number(a.reduce((acc, p) => Number(acc) + Number(p), 0)) : 0
                         data.push(promedio)
-                        const v = data && data.length ? Number(data.reduce((acc, p) => Number(acc) + Number(p), 0)) : null
-                        send(v ? v.toFixed(0) : 0)
-                        return setVal(v);
+                        const v = data && data.length ? Number(data.reduce((acc, p) => Number(acc) + Number(p), 0)) : 0
+                        const porcentaje = Number(v) * Number(linea)
+                        const final = porcentaje + v;  
+                        send(final)
+                        console.log('kabo',final)
+                        return setVal(final);
                 })
-            : 0
-            
-            
+            : null
+           
 
         }
 
         useEffect(() => {
-            enviar()
-        }, [])
+            enviar();
+            
+        }, [kitss])
     return (
         <div className="div">
-            <h1>{ valor ? new Intl.NumberFormat('es-CO', {currency:'COP'}).format(valor.toFixed(0)) : 0} COP</h1>
+            {/* <h1>{ new Intl.NumberFormat('es-CO', {currency:'COP'}).format(valor.toFixed(0)) } COP</h1> */}
+        {/* <br /><br /><br /> */}
         </div>
     )
 }

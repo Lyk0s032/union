@@ -16,18 +16,21 @@ export default function ItemToSelect(props){
 
     const cotizacions = useSelector(store => store.cotizacions);
 
-    const { cotizacion } = cotizacions;
+    const { cotizacion } = cotizacions; 
  
     const dispatch = useDispatch(); 
     const option = props.kit;
+    const distribuidor = option.linea.percentages && option.linea.percentages.length ? option.linea.percentages[0].distribuidor : 0
+    const final = option.linea.percentages && option.linea.percentages.length ? option.linea.percentages[0].final : 0
 
 
+ 
     const addItem = async () => {
         const body = {
             cotizacionId: cotizacion.id,
             kitId: option.id,
             cantidad: form.cantidad,
-            precio: valor * form.cantidad
+            precio: Number(valor * form.cantidad).toFixed(0)
         }
         if(!form.cantidad || form.cantidad == 0) return dispatch(actions.HandleAlerta('Debes ingresar una cantidad valida', 'mistake'));
 
@@ -46,7 +49,7 @@ export default function ItemToSelect(props){
     }  
     
     const recibirValor = (data) => {
-        setValor(data);
+        setValor(Number(data) + Number(final));
         console.log('LLega del componete Kits')
     }
     return ( 
@@ -69,10 +72,10 @@ export default function ItemToSelect(props){
             <td>
                 <strong>
  
-                   {valor*form.cantidad}
+                   {Number(valor * form.cantidad).toFixed(0)} COP
                 </strong>
             </td>
-            <td>
+            <td> 
                 <div className="twoButtons">
                     <button className="great" onClick={() => addItem()}>
                         <MdCheck />
@@ -87,11 +90,11 @@ export default function ItemToSelect(props){
         <tr >
             <td>{option.name}</td>
             <td>
-                <strong>1 </strong>
+                <strong>1</strong>
             </td>
             <td> 
                 <strong>
-                    <AllKit kit={option} enviarAlPadre={recibirValor} />
+                    <AllKit kit={option} enviarAlPadre={recibirValor} final={final} />
                 </strong>
             </td>
 
@@ -104,17 +107,21 @@ export default function ItemToSelect(props){
     )
 }
 
-function AllKit( { enviarAlPadre, kit } ){
+function AllKit( { enviarAlPadre, kit, final } ){
     const kitt = kit;
+    
     const [valor, setVal] = useState(0)
+    const fn = valor * Number(final)
+
 
     const Mensage = () => {
-        enviarAlPadre(valor)
-    }
-    const getTrueValor = (val) => {
-        setVal(val)
+        enviarAlPadre(Number(Number(valor) + fn).toFixed(0))
     }
 
+    const getTrueValor = (val) => {
+        setVal(val) 
+    }
+    console.log(fn)
     useEffect(() => {
         if(valor){
             Mensage()
@@ -122,7 +129,7 @@ function AllKit( { enviarAlPadre, kit } ){
     })
     return (
         <div >
-            {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(valor)} COP
+            {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valor) + fn)} COP
             <GetSimilarPrice materia={kitt.materia} realValor={getTrueValor} />
         </div>
     )

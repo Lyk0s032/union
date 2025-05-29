@@ -1,10 +1,10 @@
 import React from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 export default function LeftNav(){
     const navigate = useNavigate();
     const [params, setParams] = useSearchParams();
-
+    const location = useLocation();
     const add = (val) => {
         params.set('add', val)
         setParams(params);
@@ -37,11 +37,18 @@ export default function LeftNav(){
                     <div className="containerLeftNav">
                         <nav>
                             <ul>
-                                <li className='Active' onClick={() => {
-                                    navigate('/compras/')
+                                <li className={location.pathname == '/produccion' || location.pathname == '/produccion/' ? 'Active' : null} onClick={() => {
+                                    navigate('/produccion')
                                 }}>
                                     <div>
                                         <span>Kit's</span>
+                                    </div>
+                                </li>
+                                <li className={location.pathname == '/produccion/lineas' || location.pathname == '/produccion/lineas/' ? 'Active' : null} onClick={() => {
+                                    navigate('lineas/')
+                                }}>
+                                    <div>
+                                        <span>Lineas</span>
                                     </div>
                                 </li>
                                 {/* <li onClick={() => {
