@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { getPromedio } from "../../produccion/calculo";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as actions from './../../../store/action/action';
+import { hasPermission } from "../../acciones";
 
 export default function SuperKitItem(props){
     const superkit = props.superkit;
@@ -11,7 +12,8 @@ export default function SuperKitItem(props){
     const [active, setActive] = useState(null);
     const [howMany, setHowMany] = useState(1);
     const [valor, setValor] = useState(1);
-
+    const usuario = useSelector(store => store.usuario);
+    const { user } = usuario;
     const dispatch = useDispatch();
     const recibirValor = (data) => {
         setValor(data);
@@ -108,7 +110,9 @@ function GetaAllKit({ enviarAlAbuelo, kits } ){
 function WithAll({ enviarAlPadre, kits } ){
     const kitss = kits;
 
-    
+    const usuario = useSelector(store => store.usuario);
+    const { user } = usuario;
+
     const [valor, setVal] = useState(0)
     
  
@@ -122,17 +126,29 @@ function WithAll({ enviarAlPadre, kits } ){
             kitss && kitss.length ?
                 kitss.forEach((k, i) => {
                         const linea = k.linea.percentages && k.linea.percentages.length ? k.linea.percentages[0].final : 0
+                        const distribuidor = k.linea.percentages && k.linea.percentages.length ? k.linea.percentages[0].distribuidor : 0
+
                         const a = k.materia.map((c) => {
                             const getV  =  getPromedio(c);
                             return getV
                         })
-                        const promedio = a && a.length ? Number(a.reduce((acc, p) => Number(acc) + Number(p), 0)) : 0
+                        const promedio = a && a.length ? Number(a.reduce((acc, p) => Number(acc) + Number(p), 0)) : 0 // PROMEDIO
                         data.push(promedio)
-                        const v = data && data.length ? Number(data.reduce((acc, p) => Number(acc) + Number(p), 0)) : 0
-                        const porcentaje = Number(v) * Number(linea)
-                        const final = porcentaje + v;  
-                        send(final)
-                        console.log('kabo',final)
+                        const v = data && data.length ? Number(data.reduce((acc, p) => Number(acc) + Number(p), 0)) : 0 // V
+
+                        const porcentaje = Number(v) * Number(linea) // PORCENTAJE X VALOR FINAL
+                        const porcentajeDistribuidor = Number(v) * Number(distribuidor); // PORCENTAJE PARA DISTRIBUIR
+
+                        const dist = porcentajeDistribuidor + v; // DISTRIBUIDOR VALOR
+                        const final = porcentaje + v;  // VALOR FINAL
+
+                        
+                        {
+                            hasPermission(user.user, 'cotizar_distribuidor') && (send(dist)) 
+                        }
+                        {
+                            hasPermission(user.user, 'cotizar_final') && (send(final)) 
+                        } 
                         return setVal(final);
                 })
             : null

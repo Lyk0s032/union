@@ -277,6 +277,75 @@ export function axiosToGetPrima(carga, id){
 }
 
 
+// PRODUCTOS
+// ----------------------
+export function getProductos(data){
+    return {
+        type: types.GET_PRODUCTOS,
+        payload: data
+    }
+}
+export function gettingProductos(carga){
+    return {
+        type: types.GETTING_PRODUCTOS,
+        payload: carga
+    }
+}
+ 
+export function axiosToGetProductos(carga){
+    return function(dispatch){ 
+        dispatch(gettingProductos(carga))
+        axios.get(`/api/materia/producto/search`)
+        .then((info) => info.data) 
+        .then(inf => {
+            return dispatch(getProductos(inf))
+        })
+        .catch((e) => {
+            if(e.request){
+                return dispatch(getProductos(404));
+            }else{
+                return dispatch(getProductos(404))
+
+            }
+        });
+    }
+}
+
+
+export function getProducto(data){
+    return {
+        type: types.GET_PRODUCTO,
+        payload: data
+    }
+}
+export function gettingProducto(carga){
+    return {
+        type: types.GETTING_PRODUCTO,
+        payload: carga
+    }
+}
+
+export function axiosToGetProducto(carga, id){
+    return function(dispatch){ 
+        dispatch(gettingProducto(carga))
+        axios.get(`/api/materia/producto/get/${id}`)
+        .then((info) => info.data) 
+        .then(inf => {
+            return dispatch(getProducto(inf))
+        }) 
+        .catch((e) => { 
+            console.log(e)
+            if(e.request){
+                return dispatch(getProducto('notrequest'));
+            }else{
+                return dispatch(getProducto(404))
+
+            }
+        });
+    }
+}
+
+
 
 
 

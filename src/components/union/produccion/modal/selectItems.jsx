@@ -93,13 +93,17 @@ export default function SelectMP(){
                             params.get('update') ? null :
                             <div className="priceBox">
                                 <div>
+                                    {/* <span>Producción </span><br /> */}
+                                    <GetSimilarPrice materia={kit.materia} linea={kit.linea} />
+                                </div>
+                                {/* <div style={{marginLeft:50}}>
                                     <span>Distribuidor </span><br />
                                     <GetSimilarPrice materia={kit.materia} linea={kit.linea} type='distribuidor' />
-                                </div>
-                                <div style={{marginLeft:100}}>
+                                </div> */}
+                                {/* <div style={{marginLeft:50}}>
                                     <span>Precio final</span><br />
                                     <GetSimilarPrice materia={kit.materia} linea={kit.linea} type='final' />
-                                </div>
+                                </div> */}
                             </div> 
                         }
                         <div className="buttonConfirm">
@@ -119,7 +123,7 @@ export default function SelectMP(){
             </div>
         </div>
     )
-}
+} 
 
 function  GetSimilarPrice(props){
     const consumir = props.materia;
@@ -137,21 +141,33 @@ function  GetSimilarPrice(props){
         return setValor(promedio);
     } 
 
-    const distribuidor = linea.percentages && linea.percentages.length ? Number(valor * linea.percentages[0].distribuidor) : valor
-    const final = linea.percentages && linea.percentages.length ? Number(valor * linea.percentages[0].final) : valor
+    const distribuidor = linea.percentages && linea.percentages.length ? Number(valor / linea.percentages[0].distribuidor) : valor
+    const final = linea.percentages && linea.percentages.length ? Number(distribuidor / linea.percentages[0].final) : valor
     
     useEffect(() => {
         mapear()
     }, [consumir])
     return (
-        <div className="similarPrice">
+        <div className="similarPrice" style={{display:'flex'}}>
             {
-                type == 'distribuidor' ?
-                    <h3>{valor > 0 ? new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valor +Number(distribuidor)).toFixed(0)) : 0} <span>COP</span></h3>
-                :
-                    <h3>{valor > 0 ? new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valor +Number(final)).toFixed(0)) : 0} <span>COP</span></h3>
-
+            // Final
             }
+            <div className="">
+                <span>Distribuidor</span><br />
+                <h3 style={{fontSize:14}}>{valor > 0 ? new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(distribuidor).toFixed(0)) : 0} <span>COP</span></h3>    
+            </div>
+            {// Distribuidor
+            }
+            <div className="" style={{marginLeft:30}}>
+                <span>Final</span>
+                <h3 style={{fontSize:14}}>{valor > 0 ? new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(final).toFixed(0)) : 0} <span>COP</span></h3>
+            </div>
+            {// Produccion
+            }
+            <div className="" style={{marginLeft:30}}>
+                <span>Producción</span>
+                <h3 style={{fontSize:14}}>{valor > 0 ? new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valor).toFixed(0)) : 0} <span>COP</span></h3>
+            </div>                     
         </div>
     )
 }

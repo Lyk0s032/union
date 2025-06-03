@@ -5,6 +5,7 @@ import { MdArrowForward, MdCheck } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from '../../../store/action/action';
 import { getPromedio } from "../../produccion/calculo";
+import { hasPermission } from "../../acciones";
 
 export default function ItemToSelect(props){
     const [active, setActive] = useState(null);
@@ -94,7 +95,7 @@ export default function ItemToSelect(props){
             </td>
             <td> 
                 <strong>
-                    <AllKit kit={option} enviarAlPadre={recibirValor} final={final} />
+                    <AllKit kit={option} enviarAlPadre={recibirValor} distribuidor={distribuidor} final={final} />
                 </strong>
             </td>
 
@@ -107,29 +108,38 @@ export default function ItemToSelect(props){
     )
 }
 
-function AllKit( { enviarAlPadre, kit, final } ){
+function AllKit( { enviarAlPadre, kit, final, distribuidor } ){
     const kitt = kit;
-    
+    const usuario = useSelector(store => store.usuario);
+    const { user } = usuario;
     const [valor, setVal] = useState(0)
-    const fn = valor * Number(final)
+    const fn = valor / Number(final)
+    const dist = valor / Number(distribuidor)
+
+    // PORCENTAJE A EL VALOR DEL DIST
+    const porcentajeADist = Number(valor + dist) * Number(final) // Porcentaje descuento a val Desc.
+
 
 
     const Mensage = () => {
-        enviarAlPadre(Number(Number(valor) + fn).toFixed(0))
+        hasPermission(user.user, 'cotizar_distribuidor') && (enviarAlPadre(Number(Number(dist)).toFixed(0))) 
+        hasPermission(user.user, 'cotizar_final') && (enviarAlPadre(Number(Number(valor) + porcentajeADist).toFixed(0))) 
+        
     }
 
     const getTrueValor = (val) => {
+        hasPermission(user.user, 'cotizar_distribuidor') && (enviarAlPadre(Number(Number(dist)).toFixed(0))) 
+        hasPermission(user.user, 'cotizar_final') && (enviarAlPadre(Number(Number(valor) + fn).toFixed(0))) 
         setVal(val) 
-    }
-    console.log(fn)
+    } 
     useEffect(() => {
-        if(valor){
+        if(valor){ 
             Mensage()
         }
     })
     return (
         <div >
-            {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valor) + fn)} COP
+            {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valor))} COP
             <GetSimilarPrice materia={kitt.materia} realValor={getTrueValor} />
         </div>
     )
@@ -142,7 +152,7 @@ function GetSimilarPrice({realValor, materia }){
     const [valor, setValor] = useState(0) 
 
     const mapear = () => {
-        const a = consumir ?consumir.map((c, i) => {
+        const a = consumir ? consumir.map((c, i) => {
             const getV  =  getPromedio(c);
             return getV
         }) : 0

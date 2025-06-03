@@ -30,8 +30,7 @@ export default function Lineas(){
     }, [])
     return (
         <div className="provider">
-            {console.log(porcentajes)}
-            <div className="containerProviders">
+            <div className="containerProviders"> 
                 <div className="topSection">
                     <div className="title">
                         <h1>Líneas </h1>
@@ -41,7 +40,7 @@ export default function Lineas(){
                     <div className="containerListProviders">
                         <div className="topSearch">
                             <div className="containerTopSearch">
-                                <input type="text" placeholder="Buscar Kit" onChange={(e) => {
+                                <input type="text" placeholder="Buscar lineas" onChange={(e) => {
                                     setWord(e.target.value)
                                 }}/>
                             </div>

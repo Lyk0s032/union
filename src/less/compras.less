@@ -706,6 +706,7 @@
                                                                         font-weight: 500;
                                                                         color:@bgAzulDark;
                                                                         text-align: left;
+                                                                        position:relative;
                                                                         .proveedorData{
                                                                             text-align: center;
                                                                             img{
@@ -717,6 +718,89 @@
                                                                                 font-weight: 400;
                                                                                 font-size: 14px;
                                                                                 color: @bgAzulDark;
+                                                                            }
+                                                                        }
+
+                                                                        .itemToUse{
+                                                                            width:100%;
+                                                                            box-sizing: border-box;
+                                                                            text-align: center;
+                                                                            display: flex;
+                                                                            justify-content: space-around;
+                                                                            input{
+                                                                                border:none;
+                                                                                border-bottom: 1px solid #ccc;
+                                                                                width:100%;
+                                                                                margin:auto;
+                                                                                padding:10px 5px;
+                                                                                outline: 0px;
+                                                                                transition: .3s;
+                                                                                text-align: center;
+                                                                            }
+                                                                            input:focus{
+                                                                                border-bottom: 1px solid @bgAzulDark;
+                                                                            }
+                                                                        }
+                                                                        
+                                                                        .data{
+                                                                            margin-top:10px;
+                                                                            width:100%;
+                                                                            margin-left:auto;
+                                                                            text-align: left;
+                                                                            transition: .3s;
+                                                                            .title{
+                                                                                text-align: left;
+                                                                                transition: .3s;
+                                                                                span{
+                                                                                    transition: .3s;
+    
+                                                                                }
+                                                                                .promedio{
+                                                                                    margin:5px 0px;
+                                                                                    transition: .3s;
+    
+                                                                                    .porcentaje{
+                                                                                        color: @great;
+                                                                                    }
+                                                                                    .Danger{
+                                                                                        color: @danger;
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                            button{
+                                                                                margin-top:10px;
+                                                                                padding:5px 10px;
+                                                                                border-radius: 5px;
+                                                                                background-color: @great;
+                                                                                border:none;
+                                                                                span{
+                                                                                    color: @bgDefault;
+                                                                                }
+                                                                            }
+                                                                            .div{
+                                                                                display: flex;
+                                                                                align-items: center;
+                                                                                margin-top:10px;
+                                                                            }
+                                                                            .confirm{
+                                                                                width:30px;
+                                                                                height:30px;
+                                                                                border-radius: 100%;
+                                                                                display: flex;
+                                                                                align-items: center;
+                                                                                justify-content: space-around;
+                                                                                padding:0px;
+                                                                                margin-right: 10px;
+                                                                            }
+                                                                            .cancel{
+                                                                                width:30px;
+                                                                                height:30px;
+                                                                                border-radius: 100%;
+                                                                                background-color: @danger;
+                                                                                display: flex;
+                                                                                align-items: center;
+                                                                                justify-content: space-around;
+                                                                                padding:0px;
                                                                             }
                                                                         }
                                                                     }

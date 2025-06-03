@@ -6,6 +6,13 @@ const initialState = {
 
     prima: null,
     loadingPrima: null,
+
+
+    productos:null,
+    loadingProductos: false,
+
+    producto: null,
+    loadingProducto: null,
 }
 
 export default function (state = initialState, action) {
@@ -37,7 +44,37 @@ export default function (state = initialState, action) {
                 loadingPrima: action.payload
             }
         } 
-        default:
+
+
+        // PRODUCTOS
+        case types.GET_PRODUCTOS: {
+            return {
+                ...state,
+                productos: action.payload,
+                loadingProductos: false
+            }
+        }
+        case types.GETTING_PRODUCTOS: {
+            return {
+                ...state,
+                loadingProductos: action.payload
+            }
+        }  
+
+        case types.GET_PRODUCTO: {
+            return {
+                ...state,
+                producto: action.payload,
+                loadingProducto: false
+            }
+        }
+        case types.GETTING_PRODUCTO: {
+            return {
+                ...state,
+                loadingProducto: action.payload
+            }
+        } 
+        default: 
             return {...state}
     }
 }

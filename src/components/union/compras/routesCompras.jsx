@@ -8,6 +8,7 @@ import ModalAddExtensiones from './modal/extensiones';
 import * as actions from '../../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
 import RouteCompras from './compras/routeCompras';
+import ProductoTerminado from './productoTerminado/productoTerminado';
 
 export default function RoutesCompras(){
     const [params, setParams] = useSearchParams();
@@ -30,7 +31,8 @@ export default function RoutesCompras(){
                         <Routes> 
                             <Route index element={<RouteCompras /> } />
                             <Route path="pv/*" element={<Providers />} />
-                            <Route  path="mp/*" element={<MateriaPrima />} />
+                            <Route path="mp/*" element={<MateriaPrima />} />
+                            <Route path="pt/*" element={<ProductoTerminado />} />
                         </Routes>
                     </div>
                 </div>

@@ -14,13 +14,13 @@ function App() {
   const { user, loadingUser } = usuario;
 
   const log = JSON.parse(window.localStorage.getItem("loggedPeople"));
-
+  console.log(user) 
   useEffect(() => {
       if(log && !user){    
           dispatch(actions.AxiosAuthUser(log, true));
       }else{
         window.localStorage.removeItem('loggedPeople'); 
-      } 
+      }  
   }, [])  
   return (
     loadingUser ? 

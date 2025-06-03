@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import * as actions from '../store/action/action';
+import { hasPermission } from './acciones';
 
 export default function Nav(){
     const navigate = useNavigate();
@@ -33,11 +34,15 @@ export default function Nav(){
                                     <span>Producción</span>
                                 </div>
                             </li>
-                            <li onClick={() => navigate('/comercial')}>
-                                <div>
-                                    <span>Comercial</span>
-                                </div>
-                            </li>
+                            {
+                                hasPermission(user.user, 'cotizar_distribuidor') && (
+                                    <li onClick={() => navigate('/comercial')}>
+                                        <div>
+                                            <span>Comercial</span>
+                                        </div>
+                                    </li>
+                                )
+                            } 
                         </ul>
                     </nav> 
                 </div>

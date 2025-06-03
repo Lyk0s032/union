@@ -60,6 +60,13 @@ export default function LeftNav(){
                                         <span>Lista de Matería prima</span>
                                     </div>
                                 </li>
+                                <li onClick={() => {
+                                    navigate('/compras/pt')
+                                }} className={location.pathname === '/compras/pt' ||  location.pathname === '/compras/pt/' ? 'Active' : null }>
+                                    <div>
+                                        <span>Lista de Producto terminado</span>
+                                    </div>
+                                </li>
                             </ul>
                         </nav>
                     </div>

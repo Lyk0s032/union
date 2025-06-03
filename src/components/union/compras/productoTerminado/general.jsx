@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
-import ModaUpdateMp from '../modal/updateMp';
+import ModaUpdateProducto from '../modal/updateProduct';
 
 export default function General(props){
     const prima = props.prima;
@@ -19,15 +19,11 @@ export default function General(props){
                     </div>
                     <div className="dataGeneral">
                         <div className="boxGeneral">
+                            <h3>Producto terminado</h3>
                             <h1>{prima.description}</h1>
-                            <h3>{prima.medida} {prima.unidad}</h3>
                             <div className="optionsItem">
                                 <span className='title'>Volumen: </span><br />
                                 <span>{prima.volumen ? prima.volumen : 'Sin definir'}</span>
-                            </div>
-                            <div className="optionsItem">
-                                <span className='title'>Peso: </span><br />
-                                <span>{prima.peso ? prima.peso : 'Sin definir'}</span>
                             </div>
                             <div className="optionsItem">
                                 <span className='title'>Linea: </span><br />
@@ -43,7 +39,7 @@ export default function General(props){
             </div>
             {
                 params.get('u') ?
-                    <ModaUpdateMp prima={prima} />
+                    <ModaUpdateProducto prima={prima} />
                 : null
             }
         </div>
