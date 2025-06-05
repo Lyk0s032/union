@@ -179,7 +179,12 @@ export default function DocumentCotizacion(props){
                                                                     :
                                                                     <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.precio / it.armadoCotizacion.cantidad).toFixed(0))} COP</td>
                                                                 }
-                                                                <td>19%</td>
+                                                                {
+                                                                    it.kitCotizacion ?
+                                                                    <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.kitCotizacion.precio).toFixed(0) * (19 / 100)))} COP</td>
+                                                                    :
+                                                                    <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.armadoCotizacion.precio).toFixed(0)) * (19 / 100))} COP</td>
+                                                                }
                                                                 {
                                                                     it.kitCotizacion ?
                                                                     <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(it.kitCotizacion.descuento)} COP</td>
