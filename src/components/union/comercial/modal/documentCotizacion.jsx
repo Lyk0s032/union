@@ -58,7 +58,7 @@ export default function DocumentCotizacion(props){
                                             <h3>
                                                 FECHA:
                                             </h3>
-                                            <h4>{cotizacion.time.split('T')[0]}</h4>
+                                            <h4>{cotizacion.time ? cotizacion.time.split('T')[0] : 0}</h4>
                                         </div>
                                     </div> 
                                 </div>
@@ -110,7 +110,7 @@ export default function DocumentCotizacion(props){
                                             <h3>
                                                 Vendedor:
                                             </h3>
-                                            <h4>16788004 VIDAL, CONDE RAUL ANDRES</h4>
+                                            <h4>KEVIN ANDRÉS BOLAÑOS ORREGO</h4>
                                         </div>
                                         <div className="item">
                                             <h3>
@@ -144,8 +144,8 @@ export default function DocumentCotizacion(props){
                                     <table>
                                         <thead>
                                             <tr>
-                                                <th>Referencia</th>
-                                                <th>Descripción</th>
+                                                <th className='left'>Referencia</th>
+                                                <th className='left'>Descripción</th>
                                                 <th>Cantidad</th>
                                                 <th>Valor Unitario</th>
                                                 <th>IVA</th>
@@ -162,11 +162,11 @@ export default function DocumentCotizacion(props){
                                                                 
                                                                 {
                                                                     it.kitCotizacion ?
-                                                                        <td>0{it.id}</td>
+                                                                        <td className='left'>0{it.id}</td>
                                                                     :
-                                                                    <td>SP{it.id}</td>
+                                                                    <td className='left'>SP{it.id}</td>
                                                                 }
-                                                                <td>{it.name}</td>
+                                                                <td className='left'>{it.name}</td>
                                                                 {
                                                                     it.kitCotizacion ?
                                                                     <td>{it.kitCotizacion.cantidad}</td>
@@ -212,7 +212,7 @@ export default function DocumentCotizacion(props){
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <TotalSub />
+                                            <TotalSub cotizacion={cotizacion} />
                                         </tbody>
                                     </table>
                                 </div>
@@ -225,15 +225,26 @@ export default function DocumentCotizacion(props){
     )
 }
 
-function TotalSub({ total }){
+function TotalSub({ cotizacion }){
     
+    const valor = cotizacion.kits && cotizacion.kits.length ? Number(cotizacion.kits.reduce((acc, p) => Number(acc) + Number(p.kitCotizacion ? p.kitCotizacion.precio : 0), 0)) : null
+    const valorSuper = cotizacion.armados && cotizacion.armados.length ? Number(cotizacion.armados.reduce((acc, p) => Number(acc) + Number(p.armadoCotizacion ? p.armadoCotizacion.precio : 0), 0)) : null
+    const sumaValor = Number(valor + valorSuper)
+    // Descuento
+    const descuentoValor = cotizacion.kits && cotizacion.kits.length ? Number(cotizacion.kits.reduce((acc, p) => Number(acc) + Number(p.kitCotizacion ? p.kitCotizacion.descuento : 0), 0)) : null
+    const descuentoValorSuper = cotizacion.armados && cotizacion.armados.length ? Number(cotizacion.armados.reduce((acc, p) => Number(acc) + Number(p.armadoCotizacion ? p.armadoCotizacion.descuento : 0), 0)) : null
+    const sumaDescuento = Number(descuentoValor + descuentoValorSuper).toFixed(0)
+
+    const subTotal = sumaValor - sumaDescuento;
+    const valorIva = subTotal * (19 / 100)
+    const total = subTotal + valorIva;
     return (
         <tr className='total'>
-            <td>100.000 COP</td>
-            <td>100.000 COP</td>
-            <td>100.000 COP</td>
-            <td>100.000 COP</td>
-            <td>100.000 COP</td>
+            <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(sumaValor).toFixed(0))} COP</td>
+            <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(sumaDescuento).toFixed(0))} COP</td>
+            <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(subTotal).toFixed(0))} COP</td>
+            <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valorIva).toFixed(0))} COP</td>
+            <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(total).toFixed(0))} COP</td>
         </tr>
     )
 }

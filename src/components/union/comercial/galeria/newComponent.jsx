@@ -7,7 +7,6 @@ import ItemNewSuperKit from './itemNewSuperKit';
 
 export default function NewComponent(){
     const [params, setParams] = useSearchParams(); 
-    const [nav, setNav] = useState(null);
     
     const [selectedFile, setSelectedFile] = useState(null); // Para guardar el archivo seleccionado por el usuario
     const [uploadedImageUrl, setUploadedImageUrl] = useState(null); // Para guardar la URL de Cloudinary que viene del backend
@@ -23,7 +22,8 @@ export default function NewComponent(){
     const dispatch = useDispatch();
     const superK = useSelector(store => store.kits);
     const { superKit, loadingSuperKit} = superK;
-    console.log(superK)
+    const [nav, setNav] = useState(!superKit ? null : 'kits');
+
     const handleFileChange = (event) => {
         const file = event.target.files[0]; // Obtiene el primer archivo seleccionado
         if (file) {
@@ -133,7 +133,7 @@ export default function NewComponent(){
                 params.delete('c');
                 setParams(params);
             }}></div>
-            <div className="containerModal Avance">
+            <div className="containerModal Avance"> 
                 <div className="navTop">
                     <nav>
                         <ul>
@@ -210,14 +210,14 @@ export default function NewComponent(){
                                                 </select>
                                             </div>
 
-                                            <div className="inputDiv">
+                                            {/* <div className="inputDiv">
                                                 <label htmlFor="">Categoría</label><br />
                                                 <select name="" id="">
                                                     <option value="">Categoría A</option>
                                                     <option value="">Categoría B</option>
 
                                                 </select>
-                                            </div>
+                                            </div> */}
                                         </div>
                                         <div className="inputDiv">
                                             <button onClick={() => {
@@ -256,7 +256,7 @@ export default function NewComponent(){
                                                                 <ItemNewSuperKit key={i+1} kit={k} ky={i} superKitId={superKit.id}/>
                                                             )
                                                         })
-                                                    : <h3>Buscar</h3>
+                                                    : null
                                                 }
                                             </div>
                                         </div>
@@ -295,19 +295,18 @@ export default function NewComponent(){
                                                                             </tr>
                                                                         )
                                                                     })
-                                                                : <h1>No hay</h1>
+                                                                : <h1>No hay kit's incluidos</h1>
                                                             :null
                                                         }
-                                                        
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
-                                        <div className="bottomAvance">
+                                        {/* <div className="bottomAvance">
                                             <button>
                                                 <span>Finalizar</span>
                                             </button>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </div>

@@ -431,6 +431,10 @@ body button {
   font-size: 11px;
   color: #666;
   border-bottom: 1px solid #ccc;
+  text-align: right;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData table thead tr .left {
+  text-align: left;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData table tbody tr {
   cursor: pointer;
@@ -441,6 +445,10 @@ body button {
   box-sizing: border-box;
   color: #046290;
   font-weight: 400;
+  text-align: right;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData table tbody tr .left {
+  text-align: left;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData table tbody .total td {
   font-weight: 5
@@ -1570,6 +1578,17 @@ body button {
   box-sizing: border-box;
   cursor: pointer;
 }
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .leftParallax .topSearch .rightFilter button {
+  padding: 10px 20px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  background-color: #046290;
+  border: 1px solid #046290;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .leftParallax .topSearch .rightFilter button span {
+  font-size: 12px;
+  color: #FFF;
+}
 .panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .leftParallax .allComponentsDiv {
   height: 90%;
   box-sizing: border-box;
@@ -1656,10 +1675,27 @@ body button {
   color: #046290;
   font-size: 20px;
 }
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .rightWatch .choose {
+  width: 90%;
+  height: 90%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px 0px;
+  box-sizing: border-box;
+  text-align: center;
+}
+.panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .rightWatch .choose h1 {
+  font-weight: 400;
+  color: #454f5b;
+  font-size: 18px;
+}
 .panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .rightWatch .boxVisualizarChoose {
   height: 90%;
   overflow-y: auto;
   box-sizing: border-box;
+  padding-bottom: 30px;
 }
 .panelGaleria .homeViewGaleria .containerHomeView .divideParallaxToWork .containerDivide .rightWatch .boxVisualizarChoose .topImg {
   width: 100%;
@@ -2037,6 +2073,13 @@ body button {
   box-sizing: border-box;
   font-size: 12px;
   color: #046290;
+}
+.panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .myComponent .listaDeMyKits .lista h1 {
+  font-weight: 400;
+  color: #046290;
+  font-size: 18px;
+  margin-top: 20px;
+  margin-left: 10px;
 }
 .panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .myComponent .bottomAvance {
   height: 10%;

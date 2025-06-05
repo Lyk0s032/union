@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import NewComponent from './newComponent';
 import * as actions from './../../../store/action/action';
@@ -9,8 +9,7 @@ export default function Home(){
     const dispatch = useDispatch();
     const superK = useSelector(store => store.kits);
     const { superKits, loadingSuperKits, superKit, loadingSuperKit} = superK;
-
-    console.log(superK)
+    const [word, setWord] = useState(null);
  
     useEffect(() => {
        if(!superKits){
@@ -22,7 +21,7 @@ export default function Home(){
             <div className="containerHomeView">
                 <div className="topPage">
                     <div className="left">
-                        <h3>Librería de componentes</h3>
+                        <h3>Librería de superkit's</h3>
                     </div>
                     <div className="rightOptions">
                         <nav>
@@ -34,6 +33,7 @@ export default function Home(){
                                 </li>
                                 <li>
                                     <button onClick={() => {
+                                        dispatch(actions.getSuperKit(null))
                                         params.set('c', 'new')
                                         setParams(params);
                                     }}>
@@ -43,20 +43,22 @@ export default function Home(){
                             </ul>
                         </nav>
                     </div>
-                </div>
+                </div> 
                 <div className="divideParallaxToWork">
                     <div className="containerDivide">
                         <div className="leftParallax">
                             <div className="topSearch">
                                 <div className="leftSearch">
-                                    <input type="text" placeholder='Buscar componente' />
+                                    <input type="text" placeholder='Buscar superkit' onChange={(e) => {
+                                        setWord(e.target.value)
+                                    }}/>
                                 </div>
                                 <div className="rightFilter" style={{
                                     display:'flex',
                                     justifyContent:'end',
                                     alignItems:'center'
                                 }}>
-                                    <nav>
+                                    {/* <nav>
                                         <ul>
                                             <li>
                                                 <label htmlFor="">Categoría</label><br />
@@ -67,17 +69,17 @@ export default function Home(){
                                                 </select>
                                             </li>
                                         </ul>
-                                    </nav>
+                                    </nav> */}
                                     <button onClick={() => dispatch(actions.axiosToGetSuperKits(false))} 
                                         style={{marginLeft:10}}>
-                                        <span>Reload</span>
+                                        <span>Refresar</span>
                                     </button>
                                 </div>
                             </div>
                             <div className="allComponentsDiv">
                                 <div className="containerAll">
                                     <div className="title">
-                                        <span>2 Elementos encontrados</span>
+                                        <span>{(superKits && (superKits.length)) } Elementos encontrados</span>
                                     </div>
                                     <div className="listaComponents">
                                         <div className="containerLista">
@@ -87,7 +89,10 @@ export default function Home(){
                                                 <h1>Cargando...</h1>
                                             :
                                             superKits && superKits.length ?
-                                                superKits.map((k, i) => {
+                                                superKits.filter(sp => {
+                                                    const porLetra = word ? sp.name.toLowerCase().includes(word.toLowerCase()) : true
+                                                    return porLetra 
+                                                }).map((k, i) => {
                                                     return (
                                                     <div className="component" key={i+1} onClick={() => {
                                                         dispatch(actions.axiosToGetSuperKit(true, k.id))
@@ -117,7 +122,9 @@ export default function Home(){
                                 loadingSuperKit ?
                                     <h1>Cargando</h1>
                                 : !superKit ?
-                                    <h1>Selecciona un SuperKit para visualizar</h1>
+                                    <div className="choose">
+                                        <h1>Selecciona un superKit para visualizar</h1>
+                                    </div>
                                 : 
                                     <div className="boxVisualizarChoose">
                                         <div className="topImg">
@@ -147,7 +154,11 @@ export default function Home(){
                                         <div className="kitsDetails">
                                             <div className="title">
                                                 <span>Kit's</span>
-                                                <button>
+                                                <button onClick={() => {
+                                                        params.set('c', 'new')
+                                                        setParams(params);
+                                                        dispatch(actions.getSuperKit(superKit))
+                                                    }}>
                                                     <span>Editar</span>
                                                 </button>
                                             </div>

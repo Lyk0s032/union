@@ -98,17 +98,20 @@ export default function CotizacionItem({ cotizacionn, openMenuId, toggleMenu }){
                             </div>
                             <nav>
                                 <ul>
-                                    <li onClick={() => {
-                                        toggleMenu(cotizacion.id)
-                                        dispatch(actions.getCotizacion(cotizacion))
-                                        params.set('w', 'newCotizacion')
-                                        setParams(params);
-                                    }}> 
-                                        <div>
-                                            <BsPencil className="icon" />
-                                            <span>Editar</span>
-                                        </div>
-                                    </li>
+                                    {
+                                        cotizacion.state != 'aprobada' && (
+                                        <li onClick={() => {
+                                            toggleMenu(cotizacion.id)
+                                            dispatch(actions.getCotizacion(cotizacion))
+                                            params.set('w', 'newCotizacion')
+                                            setParams(params);
+                                        }}> 
+                                            <div>
+                                                <BsPencil className="icon" />
+                                                <span>Editar</span>
+                                            </div>
+                                        </li> ) 
+                                    }
                                     <li onClick={() => openCoti(cotizacion.id)}> 
                                         <div>
                                             <MdOutlineRemoveRedEye  className="icon" />
