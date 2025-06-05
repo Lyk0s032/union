@@ -22,12 +22,35 @@ export default function SelectedSuperKit({ kt, cotizacion }){
             dispatch(actions.axiosToGetCotizacion(false, cotizacion.id))
             dispatch(actions.axiosToGetCotizaciones(false))
             setActive(null)
+            return res
         }).catch(err => {
             dispatch(actions.HandleAlerta('No hemos podido dar este descuento', 'mistake'));
-
+            return err
         })
         return sendPeticion;
     }
+
+    const deleteSuperKitItem = async (itemId) => {
+        const body = {
+            superKidId: itemId,
+            cotizacionId: cotizacion.id 
+        }
+
+        const sendPetion = await axios.delete('api/cotizacion/remove/superKit', { data: body} )
+        .then((res) => {
+            dispatch(actions.axiosToGetCotizacion(false, cotizacion.id))
+            dispatch(actions.HandleAlerta('Kit removido', 'positive'))
+            return res
+        })
+        .catch(err => {
+            console.log(err);
+            dispatch(actions.HandleAlerta('No hemos logrado remover este Superkit', 'mistake'))
+        })
+        return sendPetion; 
+    }
+
+    
+
     return ( 
         <tr>
             <td>
@@ -59,13 +82,8 @@ export default function SelectedSuperKit({ kt, cotizacion }){
             </td> 
             <td>
                 <button onClick={() => {
-                    if(kt.kitCotizacion){
-                        deleteItem(kt.id)
-                    }else if(kt.armadoCotizacion){
-
                         deleteSuperKitItem(kt.id)
-                    }
-                } }>
+                }}>
                     x
                 </button>
             </td>

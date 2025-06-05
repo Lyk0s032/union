@@ -29,6 +29,25 @@ export default function SelectedKit({ kt, cotizacion }){
         })
         return sendPeticion;
     }
+
+    const deleteItem = async (itemId) => {
+        const body = {
+            kitId: itemId,
+            cotizacionId: cotizacion.id 
+        }
+
+        const sendPetion = await axios.delete('api/cotizacion/remove/item', { data: body} )
+        .then((res) => {
+            dispatch(actions.axiosToGetCotizacion(false, cotizacion.id))
+            dispatch(actions.HandleAlerta('Kit removido', 'positive'))
+ 
+        })
+        .catch(err => {
+            console.log(err);
+            dispatch(actions.HandleAlerta('No hemos logrado remover este kit', 'mistake'))
+        })
+        return sendPetion; 
+    }
     return (
         <tr>
             <td>
@@ -61,9 +80,6 @@ export default function SelectedKit({ kt, cotizacion }){
                 <button onClick={() => {
                     if(kt.kitCotizacion){
                         deleteItem(kt.id)
-                    }else if(kt.kitCotizacion){
-
-                        deleteSuperKitItem(kt.id)
                     }
                 } }>
                     x
