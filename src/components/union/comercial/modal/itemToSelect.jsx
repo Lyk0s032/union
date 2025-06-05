@@ -7,7 +7,7 @@ import * as actions from '../../../store/action/action';
 import { getPromedio } from "../../produccion/calculo";
 import { hasPermission } from "../../acciones";
 
-export default function ItemToSelect(props){
+export default function ItemToSelect({ dis, kit }){
     const [active, setActive] = useState(null);
 
     const [form, setForm] = useState({
@@ -20,7 +20,7 @@ export default function ItemToSelect(props){
     const { cotizacion } = cotizacions; 
  
     const dispatch = useDispatch(); 
-    const option = props.kit;
+    const option = kit;
     const distribuidor = option.linea.percentages && option.linea.percentages.length ? option.linea.percentages[0].distribuidor : 0
     const final = option.linea.percentages && option.linea.percentages.length ? option.linea.percentages[0].final : 0
 
@@ -50,9 +50,9 @@ export default function ItemToSelect(props){
     }  
     
     const recibirValor = (data) => {
-        setValor(Number(data) + Number(final));
-        console.log('LLega del componete Kits')
-    }
+        setValor(Number(data));
+        console.log('Recibe el valor: ', data)
+    } 
     return ( 
         active ?
         <tr className="active" >
@@ -72,8 +72,7 @@ export default function ItemToSelect(props){
             </td>
             <td>
                 <strong>
- 
-                   {Number(valor * form.cantidad).toFixed(0)} COP
+                    {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valor * form.cantidad).toFixed(0))} COP
                 </strong>
             </td>
             <td> 
@@ -89,17 +88,17 @@ export default function ItemToSelect(props){
         </tr>
         :
         <tr >
-            <td>{option.name}</td>
-            <td>
+            <td className="large">{option.name} </td>
+            <td className="short">
                 <strong>1</strong>
             </td>
-            <td> 
+            <td className="short"> 
                 <strong>
-                    <AllKit kit={option} enviarAlPadre={recibirValor} distribuidor={distribuidor} final={final} />
+                    <AllKit kit={option} enviarAlPadre={recibirValor} distribuidor={distribuidor} final={final} dis={dis} />
                 </strong>
-            </td>
+            </td> 
 
-            <td>
+            <td className="btns">
                 <button onClick={() => setActive('active')}>
                     <MdArrowForward />
                 </button>
@@ -108,38 +107,36 @@ export default function ItemToSelect(props){
     )
 }
 
-function AllKit( { enviarAlPadre, kit, final, distribuidor } ){
+function AllKit( { enviarAlPadre, kit, final, distribuidor, dis } ){
     const kitt = kit;
     const usuario = useSelector(store => store.usuario);
     const { user } = usuario;
     const [valor, setVal] = useState(0)
-    const fn = valor / Number(final)
-    const dist = valor / Number(distribuidor)
+    const dist = distribuidor ?  Number(Number(valor) / Number(distribuidor)) : valor
+    const fn = final ? Number(Number(dist) / Number(final)) : Number(dist) 
+
+    console.log('Valooooooooooooor', dist)
 
     // PORCENTAJE A EL VALOR DEL DIST
-    const porcentajeADist = Number(valor + dist) * Number(final) // Porcentaje descuento a val Desc.
 
 
 
     const Mensage = () => {
-        hasPermission(user.user, 'cotizar_distribuidor') && (enviarAlPadre(Number(Number(dist)).toFixed(0))) 
-        hasPermission(user.user, 'cotizar_final') && (enviarAlPadre(Number(Number(valor) + porcentajeADist).toFixed(0))) 
-        
+        return enviarAlPadre(dis ? Number(dist).toFixed(0) : fn) 
     }
 
     const getTrueValor = (val) => {
-        hasPermission(user.user, 'cotizar_distribuidor') && (enviarAlPadre(Number(Number(dist)).toFixed(0))) 
-        hasPermission(user.user, 'cotizar_final') && (enviarAlPadre(Number(Number(valor) + fn).toFixed(0))) 
-        setVal(val) 
+        setVal(val)
+        Mensage()
     } 
     useEffect(() => {
         if(valor){ 
-            Mensage()
+            Mensage() 
         }
     })
     return (
         <div >
-            {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valor))} COP
+            {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(dis ? dist : fn).toFixed(0))} COP
             <GetSimilarPrice materia={kitt.materia} realValor={getTrueValor} />
         </div>
     )
@@ -160,6 +157,7 @@ function GetSimilarPrice({realValor, materia }){
         realValor(promedio ? promedio.toFixed(0) : 0);
         return setValor(promedio);
     } 
+    console.log('Promedio de:',  valor)
 
     
     useEffect(() => {

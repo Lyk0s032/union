@@ -19,6 +19,7 @@ export default function SearchKitsComercial(){
     const [filter, setFilter] = useState(kits);
     
 
+    const [dis, setDis] = useState(false);
     useEffect(() => {
         dispatch(actions.axiosToGetKitsCompleted(false))
         setFilter(kits)
@@ -61,42 +62,34 @@ export default function SearchKitsComercial(){
                     </div>
                 </div>
                 <div className="tabla">
+                <div className="priceFilter">
+                    <label htmlFor="">Para distribuidor</label><br />
+                    <input type="checkbox" onChange={(e) => {
+                        setDis(!dis)
+                    }}/>
+                </div>
                 <table>
                     <thead>
                         <tr>
                             <th>Nombre</th>
                             <th>Cantidad</th>
-                            <th>Precio Promedio</th>
-                            <th></th>
-
+                            <th >Precio Promedio</th>
+                            <th className="btns"></th>
                         </tr>
                     </thead>
                     <tbody>
                         {
                             kits && kits.length ?
-                                word || metodo ?
-                                    filter && filter.length ?
-                                        filter.filter(m => 
-                                          m.description.toLowerCase().includes(word.toLowerCase())
-                                        ).map((pv, i) => {
-                                            return (
-                                                cotizacion.kits && cotizacion.kits.length ?
-                                                    cotizacion.kits.find(k => k.id == pv.id) ? null : 
-                                                    <ItemToSelect kit={pv} key={i+1} />
-                                                :<ItemToSelect kit={pv} key={i+1} />
-                                            )
-                                        })
-                                    : <h1>No hay resultados de busqueda</h1>
-                                :
-                                kits.map((kt, i) => {
+                                kits.filter(m => {
+                                        const porLetra = word ? m.name.toLowerCase().includes(word.toLowerCase()) : true
+                                        return porLetra
+                                    }
+                                ).map((pv, i) => {
                                     return (
-                                        cotizacion.kits && cotizacion.kits.length ?
-                                        cotizacion.kits.find(k => k.id == kt.id) ? null : 
-                                        <ItemToSelect kit={kt} key={i+1} />
-                                        :<ItemToSelect kit={kt} key={i+1} />
+                                        <ItemToSelect kit={pv} key={i+1} dis={dis} />
                                     )
                                 })
-                            :null
+                            : <h1>No hay resultados de busqueda</h1>
                         }
                     </tbody>
                 </table>

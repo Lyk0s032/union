@@ -171,21 +171,26 @@ export default function DocumentCotizacion(props){
                                                                     it.kitCotizacion ?
                                                                     <td>{it.kitCotizacion.cantidad}</td>
                                                                     :
-                                                                    <td>{it.armadoCotizacion.cantidad}</td>
-                                                                }
+                                                                    <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.cantidad).toFixed(0))}</td>
+                                                                } 
                                                                 {
                                                                     it.kitCotizacion ?
-                                                                    <td>{it.kitCotizacion.precio / it.kitCotizacion.cantidad}</td>
+                                                                    <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.kitCotizacion.precio / it.kitCotizacion.cantidad).toFixed(0))} COP</td>
                                                                     :
-                                                                    <td>{it.armadoCotizacion.precio / it.armadoCotizacion.cantidad}</td>
+                                                                    <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.precio / it.armadoCotizacion.cantidad).toFixed(0))} COP</td>
                                                                 }
                                                                 <td>19%</td>
-                                                                <td>0</td>
                                                                 {
                                                                     it.kitCotizacion ?
-                                                                    <td>{it.kitCotizacion.precio}</td>
+                                                                    <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(it.kitCotizacion.descuento)} COP</td>
                                                                     :
-                                                                    <td>{it.armadoCotizacion.precio}</td>
+                                                                    <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(it.armadoCotizacion.descuento)} COP</td>
+                                                                }
+                                                                {
+                                                                    it.kitCotizacion ?
+                                                                    <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.kitCotizacion.precio).toFixed(0))} COP</td>
+                                                                    :
+                                                                    <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.precio).toFixed(0))} COP</td>
                                                                 }
                                                             </tr>
                                                         )
@@ -207,14 +212,7 @@ export default function DocumentCotizacion(props){
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr className='total'>
-                                                <td>100.000 COP</td>
-                                                <td>100.000 COP</td>
-                                                <td>100.000 COP</td>
-                                                <td>100.000 COP</td>
-                                                <td>100.000 COP</td>
-
-                                            </tr>
+                                            <TotalSub />
                                         </tbody>
                                     </table>
                                 </div>
@@ -224,5 +222,18 @@ export default function DocumentCotizacion(props){
                 </div>
             }
         </div>
+    )
+}
+
+function TotalSub({ total }){
+    
+    return (
+        <tr className='total'>
+            <td>100.000 COP</td>
+            <td>100.000 COP</td>
+            <td>100.000 COP</td>
+            <td>100.000 COP</td>
+            <td>100.000 COP</td>
+        </tr>
     )
 }

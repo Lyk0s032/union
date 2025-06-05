@@ -3,6 +3,8 @@ import { OneElement } from "../../produccion/calculo";
 import axios from "axios";
 import * as actions from '../../../store/action/action';
 import { useDispatch } from "react-redux";
+import SelectedSuperKit from "./superKitSelected";
+import SelectedKit from "./selectedKit";
 
 export default function SelectedKits(props){
     const cotizacion = props.cotizacion;
@@ -63,58 +65,9 @@ export default function SelectedKits(props){
 
                         cotizacion.armados.concat(cotizacion.kits).map((kt, i) => {
                             return (
-                                <tr key={i+1}>
-                                    <td>
-                                        {
-                                            kt.armadoCotizacion ?
-                                            <div>
-                                                <strong style={{fontSize:12}}>Superkit</strong><br />
-                                                <span>{kt.name}</span>
-                                            </div>
-                                            :
-                                            kt.name
-                                        }
-                                    </td>
-                                    
-                                    {
-                                        kt.kitCotizacion ?
-                                            <td>{kt.kitCotizacion.cantidad }</td>
-                                        :
-                                        <td>{kt.armadoCotizacion.cantidad}</td>
-                                    }
-                                    {
-                                        kt.kitCotizacion ?
-                                            <td>{kt.kitCotizacion.descuento ? kt.kitCotizacion.descuento : 0 }</td>
-                                        :
-                                        <td>{null}</td>
-                                    }
-
-                                    {
-                                        kt.kitCotizacion ?
-                                            <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(kt.kitCotizacion.precio)} COP</td>
-                                        :
-                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(kt.armadoCotizacion.precio)} COP</td>
-                                    }
-                                    
-                                    <td>
-                                        
-                                    </td>
-                                    <td>
-                                        {/* <strong>{<ValorSelected mt={materia} />}</strong> */}
-                                    </td> 
-                                    <td>
-                                        <button onClick={() => {
-                                            if(kt.kitCotizacion){
-                                                deleteItem(kt.id)
-                                            }else if(kt.armadoCotizacion){
-
-                                                deleteSuperKitItem(kt.id)
-                                            }
-                                        } }>
-                                            x
-                                        </button>
-                                    </td>
-                                </tr>
+                                kt.armadoCotizacion ?
+                                    <SelectedSuperKit key={i+1} kt={kt} cotizacion={cotizacion}/>
+                                : <SelectedKit key={i+1} kt={kt} cotizacion={cotizacion} />
                             )
                         })
                     : null

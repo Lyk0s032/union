@@ -149,6 +149,12 @@ function  GetSimilarPrice(props){
     }, [consumir])
     return (
         <div className="similarPrice" style={{display:'flex'}}>
+            {// Produccion
+            }
+            <div className="" style={{marginLeft:30}}>
+                <span>Producción</span>
+                <h3 style={{fontSize:14}}>{valor > 0 ? new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valor).toFixed(0)) : 0} <span>COP</span></h3>
+            </div>
             {
             // Final
             }
@@ -162,12 +168,7 @@ function  GetSimilarPrice(props){
                 <span>Final</span>
                 <h3 style={{fontSize:14}}>{valor > 0 ? new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(final).toFixed(0)) : 0} <span>COP</span></h3>
             </div>
-            {// Produccion
-            }
-            <div className="" style={{marginLeft:30}}>
-                <span>Producción</span>
-                <h3 style={{fontSize:14}}>{valor > 0 ? new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valor).toFixed(0)) : 0} <span>COP</span></h3>
-            </div>                     
+                                 
         </div>
     )
 }

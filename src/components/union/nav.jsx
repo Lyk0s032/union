@@ -43,6 +43,12 @@ export default function Nav(){
                                     </li>
                                 )
                             } 
+
+                                    <li onClick={() => navigate('/comercial')}>
+                                        <div>
+                                            <span>Comercial</span>
+                                        </div>
+                                    </li>
                         </ul>
                     </nav> 
                 </div>

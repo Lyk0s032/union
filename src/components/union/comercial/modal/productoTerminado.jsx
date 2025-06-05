@@ -4,8 +4,9 @@ import * as actions from '../../../store/action/action';
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import SuperKitItem from "./itemSuperkit";
+import ProductoTerminadoItem from "./itemProducto";
 
-export default function SearchSuperKitsComercial(props){
+export default function SearchProductoTerminado(props){
     const coti = props.cotizacion;
     const dispatch = useDispatch();
     
@@ -21,16 +22,18 @@ export default function SearchSuperKitsComercial(props){
 
     const searchKitsAxios = async (searchTerm) => {
     
-        const response = await axios.get('/api/superkit/get/s/search/',{
+        const response = await axios.get('api/materia/producto/searching',{
         params: { // Aquí definimos los parámetros de consulta que irán en la URL (ej: ?query=...)
-          query: searchTerm // El nombre del parámetro 'query' debe coincidir con req.query.query en tu backend
+          q: searchTerm // El nombre del parámetro 'query' debe coincidir con req.query.query en tu backend
         },
             // Si tu backend requiere autenticación, añade headers aquí:
             // headers: { 'Authorization': `Bearer TU_TOKEN_DEL_USUARIO` }
-        })
+        }) 
         .then((res) => {
+            console.log(res)
             setData(res.data)
         }).catch(err => {
+            console.log(err)
             setData(404)
         });
     
@@ -38,13 +41,13 @@ export default function SearchSuperKitsComercial(props){
     }
 
     useEffect(() => {
-        dispatch(actions.axiosToGetKitsCompleted(false))
+        // dispatch(actions.axiosToGetKitsCompleted(false))
     }, [])
     return (
         <div className="containerRightSelect">
             <div className="topSelect">
                 <div className="titleSelect">
-                    <h3>Buscar Superkit's</h3>
+                    <h3>Buscar producto terminado</h3>
                 </div>
                 <div className="searchInput">
                     <input type="text" placeholder='Buscar aquí' onChange={(e) => {
@@ -63,14 +66,14 @@ export default function SearchSuperKitsComercial(props){
                     <div className="itemResults">
                         {
                             data == 404 ?
-                                null
+                                <h1>No hemos encontrado esto </h1>
                             : data && data.length ?
                                 data.map((m,i) => { 
                                     return (
-                                        <SuperKitItem key={i+1} dis={dis} cotizacion={coti} superkit={m} />
+                                          <ProductoTerminadoItem key={i+1} />
                                     )
-                                })
-                            : null
+                                }) 
+                            : <h1>Hoaa</h1>
                         }
                     </div>
                 </div>

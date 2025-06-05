@@ -979,19 +979,28 @@ body button {
   margin: auto;
   margin-top: 20px;
 }
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla .priceFilter {
+  width: 100%;
+  text-align: right;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla .priceFilter label {
+  font-size: 12px;
+  color: #666;
+}
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table {
   width: 100%;
   border-collapse: collapse;
 }
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table thead tr th {
   font-size: 12px;
-  padding: 10px 0px;
+  padding: 10px 10px;
   box-sizing: border-box;
   color: #046290;
   text-align: left;
 }
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody tr td {
-  padding: 8px 0px;
+  padding: 8px 10px;
+  width: 25%;
   box-sizing: border-box;
   font-size: 12px;
   color: #454f5b;
@@ -1006,9 +1015,16 @@ body button {
   display: flex;
   align-items: center;
   justify-content: space-around;
+  margin-right: 20px;
 }
-.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody .active td {
-  width: 25%;
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody tr .large {
+  width: 50%;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody tr .short {
+  width: 20%;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody tr .btns {
+  width: 10%;
 }
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody .active td .calibre {
   width: 60%;
@@ -1055,6 +1071,7 @@ body button {
   display: flex;
   align-items: center;
   justify-content: space-around;
+  font-size: 10px;
 }
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody .active td .twoButtons button:hover {
   transform: scale(1.1);
@@ -1064,6 +1081,15 @@ body button {
 }
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody .active td .twoButtons .great {
   background-color: #388E3C;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .priceFilter {
+  width: 90%;
+  margin: auto;
+  text-align: right;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .priceFilter label {
+  font-size: 12px;
+  color: #666;
 }
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .containerResults {
   box-sizing: border-box;

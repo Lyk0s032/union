@@ -7,8 +7,9 @@ import SelectedKits from './selected';
 import SearchKitsComercial from './searchKits';
 import axios from 'axios';
 import SearchSuperKitsComercial from './superKits';
+import SearchProductoTerminado from './productoTerminado';
  
-export default function SelectKits(){
+export default function SelectKits({ dist }){
     const cotizacions = useSelector(store => store.cotizacions);
 
     const { cotizacion, loadingCotizacion } = cotizacions;
@@ -89,7 +90,7 @@ export default function SelectKits(){
                     </nav> 
                     {
                         navCoti == 'terminado' ?
-                            <h1>Acá buscamos producto terminado</h1>
+                            <SearchProductoTerminado />
                         : navCoti == 'superkits' ?
                             <SearchSuperKitsComercial cotizacion={cotizacion} />
                         : <SearchKitsComercial /> 
@@ -100,7 +101,7 @@ export default function SelectKits(){
     )
 }
 
-
+ 
 function PriceCotizacion(props) { 
     const kits = props.cotizacion;
     const superK = props.coti;
@@ -112,9 +113,13 @@ function PriceCotizacion(props) {
     // const array = !ktv ? 0 : ktv.kitCotizacion.reduce((acc, p) => Number(acc) + Number(p.precio), 0)
     // console.log(ktv)
 
+    const descuentoArray =  kits ? kits.reduce((acc, p) => Number(acc) + Number(p.kitCotizacion.descuento), 0) : 0
+    const descuentoArrayDos = superK ? superK.reduce((acc, p) => Number(acc) + Number(p.armadoCotizacion.descuento), 0) : 0
+
+    const descuentos = Number(descuentoArray) + Number(descuentoArrayDos)
     return (
         <div className="">
-            <span>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(suma)} COP</span>
+            <span>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(suma - descuentos).toFixed(0))} COP</span>
         </div>
     )
 }

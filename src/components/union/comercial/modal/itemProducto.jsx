@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as actions from './../../../store/action/action';
 import { hasPermission } from "../../acciones";
 
-export default function SuperKitItem({dis, superkit, cotizacion}){
+export default function ProductoTerminadoItem(){
 
     const [active, setActive] = useState(null);
     const [howMany, setHowMany] = useState(1);
@@ -13,54 +13,32 @@ export default function SuperKitItem({dis, superkit, cotizacion}){
     const usuario = useSelector(store => store.usuario);
     const { user } = usuario;
     const dispatch = useDispatch();
-    const recibirValor = (data) => {
-        setValor(data);
-        console.log('LLega del componete Kits')
-    }
+    
 
-    const sendPeticion = async () => {
-        if(!howMany || howMany == 0) return dispatch(actions.HandleAlerta('Debes ingresar una cantidad', 'mistake'))
-        let body = {
-            superKitId: superkit.id,
-            cotizacionId: cotizacion.id,
-            cantidad: howMany,
-            precio: valor * howMany,
-        }
-        const sendPeticionVar = await axios.post('/api/cotizacion/add/superKit/item', body)
-        .then((res) => {
-            setActive(null);
-            dispatch(actions.HandleAlerta('Kit añadido con éxito', 'positive'))
-            dispatch(actions.axiosToGetCotizacion(false, cotizacion.id))
-        }).catch(err => {
-            console.log(err);
-            dispatch(actions.HandleAlerta('No hemos logrado crear esto', 'mistake'))
-        })
-        return sendPeticionVar;
-        
-    }
+ 
     return ( 
         <div className="superKitItem">
             {
                 !active ?
                 <div className="Divide" onClick={() => setActive('active')}>
                     <div className="leftImg">
-                        <img src={superkit.img} alt="" />
+                        <h1>S</h1>
                     </div>
                     <div className="titleData">
-                        <h3>{superkit.name}</h3>
-                        <span>{superkit.description}</span><br />
-                        <span>{ new Intl.NumberFormat('es-CO', {currency:'COP'}).format(valor.toFixed(0)) } COP</span>
+                        <h3>AA</h3>
+                        <span>This descriptión</span><br />
+                        <span>{ new Intl.NumberFormat('es-CO', {currency:'COP'}).format(100000) } COP</span>
                     </div>
                 </div>
                 :
                 <div className="Divide" >
                     <div className="leftImg">
-                        <img src={superkit.img} alt="" />
+                        <h1>S</h1>
                     </div>
                     <div className="titleData">
-                        <h3>{superkit.name}</h3>
+                        <h3>AA</h3>
                         <div className="form">
-                            <label htmlFor="">{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valor * howMany).toFixed(0))} COP</label><br />
+                            <label htmlFor="">{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(100000).toFixed(0))} COP</label><br />
                             <input type="text" placeholder="Cantidad" 
                             onChange={(e) => {
                                 setHowMany(e.target.value)
@@ -69,7 +47,7 @@ export default function SuperKitItem({dis, superkit, cotizacion}){
                                 sendPeticion()
                             }} className="save">
                                 <span>Guardar</span>
-                            </button>
+                            </button> 
                             <button onClick={() => setActive(null)} className="none">
                                 <span>Cancelar</span>
                             </button>
@@ -78,7 +56,7 @@ export default function SuperKitItem({dis, superkit, cotizacion}){
                 </div>
             }
             <div className="div">
-                <GetaAllKit kits={superkit.kits} enviarAlAbuelo={recibirValor} dis={dis} />
+                {/* <GetaAllKit kits={superkit.kits} enviarAlAbuelo={recibirValor} dis={dis} /> */}
             </div>
         </div>
     )

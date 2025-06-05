@@ -136,9 +136,14 @@ function ValorKit(props){
     const coti = props.cotizacion;
     const valor = coti.kits && coti.kits.length ? Number(coti.kits.reduce((acc, p) => Number(acc) + Number(p.kitCotizacion ? p.kitCotizacion.precio : 0), 0)) : null
     const valorSuper = coti.armados && coti.armados.length ? Number(coti.armados.reduce((acc, p) => Number(acc) + Number(p.armadoCotizacion ? p.armadoCotizacion.precio : 0), 0)) : null
+    
+    // Descuento
+    const descuentoValor = coti.kits && coti.kits.length ? Number(coti.kits.reduce((acc, p) => Number(acc) + Number(p.kitCotizacion ? p.kitCotizacion.descuento : 0), 0)) : null
+    const descuentoValorSuper = coti.armados && coti.armados.length ? Number(coti.armados.reduce((acc, p) => Number(acc) + Number(p.armadoCotizacion ? p.armadoCotizacion.descuento : 0), 0)) : null
  
     let totalCoti = valorSuper + valor;
+    let descuento = Number(descuentoValor) + Number(descuentoValorSuper)
     return (
-        <span>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format((totalCoti))}</span>
+        <span>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(totalCoti - descuento).toFixed(0))}</span>
     )
 }
