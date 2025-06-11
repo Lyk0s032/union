@@ -30,7 +30,6 @@ export default function SearchProductoTerminado(props){
             // headers: { 'Authorization': `Bearer TU_TOKEN_DEL_USUARIO` }
         }) 
         .then((res) => {
-            console.log(res)
             setData(res.data)
         }).catch(err => {
             console.log(err)
@@ -46,7 +45,7 @@ export default function SearchProductoTerminado(props){
     return (
         <div className="containerRightSelect">
             <div className="topSelect">
-                <div className="titleSelect">
+                <div className="titleSelect"><br />
                     <h3>Buscar producto terminado</h3>
                 </div>
                 <div className="searchInput">
@@ -61,22 +60,23 @@ export default function SearchProductoTerminado(props){
                     <input type="checkbox" onChange={(e) => {
                         setDis(!dis)
                     }}/>
-                </div>
+                </div>          
                 <div className="containerResults">
                     <div className="itemResults">
-                        {
-                            data == 404 ?
-                                <h1>No hemos encontrado esto </h1>
+                        {       
+                            !data ? null 
+
                             : data && data.length ?
                                 data.map((m,i) => { 
                                     return (
-                                          <ProductoTerminadoItem key={i+1} />
+                                          <ProductoTerminadoItem terminado={m} key={i+1} />
                                     )
                                 }) 
-                            : <h1>Hoaa</h1>
-                        }
-                    </div>
-                </div>
+                            :   
+                                <h1>No hemos encontrado esto </h1>
+                        }       
+                    </div>      
+                </div> 
             </div>
         </div>
     )

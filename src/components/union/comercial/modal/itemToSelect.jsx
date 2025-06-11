@@ -70,6 +70,7 @@ export default function ItemToSelect({ dis, kit }){
                     </div>
                 }
             </td>
+            <td>{option.extension.name}</td>
             <td>
                 <strong>
                     {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valor * form.cantidad).toFixed(0))} COP
@@ -91,6 +92,11 @@ export default function ItemToSelect({ dis, kit }){
             <td className="large">{option.name} </td>
             <td className="short">
                 <strong>1</strong>
+            </td>
+            <td>
+                {
+                    option.extension.name
+                }
             </td>
             <td className="short"> 
                 <strong>
@@ -115,15 +121,15 @@ function AllKit( { enviarAlPadre, kit, final, distribuidor, dis } ){
     const dist = distribuidor ?  Number(Number(valor) / Number(distribuidor)) : valor
     const fn = final ? Number(Number(dist) / Number(final)) : Number(dist) 
 
-    console.log('Valooooooooooooor', dist)
+    console.log(`valor de ${kitt.name}`, dist)
 
     // PORCENTAJE A EL VALOR DEL DIST
 
 
 
     const Mensage = () => {
-        return enviarAlPadre(dis ? Number(dist).toFixed(0) : fn) 
-    }
+        return enviarAlPadre(dis ? Number(dist) : fn) 
+    } 
 
     const getTrueValor = (val) => {
         setVal(val)
@@ -149,23 +155,26 @@ function GetSimilarPrice({realValor, materia }){
     const [valor, setValor] = useState(0) 
 
     const mapear = () => {
-        const a = consumir ? consumir.map((c, i) => {
-            const getV  =  getPromedio(c);
-            return getV
-        }) : 0
-        const promedio = a && a.length ? Number(a.reduce((acc, p) => Number(acc) + Number(p), 0)) : null
-        realValor(promedio ? promedio.toFixed(0) : 0);
-        return setValor(promedio);
+        // const a = consumir ? consumir.map((c, i) => {
+        //     const getV  =  getPromedio(c);
+        //     return getV
+        // }) : 0
+        // const promedio = a && a.length ? Number(a.reduce((acc, p) => Number(acc) + Number(p), 0)) : null
+        // realValor(promedio ? promedio.toFixed(0) : 0);
+        // return setValor(promedio);
+
+        const costos = consumir.map((c) => getPromedio(c));
+        const costoTotalKit = costos.reduce((acc, p) => acc + p, 0);
+        realValor(Number(costoTotalKit.toFixed(0)));
+        setValor(costoTotalKit);
     } 
     console.log('Promedio de:',  valor)
 
     
     useEffect(() => {
         mapear()
-
-    }, [])
+    }, [consumir])
     return (
-        <div className="">
-        </div>
+        <></>
     )
 }

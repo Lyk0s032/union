@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ItemToSelect from "./itemToSelect";
 import * as actions from '../../../store/action/action';
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
 export default function SearchKitsComercial(){
 
@@ -14,16 +15,31 @@ export default function SearchKitsComercial(){
     const cotizacions  = useSelector(store => store.cotizacions);
     const { cotizacion } = cotizacions;
 
-    const [word, setWord] = useState(null);
-    const [metodo, setMetodo] = useState(null); // METODO DE BUSQUEDA LINEA O CATEGORIA
-    const [filter, setFilter] = useState(kits);
     
+    const [kitSearch, setSearchKit] = useState();
+    const [loading, setLoading] = useState(false);
+    const searchKitsWithFunction = async (query) => {
+        if(!query || query == '') return setSearchKit(null);
+        setLoading(true);
+        setSearchKit(null);
+
+        const search = await axios.get('/api/kit/get/cotizar/search', {
+            params: { query: query },
+        })
+        .then((res) => {
+            setSearchKit(res.data)
+        })
+        .catch(err => {
+            console.log(err);
+            setSearchKit(null)
+            return null
+        })
+        .finally(e => setLoading(false))
+        return search
+    }
 
     const [dis, setDis] = useState(false);
-    useEffect(() => {
-        dispatch(actions.axiosToGetKitsCompleted(false))
-        setFilter(kits)
-    }, [])
+
     return (
         <div className="containerRightSelect">
             <div className="topSelect">
@@ -32,14 +48,14 @@ export default function SearchKitsComercial(){
                 </div>
                 <div className="searchInput">
                     <input type="text" placeholder='Buscar aquí' onChange={(e) => {
-                        setWord(e.target.value)
+                        searchKitsWithFunction(e.target.value)
                     }}/>
                 </div>
             </div>
             <div className="resultsToSelect">
                 <div className="filters">
                     <div className="divideFilters">
-                        <div>
+                        <div> 
                             <label htmlFor="">Categoría</label><br />
                             <select name="" id="">
                                 <option value="">Seleccionar</option>
@@ -73,18 +89,20 @@ export default function SearchKitsComercial(){
                         <tr>
                             <th>Nombre</th>
                             <th>Cantidad</th>
+                            <th>Color</th>
                             <th >Precio Promedio</th>
                             <th className="btns"></th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            kits && kits.length ?
-                                kits.filter(m => {
-                                        const porLetra = word ? m.name.toLowerCase().includes(word.toLowerCase()) : true
-                                        return porLetra
-                                    }
-                                ).map((pv, i) => {
+                            console.log(kitSearch)
+                        }
+                        {
+                            loading ? <h1>Cargando</h1>
+                            :
+                            kitSearch && kitSearch.length ?
+                                kitSearch.map((pv, i) => {
                                     return (
                                         <ItemToSelect kit={pv} key={i+1} dis={dis} />
                                     )

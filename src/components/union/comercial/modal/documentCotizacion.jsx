@@ -181,9 +181,9 @@ export default function DocumentCotizacion(props){
                                                                 }
                                                                 {
                                                                     it.kitCotizacion ?
-                                                                    <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.kitCotizacion.precio).toFixed(0) * (19 / 100)))} COP</td>
-                                                                    :
-                                                                    <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.armadoCotizacion.precio).toFixed(0)) * (19 / 100))} COP</td>
+                                                                    <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.kitCotizacion.precio - it.kitCotizacion.descuento).toFixed(0) * (0.19)))} COP</td>
+                                                                    : 
+                                                                    <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.armadoCotizacion.precio - it.armadoCotizacion.descuento).toFixed(0)) * (0.19))} COP</td>
                                                                 }
                                                                 {
                                                                     it.kitCotizacion ?

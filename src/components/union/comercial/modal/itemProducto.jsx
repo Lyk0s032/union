@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as actions from './../../../store/action/action';
 import { hasPermission } from "../../acciones";
 
-export default function ProductoTerminadoItem(){
+export default function ProductoTerminadoItem({ terminado }){
 
     const [active, setActive] = useState(null);
     const [howMany, setHowMany] = useState(1);
@@ -15,28 +15,39 @@ export default function ProductoTerminadoItem(){
     const dispatch = useDispatch();
     
 
- 
     return ( 
         <div className="superKitItem">
             {
                 !active ?
-                <div className="Divide" onClick={() => setActive('active')}>
+                <div className="Divide" onClick={() => setActive('active')} >
                     <div className="leftImg">
-                        <h1>S</h1>
-                    </div>
-                    <div className="titleData">
-                        <h3>AA</h3>
-                        <span>This descriptión</span><br />
+                        <div className="boxDiv" style={{
+                            width:40,
+                            height:40,
+                            borderRadius:100,
+                            backgroundColor: 'black',
+                            display: 'flex',
+                            alignItems:'center',
+                            justifyContent: 'space-around'
+                        }}>
+                            <h1 style={{color: 'white', fontWeight:400,fontSize:14}}>{terminado.item[0]}</h1>
+                        </div>
+                    </div> 
+                    <div className="titleData" style={{marginTop:-30}}>
+                        <h3>{terminado.item} </h3> 
+                        <span>{terminado.description}</span><br />
                         <span>{ new Intl.NumberFormat('es-CO', {currency:'COP'}).format(100000) } COP</span>
                     </div>
                 </div>
                 :
                 <div className="Divide" >
                     <div className="leftImg">
-                        <h1>S</h1>
+                        <div className="boxDiv">
+                            <h1>{terminado.item[0]}</h1>
+                        </div>
                     </div>
-                    <div className="titleData">
-                        <h3>AA</h3>
+                    <div className="titleData"  style={{marginTop:-20}}>
+                        <h3>{terminado.item} </h3> 
                         <div className="form">
                             <label htmlFor="">{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(100000).toFixed(0))} COP</label><br />
                             <input type="text" placeholder="Cantidad" 

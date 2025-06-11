@@ -18,6 +18,7 @@ export default function ModalNewProducto(){
         description: null,
         peso: null,
         criticidad: null,
+        medida: 'estatico',
         procedencia: 'nacional',
         volumen: null,
         lineaId: null,
@@ -40,6 +41,7 @@ export default function ModalNewProducto(){
                 description: '',
                 peso: '',
                 criticidad: '',
+                medida: 'estatico',
                 procedencia: 'nacional',
                 volumen: '',
                 lineaId: null,
@@ -86,6 +88,20 @@ export default function ModalNewProducto(){
                                     description: e.target.value
                                 })
                             }} value={form.description}/>
+                        </div>
+                        <div className="inputDiv">
+                            <label htmlFor=""><strong>Tipo de elemento </strong></label><br />
+                            <select name="" id="" onChange={(e) => {
+                                setForm({
+                                    ...form,
+                                    medida: e.target.value
+                                }) 
+                            }} value={form.medida}>
+                                <option value="">Seleccionar</option>
+                                <option value="estatico">Producto valor estático</option>
+                                <option value="mt2">Producto valor mt2</option>
+
+                            </select>
                         </div>
                         <div className="inputDiv">
                             <label htmlFor="">Volumen</label><br />
