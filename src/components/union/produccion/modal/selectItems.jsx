@@ -158,7 +158,7 @@ function  GetSimilarPrice(props){
             {
             // Final
             }
-            <div className="">
+            <div className="" style={{marginLeft:30}}>
                 <span>Distribuidor</span><br />
                 <h3 style={{fontSize:14}}>{valor > 0 ? new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(distribuidor).toFixed(0)) : 0} <span>COP</span></h3>    
             </div>
