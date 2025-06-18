@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as actions from './../../../store/action/action';
 import { hasPermission } from "../../acciones";
 
-export default function SuperKitItem({dis, superkit, cotizacion}){
+export default function SuperKitItem({dis, superkit, cotizacion, number}){
 
     const [active, setActive] = useState(null);
     const [howMany, setHowMany] = useState(1);
@@ -22,9 +22,10 @@ export default function SuperKitItem({dis, superkit, cotizacion}){
         if(!howMany || howMany == 0) return dispatch(actions.HandleAlerta('Debes ingresar una cantidad', 'mistake'))
         let body = {
             superKitId: superkit.id,
-            cotizacionId: cotizacion.id,
+            cotizacionId: number,
             cantidad: howMany,
             precio: valor * howMany,
+            areaId: cotizacion.id
         }
         const sendPeticionVar = await axios.post('/api/cotizacion/add/superKit/item', body)
         .then((res) => {

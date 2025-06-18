@@ -20,11 +20,9 @@ export default function CotizacionDescription(){
     // Crear cotización
     const createCotizacion = async () => { 
         if(!form.name) return dispatch(actions.HandleAlerta('Debes llenar nombre de la cotización', 'mistake'))
-        if(!form.description) return dispatch(actions.HandleAlerta('Escribe una pequeña descripción', 'mistake'))
         if(!choose) return dispatch(actions.HandleAlerta('Debes seleccionar un cliente', 'mistake'))
 
-        const body = form
-        console.log(body)
+        const body = form;
         const sendPeticion = await axios.post('/api/cotizacion/new', body)
         .then((res) => {
             console.log(res)
@@ -32,6 +30,7 @@ export default function CotizacionDescription(){
         })
         .catch(err => {
             dispatch(actions.HandleAlerta('No hemos logrado crear esta cotización', 'mistake'))
+            return err;
         })
         return sendPeticion;
     }
@@ -68,15 +67,6 @@ export default function CotizacionDescription(){
                                     name: e.target.value
                                 })
                             }} value={form.name} />
-                        </div>
-                        <div className="inputDiv">
-                            <h3>Descripción</h3>
-                            <textarea name="" id="" onChange={(e) => {
-                                setForm({
-                                    ...form,
-                                    description: e.target.value
-                                })
-                            }} value={form.description}></textarea>
                         </div>
                         {
                             !choose ?

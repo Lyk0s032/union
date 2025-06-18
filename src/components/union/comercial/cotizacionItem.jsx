@@ -37,9 +37,9 @@ export default function CotizacionItem({ cotizacionn, openMenuId, toggleMenu }){
             <td onClick={() => openCoti()}>{cotizacion.name}</td>
             <td>{cotizacion.client.nombre}</td>
             <td>{cotizacion.updatedAt.split('T')[0]}</td>
-            <td>
+            {/* <td>
                 <strong>{<ValorKit cotizacion={cotizacion} />} COP</strong>
-            </td>
+            </td> */}
             <td>{cotizacion.state}</td>
             {/* <td> 
                 <button onClick={() => {

@@ -23,7 +23,19 @@ export default function Nav(){
                 </div>
                 <div className="optionsGeneral">
                     <nav>
+                        {
+                            user.user.rango == 'asesor' ? 
+                                <ul>
+                                    <li onClick={() => navigate('/comercial')}>
+                                        <div>
+                                            <span>Comercial</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            :
+                        
                         <ul>
+                            
                             <li onClick={() => navigate('/compras')}>
                                 <div>
                                     <span>Compras</span>
@@ -50,6 +62,7 @@ export default function Nav(){
                                         </div>
                                     </li>
                         </ul>
+                        }
                     </nav> 
                 </div>
                 <div className="user">

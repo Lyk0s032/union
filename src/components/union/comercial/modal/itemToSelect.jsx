@@ -7,7 +7,7 @@ import * as actions from '../../../store/action/action';
 import { getPromedio } from "../../produccion/calculo";
 import { hasPermission } from "../../acciones";
 
-export default function ItemToSelect({ dis, kit }){
+export default function ItemToSelect({ dis, kit, number }){
     const [active, setActive] = useState(null);
 
     const [form, setForm] = useState({
@@ -28,13 +28,13 @@ export default function ItemToSelect({ dis, kit }){
  
     const addItem = async () => {
         const body = {
-            cotizacionId: cotizacion.id,
+            cotizacionId: number,
             kitId: option.id,
             cantidad: form.cantidad,
-            precio: Number(valor * form.cantidad).toFixed(0)
+            precio: Number(valor * form.cantidad).toFixed(0),
+            areaId: cotizacion.id
         }
         if(!form.cantidad || form.cantidad == 0) return dispatch(actions.HandleAlerta('Debes ingresar una cantidad valida', 'mistake'));
-
         const sendPetion = await axios.post('api/cotizacion/add/item', body )
         .then((res) => {
             dispatch(actions.axiosToGetCotizacion(false, cotizacion.id))
@@ -51,7 +51,6 @@ export default function ItemToSelect({ dis, kit }){
     
     const recibirValor = (data) => {
         setValor(Number(data));
-        console.log('Recibe el valor: ', data)
     } 
     return ( 
         active ?
@@ -168,7 +167,6 @@ function GetSimilarPrice({realValor, materia }){
         realValor(Number(costoTotalKit.toFixed(0)));
         setValor(costoTotalKit);
     } 
-    console.log('Promedio de:',  valor)
 
     
     useEffect(() => {

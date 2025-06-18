@@ -4,7 +4,7 @@ import * as actions from '../../../store/action/action';
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
-export default function SearchKitsComercial(){
+export default function SearchKitsComercial({ number }){
 
     const dispatch = useDispatch();
     
@@ -39,7 +39,18 @@ export default function SearchKitsComercial(){
     }
 
     const [dis, setDis] = useState(false);
+    const [final, setFinal] = useState(true);
 
+    const change = () => {
+        if(dis){
+            setFinal(false)
+        }else{
+            setFinal(true)
+        }
+    }
+    useEffect(() => {
+        change()
+    }, [dis])
     return (
         <div className="containerRightSelect">
             <div className="topSelect">
@@ -79,10 +90,18 @@ export default function SearchKitsComercial(){
                 </div>
                 <div className="tabla">
                 <div className="priceFilter">
-                    <label htmlFor="">Para distribuidor</label><br />
-                    <input type="checkbox" onChange={(e) => {
-                        setDis(!dis)
-                    }}/>
+                    <div className="">
+                        <label htmlFor="">Cliente distribuidor</label><br />
+                        <input type="checkbox" onChange={(e) => {
+                            setDis(!dis)
+                        }} checked={dis}/><br />
+                    </div>
+                    <div className="">
+                        <label htmlFor="">Cliente final</label><br />
+                        <input type="checkbox" checked={final} onChange={(e) => {
+                            setDis(false)
+                        }}/>
+                    </div>
                 </div>
                 <table>
                     <thead>
@@ -96,20 +115,17 @@ export default function SearchKitsComercial(){
                     </thead>
                     <tbody>
                         {
-                            console.log(kitSearch)
-                        }
-                        {
                             loading ? <h1>Cargando</h1>
                             :
                             kitSearch && kitSearch.length ?
                                 kitSearch.map((pv, i) => {
                                     return (
-                                        <ItemToSelect kit={pv} key={i+1} dis={dis} />
+                                        <ItemToSelect kit={pv} key={i+1} dis={dis} number={number} />
                                     )
                                 })
-                            : <h1>No hay resultados de busqueda</h1>
+                            : null
                         }
-                    </tbody>
+                    </tbody><br /><br /><br /><br /><br />
                 </table>
                 </div>
             </div>

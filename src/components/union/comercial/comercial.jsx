@@ -81,7 +81,6 @@ export default function ComercialPanel(){
                                         <th>Nombre</th>
                                         <th>Cliente</th>
                                         <th>fecha</th>
-                                        <th>Valor</th>
                                         <th>Estado</th>
                                         <th></th>
                                     </tr>
@@ -90,8 +89,9 @@ export default function ComercialPanel(){
                                     {
                                         !cotizaciones || loadingCotizaciones ?
                                             <h1>Cargando</h1>
+                                        : cotizaciones == 404 || cotizaciones == 'notrequest' ? null
                                         :
-                                        cotizaciones && cotizaciones.length ?
+                                        cotizaciones?.length ?
                                             cotizaciones.map((coti, i) => {
                                                 return (
                                                     <CotizacionItem cotizacionn={coti} key={i+1} openMenuId={openMenuId} toggleMenu={toggleMenu} />

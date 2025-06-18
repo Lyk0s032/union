@@ -5,15 +5,50 @@ import { useDispatch, useSelector } from "react-redux";
 import * as actions from './../../../store/action/action';
 import { hasPermission } from "../../acciones";
 
-export default function ProductoTerminadoItem({ terminado }){
+export default function ProductoTerminadoItem({ area, terminado }){
 
     const [active, setActive] = useState(null);
-    const [howMany, setHowMany] = useState(1);
-    const [valor, setValor] = useState(1);
+    const [howMany, setHowMany] = useState(terminado.medida == 'mt2' ? '1X1' : 1);
     const usuario = useSelector(store => store.usuario);
     const { user } = usuario;
+    const cotizacions = useSelector(store => store.cotizacions);
+    const { cotizacion } = cotizacions;
+
     const dispatch = useDispatch();
     
+    const [form, setForm] = useState({
+        cantidad: 1
+    })
+    const [valor, setValor] = useState(0);
+
+    const getValor = (val) => {
+        setValor(val)
+    }
+    const addItem = async () => {
+        const body = {
+            cotizacionId: area,
+            productoId: terminado.id,
+            cantidad: form.cantidad,
+            precio: terminado.medida == 'mt2' ? Number(valor * Number(Number(howMany.split('X')[0]) * Number(howMany.split('X')[1]))) : Number(valor * howMany).toFixed(0),
+            areaId: area,
+            areaCotizacionId: cotizacion.id
+        }
+  
+        if(!form.cantidad || form.cantidad == 0) return dispatch(actions.HandleAlerta('Debes ingresar una cantidad valida', 'mistake'));
+ 
+        const sendPetion = await axios.post('api/cotizacion/add/producto/item', body )
+        .then((res) => {
+            dispatch(actions.axiosToGetCotizacion(false, cotizacion.id))
+            dispatch(actions.axiosToGetCotizaciones(false))
+            dispatch(actions.HandleAlerta('Kit agregado con éxito', 'positive'))
+    
+        })
+        .catch(err => {
+            console.log(err);
+            dispatch(actions.HandleAlerta('No hemos logrado agregar este producto a la cotización', 'mistake'))
+        })
+        return sendPetion; 
+    }  
 
     return ( 
         <div className="superKitItem">
@@ -34,28 +69,35 @@ export default function ProductoTerminadoItem({ terminado }){
                         </div>
                     </div> 
                     <div className="titleData" style={{marginTop:-30}}>
-                        <h3>{terminado.item} </h3> 
+                        <h3>{terminado.item}  </h3> 
                         <span>{terminado.description}</span><br />
-                        <span>{ new Intl.NumberFormat('es-CO', {currency:'COP'}).format(100000) } COP</span>
+                        <GetPrice getValor={getValor} precios={terminado.productPrices} terminado={terminado} />
+                        <span>{ new Intl.NumberFormat('es-CO', {currency:'COP'}).format(valor) } COP</span>
                     </div>
                 </div>
                 :
                 <div className="Divide" >
-                    <div className="leftImg">
+                    <div className="leftImg"> {console.log(form.precio)}
                         <div className="boxDiv">
-                            <h1>{terminado.item[0]}</h1>
+                            <h1>{terminado.item[0]} </h1>
                         </div>
                     </div>
                     <div className="titleData"  style={{marginTop:-20}}>
                         <h3>{terminado.item} </h3> 
                         <div className="form">
-                            <label htmlFor="">{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(100000).toFixed(0))} COP</label><br />
+                            {
+                                terminado.medida == 'mt2' ?
+                                    <label htmlFor="">Valor MT2 {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valor * Number(howMany?.split('X')[0]*howMany?.split('X')[1])).toFixed(0))} COP</label>
+                                : 
+                                 <label htmlFor="">{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valor * howMany).toFixed(0))} COP</label>
+                                }
+                                <br />
                             <input type="text" placeholder="Cantidad" 
                             onChange={(e) => {
-                                setHowMany(e.target.value)
+                                 setHowMany(e.target.value)
                             }} value={howMany}/>
                             <button onClick={() => {
-                                sendPeticion()
+                                addItem()
                             }} className="save">
                                 <span>Guardar</span>
                             </button> 
@@ -73,6 +115,20 @@ export default function ProductoTerminadoItem({ terminado }){
     )
 }
 
+
+function GetPrice({ precios, terminado, getValor }){
+    const valor = precios.reduce((a,b) => Number(a) + Number(b.valor), 0)
+    const promedio = Number(valor) / precios.length
+
+
+    useEffect(() => {
+        getValor(promedio)
+    }, [promedio])
+    return (
+        <></>
+        // <span>{promedio}</span>
+    )
+}
 
 
 function GetaAllKit({ enviarAlAbuelo, kits, dis } ){

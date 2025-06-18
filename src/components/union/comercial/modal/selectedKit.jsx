@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import * as actions from '../../../store/action/action';
 import axios from 'axios';
 
-export default function SelectedKit({ kt, cotizacion }){
+export default function SelectedKit({ kt, cotizacion, area }){
     const [active, setActive] = useState(false);
     const [descuento, setDescuento] = useState(kt.kitCotizacion.descuento ? kt.kitCotizacion.descuento : 0);
     const dispatch = useDispatch();
+
 
     const giveDescuento = async () => {
         if(!descuento) return dispatch(actions.HandleAlerta('Debes dar un descuento', 'mistake'))
@@ -23,7 +24,6 @@ export default function SelectedKit({ kt, cotizacion }){
             dispatch(actions.axiosToGetCotizaciones(false))
             setActive(null)
         }).catch(err => {
-            console.log(body)
             console.log(err) 
             dispatch(actions.HandleAlerta('No hemos podido dar este descuento', 'mistake'));
         })
@@ -33,7 +33,7 @@ export default function SelectedKit({ kt, cotizacion }){
     const deleteItem = async (itemId) => {
         const body = {
             kitId: itemId,
-            cotizacionId: cotizacion.id 
+            cotizacionId: area.id
         }
 
         const sendPetion = await axios.delete('api/cotizacion/remove/item', { data: body} )
@@ -48,8 +48,10 @@ export default function SelectedKit({ kt, cotizacion }){
         })
         return sendPetion; 
     }
+
+    
     return (
-        <tr>
+        <tr >
             <td>
                 <div>
                     <span>{kt.name}</span>

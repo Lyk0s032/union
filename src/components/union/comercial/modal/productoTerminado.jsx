@@ -6,11 +6,9 @@ import axios from "axios";
 import SuperKitItem from "./itemSuperkit";
 import ProductoTerminadoItem from "./itemProducto";
 
-export default function SearchProductoTerminado(props){
-    const coti = props.cotizacion;
+export default function SearchProductoTerminado({ number }){
     const dispatch = useDispatch();
     
-    const [dis, setDis] = useState(false);
     const kitStore = useSelector(store => store.kits);
     const {kits, kit, loadingKits} = kitStore;
 
@@ -39,9 +37,19 @@ export default function SearchProductoTerminado(props){
         return response
     }
 
+    const [dis, setDis] = useState(false);
+    const [final, setFinal] = useState(true);
+
+    const change = () => {
+        if(dis){
+            setFinal(false)
+        }else{
+            setFinal(true)
+        }
+    }
     useEffect(() => {
-        // dispatch(actions.axiosToGetKitsCompleted(false))
-    }, [])
+        change()
+    }, [dis])
     return (
         <div className="containerRightSelect">
             <div className="topSelect">
@@ -55,12 +63,16 @@ export default function SearchProductoTerminado(props){
                 </div>
             </div>
             <div className="resultsToSelect">
-                <div className="priceFilter">
-                    <label htmlFor="">Para distribuidor</label><br />
-                    <input type="checkbox" onChange={(e) => {
-                        setDis(!dis)
-                    }}/>
-                </div>          
+                    <div className="priceFilter">
+                        <label htmlFor="">Cliente distribuidor</label><br />
+                        <input type="checkbox" onChange={(e) => {
+                            setDis(!dis)
+                        }} checked={dis}/><br />
+                        <label htmlFor="">Cliente final</label><br />
+                        <input type="checkbox" checked={final} onChange={(e) => {
+                            setDis(false)
+                        }}/>
+                    </div>         
                 <div className="containerResults">
                     <div className="itemResults">
                         {       
@@ -69,7 +81,7 @@ export default function SearchProductoTerminado(props){
                             : data && data.length ?
                                 data.map((m,i) => { 
                                     return (
-                                          <ProductoTerminadoItem terminado={m} key={i+1} />
+                                          <ProductoTerminadoItem area={number} terminado={m} key={i+1} />
                                     )
                                 }) 
                             :   

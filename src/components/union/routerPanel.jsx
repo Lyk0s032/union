@@ -11,6 +11,8 @@ import * as actions from '../store/action/action';
 export default function RouterPanel(){
     const system = useSelector(store => store.system);
     const { alerta, typeAlerta } = system;
+    const usuario = useSelector(store => store.usuario);
+    const { user } = usuario;
 
     const dispatch = useDispatch();
 
@@ -26,7 +28,7 @@ export default function RouterPanel(){
   
                 <div className="optionsByPanel">
                     <Routes>
-                        <Route path="/" element={<Navigate to="/compras" replace />} />
+                        <Route path="/" element={user.user.rango == 'asesor' ? <Navigate to="/comercial" replace /> : <Navigate to="/compras" replace />} />
                         <Route path="/compras/*" element={<RoutesCompras />} />
                         <Route path="/produccion/*" element={<RoutesProduccion />} />
                         <Route path="/comercial/*" element={<RoutesComercial />} />

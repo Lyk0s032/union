@@ -3,9 +3,9 @@ import { useDispatch } from 'react-redux';
 import * as actions from '../../../store/action/action';
 import axios from 'axios';
 
-export default function SelectedSuperKit({ kt, cotizacion, area }){
+export default function SelectedProducto({ kt, cotizacion, area }){
     const [active, setActive] = useState(false);
-    const [descuento, setDescuento] = useState(kt.armadoCotizacion.descuento ? kt.armadoCotizacion.descuento : 0);
+    const [descuento, setDescuento] = useState(kt.productoCotizacion.descuento ? kt.productoCotizacion.descuento : 0);
     const dispatch = useDispatch();
 
     const giveDescuento = async () => {
@@ -49,17 +49,15 @@ export default function SelectedSuperKit({ kt, cotizacion, area }){
         return sendPetion; 
     }
 
-    
-
     return ( 
         <tr>
             <td>
                 <div>
-                    <strong style={{fontSize:12}}>Superkit</strong><br />
-                    <span>{kt.name}</span>
+                    <strong style={{fontSize:12}}>Producto</strong><br />
+                    <span>{kt.item}</span>
                 </div>
             </td>
-            <td>{kt.armadoCotizacion.cantidad}</td>
+            <td>{kt.productoCotizacion.cantidad}</td>
             {
                 active ?
                 <td>
@@ -71,22 +69,22 @@ export default function SelectedSuperKit({ kt, cotizacion, area }){
                     }} value={descuento} />
                 </td>
                 :
-                <td onDoubleClick={() => setActive(true)}>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(kt.armadoCotizacion.descuento).toFixed(0))} COP</td>
+                <td onDoubleClick={() => setActive(true)}>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(kt.productoCotizacion.descuento).toFixed(0))} COP</td>
             }
-            <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(kt.armadoCotizacion.precio).toFixed(0))} COP</td>
+            <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(kt.productoCotizacion.precio).toFixed(0))} COP</td>
             <td>
 
             </td>
             <td>
                 {/* <strong>{<ValorSelected mt={materia} />}</strong> */}
             </td> 
-            {/* <td>
+            <td>
                 <button onClick={() => {
                         deleteSuperKitItem(kt.id)
                 }}>
                     x
                 </button>
-            </td> */}
+            </td>
         </tr>
     )
 }

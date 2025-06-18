@@ -1,5 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import * as actions from '../store/action/action';
 
 export default function Login(){
     const [state, setState] = useState(null);
@@ -12,7 +14,7 @@ export default function Login(){
     });
 
     const [loading, setLoading] = useState(false);
-
+    const dispatch = useDispatch();
     const showState = (val) => {
         setState(val)
     }
@@ -67,7 +69,7 @@ export default function Login(){
             }
         })
         .then((data) => {
-            // dispatch(actions.AxiosAuthUser(data.data, true));
+            dispatch(actions.AxiosAuthUser(data.data, true));
         })
         .catch(err => {
             setLoading(false)

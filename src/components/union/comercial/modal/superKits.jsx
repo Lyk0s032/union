@@ -5,8 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import SuperKitItem from "./itemSuperkit";
 
-export default function SearchSuperKitsComercial(props){
-    const coti = props.cotizacion;
+export default function SearchSuperKitsComercial({ number }){
     const dispatch = useDispatch();
     
     const [dis, setDis] = useState(false);
@@ -20,7 +19,7 @@ export default function SearchSuperKitsComercial(props){
     const [data, setData] = useState(null);
 
     const searchKitsAxios = async (searchTerm) => {
-    
+     
         const response = await axios.get('/api/superkit/get/s/search/',{
         params: { // Aquí definimos los parámetros de consulta que irán en la URL (ej: ?query=...)
           query: searchTerm // El nombre del parámetro 'query' debe coincidir con req.query.query en tu backend
@@ -67,7 +66,7 @@ export default function SearchSuperKitsComercial(props){
                             : data && data.length ?
                                 data.map((m,i) => { 
                                     return (
-                                        <SuperKitItem key={i+1} dis={dis} cotizacion={coti} superkit={m} />
+                                        <SuperKitItem key={i+1} dis={dis} number={number} cotizacion={cotizacion} superkit={m} />
                                     )
                                 })
                             : null
