@@ -1,13 +1,63 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
+import html2pdf from "html2pdf.js";
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 export default function DocumentCotizacion(){
-    const [params, setParams] = useSearchParams();
+    const [params, setParams] = useSearchParams(); 
 
     const cotizacionn = useSelector(store => store.cotizacions);
     const { cotizacion, loadingCotizacion } = cotizacionn;
-    return (
+
+    const pdfRef = useRef();
+
+const exportToPDF = () => {
+  const input = document.getElementById("cotizacion-pdf");
+
+  // Guardar estilo original
+  const originalHeight = input.style.height;
+  const originalOverflow = input.style.overflow;
+
+  // Expandir div para mostrar todo el contenido
+  input.style.height = 'auto';
+  input.style.overflow = 'visible';
+
+  // Esperar a que se renderice visualmente (opcional pero recomendable)
+  setTimeout(() => {
+    html2canvas(input, { scale: 2 }).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+
+      const pdf = new jsPDF("p", "pt", "a4");
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+
+      const imgWidth = pageWidth;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      let heightLeft = imgHeight;
+      let position = 0;
+
+      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft > 0) {
+        position -= pageHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+
+      pdf.save(`cotizacion-${cotizacion.client.name}-${Number(21719)+Number(cotizacion.id)}.pdf`);
+
+      // Restaurar estilos originales
+      input.style.height = originalHeight;
+      input.style.overflow = originalOverflow;
+    });
+  }, 100); // Espera opcional de 100ms para asegurar render
+};
+    return ( 
         <div className="modal">
             <div className="hiddenModal" onClick={() => {
                 params.delete('watch');
@@ -18,7 +68,7 @@ export default function DocumentCotizacion(){
                     <h1>Cargando cotización...</h1>
                 : 
                 <div className="containerModal Large">
-                    <div className="cotizacionBody">
+                    <div className="cotizacionBody" id="cotizacion-pdf">
                         <div className="top">
                             <img src="https://metalicascosta.com.co/assets/img/logo_metalicas_costa.png" alt="" />
                         </div>
@@ -51,7 +101,7 @@ export default function DocumentCotizacion(){
                                             <h3>
                                                 Número:
                                             </h3>
-                                            <h4> MDC-CV-{cotizacion.id}</h4>
+                                            <h4> MDC-CV-{Number(21719)+Number(cotizacion.id)}</h4>
                                         </div>
                                         <div className="item">
                                             <h3>
@@ -260,9 +310,18 @@ export default function DocumentCotizacion(){
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
+                    <div className="optionDownload">
+                        <button  onClick={exportToPDF}>
+                            <span>Descargar</span>
+                        </button>
+                    </div>
+                    
                 </div>
             }
+
+            
         </div>
     )
 }

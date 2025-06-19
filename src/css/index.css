@@ -467,6 +467,24 @@ body button {
                                         00;
   font-size: 12px;
 }
+.modal .containerModal .cotizacionBody .optionDownload {
+  box-sizing: border-box;
+  width: 90%;
+  margin: auto;
+  text-align: center;
+  margin-top: 50px;
+  padding-bottom: 40px;
+}
+.modal .containerModal .cotizacionBody .optionDownload button {
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #046290;
+  border: 1px solid #046290;
+}
+.modal .containerModal .cotizacionBody .optionDownload button span {
+  font-size: 12px;
+  color: #FFF;
+}
 .modal .Complete {
   width: 100%;
   height: 100%;
