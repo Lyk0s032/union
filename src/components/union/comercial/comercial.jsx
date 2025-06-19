@@ -13,7 +13,8 @@ export default function ComercialPanel(){
     const dispatch = useDispatch();
     const cotizacions = useSelector(store => store.cotizacions);
     const { cotizaciones, loadingCotizaciones } = cotizacions;
-
+    const usuario = useSelector(store => store.usuario);
+    const { user } = usuario;
     const [state, setState] = useState('completa');      
     const [word, setWord] = useState(null);
     const [metodo, setMetodo] = useState(null); // METODO DE BUSQUEDA LINEA O CATEGORIA
@@ -43,7 +44,7 @@ export default function ComercialPanel(){
 
 
     useEffect(() => {
-        dispatch(actions.axiosToGetCotizaciones(true))
+        dispatch(actions.axiosToGetCotizaciones(true, user.user.id))
     }, []) 
     return (
         <div className="provider">

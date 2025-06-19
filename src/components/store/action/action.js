@@ -530,10 +530,10 @@ export function gettingCotizaciones(carga){
     }
 }
 
-export function axiosToGetCotizaciones(carga){
+export function axiosToGetCotizaciones(carga, userId){
     return function(dispatch){ 
         dispatch(gettingCotizaciones(carga))
-        axios.get(`/api/cotizacion/getAll`)
+        axios.get(`/api/cotizacion/getAll/${userId}`)
         .then((info) => info.data) 
         .then(inf => {
             return dispatch(getCotizaciones(inf))
