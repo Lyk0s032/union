@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import * as actions from '../../../store/action/action';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import dayjs from 'dayjs';
 
 export default function CotizacionDescription(){
@@ -10,9 +10,12 @@ export default function CotizacionDescription(){
     const [choose, setChoose] = useState(null);
     const dispatch = useDispatch(); 
     const dia = dayjs()
+    const usuario = useSelector(store => store.usuario);
+    const { user } = usuario;
 
     const [form, setForm] = useState({
         clientId: choose ? choose.id : null,
+        userId: user.user.id,
         name: null,
         description: null,
         time: dia,
