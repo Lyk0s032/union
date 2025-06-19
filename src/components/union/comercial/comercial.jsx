@@ -47,7 +47,7 @@ export default function ComercialPanel(){
     }, []) 
     return (
         <div className="provider">
-            <div className="containerProviders">
+            <div className="containerProviders"> {console.log(cotizaciones)}
                 <div className="topSection">
                     <div className="title">
                         <h1>Cotizaciones</h1>

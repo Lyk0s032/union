@@ -3,18 +3,19 @@ import React, { useEffect, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import * as actions from '../../../store/action/action';
 import { useDispatch } from 'react-redux';
+import dayjs from 'dayjs';
 
 export default function CotizacionDescription(){
     const [client, setClient] = useState(null); 
     const [choose, setChoose] = useState(null);
     const dispatch = useDispatch(); 
-
+    const dia = dayjs()
 
     const [form, setForm] = useState({
         clientId: choose ? choose.id : null,
         name: null,
         description: null,
-        time: '03-20-2025',
+        time: dia,
     });
     
     // Crear cotización

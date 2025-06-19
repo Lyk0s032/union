@@ -69,7 +69,7 @@ export default function DocumentCotizacion(){
                                             <h3>
                                                 Cliente:
                                             </h3>
-                                            <h4> {cotizacion.client.nombre}</h4>
+                                            <h4> {cotizacion.client.nombre.toUpperCase()}</h4>
                                         </div>
                                         <div className="item">
                                             <h3>
@@ -81,7 +81,7 @@ export default function DocumentCotizacion(){
                                             <h3>
                                                 DIRECCIÓN:
                                             </h3>
-                                            <h4>{cotizacion.client.direccion}</h4>
+                                            <h4>{cotizacion.client.direccion.toUpperCase()}</h4>
                                         </div>
                                         <div className="item">
                                             <h3>
@@ -109,26 +109,26 @@ export default function DocumentCotizacion(){
                                             <h3>
                                                 Vendedor:
                                             </h3>
-                                            <h4>KEVIN ANDRÉS BOLAÑOS ORREGO</h4>
+                                            <h4>{cotizacion.user.nick.toUpperCase()}</h4>
                                         </div>
-                                        <div className="item">
+                                        {/* <div className="item">
                                             <h3>
                                                 FORMA DE PAGO:
                                             </h3>
                                             <h4> 03 50% ANTICIPO-50% ENTREGA</h4>
-                                        </div>
+                                        </div> */}
                                         <div className="item">
                                             <h3>
                                                 MONEDA:
                                             </h3>
                                             <h4>PESOS</h4>
                                         </div>
-                                        <div className="item">
+                                        {/* <div className="item">
                                             <h3>
                                                 VALIDA HASTA:
                                             </h3>
                                             <h4> 25 DE MAYO DEL 2025</h4>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </div>
@@ -177,9 +177,9 @@ export default function DocumentCotizacion(){
                                                                                     }
                                                                                     {
                                                                                         it.productoCotizacion ?
-                                                                                            <td className='left'>{it.item}</td>
+                                                                                            <td className='left'>{it.item} - {it.extension.name}</td>
                                                                                         :
-                                                                                            <td className='left'>{it.name}</td>
+                                                                                            <td className='left'>{it.name} - {it.extension.name}</td>
                                                                                     }
                                                                                     {
                                                                                         it.kitCotizacion ?
@@ -201,7 +201,7 @@ export default function DocumentCotizacion(){
                                                                                     }
                                                                                     {
                                                                                         it.kitCotizacion ?
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.kitCotizacion.precio - it.kitCotizacion.descuento).toFixed(0) * (0.19)))} COP</td>
+                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.kitCotizacion.precio - it.kitCotizacion.descuento).toFixed(0) * (0.19)).toFixed(0))} COP</td>
                                                                                         : 
                                                                                          it.productoCotizacion ?
                                                                                         <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.productoCotizacion.precio - it.productoCotizacion.descuento).toFixed(0)) * (0.19))} COP</td>
