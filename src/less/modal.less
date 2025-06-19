@@ -937,7 +937,134 @@
                                     padding:10px;
                                     border-radius: 10px;
                                 }
-
+                                        table{
+                                            width:100%;
+                                            border-collapse: collapse;
+                                            thead{
+                                                tr{
+                                                    th{
+                                                        font-size: 12px;
+                                                        font-weight: 400;
+                                                        padding:10px 0px;
+                                                        box-sizing: border-box;
+                                                        color: @bgAzulDark;
+                                                        text-align: left;
+                                                    }
+                                                }
+                                            }
+                                            tbody{
+                                                tr{
+                                                    position:relative;
+                                                    td{
+                                                        padding:8px 0px;
+                                                        box-sizing: border-box;
+                                                        font-size: 11px;
+                                                        color: @bgDark;
+                                                    }
+                                                    .option{
+                                                        button{
+                                                            padding: 5px 5px;
+                                                            margin-left:10px;
+                                                            background-color: white;
+                                                            border:none;
+                                                            .icon{
+                                                                font-size: 16px;
+                                                                color: #666;
+                                                            }
+                                                        }
+        
+                                                        .menu-dropdown {
+                                                            /* Posicionamiento y tamaño base */
+                                                            right: 0;
+                                                            top:0;
+                                                            padding:10px 0px;
+                                                            border-radius: 5px;
+                                                            box-sizing: border-box;
+                                                            margin-right:20px;
+                                                            width:30%; 
+                                                            position:absolute;
+                                                            z-index: 5;
+                                                            background-color: @bgDefault;
+                                                            border:1px solid #ccc;
+                                                            box-sizing: border-box;
+                                                           .panel{
+                                                                padding:10px 0px;
+                                                                box-sizing: border-box;
+                                                                .title{
+                                                                    margin-bottom: 10px;
+                                                                    strong{
+                                                                        padding:0px 20px;
+                                                                        font-weight: 400;
+                                                                        font-size: 12px;
+                                                                        color: @bgAzulDark;
+        
+                                                                    }
+                                                                }
+                                                                nav{
+                                                                    ul{
+                                                                        li{
+                                                                            box-sizing: border-box;
+                                                                            cursor: pointer;
+                                                                            display: flex;
+                                                                            transition: .3s;
+                                                                            div{
+                                                                                display: flex;
+                                                                                padding:10px 20px;
+                                                                                align-items: center;
+                                                                                transition: .3s;
+                                                                                
+                                                                                .icon{
+                                                                                    margin-right: 10px;
+                                                                                    font-size: 16px;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                        li:hover{
+                                                                            background-color: #f8f8f8;
+                                                                        }
+                                                                    }
+                                                                }
+                                                           }
+                                                            /* Estado cuando el menú está abierto (anidado en Less) */
+                                                            &.menu-open {
+                                                                opacity: 1;
+                                                                max-height: 12rem; /* Altura máxima suficiente para tu contenido (ajusta si es necesario) */
+                                                                transform: scale(1); /* Escala normal */
+                                                                pointer-events: auto; /* Habilita clics cuando está abierto */
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                .forEdit{
+                                                    td{
+                                                        font-size: 10px;
+                                                        color: @bgAzulDark;
+        
+                                                    }
+        
+                                                    button{
+                                                        padding:5px 5px;
+                                                        border-radius: 5px;
+                                                        box-sizing: border-box;
+                                                        font-size: 10px;
+                                                        margin:0px 5px;
+                                                        border:none;
+                                                    }
+                                                    .ok{
+                                                        background-color: @bgAzulDark;
+                                                        span{
+                                                            color: @bgDefault;
+                                                        }
+                                                    }
+                                                    .cancel{
+                                                        background-color: @danger;
+                                                        span{
+                                                            color: @bgDefault;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
                                 .updateKit{
                                     box-sizing: border-box;
                                     .containerUpdate{
