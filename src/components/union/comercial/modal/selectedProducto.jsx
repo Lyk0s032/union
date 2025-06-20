@@ -32,11 +32,11 @@ export default function SelectedProducto({ kt, cotizacion, area }){
 
     const deleteSuperKitItem = async (itemId) => {
         const body = {
-            superKidId: itemId, 
+            productoId: itemId, 
             cotizacionId: area.id
         }
 
-        const sendPetion = await axios.delete('api/cotizacion/remove/superKit', { data: body} )
+        const sendPetion = await axios.delete('api/cotizacion/remove/producto', { data: body} )
         .then((res) => {
             dispatch(actions.axiosToGetCotizacion(false, cotizacion.id))
             dispatch(actions.HandleAlerta('Kit removido', 'positive'))

@@ -49,7 +49,7 @@ const exportToPDF = () => {
         heightLeft -= pageHeight;
       }
 
-      pdf.save(`cotizacion-${cotizacion.client.name}-${Number(21719)+Number(cotizacion.id)}.pdf`);
+      pdf.save(`cotizacion-${cotizacion.client.nombre}-${Number(21719)+Number(cotizacion.id)}.pdf`);
 
       // Restaurar estilos originales
       input.style.height = originalHeight;

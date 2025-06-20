@@ -18,7 +18,8 @@ export default function ModalNewProducto(){
         description: null,
         peso: null,
         criticidad: null,
-        medida: 'estatico',
+        unidad: 'estatico',
+        medida: 1,
         procedencia: 'nacional',
         volumen: null,
         lineaId: null,
@@ -90,19 +91,32 @@ export default function ModalNewProducto(){
                             }} value={form.description}/>
                         </div>
                         <div className="inputDiv">
-                            <label htmlFor=""><strong>Tipo de elemento </strong></label><br />
+                            <label htmlFor=""><strong>Tipo de elemento {form.medida}</strong></label><br />
                             <select name="" id="" onChange={(e) => {
                                 setForm({
                                     ...form,
-                                    medida: e.target.value
+                                    unidad: e.target.value,
+                                    medida: e.target.value == 'mt2' ? '1X1' : 1
                                 }) 
-                            }} value={form.medida}>
-                                <option value="">Seleccionar</option>
+                            }} value={form.unidad}>
                                 <option value="estatico">Producto valor estático</option>
                                 <option value="mt2">Producto valor mt2</option>
 
                             </select>
                         </div>
+                        {
+                            form.unidad == 'mt2' ?
+                            <div className="inputDiv">
+                                <label htmlFor="">Medida </label><br />
+                                <input type="text" placeholder="Escribe aquí" onChange={(e) => {
+                                    setForm({
+                                        ...form,
+                                        medida: e.target.value
+                                    })
+                                }} value={form.medida}/>
+                            </div> 
+                            : null
+                        }
                         <div className="inputDiv">
                             <label htmlFor="">Volumen</label><br />
                             <input type="text" placeholder="Escribe aquí" onChange={(e) => {

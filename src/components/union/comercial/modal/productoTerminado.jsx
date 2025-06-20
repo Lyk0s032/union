@@ -15,11 +15,14 @@ export default function SearchProductoTerminado({ number }){
     const cotizacions  = useSelector(store => store.cotizacions);
     const { cotizacion } = cotizacions;
 
-    
+    const [loading, setLoading] = useState(false)
     const [data, setData] = useState(null);
 
     const searchKitsAxios = async (searchTerm) => {
-    
+        if(!searchTerm || searchTerm == '') return setData(null);
+        setLoading(true);
+        setData(null);
+
         const response = await axios.get('api/materia/producto/searching',{
         params: { // Aquí definimos los parámetros de consulta que irán en la URL (ej: ?query=...)
           q: searchTerm // El nombre del parámetro 'query' debe coincidir con req.query.query en tu backend
@@ -32,8 +35,8 @@ export default function SearchProductoTerminado({ number }){
         }).catch(err => {
             console.log(err)
             setData(404)
-        });
-    
+        })
+        .finally(e => setLoading(false))
         return response
     }
 
@@ -76,12 +79,13 @@ export default function SearchProductoTerminado({ number }){
                 <div className="containerResults">
                     <div className="itemResults">
                         {       
+                            loading ? <h1>Cargando</h1> :
                             !data ? null 
 
                             : data && data.length ?
                                 data.map((m,i) => { 
                                     return (
-                                          <ProductoTerminadoItem area={number} terminado={m} key={i+1} />
+                                          <ProductoTerminadoItem area={number} final={final} terminado={m} key={i+1} />
                                     )
                                 }) 
                             :   

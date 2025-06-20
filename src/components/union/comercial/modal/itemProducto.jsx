@@ -5,10 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import * as actions from './../../../store/action/action';
 import { hasPermission } from "../../acciones";
 
-export default function ProductoTerminadoItem({ area, terminado }){
-
+export default function ProductoTerminadoItem({ area, terminado, final }){
     const [active, setActive] = useState(null);
-    const [howMany, setHowMany] = useState(terminado.medida == 'mt2' ? '1X1' : 1);
+    const [howMany, setHowMany] = useState(terminado.unidad == 'mt2' ? terminado.medida : '1');
     const usuario = useSelector(store => store.usuario);
     const { user } = usuario;
     const cotizacions = useSelector(store => store.cotizacions);
@@ -21,25 +20,48 @@ export default function ProductoTerminadoItem({ area, terminado }){
     })
     const [valor, setValor] = useState(0);
 
+    const distribuidor = terminado.linea.percentages && terminado.linea.percentages.length ? terminado.linea.percentages[0].distribuidor : 0
+    const Pfinal = terminado.linea.percentages && terminado.linea.percentages.length ? terminado.linea.percentages[0].final : 0
+    const [mt, setMt] = useState(0);
     const getValor = (val) => {
         setValor(val)
+    }
+
+    const generatePrice = async () => {
+        let valorPromedio = valor;
+        let medida = terminado.medida;
+        // Área Definida
+        let areaDefinida = Number(Number(medida.split('X')[0]) * Number(medida.split('X')[1]))
+        // Obtenemos el valor del MT2.
+        let valorMt2 = Number(valorPromedio) / areaDefinida
+        // Área a consumir
+        const AreaAConsumir =  Number(Number(howMany.split('X')[0] * howMany.split('X')[1])).toFixed(2)
+        console.log('Area', AreaAConsumir)
+        console.log('Valor Promedio', valorPromedio)
+        console.log('Área definida', areaDefinida)
+
+        console.log('Valor MT', valorMt2)
+
+        const valorTotal = AreaAConsumir * valorMt2;
+        setMt(valorTotal)
+        return valorTotal;
     }
     const addItem = async () => {
         const body = {
             cotizacionId: area,
             productoId: terminado.id,
             cantidad: form.cantidad,
-            precio: terminado.medida == 'mt2' ? Number(valor * Number(Number(howMany.split('X')[0]) * Number(howMany.split('X')[1]))) : Number(valor * howMany).toFixed(0),
+            precio: terminado.unidad == 'mt2' ? Number(mt).toFixed(0) : Number(valor * howMany).toFixed(0),
             areaId: area,
             areaCotizacionId: cotizacion.id
         }
-  
+        console.log(body)
         if(!form.cantidad || form.cantidad == 0) return dispatch(actions.HandleAlerta('Debes ingresar una cantidad valida', 'mistake'));
  
         const sendPetion = await axios.post('api/cotizacion/add/producto/item', body )
         .then((res) => {
             dispatch(actions.axiosToGetCotizacion(false, cotizacion.id))
-            dispatch(actions.axiosToGetCotizaciones(false))
+            dispatch(actions.axiosToGetCotizaciones(false, user.user.id))
             dispatch(actions.HandleAlerta('Kit agregado con éxito', 'positive'))
     
         })
@@ -49,12 +71,22 @@ export default function ProductoTerminadoItem({ area, terminado }){
         })
         return sendPetion; 
     }  
+    useEffect(() => {
+        setActive(null)
+    }, [terminado])
+
+    useEffect(() => {
+        if(terminado.unidad == 'mt2') generatePrice() 
+    }, [howMany])
 
     return ( 
         <div className="superKitItem">
             {
                 !active ?
-                <div className="Divide" onClick={() => setActive('active')} >
+                <div className="Divide" onClick={() => {
+                        setActive('active')
+                        terminado.unidad == 'mt2' ? generatePrice() : null
+                    }}>
                     <div className="leftImg">
                         <div className="boxDiv" style={{
                             width:40,
@@ -71,31 +103,41 @@ export default function ProductoTerminadoItem({ area, terminado }){
                     <div className="titleData" style={{marginTop:-30}}>
                         <h3>{terminado.item}  </h3> 
                         <span>{terminado.description}</span><br />
-                        <GetPrice getValor={getValor} precios={terminado.productPrices} terminado={terminado} />
+                        <GetPrice getValor={getValor} estado={final} distribuidor={distribuidor} final={Pfinal} precios={terminado.productPrices} terminado={terminado} />
                         <span>{ new Intl.NumberFormat('es-CO', {currency:'COP'}).format(valor) } COP</span>
                     </div>
                 </div>
                 :
                 <div className="Divide" >
-                    <div className="leftImg"> {console.log(form.precio)}
+                    {console.log(terminado)}
+                    <div className="leftImg"> 
                         <div className="boxDiv">
                             <h1>{terminado.item[0]} </h1>
                         </div>
                     </div>
                     <div className="titleData"  style={{marginTop:-20}}>
-                        <h3>{terminado.item} </h3> 
+                        <h3>{terminado.item} {distribuidor} </h3> 
                         <div className="form">
                             {
-                                terminado.medida == 'mt2' ?
-                                    <label htmlFor="">Valor MT2 {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valor * Number(howMany?.split('X')[0]*howMany?.split('X')[1])).toFixed(0))} COP</label>
+                                terminado.unidad == 'mt2' ?
+                                    <label htmlFor="">
+                                        {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(
+                                            Number(mt).toFixed(0)
+                                        )}
+                                         <span> COP</span>
+                                        <div>
+                                        </div>
+                                    </label>
                                 : 
-                                 <label htmlFor="">{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valor * howMany).toFixed(0))} COP</label>
+                                 <label htmlFor=""> Precio normal {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valor * howMany).toFixed(0))} COP</label>
                                 }
                                 <br />
-                            <input type="text" placeholder="Cantidad" 
+                            <input type="text" id={terminado.id} placeholder="Cantidad" 
                             onChange={(e) => {
-                                 setHowMany(e.target.value)
-                            }} value={howMany}/>
+                                setHowMany(e.target.value)
+                            }} value={howMany.toUpperCase()}/>
+
+
                             <button onClick={() => {
                                 addItem()
                             }} className="save">
@@ -116,17 +158,18 @@ export default function ProductoTerminadoItem({ area, terminado }){
 }
 
 
-function GetPrice({ precios, terminado, getValor }){
+function GetPrice({ precios, terminado, getValor, final, distribuidor, estado }){
     const valor = precios.reduce((a,b) => Number(a) + Number(b.valor), 0)
     const promedio = Number(valor) / precios.length
 
-
+    const  precioDistribuidor = promedio / distribuidor
+    const precioFinal = precioDistribuidor / final
     useEffect(() => {
-        getValor(promedio)
-    }, [promedio])
+        getValor(estado ? precioFinal.toFixed(0) : precioDistribuidor.toFixed(0))
+    }, [promedio, estado])
     return (
+    //    <h1>{estado ? precioFinal.toFixed(0) : precioDistribuidor.toFixed(0)}</h1>
         <></>
-        // <span>{promedio}</span>
     )
 }
 
