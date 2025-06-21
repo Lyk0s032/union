@@ -34,8 +34,8 @@ export default function KitDescription(){
         const sendPeticion = await axios.post('/api/kit/new', body)
         .then((res) => {
             console.log(res)
-            dispatch(actions.axiosToGetCotizaciones(false));
-            return dispatch(actions.getKit(res.data)) 
+            dispatch(actions.axiosToGetKits(false));
+            return dispatch(actions.axiosToGetKit(false,res.data.id)) 
         })
         .catch(err => {
             dispatch(actions.HandleAlerta('No hemos logrado crear esto, intentalo más tarde', 'mistake'))
