@@ -227,7 +227,7 @@ const exportToPDF = () => {
                                                                                     }
                                                                                     {
                                                                                         it.productoCotizacion ?
-                                                                                            <td className='left'>{it.item} - {it.extension.name}</td>
+                                                                                            <td className='left'>{it.item}</td>
                                                                                         :
                                                                                             <td className='left'>{it.name} - {it.extension.name}</td>
                                                                                     }
