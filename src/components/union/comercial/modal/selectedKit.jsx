@@ -1,14 +1,25 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../../store/action/action';
 import axios from 'axios';
 
 export default function SelectedKit({ kt, cotizacion, area }){
     const [active, setActive] = useState(false);
     const [descuento, setDescuento] = useState(kt.kitCotizacion.descuento ? kt.kitCotizacion.descuento : 0);
+    const usuario = useSelector(store => store.usuario);
+    const { user } = usuario;
+
     const dispatch = useDispatch();
+    const [porcentaje, setPorcentaje] = useState(0);
 
+    // Convertir descuento
+    const porcentForDescuento = (porcentaje) => {
+        let  precio = kt.kitCotizacion.precio;
+        const descuentico = Number(porcentaje / 100) * Number(precio)
+        return setDescuento(descuentico.toFixed(0))    
+    }
 
+    // Dar descuento
     const giveDescuento = async () => {
         if(!descuento) return dispatch(actions.HandleAlerta('Debes dar un descuento', 'mistake'))
         if(descuento == kt.kitCotizacion.descuento) return dispatch(actions.HandleAlerta('Debes dar un descuento diferente', 'mistake'))
@@ -21,15 +32,16 @@ export default function SelectedKit({ kt, cotizacion, area }){
         .then((res) => { 
             dispatch(actions.HandleAlerta('Descuento asignado', 'positive'));
             dispatch(actions.axiosToGetCotizacion(false, cotizacion.id))
-            dispatch(actions.axiosToGetCotizaciones(false))
+            dispatch(actions.axiosToGetCotizaciones(false, user.user.id))
             setActive(null)
+            return res;
         }).catch(err => {
             console.log(err) 
             dispatch(actions.HandleAlerta('No hemos podido dar este descuento', 'mistake'));
         })
         return sendPeticion;
     }
-
+    // Eliminar item
     const deleteItem = async (itemId) => {
         const body = {
             kitId: itemId,
@@ -40,7 +52,7 @@ export default function SelectedKit({ kt, cotizacion, area }){
         .then((res) => {
             dispatch(actions.axiosToGetCotizacion(false, cotizacion.id))
             dispatch(actions.HandleAlerta('Kit removido', 'positive'))
- 
+            return res;
         })
         .catch(err => {
             console.log(err);
@@ -49,7 +61,6 @@ export default function SelectedKit({ kt, cotizacion, area }){
         return sendPetion; 
     }
 
-    
     return (
         <tr >
             <td>
@@ -61,12 +72,19 @@ export default function SelectedKit({ kt, cotizacion, area }){
             {
                 active ?
                     <td> 
-                        <input type="text" onKeyDown={(e) => {
+                        <label htmlFor="">{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(descuento)} COP</label><br />
+                        <input type="text" inputMode="numeric"
+                        pattern="[0-9]*" onKeyDown={(e) => {
                             if(e.key === 'Escape') setActive(false)
                             if(e.key === 'Enter')  giveDescuento();
-                        }} onChange={(e) => { 
-                            setDescuento(e.target.value)
-                        }} value={descuento} />
+                            }} onChange={(e) => { 
+                                const text = e.target.value
+                                if (/^\d*\.?\d*$/.test(text)) { // Solo números positivos sin decimales
+                                    setPorcentaje(e.target.value)
+                                    porcentForDescuento(e.target.value)
+                                } 
+                                
+                            }}  value={porcentaje}/>
                     </td>
                 :
                     <td onDoubleClick={() => setActive(true)}>{kt.kitCotizacion.descuento ? new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(kt.kitCotizacion.descuento).toFixed(0)) : 0 } COP</td>

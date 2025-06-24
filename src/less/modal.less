@@ -125,6 +125,7 @@
                     table{
                         border-collapse: collapse;
                         width:100%;
+                        box-sizing: border-box;
                         thead{
                             tr{
                                 th{
@@ -145,7 +146,7 @@
                             tr{
                                 width:100%;
                                 td{
-                                    width:20%;
+                                    width:25%;
                                     text-align: left;
                                     font-size: 12px;
                                     color: @bgDark;
@@ -517,6 +518,56 @@
             .page{
                 width:100%;
                 height:100%;
+                .mode{
+                    background-color: @great;
+                    position:absolute;
+                    width:100%;
+                    top:0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding:0px 10px;
+                    box-sizing: border-box;
+                    .leftMode{
+                        button{
+                            margin-right: 10px;
+                            padding:5px 10px;
+                            border-radius: 5px;
+                            background-color: transparent;
+                            border:1px solid @bgAzulDark;
+                            background-color: @bgAzulDark;
+                            span{
+                                font-size: 12px;
+                                color: @bgDefault;
+                            }
+                        }
+                    }
+                    .txt{
+                        width:90%;
+                        margin:auto;
+                        text-align: center;
+                        padding:15px 0px;
+                        box-sizing: border-box;
+                        display: flex;
+                        justify-content: space-around;
+                        align-items: center;
+                        span{
+                            color: @bgDefault;
+                        }
+                        .back{
+                            width:30%;
+                            justify-content: center;
+                            display: flex;
+                            align-items: center;
+                            margin-left:20px;
+                            span{
+                                font-size: 12px;
+                            }
+                            
+                        }
+                    }
+                    box-sizing: border-box;
+                }
                 .kitDescription{
                     height:100%;
                     box-sizing: border-box;
@@ -2204,10 +2255,32 @@
             box-sizing: border-box;
             padding:20px 10px;
             border-bottom: 1px solid #ccc;
-            h3{
-                font-weight: 400;
-                font-size: 16px;
-                color: @bgAzulDark;
+            .divide{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                h3{
+                    font-weight: 400;
+                    font-size: 16px;
+                    color: @bgAzulDark;
+                }
+                .boton{
+                    button{
+                        background-color: @bgAzulDark;
+                        border-radius: 5px;
+                        border:1px solid @bgAzulDark;
+                        padding:5px 10px;
+                        box-sizing: border-box;
+                        transition: .3s;|
+                        span{
+                            font-size: 12px;
+                            color: @bgDefault;
+                        }
+                    }
+                    button:hover{
+                        transform: scale(1.1);
+                    }
+                }
             }
         }
         .bodyModalTable{
@@ -2286,6 +2359,52 @@
                     }
                     tr:hover{
                         background-color: #F8F8F8;
+                    }
+                }
+            }
+            .dataScroll{
+                width:90%;
+                margin:auto;
+                padding:30px 0px;
+                box-sizing: border-box;
+                table{
+                    border-collapse: collapse;
+                    width:100%;
+                    thead{
+                        tr{
+                            th{
+                                padding:10px 10px;
+                                box-sizing: border-box;
+                                text-align: left;
+                                font-weight: 400;
+                                font-size: 12px;
+                                color: #666;
+                            }
+                        }
+                    }
+                    tbody{
+                        tr{
+                            cursor: pointer;
+                            transition: .3s;
+                            td{
+                                padding:10px 10px;
+                                font-size: 12px;
+                                color: @bgAzulDark;
+                            }
+                        }
+                        tr:hover{
+                            background-color: #f8f8f8;
+                        }
+                        tr.Active{
+                            background-color: @bgAzulDark;
+                            td{
+                                color: @bgDefault;
+                            }
+                        }
+                        tr.Currently{
+                            background-color: #CCC;
+                        }
+                        
                     }
                 }
             }

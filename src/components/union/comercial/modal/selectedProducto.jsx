@@ -7,16 +7,22 @@ export default function SelectedProducto({ kt, cotizacion, area }){
     const [active, setActive] = useState(false);
     const [descuento, setDescuento] = useState(kt.productoCotizacion.descuento ? kt.productoCotizacion.descuento : 0);
     const dispatch = useDispatch();
-
+    const [porcentaje, setPorcentaje] = useState(0);
+    const porcentForDescuento = (porcentaje) => {
+        let  precio = kt.productoCotizacion.precio;
+        const descuentico = Number(porcentaje / 100) * Number(precio)
+        return setDescuento(descuentico.toFixed(0))    
+    }
     const giveDescuento = async () => {
+        if(Number(porcentaje) > 10) return dispatch(actions.HandleAlerta('Este descuento es muy alto', 'mistake'));
         if(!descuento) return dispatch(actions.HandleAlerta('Debes dar un descuento', 'mistake'))
-        if(descuento == kt.armadoCotizacion.descuento) return dispatch(actions.HandleAlerta('Debes dar un descuento diferente', 'mistake'))
+        if(descuento == kt.productoCotizacion.descuento) return dispatch(actions.HandleAlerta('Debes dar un descuento diferente', 'mistake'))
             // Caso contrario, avanzamos
         let body = {
-            superKitId: kt.armadoCotizacion.id,
+            productoCotizacionId: kt.productoCotizacion.id,
             descuento
         }
-        const sendPeticion = await axios.put('/api/cotizacion/superkit/descuento', body)
+        const sendPeticion = await axios.put('/api/cotizacion/producto/descuento', body)
         .then((res) => {
             dispatch(actions.HandleAlerta('Descuento asignado', 'positive'));
             dispatch(actions.axiosToGetCotizacion(false, cotizacion.id))
@@ -61,12 +67,25 @@ export default function SelectedProducto({ kt, cotizacion, area }){
             {
                 active ?
                 <td>
-                    <input type="text" onKeyDown={(e) => {
+                    {/* <input type="text" onKeyDown={(e) => {
                         if(e.key === 'Escape') setActive(false)
                         if(e.key === 'Enter')  giveDescuento();
                     }} onChange={(e) => { 
                         setDescuento(e.target.value)
-                    }} value={descuento} />
+                    }} value={descuento} /> */}
+                    <label htmlFor="">{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(descuento)} COP</label><br />
+                    <input type="text" inputMode="numeric"
+                    pattern="[0-9]*" onKeyDown={(e) => {
+                        if(e.key === 'Escape') setActive(false)
+                        if(e.key === 'Enter')  giveDescuento();
+                    }} onChange={(e) => { 
+                        const text = e.target.value
+                        if (/^\d*\.?\d*$/.test(text)) { // Solo números positivos sin decimales
+                            setPorcentaje(e.target.value)
+                            porcentForDescuento(e.target.value)
+                        }
+                        
+                    }}  value={porcentaje}/>
                 </td>
                 :
                 <td onDoubleClick={() => setActive(true)}>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(kt.productoCotizacion.descuento).toFixed(0))} COP</td>

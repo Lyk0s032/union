@@ -96,6 +96,7 @@ export default function ModalAddCat(){
                                         <th>Nombre</th>
                                         <th>Descripción</th>
                                         <th>Tipo</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>

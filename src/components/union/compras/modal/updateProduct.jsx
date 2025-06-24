@@ -37,7 +37,7 @@ export default function ModaUpdateProducto(props){
         const sendPeticion = await axios.put('/api/materia/producto/new', body)
         .then((res) => {
             dispatch(actions.axiosToGetProducto(false, prima.id))
-            dispatch(actions.HandleAlerta('Producto agregado con exito', 'positive'))
+            dispatch(actions.HandleAlerta('Producto actualizado con exito', 'positive'))
             setForm({
                 item: '',
                 description: '',
@@ -50,7 +50,7 @@ export default function ModaUpdateProducto(props){
             });
             params.delete('u');
             setParams(params);
-
+            return res;
         })
         .catch(err => {
             console.log(err)
@@ -92,6 +92,45 @@ export default function ModaUpdateProducto(props){
                                 })
                             }} value={form.description}/>
                         </div>
+                        <div className="inputDiv">
+                            <label htmlFor=""><strong>Tipo de elemento </strong></label><br />
+                            <select name="" id=""  onChange={(e) => {
+                                setForm({
+                                    ...form, 
+                                    unidad: e.target.value,
+                                    medida: e.target.value == 'mt2' ? '1X1' : 1
+                                }) 
+                            }} value={form.unidad}>
+                                {
+                                    form.unidad == 'mt2' ?
+                                        <>
+                                            <option value="mt2">Producto valor mt2</option>
+                                            <option value="estatico">Producto valor estático</option>
+                                        </>
+
+                                    :
+                                     <>
+                                        <option value="estatico">Producto valor estático</option>
+                                        <option value="mt2">Producto valor mt2</option>
+                                    </>
+
+                                }
+
+                            </select>
+                        </div>
+                        {
+                            form.unidad == 'mt2' ?
+                            <div className="inputDiv">
+                                <label htmlFor="">Medida </label><br />
+                                <input type="text" placeholder="Escribe aquí" onChange={(e) => {
+                                    setForm({
+                                        ...form,
+                                        medida: e.target.value
+                                    })
+                                }} value={form.medida}/>
+                            </div> 
+                            : null
+                        }
                         <div className="inputDiv">
                             <label htmlFor="">Volumen</label><br />
                             <input type="text" placeholder="Escribe aquí" onChange={(e) => {

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import * as actions from '../../../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
@@ -30,6 +30,7 @@ export default function CotizacionDescription(){
         const sendPeticion = await axios.post('/api/cotizacion/new', body)
         .then((res) => {
             console.log(res)
+            dispatch(actions.axiosToGetCotizaciones(false, user.user.id))
             return dispatch(actions.getCotizacion(res.data)) 
         })
         .catch(err => {
@@ -57,7 +58,7 @@ export default function CotizacionDescription(){
         
        
     }
-
+ 
     return (
         <div className="kitDescription">
             <div className="containerKitDescription">

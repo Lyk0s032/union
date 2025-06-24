@@ -144,7 +144,7 @@ export default function ModalAddExtensiones(){
                                                         m.name.toLowerCase().includes(word.toLowerCase()) || m.code.toLowerCase().includes(word.toLowerCase())
                                                     ).map((pv, i) => {
                                                         return (
-                                                            <tr className="ExtensionFila" key={i+1}>
+                                                            <tr className="ExtensionFila" id={`elemento-${pv.id}`} key={i+1}>
                                                                 <td>
                                                                     <div className="divideCode">
                                                                         <div className="color" style={{backgroundColor: pv.code}}></div>

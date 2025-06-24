@@ -45,7 +45,7 @@ export default function MateriaPrima(){
             <div className="containerProviders">
                 <div className="topSection">
                     <div className="title">
-                        <h1>Materia prima</h1>
+                        <h1>Materia prima { primas?.length && (`(${primas.length})`)}</h1>
                     </div>
                     <div className="optionsFast">
                         <nav>

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { BsPencil, BsThreeDots, BsThreeDotsVertical } from "react-icons/bs";
 import * as actions from '../../store/action/action';
@@ -8,30 +8,54 @@ import axios from "axios";
 
 export default function CotizacionItem({ cotizacionn, openMenuId, toggleMenu }){
     const [params, setParams] = useSearchParams();
+    const usuario = useSelector(store => store.usuario);
+    const { user } = usuario;
+
     const cotizacion = cotizacionn;
 
     const dispatch = useDispatch();
-
+    // Aprobar 
     const handleAprobar = async() => {
         
         const sendAprobation = await axios.get(`/api/cotizacion/accept/${cotizacion.id}`)
         .then(res => {
             dispatch(actions.HandleAlerta('Cotización aprobada', 'positive')) 
-            dispatch(actions.axiosToGetCotizaciones(false))
+            dispatch(actions.axiosToGetCotizaciones(false, user.user.id))
             toggleMenu(cotizacion.id)
+            return res
         })
         .catch(err => {
             dispatch(actions.HandleAlerta('Ha ocurrido un error', 'positive'))
+            return err;
         })
         return sendAprobation;
     } 
-
+    // Abrir cotización
     const openCoti = async () => {
         toggleMenu(null)
         dispatch(actions.axiosToGetCotizacion(true, cotizacion.id))
         params.set('watch', 'cotizacion');
         setParams(params);
     }
+    // Eliminar cotizacion
+    const handleRemove = async() => {
+        let body = {
+            userId: user.user.id,
+            cotizacionId: cotizacion.id
+        }
+        const sendRemove = await axios.delete(`/api/cotizacion/remove/cotizacion`, { data: body})
+        .then(res => {
+            dispatch(actions.HandleAlerta('Cotización removida', 'positive')) 
+            dispatch(actions.axiosToGetCotizaciones(false, user.user.id))
+            toggleMenu(cotizacion.id)
+            return res;
+        })
+        .catch(err => {
+            dispatch(actions.HandleAlerta('No hemos logrado remover esta cotización', 'positive'))
+            return err
+        })
+        return sendRemove;
+    } 
     return (
         <tr>
             <td onClick={() => openCoti()}>{cotizacion.name}</td>
@@ -118,7 +142,7 @@ export default function CotizacionItem({ cotizacionn, openMenuId, toggleMenu }){
                                             <span>Ver</span>
                                         </div>
                                     </li>
-                                    <li> 
+                                    <li onClick={() => handleRemove()}> 
                                         <div>
                                             <MdDeleteOutline className="icon" />
                                             <span>Eliminar</span>

@@ -31,7 +31,7 @@ export default function ProductoTerminado(){
             <div className="containerProviders">
                 <div className="topSection">
                     <div className="title">
-                        <h1>Productos terminado</h1>
+                        <h1>Productos terminado {productos?.length && (`(${productos.length})`)}</h1>
                     </div>
                     <div className="optionsFast">
                         <nav>
