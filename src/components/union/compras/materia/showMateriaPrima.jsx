@@ -27,7 +27,7 @@ export default function ShowMateriaPrima(){
         </div>
         :
         <div className="showProveedor">
-            <div className="containerShow">
+            <div className="containerShow">  {console.log(prima)}
                 <div className="topProvider"> 
                     <div className="divideTop">
                         <button onClick={() => {
