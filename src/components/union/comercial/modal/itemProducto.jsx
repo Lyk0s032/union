@@ -52,7 +52,7 @@ export default function ProductoTerminadoItem({ area, terminado, final }){
             cotizacionId: area,
             productoId: terminado.id,
             cantidad: form.cantidad,
-            precio: terminado.unidad == 'mt2' ? Number(mt).toFixed(0) : Number(valor * howMany).toFixed(0),
+            precio: terminado.unidad == 'mt2' ? Number(mt * form.cantidad).toFixed(0) : Number(valor * howMany).toFixed(0),
             areaId: area,
             areaCotizacionId: cotizacion.id
         }
@@ -110,20 +110,19 @@ export default function ProductoTerminadoItem({ area, terminado, final }){
                 </div>
                 :
                 <div className="Divide" >
-                    {console.log(terminado)}
                     <div className="leftImg"> 
                         <div className="boxDiv">
                             <h1>{terminado.item[0]} </h1>
                         </div>
                     </div>
-                    <div className="titleData"  style={{marginTop:-20}}>
+                    <div className="titleData"  style={{marginTop:-10}}>
                         <h3>{terminado.item} {terminado.unidad == 'mt2' ? <strong>{`(MT2)`}</strong> : null} </h3> 
-                        <div className="form">
+                        <div className="form"  >
                             {
                                 terminado.unidad == 'mt2' ?
                                     <label htmlFor="">
                                         {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(
-                                            Number(mt).toFixed(0)
+                                            Number(mt * form.cantidad).toFixed(0)
                                         )}
                                          <span> COP</span>
                                         <div>
@@ -137,6 +136,14 @@ export default function ProductoTerminadoItem({ area, terminado, final }){
                             onChange={(e) => {
                                 setHowMany(e.target.value)
                             }} value={howMany.toUpperCase()}/>
+
+                            <input type="text" id={terminado.id+2} placeholder={"Cantidad"}
+                            onChange={(e) => {
+                                setForm({
+                                    ...form,
+                                    cantidad: e.target.value
+                                })
+                            }} value={form.cantidad}/>
 
 
                             <button onClick={() => {
