@@ -133,7 +133,7 @@ export default function ProductoTerminadoItem({ area, terminado, final }){
                                  <label htmlFor=""> Precio normal {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valor * howMany).toFixed(0))} COP</label>
                                 }
                                 <br />
-                            <input type="text" id={terminado.id} placeholder="Cantidad" 
+                            <input type="text" id={terminado.id} placeholder={terminado.unidad == 'mt2' ? 'Medida. Ejemplo: 1X1' : "Cantidad"}
                             onChange={(e) => {
                                 setHowMany(e.target.value)
                             }} value={howMany.toUpperCase()}/>
