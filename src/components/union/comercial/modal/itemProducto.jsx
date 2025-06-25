@@ -30,6 +30,7 @@ export default function ProductoTerminadoItem({ area, terminado, final }){
     const generatePrice = async () => {
         let valorPromedio = valor;
         let medida = terminado.medida;
+        console.log(terminado)
         // Área Definida
         let areaDefinida = Number(Number(medida.split('X')[0]) * Number(medida.split('X')[1]))
         // Obtenemos el valor del MT2.
@@ -116,7 +117,7 @@ export default function ProductoTerminadoItem({ area, terminado, final }){
                         </div>
                     </div>
                     <div className="titleData"  style={{marginTop:-20}}>
-                        <h3>{terminado.item} {distribuidor} </h3> 
+                        <h3>{terminado.item} {terminado.unidad == 'mt2' ? <strong>{`(MT2)`}</strong> : null} </h3> 
                         <div className="form">
                             {
                                 terminado.unidad == 'mt2' ?
