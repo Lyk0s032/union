@@ -67,7 +67,7 @@ const exportToPDF = () => {
                 !cotizacion || loadingCotizacion ?
                     <h1>Cargando cotización...</h1>
                 : 
-                <div className="containerModal Large">
+                <div className="containerModal Large" style={{width:'90%'}}>
                     <div className="cotizacionBody" id="cotizacion-pdf">
                         <div className="top">
                             <img src="https://metalicascosta.com.co/assets/img/logo_metalicas_costa.png" alt="" />
@@ -203,9 +203,11 @@ const exportToPDF = () => {
                                                                     <th className='left'>Descripción</th>
                                                                     <th>Cantidad</th>
                                                                     <th>Valor Unitario</th>
+                                                                    <th>Subtotal</th>
+                                                                    <th>Descuento</th>
                                                                     <th>IVA</th>
-                                                                    <th>Descuentos</th>
-                                                                    <th>Valor total</th>
+                                                                    <th>Antes de IVA</th>
+                                                                    <th>Total</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -240,6 +242,8 @@ const exportToPDF = () => {
                                                                                         :
                                                                                         <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.cantidad).toFixed(0))}</td>
                                                                                     } 
+                                                                                    
+
                                                                                     { 
                                                                                         it.kitCotizacion ?
                                                                                         <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.kitCotizacion.precio / it.kitCotizacion.cantidad).toFixed(0))} COP</td>
@@ -249,14 +253,14 @@ const exportToPDF = () => {
                                                                                         :
                                                                                         <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.precio / it.armadoCotizacion.cantidad).toFixed(0))} COP</td>
                                                                                     }
-                                                                                    {
+                                                                                    { 
                                                                                         it.kitCotizacion ?
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.kitCotizacion.precio - it.kitCotizacion.descuento).toFixed(0) * (0.19)).toFixed(0))} COP</td>
-                                                                                        : 
-                                                                                         it.productoCotizacion ?
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.productoCotizacion.precio - it.productoCotizacion.descuento).toFixed(0)) * (0.19))} COP</td>
+                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.kitCotizacion.precio).toFixed(0))} COP</td>
                                                                                         :
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.armadoCotizacion.precio - it.armadoCotizacion.descuento).toFixed(0)) * (0.19))} COP</td>
+                                                                                        it.productoCotizacion ?
+                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.productoCotizacion.precio).toFixed(0))} COP</td>
+                                                                                        :
+                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.precio).toFixed(0))} COP</td>
                                                                                     }
                                                                                     {
                                                                                         it.kitCotizacion ?
@@ -269,12 +273,32 @@ const exportToPDF = () => {
                                                                                     }
                                                                                     {
                                                                                         it.kitCotizacion ?
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.kitCotizacion.precio).toFixed(0))} COP</td>
+                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.kitCotizacion.precio - it.kitCotizacion.descuento).toFixed(0) * (0.19)).toFixed(0))} COP</td>
+                                                                                        : 
+                                                                                         it.productoCotizacion ?
+                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.productoCotizacion.precio - it.productoCotizacion.descuento).toFixed(0)) * (0.19))} COP</td>
+                                                                                        :
+                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.armadoCotizacion.precio - it.armadoCotizacion.descuento).toFixed(0)) * (0.19))} COP</td>
+                                                                                    }
+                                                                                    
+                                                                                    {
+                                                                                        it.kitCotizacion ?
+                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.kitCotizacion.precio - it.kitCotizacion.descuento).toFixed(0))} COP</td>
                                                                                         :
                                                                                          it.productoCotizacion ?
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.productoCotizacion.precio).toFixed(0))} COP</td>
+                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.productoCotizacion.precio - it.productoCotizacion.descuento).toFixed(0))} COP</td>
                                                                                         :
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.precio).toFixed(0))} COP</td>
+                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.precio  - it.armadoCotizacion.descuento).toFixed(0))} COP</td>
+                                                                                    }
+
+                                                                                    {
+                                                                                        it.kitCotizacion ?
+                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.kitCotizacion.precio - it.kitCotizacion.descuento + Number(Number(it.kitCotizacion.precio - it.kitCotizacion.descuento).toFixed(0) * (0.19))).toFixed(0))} COP</td>
+                                                                                        :
+                                                                                         it.productoCotizacion ?
+                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.productoCotizacion.precio - it.productoCotizacion.descuento + Number(Number(it.productoCotizacion.precio - it.productoCotizacion.descuento).toFixed(0)) * (0.19)).toFixed(0))} COP</td>
+                                                                                        :
+                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.precio  - it.armadoCotizacion.descuento + Number(Number(it.armadoCotizacion.precio - it.armadoCotizacion.descuento).toFixed(0)) * (0.19)).toFixed(0))} COP</td>
                                                                                     }
                                                                                 </tr>
                                                                             )

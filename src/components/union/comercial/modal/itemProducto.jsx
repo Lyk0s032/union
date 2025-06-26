@@ -137,13 +137,17 @@ export default function ProductoTerminadoItem({ area, terminado, final }){
                                 setHowMany(e.target.value)
                             }} value={howMany.toUpperCase()}/>
 
-                            <input type="text" id={terminado.id+2} placeholder={"Cantidad"}
-                            onChange={(e) => {
-                                setForm({
-                                    ...form,
-                                    cantidad: e.target.value
-                                })
-                            }} value={form.cantidad}/>
+                            {
+                                terminado.unidad == 'mt2' && (
+                                    <input type="text" id={terminado.id+2} placeholder={"Cantidad"}
+                                    onChange={(e) => {
+                                        setForm({
+                                            ...form,
+                                            cantidad: e.target.value
+                                        })
+                                    }} value={form.cantidad}/>
+                                )
+                            }
 
 
                             <button onClick={() => {

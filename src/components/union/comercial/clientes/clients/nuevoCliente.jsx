@@ -9,9 +9,9 @@ export default function NewClient(){
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [form, setForm] = useState({
-        nit:null,
+        nit:"",
         persona: 'juridica',
-        code: null,
+        code: "",
         nombre: null,
         name: null,
         lastName: null,
@@ -96,7 +96,7 @@ export default function NewClient(){
                             </select>
                         </div>
                         <div className="inputDiv">
-                            <label htmlFor="">{form.persona == 'juridica' ? 'NIT' : 'Documento de indentificación'} {form.nit} - {form.code}</label><br />
+                            <label htmlFor="">{form.persona == 'juridica' ? 'NIT' : 'Documento de indentificación'} {form.nit} - {form.code && (form.code)}</label><br />
                             <input type="text" placeholder="Escribe aquí" onChange={(e) => {
                                 setForm({
                                     ...form,
@@ -104,7 +104,6 @@ export default function NewClient(){
                                 })
                             }} value={form.nit} />
                         </div>
-
                         {
                             form.persona == 'juridica' ?
                                 <div className="inputDiv">
