@@ -1,64 +1,93 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import html2pdf from "html2pdf.js";
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import axios from 'axios';
 
 export default function DocumentCotizacion(){
     const [params, setParams] = useSearchParams(); 
 
     const cotizacionn = useSelector(store => store.cotizacions);
     const { cotizacion, loadingCotizacion } = cotizacionn;
-
+    const [municipio, setMuni] = useState(null);
     const pdfRef = useRef();
 
-const exportToPDF = () => {
-  const input = document.getElementById("cotizacion-pdf");
+    const exportToPDF = () => {
+    const input = document.getElementById("cotizacion-pdf");
 
-  // Guardar estilo original
-  const originalHeight = input.style.height;
-  const originalOverflow = input.style.overflow;
+    // Guardar estilo original
+    const originalHeight = input.style.height;
+    const originalOverflow = input.style.overflow;
 
-  // Expandir div para mostrar todo el contenido
-  input.style.height = 'auto';
-  input.style.overflow = 'visible';
+    // Expandir div para mostrar todo el contenido
+    input.style.height = 'auto';
+    input.style.overflow = 'visible';
 
-  // Esperar a que se renderice visualmente (opcional pero recomendable)
-  setTimeout(() => {
-    html2canvas(input, { scale: 2 }).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
+    // Esperar a que se renderice visualmente (opcional pero recomendable)
+    setTimeout(() => {
+        html2canvas(input, { scale: 2 }).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
 
-      const pdf = new jsPDF("p", "pt", "a4");
-      const pageWidth = pdf.internal.pageSize.getWidth();
-      const pageHeight = pdf.internal.pageSize.getHeight();
+        const pdf = new jsPDF("p", "pt", "a4");
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
 
-      const imgWidth = pageWidth;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        const imgWidth = pageWidth;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-      let heightLeft = imgHeight;
-      let position = 0;
+        let heightLeft = imgHeight;
+        let position = 0;
 
-      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-
-      while (heightLeft > 0) {
-        position -= pageHeight;
-        pdf.addPage();
         pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
         heightLeft -= pageHeight;
-      }
 
-      pdf.save(`cotizacion-${cotizacion.client.nombre}-${Number(21719)+Number(cotizacion.id)}.pdf`);
+        while (heightLeft > 0) {
+            position -= pageHeight;
+            pdf.addPage();
+            pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+        }
 
-      // Restaurar estilos originales
-      input.style.height = originalHeight;
-      input.style.overflow = originalOverflow;
-    });
-  }, 100); // Espera opcional de 100ms para asegurar render
-};
+        pdf.save(`cotizacion-${cotizacion.client.nombre}-${Number(21719)+Number(cotizacion.id)}.pdf`);
+
+        // Restaurar estilos originales
+        input.style.height = originalHeight;
+        input.style.overflow = originalOverflow;
+        });
+    }, 100); // Espera opcional de 100ms para asegurar render
+    };
+
+// 2. Envuelve tu función en useCallback
+    const obtenerNombreMunicipio = useCallback(async (codigoConPunto) => {
+        try {
+            const codigoLimpio = String(codigoConPunto).replace('.', '');
+            console.log('Código limpio', codigoLimpio)
+            const url = `https://www.datos.gov.co/resource/xdk5-pm3f.json?c_digo_dane_del_municipio=${codigoLimpio}`;
+            const respuesta = await axios.get(url);
+
+            if (respuesta.data.length > 0) {
+                setMuni(respuesta.data[0].municipio);
+                // No es necesario el return aquí si solo actualizas el estado
+            } else {
+                setMuni("No encontrado");
+            } 
+        } catch (error) {
+            console.error("Hubo un error buscando el municipio:", error);
+            setMuni("Error de búsqueda");
+        }
+    // El arreglo vacío [] al final le dice a useCallback que nunca necesita recrear la función.
+    }, []); 
+
+    // useEffect(() => {
+    //     if (cotizacion && cotizacion.client && cotizacion.client.ciudad) {
+    //         obtenerNombreMunicipio(cotizacion.client.ciudad);
+    //     }
+    // // Ahora esta lista de dependencias es segura y estable
+    // }, [cotizacion, obtenerNombreMunicipio]);
     return ( 
-        <div className="modal">
+        <div className="modal"> 
             <div className="hiddenModal" onClick={() => {
                 params.delete('watch');
                 setParams(params);
@@ -137,7 +166,7 @@ const exportToPDF = () => {
                                             <h3>
                                                 CIUDAD:
                                             </h3>
-                                            <h4> {cotizacion.client.ciudad}</h4>
+                                            <h4> {cotizacion.client.ciudad.toUpperCase()}</h4>
                                         </div>
                                         <div className="item">
                                             <h3>
@@ -378,11 +407,10 @@ function TotalSub({ cotizacion }){
 
     const valorProductos = cotizacion.areaCotizacions?.reduce((accArea, area) => {
     const suma = area.productos?.reduce((accKit, kit) => {
-            return accKit + Number(kit.productosCotizacion?.precio || 0);
+            return accKit + Number(kit.productoCotizacion?.precio || 0);
         }, 0) || 0;
         return accArea + suma;
     }, 0) || 0;
-
 
     // Descuentos
     const descuentoKits = cotizacion.areaCotizacions?.reduce((accArea, area) => {
@@ -399,9 +427,10 @@ function TotalSub({ cotizacion }){
         return accArea + suma;
     }, 0) || 0;
 
+
     const descuentoProductos = cotizacion.areaCotizacions?.reduce((accArea, area) => {
     const suma = area.productos?.reduce((accKit, kit) => {
-            return accKit + Number(kit.productosCotizacion?.descuento || 0);
+            return accKit + Number(kit.productoCotizacion?.descuento || 0);
         }, 0) || 0;
         return accArea + suma;
     }, 0) || 0;
@@ -421,5 +450,5 @@ function TotalSub({ cotizacion }){
             <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(total).toFixed(0))} COP</td>
         
         </tr>
-    )
+    ) 
 }

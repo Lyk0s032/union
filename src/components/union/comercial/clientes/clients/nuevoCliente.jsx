@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import * as actions from '../../../../store/action/action';
@@ -7,6 +7,11 @@ import axios from 'axios';
 export default function NewClient(){
     const [params, setParams] = useSearchParams();
     const dispatch = useDispatch();
+
+    const [divipolaData, setDivipolaData] = useState([]);
+    const [departamentos, setDepartamentos] = useState([]);
+    const [municipios, setMunicipios] = useState([]);
+
     const [loading, setLoading] = useState(false);
     const [form, setForm] = useState({
         nit:"",
@@ -18,14 +23,31 @@ export default function NewClient(){
         siglas: null,
         email:null,
         direccion:null,
-        ciudad: null,
-        departamento:null,
+        ciudad: '',
+        departamento:'',
         pais:'colombia',
         fijo:null,
         phone:null,
     });
     const usuario = useSelector(store => store.usuario);
     const { user } = usuario;
+
+    const searchDeparamentos = async () => {
+        try {
+            const res = await axios.get("https://www.datos.gov.co/resource/xdk5-pm3f.json?$limit=2000");           
+            setDivipolaData(res.data);
+            console.log(res.data)
+            // <-- CORRECCIÓN #1: Usar el nombre de campo correcto de la API
+            const uniqueDepartamentos = Array.from(new Set(res.data.map(d =>
+                `${d.c_digo_dane_del_departamento}-${d.departamento}` // <--- AQUÍ
+            )));
+
+            setDepartamentos(uniqueDepartamentos);
+        } catch (error) {
+            console.error("Error fetching Divipola data:", error);
+            dispatch(actions.HandleAlerta('No se pudo cargar la lista de departamentos', 'negative'));
+        }
+    }
 
     const createClient = async() => {
         if(form.persona == 'juridica' && !form.nombre) return dispatch(actions.HandleAlerta('Ingresa un nombre de empresa', 'negative'))
@@ -68,6 +90,22 @@ export default function NewClient(){
             return sendPeticion;
         } 
     } 
+
+    useEffect(() => {
+        searchDeparamentos()
+    }, [])
+
+
+    useEffect(() => {
+        if (form.departamento && divipolaData.length > 0) {
+            const [codigoDepto] = form.departamento.split('-');
+            // <-- CORRECCIÓN #2: Usar el nombre de campo correcto para filtrar
+            const filtered = divipolaData.filter(m => m.c_digo_dane_del_departamento === codigoDepto); // <--- AQUÍ
+            setMunicipios(filtered);
+        } else {
+            setMunicipios([]);
+        }
+    }, [form.departamento, divipolaData]);
     return (
         <div className="modal">
             <div className="hiddenModal" onClick={() => {
@@ -169,7 +207,7 @@ export default function NewClient(){
                             </div>
                             :null
                         }
-                        <div className="inputDiv">
+                        <div className="inputDiv"> 
                             <label htmlFor="">Dirección</label><br />
                             <input type="text" placeholder="Escribe aquí" onChange={(e) => {
                                 setForm({
@@ -190,104 +228,41 @@ export default function NewClient(){
                             </select>
                         </div>
                         <div className="inputDiv">
-                            <label htmlFor="">Departamento</label><br />
+                            <label htmlFor="">Departamento </label><br />
                             <select onChange={(e) => {
                                 setForm({
                                     ...form,
                                     departamento: e.target.value
                                 })
+                                
                             }} value={form.departamento} >
-                                <option value="">Selecciona departamento</option>
-                                <option value="05">Amazonas</option>
-                                <option value="08">Antioquia</option>
-                                <option value="11">Arauca</option>
-                                <option value="13">Atlántico</option>
-                                <option value="15">Bolívar</option>
-                                <option value="17">Boyacá</option>
-                                <option value="18">Caldas</option>
-                                <option value="19">Caquetá</option>
-                                <option value="20">Casanare</option>
-                                <option value="23">Cauca</option>
-                                <option value="25">Cesar</option>
-                                <option value="27">Chocó</option>
-                                <option value="30">Córdoba</option>
-                                <option value="32">Cundinamarca</option>
-                                <option value="95">Guaviare</option>
-                                <option value="97">Guainía</option>
-                                <option value="41">Huila</option>
-                                <option value="44">La Guajira</option>
-                                <option value="47">Magdalena</option>
-                                <option value="50">Meta</option>
-                                <option value="52">Nariño</option>
-                                <option value="54">Norte de Santander</option>
-                                <option value="86">Putumayo</option>
-                                <option value="63">Quindío</option>
-                                <option value="66">Risaralda</option>
-                                <option value="88">San Andrés y Providencia</option>
-                                <option value="68">Santander</option>
-                                <option value="70">Sucre</option>
-                                <option value="73">Tolima</option>
-                                <option value="76">Valle del Cauca</option>
-                                <option value="86">Vaupés</option>
-                                <option value="97">Vichada</option>
-                                <option value="00">Bogotá (Distrito Capital)</option>
+                                <option value="">Selecciona un Departamento</option>
+                            
+                                {departamentos.map(dep => {
+                                const [codigo, nombre] = dep.split('-');
+                                return <option key={codigo} value={dep}>{nombre}</option>;
+                                })}
                             </select>
                         </div>
                         <div className="inputDiv">
-                            <label htmlFor="">Municipio</label><br />
+                            <label htmlFor="">Municipio </label><br />
                             <select onChange={(e) => {
                                 setForm({
                                     ...form,
                                     ciudad: e.target.value
                                 })
                             }} value={form.ciudad} >
-                                    <option value="">Selecciona municipio</option>
-                                    <option value="76001">Cali</option>
-                                    <option value="76002">Buenaventura</option>
-                                    <option value="76003">Palmira</option>
-                                    <option value="76004">Tuluá</option>
-                                    <option value="76005">Buga</option>
-                                    <option value="76006">Cartago</option>
-                                    <option value="76007">Zarzal</option>
-                                    <option value="76008">Roldanillo</option>
-                                    <option value="76009">Guacarí</option>
-                                    <option value="76010">El Cerrito</option>
-                                    <option value="76011">Dagua</option>
-                                    <option value="76012">Yumbo</option>
-                                    <option value="76013">La Unión</option>
-                                    <option value="76014">Versalles</option>
-                                    <option value="76015">La Cumbre</option>
-                                    <option value="76016">San Pedro</option>
-                                    <option value="76017">Restrepo</option>
-                                    <option value="76018">Riofrío</option>
-                                    <option value="76019">Trujillo</option>
-                                    <option value="76020">Tuluá</option>
-                                    <option value="76021">El Águila</option>
-                                    <option value="76022">Obando</option>
-                                    <option value="76023">Andalucía</option>
-                                    <option value="76024">Candelaria</option>
-                                    <option value="76025">Ginebra</option>
-                                    <option value="76026">Florida</option>
-                                    <option value="76027">Restrepo</option>
-                                    <option value="76028">Villarica</option>
-                                    <option value="76029">La Victoria</option>
-                                    <option value="76030">Yotoco</option>
-                                    <option value="76031">Candelaria</option>
-                                    <option value="76032">El Cairo</option>
-                                    <option value="76033">Ansermanuevo</option>
-                                    <option value="76034">Caicedonia</option>
-                                    <option value="76035">La Cumbre</option>
-                                    <option value="76036">Riofrío</option>
-                                    <option value="76037">Roldanillo</option>
-                                    <option value="76038">San Pedro</option>
-                                    <option value="76039">Bugalagrande</option>
-                                    <option value="76040">Ginebra</option>
-                                    <option value="76041">Toro</option>
-                                    <option value="76042">Argelia</option>
-                                    <option value="76043">San Juan de los Morros</option>
-                                    <option value="76044">Villarica</option>
-                                    <option value="76045">La Victoria</option>
-                                    <option value="76046">Guacari</option>
+                                <option value="">Selecciona un municipio</option>
+                                {console.log(municipios)}
+                                {municipios
+                                    // <-- CAMBIO CLAVE: Asegurarnos de que TANTO el código como el nombre existan
+                                    .filter(mun => mun && mun.municipio && mun.c_digo_dane_del_municipio) 
+                                    .map(mun => (
+                                        <option key={mun.c_digo_dane_del_municipio} value={mun.c_digo_dane_del_municipio}>
+                                            {mun.municipio}
+                                        </option>
+                                    ))
+                                }
                             </select>
                         </div>
                         <div className="inputDiv">
