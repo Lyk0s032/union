@@ -52,6 +52,7 @@ export default function ProductoTerminadoItem({ area, terminado, final }){
             cotizacionId: area,
             productoId: terminado.id,
             cantidad: form.cantidad,
+            medida: howMany,
             precio: terminado.unidad == 'mt2' ? Number(mt * form.cantidad).toFixed(0) : Number(valor * howMany).toFixed(0),
             areaId: area,
             areaCotizacionId: cotizacion.id

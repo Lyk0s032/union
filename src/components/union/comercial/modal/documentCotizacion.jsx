@@ -258,9 +258,9 @@ export default function DocumentCotizacion(){
                                                                                     }
                                                                                     {
                                                                                         it.productoCotizacion ?
-                                                                                            <td className='left'>{it.item}</td>
+                                                                                            <td className='left'>{it.item} {it.productoCotizacion.medida && (`| ${it.productoCotizacion.medida}`)}</td>
                                                                                         :
-                                                                                            <td className='left'>{it.name} - {it.extension.name}</td>
+                                                                                            <td className='left'>{it.name} - {it.extension.name} </td>
                                                                                     }
                                                                                     {
                                                                                         it.kitCotizacion ?

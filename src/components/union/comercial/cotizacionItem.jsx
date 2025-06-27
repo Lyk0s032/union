@@ -5,13 +5,18 @@ import { BsPencil, BsThreeDots, BsThreeDotsVertical } from "react-icons/bs";
 import * as actions from '../../store/action/action';
 import { MdDeleteOutline, MdOutlineFlag, MdOutlineRemoveRedEye, MdOutlineScreenShare } from "react-icons/md";
 import axios from "axios";
+import dayjs from "dayjs";
+import localeData from 'dayjs/plugin/localeData';
+import 'dayjs/locale/es'; // Idioma español
 
 export default function CotizacionItem({ cotizacionn, openMenuId, toggleMenu }){
     const [params, setParams] = useSearchParams();
     const usuario = useSelector(store => store.usuario);
     const { user } = usuario;
-
     const cotizacion = cotizacionn;
+
+        dayjs.locale('es') 
+        dayjs.extend(localeData);
 
     const dispatch = useDispatch();
     // Aprobar 
@@ -60,7 +65,9 @@ export default function CotizacionItem({ cotizacionn, openMenuId, toggleMenu }){
         <tr>
             <td onClick={() => openCoti()}>{cotizacion.name}</td>
             <td>{cotizacion.client.nombre}</td>
-            <td>{cotizacion.updatedAt.split('T')[0]}</td>
+            <td>{Number(21719) + cotizacion.id}</td>
+            
+            <td>{dayjs(cotizacion.createdAt.split('T')[0]).format('DD [de] MMMM [de] YYYY')}</td>
             {/* <td>
                 <strong>{<ValorKit cotizacion={cotizacion} />} COP</strong>
             </td> */}

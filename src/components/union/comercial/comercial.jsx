@@ -42,13 +42,13 @@ export default function ComercialPanel(){
         };
       }, [openMenuId]); 
 
-
+ 
     useEffect(() => {
         dispatch(actions.axiosToGetCotizaciones(true, user.user.id))
     }, []) 
     return (
         <div className="provider">
-            <div className="containerProviders"> {console.log(cotizaciones)}
+            <div className="containerProviders"> 
                 <div className="topSection">
                     <div className="title">
                         <h1>Cotizaciones</h1>
@@ -81,6 +81,7 @@ export default function ComercialPanel(){
                                     <tr>
                                         <th>Nombre</th>
                                         <th>Cliente</th>
+                                        <th>Nro</th>
                                         <th>fecha</th>
                                         <th>Estado</th>
                                         <th></th>

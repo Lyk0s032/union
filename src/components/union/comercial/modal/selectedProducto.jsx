@@ -60,7 +60,7 @@ export default function SelectedProducto({ kt, cotizacion, area }){
             <td>
                 <div>
                     <strong style={{fontSize:12}}>Producto</strong><br />
-                    <span>{kt.item}</span>
+                    <span>{kt.item} {kt.productoCotizacion.medida && (`| ${kt.productoCotizacion.medida}`)}</span>
                 </div>
             </td>
             <td>{kt.productoCotizacion.cantidad}</td>
