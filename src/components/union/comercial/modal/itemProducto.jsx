@@ -178,10 +178,10 @@ function GetPrice({ precios, terminado, getValor, final, distribuidor, estado })
     const  precioDistribuidor = promedio / distribuidor
     const precioFinal = promedio / final
     useEffect(() => {
-        getValor(estado ? precioFinal.toFixed(0) : precioDistribuidor.toFixed(0))
+        getValor(!estado ? precioFinal.toFixed(0) : precioDistribuidor.toFixed(0))
     }, [promedio, estado])
     return (
-    //    <h1>{estado ? precioFinal.toFixed(0) : precioDistribuidor.toFixed(0)}</h1>
+    //    <h1>{String(estado)} - {estado ? precioFinal.toFixed(0) : precioDistribuidor.toFixed(0)}</h1>
         <></>
     )
 }

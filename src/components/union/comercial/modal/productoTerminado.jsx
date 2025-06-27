@@ -91,7 +91,7 @@ export default function SearchProductoTerminado({ number }){
                             :   
                                 <h1>No hemos encontrado esto </h1>
                         }       
-                    </div>      
+                    </div><br /><br /><br /><br />  
                 </div> 
             </div>
         </div>
