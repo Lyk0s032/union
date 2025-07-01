@@ -16,7 +16,7 @@ export default function ComercialPanel(){
     const usuario = useSelector(store => store.usuario);
     const { user } = usuario;
     const [state, setState] = useState('completa');      
-    const [word, setWord] = useState(null);
+    const [word, setWord] = useState('');
     const [metodo, setMetodo] = useState(null); // METODO DE BUSQUEDA LINEA O CATEGORIA
     const [filter, setFilter] = useState(cotizaciones);
         
@@ -26,7 +26,7 @@ export default function ComercialPanel(){
     const toggleMenu = (id) => {
         setOpenMenuId(openMenuId === id ? null : id); // Si ya está abierto, ciérralo; si no, ábrelo
     };
-    
+
     useEffect(() => {
         const handleClickOutside = (event) => {
           // Si hay un menú abierto y el clic no fue dentro de ningún menú (o su botón)
@@ -42,7 +42,7 @@ export default function ComercialPanel(){
         };
       }, [openMenuId]); 
 
- 
+    
     useEffect(() => {
         dispatch(actions.axiosToGetCotizaciones(true, user.user.id))
     }, []) 
@@ -72,7 +72,9 @@ export default function ComercialPanel(){
                     <div className="containerListProviders">
                         <div className="topSearch">
                             <div className="containerTopSearch">
-                                <input type="text" placeholder="Buscar cotización" />
+                                <input type="text" placeholder="Buscar cotización" onChange={(e) => {
+                                    setWord(e.target.value)
+                                }} value={word}/>
                             </div>
                         </div>
                         <div className="table">
@@ -94,7 +96,14 @@ export default function ComercialPanel(){
                                         : cotizaciones == 404 || cotizaciones == 'notrequest' ? null
                                         :
                                         cotizaciones?.length ?
-                                            cotizaciones.map((coti, i) => {
+                                            cotizaciones.filter(pro => {
+                                                const searchTerm = word.toLowerCase();
+                                                const busqueda = word ? pro.name.toLowerCase().includes(word.toLowerCase()) : true;
+                                                const idVisible = String(21719 + Number(pro.id));
+                                                const coincidePorId = idVisible.includes(searchTerm);
+
+                                                return busqueda || coincidePorId; 
+                                            }).map((coti, i) => {
                                                 return (
                                                     <CotizacionItem cotizacionn={coti} key={i+1} openMenuId={openMenuId} toggleMenu={toggleMenu} />
                                                 )

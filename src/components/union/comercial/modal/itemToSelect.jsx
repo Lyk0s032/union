@@ -88,7 +88,10 @@ export default function ItemToSelect({ dis, kit, number }){
         </tr>
         :
         <tr >
-            <td className="large">{option.name} </td>
+            <td className="large">
+                <strong>{option.id} - </strong> 
+                {option.name} 
+            </td>
             <td className="short">
                 <strong>1</strong>
             </td>

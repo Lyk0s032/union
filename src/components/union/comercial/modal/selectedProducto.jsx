@@ -5,21 +5,21 @@ import axios from 'axios';
 
 export default function SelectedProducto({ kt, cotizacion, area }){
     const [active, setActive] = useState(false);
-    const [descuento, setDescuento] = useState(kt.productoCotizacion.descuento ? kt.productoCotizacion.descuento : 0);
+    const [descuento, setDescuento] = useState(kt.descuento ? kt.descuento : 0);
     const dispatch = useDispatch();
     const [porcentaje, setPorcentaje] = useState(0);
     const porcentForDescuento = (porcentaje) => {
-        let  precio = kt.productoCotizacion.precio;
+        let  precio = kt.precio;
         const descuentico = Number(porcentaje / 100) * Number(precio)
         return setDescuento(descuentico.toFixed(0))    
     }
     const giveDescuento = async () => {
         if(Number(porcentaje) > 10) return dispatch(actions.HandleAlerta('Este descuento es muy alto', 'mistake'));
         if(!descuento) return dispatch(actions.HandleAlerta('Debes dar un descuento', 'mistake'))
-        if(descuento == kt.productoCotizacion.descuento) return dispatch(actions.HandleAlerta('Debes dar un descuento diferente', 'mistake'))
+        if(descuento == kt.descuento) return dispatch(actions.HandleAlerta('Debes dar un descuento diferente', 'mistake'))
             // Caso contrario, avanzamos
         let body = {
-            productoCotizacionId: kt.productoCotizacion.id,
+            productoCotizacionId: kt.id,
             descuento
         }
         const sendPeticion = await axios.put('/api/cotizacion/producto/descuento', body)
@@ -39,7 +39,8 @@ export default function SelectedProducto({ kt, cotizacion, area }){
     const deleteSuperKitItem = async (itemId) => {
         const body = {
             productoId: itemId, 
-            cotizacionId: area.id
+            cotizacionId: area.id,
+            productoCotizacionId: kt.id
         }
 
         const sendPetion = await axios.delete('api/cotizacion/remove/producto', { data: body} )
@@ -60,10 +61,10 @@ export default function SelectedProducto({ kt, cotizacion, area }){
             <td>
                 <div>
                     <strong style={{fontSize:12}}>Producto</strong><br />
-                    <span>{kt.item} {kt.productoCotizacion.medida && (`| ${kt.productoCotizacion.medida}`)}</span>
+                    <span>{kt.producto.item} {kt.medida && (`| ${kt.medida}`)}</span>
                 </div>
             </td>
-            <td>{kt.productoCotizacion.cantidad}</td>
+            <td>{kt.cantidad}</td>
             {
                 active ?
                 <td>
@@ -88,9 +89,9 @@ export default function SelectedProducto({ kt, cotizacion, area }){
                     }}  value={porcentaje}/>
                 </td>
                 :
-                <td onDoubleClick={() => setActive(true)}>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(kt.productoCotizacion.descuento).toFixed(0))} COP</td>
+                <td onDoubleClick={() => setActive(true)}>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(kt.descuento).toFixed(0))} COP</td>
             }
-            <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(kt.productoCotizacion.precio).toFixed(0))} COP</td>
+            <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(kt.precio).toFixed(0))} COP</td>
             <td>
 
             </td>

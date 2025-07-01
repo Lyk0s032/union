@@ -111,6 +111,7 @@ export default function SelectedKits({ number, selectArea, cotizacion, area}){
         };
       }, [openMenuId]);  
     
+
     return (
         <div className={number == area.id ? 'area Active' : 'area'}>
             <div className="topTitleArea" onContextMenu={(e) => {
@@ -219,16 +220,16 @@ export default function SelectedKits({ number, selectArea, cotizacion, area}){
 
                         </tr>
                     </thead> 
-                    <tbody>
+                    <tbody> 
  
                         {
-                            area && area.kits?.length || area.armados?.length || area.productos?.length ? 
- 
-                            area.productos.concat(area.armados).concat(area.kits).map((kt, i) => {
+                            area && area.kits?.length || area.armados?.length || area.productoCotizacions?.length ? 
+  
+                            area.productoCotizacions.concat(area.armados).concat(area.kits).map((kt, i) => {
                                     return (
                                         kt.armadoCotizacion ?
                                             <SelectedSuperKit key={i+1} kt={kt} area={area} cotizacion={cotizacion}/>
-                                        : kt.productoCotizacion?
+                                        : kt.cantidad? 
                                             <SelectedProducto  key={i+1} kt={kt} area={area} cotizacion={cotizacion} />    
                                         : kt.kitCotizacion ? 
                                             <SelectedKit key={i+1} kt={kt} area={area} cotizacion={cotizacion} />
@@ -237,8 +238,6 @@ export default function SelectedKits({ number, selectArea, cotizacion, area}){
                                 })
                             : null
                         }
-
-
 
                     </tbody>
                 </table>

@@ -109,9 +109,10 @@ export default function ModalNewProducto(){
                             <div className="inputDiv">
                                 <label htmlFor="">Medida </label><br />
                                 <input type="text" placeholder="Escribe aquí" onChange={(e) => {
+                                    const nuevoValor = e.target.value.replace(/\s+/g, '').replace(/,/g, '.').toUpperCase();
                                     setForm({
                                         ...form,
-                                        medida: e.target.value
+                                        medida: nuevoValor
                                     })
                                 }} value={form.medida}/>
                             </div> 

@@ -53,7 +53,7 @@ export default function ProductoTerminadoItem({ area, terminado, final }){
             productoId: terminado.id,
             cantidad: form.cantidad,
             medida: howMany,
-            precio: terminado.unidad == 'mt2' ? Number(mt * form.cantidad).toFixed(0) : Number(valor * howMany).toFixed(0),
+            precio: terminado.unidad == 'mt2' ? Number(mt * form.cantidad).toFixed(0) : Number(valor * form.cantidad).toFixed(0),
             areaId: area,
             areaCotizacionId: cotizacion.id
         }
@@ -99,7 +99,7 @@ export default function ProductoTerminadoItem({ area, terminado, final }){
                             alignItems:'center',
                             justifyContent: 'space-around'
                         }}>
-                            <h1 style={{color: 'white', fontWeight:400,fontSize:14}}>{terminado.item[0]}</h1>
+                            <h1 style={{color: 'white', fontWeight:400,fontSize:14}}>{terminado.id}</h1>
                         </div>
                     </div> 
                     <div className="titleData" style={{marginTop:-30}}>
@@ -130,13 +130,25 @@ export default function ProductoTerminadoItem({ area, terminado, final }){
                                         </div>
                                     </label>
                                 : 
-                                 <label htmlFor=""> Precio normal {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valor * howMany).toFixed(0))} COP</label>
+                                 <label htmlFor=""> Precio normal {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valor * form.cantidad).toFixed(0))} COP</label>
                                 }
-                                <br />
-                            <input type="text" id={terminado.id} placeholder={terminado.unidad == 'mt2' ? 'Medida. Ejemplo: 1.70X2.30' : "Cantidad"}
-                            onChange={(e) => {
-                                setHowMany(e.target.value)
-                            }} value={howMany.toUpperCase()}/>
+                                <br /> 
+                            {
+                                terminado.unidad == 'mt2' ?
+                                <input type="text" id={terminado.id} placeholder={terminado.unidad == 'mt2' ? 'Medida. Ejemplo: 1.70X2.30' : "Cantidad"}
+                                onChange={(e) => {
+                                    const nuevoValor = e.target.value.replace(/\s+/g, '').replace(/,/g, '.').toUpperCase();
+                                    setHowMany(nuevoValor)
+                                }} value={howMany.toUpperCase()}/>
+                            :
+                                <input type="text" id={terminado.id} placeholder={terminado.unidad == 'mt2' ? 'Medida. Ejemplo: 1.70X2.30' : "Cantidad"}
+                                    onChange={(e) => {
+                                        setForm({
+                                            ...form,
+                                            cantidad: e.target.value
+                                        })
+                                    }} value={form.cantidad}/>
+                            }
 
                             {
                                 terminado.unidad == 'mt2' && (

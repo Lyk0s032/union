@@ -57,6 +57,7 @@ export default function SelectKits({ dist }){
     const selectArea = (zona) => {
         setNumber(zona)
     }
+
     const newArea = async () => {
         if(!name) return dispatch(actions.HandleAlerta('Debes ingresar un nombre al área', 'mistake'))
         // caso contrario... Avanzamos
@@ -141,6 +142,15 @@ export default function SelectKits({ dist }){
         return send;
     }
 
+    // Abrir cotización
+    const openCoti = async () => {
+        dispatch(actions.axiosToGetCotizacion(true, cotizacion.id))
+        console.log(cotizacion.id)
+        console.log('Pasooo')
+
+        params.set('watch', 'cotizacion');
+        setParams(params);
+    }
     return (
         <div className="page">
             {cotizacion.state == 'version' && (
@@ -174,78 +184,83 @@ export default function SelectKits({ dist }){
                             <div className="topData">
                                 {
                                     edit ? 
-                                    <div className="DataKit">
-                                        <div className="editForm">
-                                            <div className="inputDiv">
-                                                <label htmlFor="">Editar nombre cotización</label><br />
-                                                <input type="text" placeholder='' onKeyDown={(event) => {
-                                                    if(event.key === 'Escape'){
-                                                        setEdit(false)
-                                                    }
-                                                }} />
-                                            </div>
-                                        </div><br />
-                                    </div>
+                                        <div className="DataKit">
+                                            <div className="editForm">
+                                                <div className="inputDiv">
+                                                    <label htmlFor="">Editar nombre cotización</label><br />
+                                                    <input type="text" placeholder='' onKeyDown={(event) => {
+                                                        if(event.key === 'Escape'){
+                                                            setEdit(false)
+                                                        }
+                                                    }} />
+                                                </div>
+                                            </div><br />
+                                        </div>
                                     :
-                                    <div className="DataKit">
-                                        <h3 onDoubleClick={() => setEdit(true)}>
-                                            {cotizacion.name} {number}
-                                        </h3> 
-                                        <span>Fecha creada: <strong>{dayjs(cotizacion.createdAt.split('T')[0]).format('dddd, D [de] MMMM [de] YYYY')}</strong></span><br />
-                                        <span>Nro: <strong>{21719 +cotizacion.id}</strong></span>
-                                    </div>
+                                        <div className="DataKit">
+                                            <h3 onDoubleClick={() => setEdit(true)}>
+                                                {cotizacion.name} {number}
+                                            </h3> 
+                                            <span>Fecha creada: <strong>{dayjs(cotizacion.createdAt.split('T')[0]).format('dddd, D [de] MMMM [de] YYYY')}</strong></span><br />
+                                            <span>Nro: <strong>{21719 +cotizacion.id}</strong></span>
+                                        </div>  
                                 }
-                                
-                                <div className="optionsForCotizacion">
-                                    <div className="containerOptions">
-                                        <nav>
-                                            <ul>
-                                                {
-                                                    !area && (
-                                                        <li onClick={() => setEdit(!edit)}>
-                                                            <div className="">
-                                                                <BsPencil className="icon" />
-                                                                <span>{!edit ? 'Editar' : 'Cancelar edición'}</span>
-                                                            </div>
-                                                        </li>
-                                                    ) 
-                                                }
-                                                {
-                                                    !area ?
-                                                        !edit && (
+                                 
+                                    <div className="optionsForCotizacion">
+                                        <div className="containerOptions">
+                                            <nav>
+                                                <ul>
+                                                    {
+                                                        !area && (
+                                                            <li onClick={() => setEdit(!edit)}>
+                                                                <div className="">
+                                                                    <BsPencil className="icon" />
+                                                                    <span>{!edit ? 'Editar' : 'Cancelar edición'}</span>
+                                                                </div>
+                                                            </li>
+                                                        ) 
+                                                    }
+                                                    {
+                                                        !area ?
+                                                            !edit && (
+                                                                <li onClick={() => {
+                                                                    setArea(!area)
+                                                                }}>
+                                                                    <div className="" >
+                                                                        <BsPlusLg  className="icon" />
+                                                                        <span>Agregar área</span>
+                                                                    </div>
+                                                                </li>
+                                                            ) 
+                                                        : 
                                                             <li onClick={() => {
                                                                 setArea(!area)
                                                             }}>
                                                                 <div className="" >
                                                                     <BsPlusLg  className="icon" />
-                                                                    <span>Agregar área</span>
+                                                                    <span>Cancelar creación</span>
                                                                 </div>
                                                             </li>
-                                                        ) 
-                                                    : 
-                                                        <li onClick={() => {
-                                                            setArea(!area)
-                                                        }}>
-                                                            <div className="" >
-                                                                <BsPlusLg  className="icon" />
-                                                                <span>Cancelar creación</span>
-                                                            </div>
-                                                        </li>
-                                                }
-                                                <li onClick={() => setNotes(true)}>
-                                                    <div>
-                                                        <span>Notas</span>
-                                                    </div>
-                                                </li>
-                                                <li onClick={() => setVersion(true)}>
-                                                    <div>
-                                                        <span>Versiones</span>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </nav>
+                                                    }
+                                                    <li onClick={() => setNotes(true)}>
+                                                        <div>
+                                                            <span>Notas</span>
+                                                        </div>
+                                                    </li>
+                                                    <li onClick={() => setVersion(true)}>
+                                                        <div>
+                                                            <span>Versiones</span>
+                                                        </div>
+                                                    </li>
+                                                    {/* <li onClick={() => openCoti()}>
+                                                        <div>
+                                                            <span>Visualizar</span>
+                                                        </div>
+                                                    </li> */}
+                                                </ul>
+                                            </nav>
+                                        </div>
                                     </div>
-                                </div>
                             </div>
                             <div className="middleData">
                                 <div className="tableItemsMPKits">

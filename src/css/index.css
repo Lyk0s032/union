@@ -324,7 +324,7 @@ body button {
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .title span {
   font-size: 14px;
-  color: #046290;
+  color: red;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .topCoti {
   padding: 10px 0px;
@@ -343,10 +343,10 @@ body button {
   text-align: left;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .topCoti .divideTop .left h1 {
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 15px;
   font-size: 12px;
-  color: #046290;
+  color: #454f5b;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .topCoti .divideTop .left .item {
   width: 100%;
@@ -356,13 +356,13 @@ body button {
   margin-bottom: 5px;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .topCoti .divideTop .left .item h3 {
-  font-weight: 400;
-  font-size: 11px;
-  color: #046290;
+  font-weight: 500;
+  font-size: 12px;
+  color: #454f5b;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .topCoti .divideTop .left .item h4 {
   font-weight: 400;
-  font-size: 11px;
+  font-size: 12px;
   color: #666;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .clientTopData {
@@ -394,13 +394,13 @@ body button {
   margin-bottom: 5px;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .clientTopData .divideTopData .left .item h3 {
-  font-weight: 400;
-  font-size: 11px;
-  color: #046290;
+  font-weight: 500;
+  font-size: 12px;
+  color: #454f5b;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .clientTopData .divideTopData .left .item h4 {
   font-weight: 400;
-  font-size: 10px;
+  font-size: 12px;
   color: #666;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias {
@@ -426,7 +426,7 @@ body button {
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla h4 {
   font-weight: 500;
   font-size: 12px;
-  color: #046290;
+  color: #454f5b;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla .final {
   border-top: 2px solid #ccc;
@@ -435,16 +435,20 @@ body button {
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla table {
   width: 100%;
   text-align: left;
+  margin-top: 10px;
   border-collapse: collapse;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla table thead tr th {
   padding: 10px 0px;
   box-sizing: border-box;
-  font-weight: 500;
   font-size: 11px;
   color: #666;
   border-bottom: 1px solid #ccc;
   text-align: right;
+  font-weight: 500;
+  font-size: 12px;
+  color: #454f5b;
+  width: auto;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla table thead tr .left {
   text-align: left;
@@ -453,15 +457,20 @@ body button {
   cursor: pointer;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla table tbody tr td {
-  font-size: 11px;
+  font-size: 12px;
   padding: 15px 0px;
   box-sizing: border-box;
-  color: #046290;
+  color: #666;
   font-weight: 400;
   text-align: right;
+  width: auto;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla table tbody tr .left {
   text-align: left;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla table tbody tr .Small {
+  box-sizing: border-box;
+  width: 10%;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla table tbody .total td {
   font-weight: 5
