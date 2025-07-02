@@ -25,7 +25,12 @@ export default function SelectKits({ dist }){
     const { user } = usuario;
     const [area, setArea] = useState(null); 
     const [edit, setEdit] = useState(false);
+    const [time, setTime] = useState(cotizacion && (cotizacion.time.split('T')[0]))
+    // Datos para actualizar cotizacion
+    const [editTime, setEditTime] = useState(null);
+    const [title, setTitle] = useState(cotizacion && (cotizacion.name))
     const [name, setName] = useState(null);
+
     const [loading, setLoading] = useState(false);
     // const system = useSelector(store => store.system);
 
@@ -53,7 +58,7 @@ export default function SelectKits({ dist }){
 
     // Version
     const [version, setVersion] = useState(null);
-
+ 
     const selectArea = (zona) => {
         setNumber(zona)
     }
@@ -141,13 +146,35 @@ export default function SelectKits({ dist }){
         })
         return send;
     }
+    // Modificar cotizacion
+     const modificarCotizacion = async () => {
+        if(!title && edit) return dispatch(actions.HandleAlerta('Debes ingresar un nombre a la cotización', 'mistake'))
+        if(!time && editTime) return dispatch(actions.HandleAlerta('Debes ingresar una fecha', 'mistake'))
+        // caso contrario... Avanzamos
 
+        let body = {
+            time: time != cotizacion.time ? time: cotizacion.time,
+            name: title != cotizacion.name ? title : cotizacion.name,
+            userId: user.user.id,
+            cotizacionId: cotizacion.id,
+        }
+        console.log(body)
+        const send = await axios.put('/api/cotizacion/new', body)
+        .then((res) => {
+            dispatch(actions.HandleAlerta('Cotización actualizada con exito.', 'positive'))
+            dispatch(actions.axiosToGetCotizacion(false, cotizacion.id))
+            setEdit(null);
+            setEditTime(null);
+            return res;
+        })
+        .catch(err => {
+            console.log(err)
+            dispatch(actions.HandleAlerta('No hemos logrado actualizar esta cotización', 'mistake'))
+        })
+        return send;
+    }
     // Abrir cotización
     const openCoti = async () => {
-        dispatch(actions.axiosToGetCotizacion(true, cotizacion.id))
-        console.log(cotizacion.id)
-        console.log('Pasooo')
-
         params.set('watch', 'cotizacion');
         setParams(params);
     }
@@ -191,8 +218,30 @@ export default function SelectKits({ dist }){
                                                     <input type="text" placeholder='' onKeyDown={(event) => {
                                                         if(event.key === 'Escape'){
                                                             setEdit(false)
+                                                        } if(event.key == 'Enter'){
+                                                            modificarCotizacion()
                                                         }
-                                                    }} />
+                                                    }} onChange={(e) => {
+                                                        setTitle(e.target.value)
+                                                    }}  value={title} />
+                                                </div>
+                                            </div><br />
+                                        </div>
+                                    :
+                                    editTime ?
+                                        <div className="DataKit">
+                                            <div className="editForm">
+                                                <div className="inputDiv">
+                                                    <label htmlFor="">Modificar fecha</label><br />
+                                                    <input type="date" placeholder='' onKeyDown={(event) => {
+                                                        if(event.key === 'Escape'){
+                                                            setEditTime(false)
+                                                        } if(event.key == 'Enter'){
+                                                            modificarCotizacion()
+                                                        }
+                                                    }}  onChange={(e) => {
+                                                        setTime(e.target.value)
+                                                    }} value={time}/>
                                                 </div>
                                             </div><br />
                                         </div>
@@ -201,7 +250,7 @@ export default function SelectKits({ dist }){
                                             <h3 onDoubleClick={() => setEdit(true)}>
                                                 {cotizacion.name} {number}
                                             </h3> 
-                                            <span>Fecha creada: <strong>{dayjs(cotizacion.createdAt.split('T')[0]).format('dddd, D [de] MMMM [de] YYYY')}</strong></span><br />
+                                            <span onDoubleClick={() => setEditTime(true)}>Fecha creada: <strong>{dayjs(cotizacion.time.split('T')[0]).format('dddd, D [de] MMMM [de] YYYY')}</strong></span><br />
                                             <span>Nro: <strong>{21719 +cotizacion.id}</strong></span>
                                         </div>  
                                 }
@@ -252,6 +301,7 @@ export default function SelectKits({ dist }){
                                                             <span>Versiones</span>
                                                         </div>
                                                     </li>
+                                                    
                                                     {/* <li onClick={() => openCoti()}>
                                                         <div>
                                                             <span>Visualizar</span>

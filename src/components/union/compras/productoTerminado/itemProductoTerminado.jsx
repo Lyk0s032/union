@@ -59,6 +59,7 @@ export default function ItemProductoTerminado(props){
           setLoading(false); // Finaliza el loading
         }
     };
+    console.log(MP)
     return (
         <tr > 
             <td onClick={() => {
@@ -66,6 +67,8 @@ export default function ItemProductoTerminado(props){
                 setParams(params);
             }}>{MP.id}</td>
             <td >{MP.description.toUpperCase()}</td>
+            <td>{MP.categorium.name}</td>
+            <td>{MP.linea.name}</td>
             <td>{promedio ? new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(promedio/MP.productPrices.length).toFixed(0)) : 'No hay precios aun'}</td> 
             
             <td className="btnKits">

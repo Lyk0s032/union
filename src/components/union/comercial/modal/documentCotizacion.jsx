@@ -87,14 +87,14 @@ export default function DocumentCotizacion(){
     // // Ahora esta lista de dependencias es segura y estable
     // }, [cotizacion, obtenerNombreMunicipio]);
     return ( 
-        <div className="modal" style={{zIndex:7}}> 
+        <div className="modal" style={{zIndex:10}}> 
             <div className="hiddenModal" onClick={() => {
                 params.delete('watch');
                 setParams(params);
             }}></div>
             {
                 !cotizacion || loadingCotizacion ?
-                    <h1>Cargando cotización...</h1>
+                    <h1 style={{zIndex:10}}>Cargando cotización...</h1>
                 : 
                 cotizacion == 404 || cotizacion == 'notrequest' ? <h1>No carga</h1> : 
                 <div className="containerModal Large" style={{width:'90%'}}>
@@ -309,7 +309,7 @@ export default function DocumentCotizacion(){
                                                                                         <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.kitCotizacion.precio - it.kitCotizacion.descuento).toFixed(0) * (0.19)).toFixed(0))} COP</td>
                                                                                         : 
                                                                                          it.cantidad ?
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.precio - it.descuento).toFixed(0)) * (0.19).toFixed(0))} COP</td>
+                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.precio - it.descuento).toFixed(0) * (0.19)).toFixed(0))} COP</td>
                                                                                         :
                                                                                         <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.armadoCotizacion.precio - it.armadoCotizacion.descuento) * (0.19)).toFixed(0))} COP</td>
                                                                                     }

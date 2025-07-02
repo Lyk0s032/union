@@ -70,7 +70,7 @@ export default function ProductoTerminado(){
                                                 categorias && categorias.length ?
                                                     categorias.map((c, i) => {
                                                         return (
-                                                            c.type == 'MP' ?
+                                                            c.type == 'comercial' ?
                                                                 <option key={i+1} value={c.id}>{c.name}</option>
                                                             :null 
                                                         )
@@ -89,7 +89,7 @@ export default function ProductoTerminado(){
                                                 lineas && lineas.length ?
                                                     lineas.map((l, i) => {
                                                         return (
-                                                            l.type == 'MP' ?
+                                                            l.type == 'comercial' ?
                                                                 <option key={i+1} value={l.id}>{l.name.toUpperCase()}</option>
                                                             :null 
                                                         )
@@ -112,6 +112,8 @@ export default function ProductoTerminado(){
                                         <tr>
                                             <th>Código</th>
                                             <th>Nombre</th>
+                                            <th>Categoría</th>
+                                            <th>Línea</th>
                                             <th>Precio promedio</th>
                                             <th></th>
                                         </tr>
