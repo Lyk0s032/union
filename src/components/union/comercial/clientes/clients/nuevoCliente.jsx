@@ -32,14 +32,14 @@ export default function NewClient(){
     const usuario = useSelector(store => store.usuario);
     const { user } = usuario;
 
-    const searchDeparamentos = async () => {
+     const searchDeparamentos = async () => {
         try {
-            const res = await axios.get("https://www.datos.gov.co/resource/xdk5-pm3f.json?$limit=2000");           
+            const res = await axios.get("https://www.datos.gov.co/resource/gt2j-8ykr.json?$limit=2000");
             setDivipolaData(res.data);
-            console.log(res.data)
-            // <-- CORRECCIÓN #1: Usar el nombre de campo correcto de la API
+            
+            // CAMBIO: Usamos los nuevos nombres de campo de la API
             const uniqueDepartamentos = Array.from(new Set(res.data.map(d =>
-                `${d.c_digo_dane_del_departamento}-${d.departamento}` // <--- AQUÍ
+                `${d.departamento_nom}-${d.departamento}` 
             )));
 
             setDepartamentos(uniqueDepartamentos);
@@ -54,7 +54,7 @@ export default function NewClient(){
         if(form.persona == 'natural' && !form.name) return dispatch(actions.HandleAlerta('Ingresa nombre del proveedor ', 'negative'))
         if(form.persona == 'natural' && !form.lastName) return dispatch(actions.HandleAlerta('Ingresa apellidos del proveedor ', 'negative'))
 
-        if(!form.nit || !form.email || !form.direccion || !form.ciudad || !form.departamento || !form.pais || !form.fijo || !form.phone){
+        if(!form.nit || !form.email || !form.direccion || !form.ciudad ||  !form.fijo || !form.phone){
            
             return dispatch(actions.HandleAlerta('No puedes dejar campos vacios', 'negative'))
         }else{
@@ -99,13 +99,14 @@ export default function NewClient(){
     useEffect(() => {
         if (form.departamento && divipolaData.length > 0) {
             const [codigoDepto] = form.departamento.split('-');
-            // <-- CORRECCIÓN #2: Usar el nombre de campo correcto para filtrar
-            const filtered = divipolaData.filter(m => m.c_digo_dane_del_departamento === codigoDepto); // <--- AQUÍ
+            // CAMBIO: Usamos el nuevo nombre de campo para filtrar
+            const filtered = divipolaData.filter(m => m.departamento === codigoDepto);
             setMunicipios(filtered);
         } else {
             setMunicipios([]);
         }
     }, [form.departamento, divipolaData]);
+
     return (
         <div className="modal">
             <div className="hiddenModal" onClick={() => {
@@ -232,15 +233,15 @@ export default function NewClient(){
                             <select onChange={(e) => {
                                 setForm({
                                     ...form,
-                                    departamento: e.target.value
+                                    departamento: e.target.value,
+                                    // Reseteamos la ciudad al cambiar de depto
+                                    ciudad: ""
                                 })
-                                
                             }} value={form.departamento} >
                                 <option value="">Selecciona un Departamento</option>
-                            
                                 {departamentos.map(dep => {
-                                const [codigo, nombre] = dep.split('-');
-                                return <option key={codigo} value={dep}>{nombre}</option>;
+                                    const [codigo, nombre] = dep.split('-');
+                                    return <option key={codigo} value={dep}>{codigo}</option>;
                                 })}
                             </select>
                         </div>
@@ -253,16 +254,15 @@ export default function NewClient(){
                                 })
                             }} value={form.ciudad} >
                                 <option value="">Selecciona un municipio</option>
-                                {console.log(municipios)}
                                 {municipios
-                                    // <-- CAMBIO CLAVE: Asegurarnos de que TANTO el código como el nombre existan
-                                    .filter(mun => mun && mun.municipio && mun.c_digo_dane_del_municipio) 
-                                    .map(mun => (
-                                        <option key={mun.c_digo_dane_del_municipio} value={mun.c_digo_dane_del_municipio}>
-                                            {mun.municipio}
-                                        </option>
-                                    ))
-                                }
+    .filter(mun => mun && mun.municipio_nom && mun.municipio) // Filtramos por los nuevos nombres de campo
+    .map(mun => (
+        // Usamos mun.municipio para la 'key' y mun.municipio_nom para el valor y el texto
+        <option key={mun.municipio} value={mun.municipio_nom}>
+            {mun.municipio_nom}
+        </option>
+    ))
+}
                             </select>
                         </div>
                         <div className="inputDiv">
