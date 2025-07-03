@@ -8,6 +8,9 @@ export default function AddPrice(props){
     const prima = props.prima;
     const [provider, setProvider] = useState(null);    
     const promedio = prima.prices && prima.prices.length ? prima.prices.reduce((acc, p) => Number(acc) + Number(p.valor), 0) : null
+    const sinIva = prima.prices && prima.prices.length ? prima.prices.reduce((acc, p) => Number(acc) + Number(p.descuentos), 0) : null
+    const iva = prima.prices && prima.prices.length ? prima.prices.reduce((acc, p) => Number(acc) + Number(p.iva), 0) : null
+
 
     return (
         <div className="pestana">
@@ -21,6 +24,9 @@ export default function AddPrice(props){
                         
                             <div className="dataMateria">
                                 <span>Precio promedio: <strong>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(promedio) / prima.prices.length).toFixed(0))}</strong></span><br />
+                                <span>Promedio sin IVA: <strong>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(sinIva) / prima.prices.length).toFixed(0))}</strong></span><br />
+                                <span>Valor del IVA: <strong>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(iva) / prima.prices.length).toFixed(0))}</strong></span><br />
+                                
                                 <span>Medida: <strong>{prima.medida}</strong></span><br />
                                 <span>Unidad: <strong>{prima.unidad}</strong></span><br /><br />
                                 <span>Última actualización: <strong>Por definir</strong></span>
