@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdCheck } from 'react-icons/md';
 import ItemToSelect from './itemToSelect';
 import * as actions from '../../../store/action/action';
@@ -25,7 +25,8 @@ export default function SelectKits({ dist }){
     const { user } = usuario;
     const [area, setArea] = useState(null); 
     const [edit, setEdit] = useState(false);
-    const [time, setTime] = useState(cotizacion && (cotizacion.time.split('T')[0]))
+    const [time, setTime] = useState(cotizacion && (cotizacion.time.split('T')[0])) 
+    const [openServices, setOpenServices] = useState(null);
     // Datos para actualizar cotizacion
     const [editTime, setEditTime] = useState(null);
     const [title, setTitle] = useState(cotizacion && (cotizacion.name))
@@ -39,6 +40,9 @@ export default function SelectKits({ dist }){
 
     const dispatch = useDispatch();
 
+    const closeOpen = () => {
+        setOpenServices(null);
+    }
     const [navCoti, setNav] = useState(null);
     // const handleAprobar = async() => {
     //     const sendAprobation = await axios.get(`/api/cotizacion/accept/${cotizacion.id}`)
@@ -58,7 +62,6 @@ export default function SelectKits({ dist }){
 
     // Version
     const [version, setVersion] = useState(null);
- 
     const selectArea = (zona) => {
         setNumber(zona)
     }
@@ -259,6 +262,14 @@ export default function SelectKits({ dist }){
                                         <div className="containerOptions">
                                             <nav>
                                                 <ul>
+                                                    <li onClick={() => {
+                                                        setOpenServices(!openServices)
+                                                    }}>
+                                                        <div className="" >
+                                                            <BsPlusLg  className="icon" />
+                                                            <span>Servicios</span>
+                                                        </div>
+                                                    </li>
                                                     {
                                                         !area && (
                                                             <li onClick={() => setEdit(!edit)}>
@@ -413,6 +424,9 @@ export default function SelectKits({ dist }){
                     }
                 </div>
             </div>
+            {
+                openServices && (<ModalServices closeOpen={closeOpen} number={number} cotizacion={cotizacion} />)
+            } 
             {version &&(<div className="modal">
                 <div className="hiddenModal" onClick={() => setVersion(null)}></div>
                 <div className="containerModal Small">
@@ -464,12 +478,204 @@ export default function SelectKits({ dist }){
                     </div>
                     
                 </div>
-            </div>)}
+            </div>)
+            }
         </div>
     )
 }
 
- 
+function ModalServices({ number, cotizacion, closeOpen }){
+    const [loading, setLoading] = useState(false); 
+    const [services, setServices] = useState(null);
+    const [loadingServices, setLoadingServices] = useState(false);
+    const [nuevo, setNew] = useState(false);
+
+    const [form, setForm] = useState({
+        name: null,
+        description:null
+    });
+
+    const dispatch = useDispatch();
+
+    const searchServices = async () => {
+        setLoadingServices(true)
+        const send = await axios.get('/api/materia/services/search')
+        .then((res) => {
+            setServices(res.data)
+        }).catch(err => {
+            setServices(404)
+            return err
+        })
+        .finally(() => {
+            setLoadingServices(false)
+        })
+        return send;
+    }
+
+    const newServicio = async () => {
+        if(!form.name || !form.description) return dispatch(actions.HandleAlerta('No puedes dejar campos vacios', 'mistake'))
+        setLoading(true);
+        let body = {
+            name: form.name,
+            description: form.description
+        }
+        const sendCreate = await axios.post('/api/materia/service/new', body)
+        .then((res) => {
+            searchServices();
+            dispatch(actions.HandleAlerta('Servicio anexado con éxito', 'positive'));
+            setNew(false); 
+            return res;
+        })
+        .catch(err => {
+            dispatch(actions.HandleAlerta('No hemos logrado anexar este servicio.', 'mistake'))
+            return err;
+        })
+        .finally(() => {
+            setLoading(false);
+        })
+        return sendCreate;
+    }
+
+    const addService = async (howMany, valor, serviceId) => {
+        if(!howMany || !valor) return dispatch(actions.HandleAlerta('No puedes dejar campos vacios', 'mistake'))
+        setLoading(true);
+        let body = {
+            cotizacionId: number ? number : null,
+            servicioId: serviceId,
+            cantidad: howMany,
+            precio: valor
+        } 
+        const sendCreate = await axios.post('/api/cotizacion/add/service/item', body)
+        .then((res) => {
+            searchServices();
+            dispatch(actions.axiosToGetCotizacion(false, cotizacion.id ))
+            dispatch(actions.HandleAlerta('Servicio anexado con éxito', 'positive'));
+            setNew(false); 
+            return res;
+        })
+        .catch(err => {
+            dispatch(actions.HandleAlerta('No hemos logrado anexar este servicio.', 'mistake'))
+            return err;
+        })
+        .finally(() => {
+            setLoading(false);
+        })
+        return sendCreate;
+    }
+    useEffect(() => {
+        searchServices()
+    }, [])
+    return (
+            <div className="modal">
+                <div className="hiddenModal" onClick={() => closeOpen()}></div>
+                    <div className="containerModal Small">
+                        <div className="headerModal" style={{paddingLeft:40}}>
+                            <div className="divide">
+                                <h3>Servicios</h3>
+                                <div className="boton">
+                                    <button onClick={() => {
+                                        setNew(!nuevo)
+                                    }}>
+                                        <span style={{color: 'white'}}>{!nuevo ? 'Nuevo servicio' : 'Cancelar'}</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="bodyModalTable">
+                            <div className="dataScroll">
+                                
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Descripción</th>
+                                                <th>Cantidad</th>
+                                                <th>Valor</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {
+                                                nuevo ?
+                                                    <tr>
+                                                        <td>
+                                                            <label htmlFor="">Nombre</label><br />
+                                                            <input type="text" onChange={(e) => {
+                                                                setForm({
+                                                                    ...form,
+                                                                    name: e.target.value
+                                                                })
+                                                            }} value={form.name}/>
+                                                        </td>
+                                                        <td>
+                                                            <label htmlFor="">Descripción</label><br />
+                                                            <input type="text" onChange={(e) => {
+                                                                setForm({
+                                                                    ...form,
+                                                                    description: e.target.value
+                                                                })
+                                                            }} value={form.description}/>
+                                                        </td>
+                                                        <td onClick={() => {
+                                                            if(!loading){
+                                                                newServicio()
+                                                            }
+                                                        }}>
+                                                            <button>{!loading ? 'Anexar' : 'Anexando...'}</button>
+                                                        </td>
+                                                        <td>
+                                                            {
+                                                                !loading ?
+                                                                <button onClick={() => {
+                                                                    setNew(false);
+                                                                }}>Cancelar</button>
+                                                                :null
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                : null
+                                            }
+                                            {
+                                                !services || loadingServices ?
+                                                <h1>Cargando...</h1>
+                                                :
+                                                services == 404 ? <h1>No hay</h1>
+                                                :
+                                                services?.map((sv, i) => {
+                                                    return (
+                                                        <tr key={i+1}>
+                                                            <td>{sv.name}</td>
+                                                            <td>{sv.description}</td>
+                                                            <td style={{width:50}}>
+                                                                <label htmlFor="">Cantidad</label>
+                                                                <input type="text" id={`${sv.id}-cantidad`} />
+                                                            </td>
+                                                            <td>
+                                                                <label htmlFor="">Valor</label>
+                                                                <input type="text" id={`${sv.id}-valor`} />
+                                                            </td>
+                                                            <td>
+                                                                <button onClick={() => {
+                                                                    let canti = document.getElementById(`${sv.id}-cantidad`).value
+                                                                    let val = document.getElementById(`${sv.id}-valor`).value
+                                                                    addService(canti, val, sv.id)
+                                                                }}>
+                                                                    <span>Enviar</span>
+                                                                </button> 
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                })
+                                            }
+                                            
+                                        </tbody>
+                                    </table>
+                            </div>
+                        </div>
+                </div>
+            </div>
+    )
+} 
 function PriceCotizacion(props) { 
     const kits = props.cotizacion;
     const superK = props.coti;

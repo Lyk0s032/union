@@ -243,7 +243,7 @@ export default function DocumentCotizacion(){
                                                             <tbody>
                                                                 {
                                                                     area && area.kits?.length || area.armados?.length || area.productoCotizacions?.length ? 
-                                                                        area.productoCotizacions .concat(area.kits).concat(area.armados).map((it,i) => {
+                                                                        area.productoCotizacions.concat(area.serviciosCotizados).concat(area.kits).concat(area.armados).map((it,i) => {
                                                                             return (
                                                                                 <tr key={i+1}>
                                                                                     
@@ -251,15 +251,21 @@ export default function DocumentCotizacion(){
                                                                                         it.kitCotizacion ?
                                                                                             <td className='left Small'>0{it.id}</td>
                                                                 
-                                                                                            :
-                                                                                        it.cantidad ?
+                                                                                        :
+                                                                                        it.cantidad && it.service ?
+                                                                                            <td className='left Small'>SV{it.id}</td>
+                                                                                        :
+                                                                                        it.cantidad && it.producto ?
                                                                                             <td className='left Small'>PT{it.id}</td>
                                                                                         :
                                                                                         <td className='left Small'>SP{it.id}</td>
                                                                                     }
                                                                                     {
-                                                                                        it.cantidad ?
+                                                                                        it.cantidad && it.producto ?
                                                                                             <td className='left'>{it.producto.item} {it.medida && (`| ${it.medida}`)}</td>
+                                                                                        :
+                                                                                        it.cantidad && it.service ?
+                                                                                            <td className='left'>{it.service.name}</td>
                                                                                         :
                                                                                         it.armadoCotizacion ?
                                                                                             <td className="left">{it.name}</td>
@@ -270,7 +276,10 @@ export default function DocumentCotizacion(){
                                                                                         it.kitCotizacion ?
                                                                                         <td>{it.kitCotizacion.cantidad}</td>
                                                                                         :
-                                                                                        it.cantidad ?
+                                                                                        it.cantidad && it.producto ?
+                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.cantidad).toFixed(0))}</td>
+                                                                                        :
+                                                                                        it.cantidad && it.service ?
                                                                                         <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.cantidad).toFixed(0))}</td>
                                                                                         :
                                                                                         <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.cantidad).toFixed(0))}</td>
@@ -416,6 +425,15 @@ function TotalSub({ cotizacion }){
         return accArea + suma;
     }, 0) || 0;
 
+
+    const valorServicios = cotizacion.areaCotizacions?.reduce((accArea, area) => {
+    const suma = area.serviciosCotizados?.reduce((accKit, kit) => {
+            return accKit + Number(kit.precio || 0);
+        }, 0) || 0;
+        return accArea + suma;
+    }, 0) || 0;
+
+
     // Descuentos
     const descuentoKits = cotizacion.areaCotizacions?.reduce((accArea, area) => {
     const suma = area.kits?.reduce((accKit, kit) => {
@@ -439,8 +457,15 @@ function TotalSub({ cotizacion }){
         return accArea + suma;
     }, 0) || 0;
 
-    const sumaDescuento = descuentoKits + descuentoArmados + descuentoProductos;
-    const subTotal = valorKits + valorArmados + valorProductos;
+    const descuentoServicios = cotizacion.areaCotizacions?.reduce((accArea, area) => {
+    const suma = area.serviciosCotizados?.reduce((accKit, kit) => {
+            return accKit + Number(kit.descuento || 0);
+        }, 0) || 0;
+        return accArea + suma;
+    }, 0) || 0;
+
+    const sumaDescuento = descuentoKits + descuentoArmados + descuentoProductos + descuentoServicios;
+    const subTotal = valorKits + valorArmados + valorProductos + valorServicios;
     const totalSub = subTotal - sumaDescuento;
     const valorIva = Number(subTotal - sumaDescuento) * (19 / 100)
     const total = totalSub + valorIva;

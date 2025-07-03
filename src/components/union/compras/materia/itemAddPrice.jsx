@@ -23,15 +23,15 @@ export default function ItemAddPrice(props){
     const updatePrice = async () => {
         if(!valor) return dispatch(actions.HandleAlerta("Debes ingresar un valor", 'mistake'))
         // Caso contrario, enviamos consulta
-
+        let iva = valor * 0.19;
+        let total = Number(Number(valor) + Number(iva)).toFixed(0); 
         const body = {
             mtId: prima.id,
             pvId: precio.proveedor.id,
-            price: valor,
-            iva: null,
-            descuentos: null
+            price:total ,
+            iva,
+            descuentos: valor,
         }
-        console.log(body)
         const sendPetion = await axios.post('/api/mt/price/give', body)
         .then((res) => {
             dispatch(actions.axiosToGetPrima(false, prima.id))

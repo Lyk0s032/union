@@ -19,7 +19,7 @@ export default function ProductoTerminado(){
     const system = useSelector(store => store.system); 
     const { categorias, lineas } = system
 
-    const [word, setWord] = useState(null);
+    const [word, setWord] = useState('');
     const [cat, setCat] = useState(null);
     const [li, setLi] = useState(null);
 
@@ -124,12 +124,28 @@ export default function ProductoTerminado(){
                                             productos == 404 ? 0 :
                                             productos && productos.length ?
                                                           productos.filter(m => {
-                                                            const porLetra = word ?  m.description.toLowerCase().includes(word.toLowerCase()) ||
-                                                            m.item.toLowerCase().includes(word.toLowerCase()): true;
                                                             const porLinea = li ? m.lineaId == li : true;
                                                             const porCategoria = cat ? m.categoriumId == cat : true;
 
-                                                            return porLetra && porLinea && porCategoria
+                                                            // Lógica de búsqueda por palabra (la parte que cambia)
+                                                                let coincidePalabra = true; // Por defecto, la condición es verdadera
+
+                                                                // Solo aplicamos el filtro si hay algo escrito en el buscador
+                                                                if (word && word.trim() !== '') {
+                                                                    const searchTerm = word.toLowerCase();
+
+                                                                    // Revisa si el término de búsqueda es un número
+                                                                    if (!isNaN(searchTerm)) {
+                                                                        // SI ES NÚMERO: busca solo en el ID del producto.
+                                                                        coincidePalabra = String(m.id).includes(searchTerm);
+                                                                    } else {
+                                                                        // SI ES TEXTO: busca solo en el nombre del ítem.
+                                                                        coincidePalabra = m.item.toLowerCase().includes(searchTerm);
+                                                                    }
+                                                                }
+
+                                                                // El producto final debe cumplir con TODOS los filtros activos.
+                                                                return porLinea && porCategoria && coincidePalabra;
                                                           }
                                                           ).map((pv, i) => {
                                                               return ( 
@@ -138,7 +154,7 @@ export default function ProductoTerminado(){
                                                           })
                                               : <h1>No hay resultados</h1>
                                         }
-                                    </tbody>
+                                    </tbody>{console.log(productos)} 
                                 </table>
                             }
                         </div>

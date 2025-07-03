@@ -9,6 +9,7 @@ import { MdDeleteOutline, MdOutlineFlag, MdOutlineKeyboardArrowDown, MdOutlineRe
 import SelectedProducto from "./selectedProducto";
 import { BsThreeDots, BsThreeDotsVertical } from "react-icons/bs";
 import { useSearchParams } from "react-router-dom";
+import SelectedServices from "./selectedService";
 
 export default function SelectedKits({ number, selectArea, cotizacion, area}){
     
@@ -120,7 +121,7 @@ export default function SelectedKits({ number, selectArea, cotizacion, area}){
                 selectArea(area.id)
             }}>
                 <div className="divide">
-                    <div className="left"> 
+                    <div className="left">  {console.log(area)}
                         {
                              edit ?
                              <input type="text" id={area.id} ref={inputRef} className="inputVisible"  value={name} 
@@ -225,11 +226,13 @@ export default function SelectedKits({ number, selectArea, cotizacion, area}){
                         {
                             area && area.kits?.length || area.armados?.length || area.productoCotizacions?.length ? 
   
-                            area.productoCotizacions.concat(area.armados).concat(area.kits).map((kt, i) => {
+                            area.productoCotizacions.concat(area.serviciosCotizados).concat(area.armados).concat(area.kits).map((kt, i) => {
                                     return (
                                         kt.armadoCotizacion ?
                                             <SelectedSuperKit key={i+1} kt={kt} area={area} cotizacion={cotizacion}/>
-                                        : kt.cantidad? 
+                                        : kt.cantidad && kt.service ?
+                                            <SelectedServices key={i+1} kt={kt} area={area} cotizacion={cotizacion} />
+                                        : kt.cantidad && kt.producto ? 
                                             <SelectedProducto  key={i+1} kt={kt} area={area} cotizacion={cotizacion} />    
                                         : kt.kitCotizacion ? 
                                             <SelectedKit key={i+1} kt={kt} area={area} cotizacion={cotizacion} />
@@ -239,7 +242,7 @@ export default function SelectedKits({ number, selectArea, cotizacion, area}){
                             : null
                         }
 
-                    </tbody>
+                    </tbody>  
                 </table>
                 
             </div>
