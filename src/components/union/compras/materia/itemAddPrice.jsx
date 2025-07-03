@@ -7,7 +7,7 @@ import { AiOutlineClose } from "react-icons/ai";
  
 export default function ItemAddPrice(props){
     const precio = props.precio;
-    const [valor, setValor] = useState(precio.valor)
+    const [valor, setValor] = useState(precio.descuentos)
     const [confirmar, setConfirmar] = useState(false);
     const materiaPrima = useSelector(store => store.prima);
     const { prima } = materiaPrima;
@@ -16,7 +16,7 @@ export default function ItemAddPrice(props){
     const dispatch = useDispatch();
 
     const porcentaChange = () => {
-        const p = ((Number(valor) - Number(precio.valor)) / Number(precio.valor)) * 100 
+        const p = ((Number(valor) - Number(precio.descuentos)) / Number(precio.descuentos)) * 100 
         setPorcentaje(p)
     }
 
@@ -25,7 +25,7 @@ export default function ItemAddPrice(props){
         // Caso contrario, enviamos consulta
         let iva = valor * 0.19;
         let total = Number(Number(valor) + Number(iva)).toFixed(0); 
-        const body = {
+        const body = { 
             mtId: prima.id,
             pvId: precio.proveedor.id,
             price:total ,
@@ -54,10 +54,10 @@ export default function ItemAddPrice(props){
             <input type="text" id={precio.id} onChange={(e) => setValor(e.target.value)} value={valor}/><br />
             <div className="data">
                 <div className="title">
-                    <span>Actual: <strong>{precio.valor} <span>COP</span></strong></span><br />
+                    <span>Actual: <strong>{precio.descuentos} <span>COP</span></strong></span><br />
                     {
                         valor ?
-                        <span>Actual: {valor} <span>COP</span></span>
+                        <span>Escrito: {valor} <span>COP</span></span>
                         : null
                     }<br/>
                     <div className="promedio">
