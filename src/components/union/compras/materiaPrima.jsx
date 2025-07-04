@@ -23,22 +23,49 @@ export default function MateriaPrima(){
     const { categorias, lineas } = system
 
     const [word, setWord] = useState(null);
-    const [metodo, setMetodo] = useState(null); // METODO DE BUSQUEDA LINEA O CATEGORIA
     const [cat, setCat] = useState(null);
     const [li, setLi] = useState(null);
 
-    const [filter, setFilter] = useState(primas);
+    
+    const handleExportarCSV = () => {
+        // 1. Definir los encabezados de tu archivo CSV
+        const encabezados = ['Código', 'Nombre', 'Descripción', 'Medida', 'Unidad'];
 
-    const filterProviders = (val) => {
-        const filtrado = providers.filter(pv => pv.nombre.toLowerCase().includes(word.toLowerCase()))
-        return setFilter(filtrado)
-    }
+        // 2. Mapear los datos filtrados al formato CSV
+        const filas = primas.map(materia => {
+            // Para cada materia prima, crea una fila con los datos que quieres
+            return [
+                materia.id,
+                materia.item.replace(/,/g, ''), // Quitamos comas para no romper el CSV
+                materia.description.replace(/,/g, ''),
+                materia.medida,
+                materia.unidad
+            ].join(','); // Unimos las celdas con una coma
+        });
+
+        // 3. Unir encabezados y filas
+        // CÓDIGO CORREGIDO Y MÁS ROBUSTO
+        const encabezadosCSV = encabezados.join(',');
+        const filasCSV = filas.join('\n');
+
+        // La magia está aquí: \uFEFF es el BOM y sep=, es la pista para Excel
+        const csvContent = '\uFEFF' + 'sep=,\n' + encabezadosCSV + '\n' + filasCSV;
+
+        // 4. Crear y disparar la descarga
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        
+        link.setAttribute("href", url);
+        link.setAttribute("download", "reporte_materia_prima.csv"); // Nombre del archivo
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
 
 
-     
     useEffect(() => {
         dispatch(actions.axiosToGetPrimas(true)) 
-        setFilter(primas)
     }, [])
     return (
         <div className="provider">
@@ -50,6 +77,11 @@ export default function MateriaPrima(){
                     <div className="optionsFast">
                         <nav>
                             <ul>
+                                <li style={{marginRight:5}}>
+                                    <button onClick={handleExportarCSV}>
+                                        <span>Descargar</span>
+                                    </button>
+                                </li>
                                 <li> 
                                     <button onClick={() => {
                                         params.set('w', 'newMp');
@@ -59,7 +91,7 @@ export default function MateriaPrima(){
                                     </button>
                                 </li>
                             </ul>
-                        </nav>
+                        </nav> 
                     </div>
                 </div>
                 <div className="listProviders">
