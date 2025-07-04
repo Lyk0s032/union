@@ -3785,7 +3785,8 @@ body button {
   color: #FFF;
 }
 .compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table {
-  margin-top: 20px;
+  margin-top: 0px;
+  margin-bottom: 100px;
   width: 100%;
 }
 .compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table {
@@ -3893,6 +3894,9 @@ body button {
   justify-content: space-around;
   padding: 0px;
 }
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody {
+  width: 100%;
+}
 .compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody .input {
   text-align: center;
 }
@@ -3990,6 +3994,69 @@ body button {
 }
 .compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody .save button:hover {
   transform: scale(1.1);
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody tr {
+  width: 100%;
+  transition: 0.3s;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody tr td {
+  width: 20%;
+  border-bottom: 1px solid #ccc;
+  padding: 15px 0px;
+  box-sizing: border-box;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody tr td .proveedorData {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody tr td .proveedorData .letter {
+  width: 30px;
+  height: 30px;
+  background-color: #046290;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody tr td .proveedorData .letter h1 {
+  color: #FFF;
+  font-weight: 400;
+  font-size: 14px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody tr td .proveedorData .dataProvider {
+  margin-left: 10px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody tr td .proveedorData .dataProvider h3 {
+  color: #046290;
+  font-size: 14px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody tr td button {
+  background-color: transparent;
+  border: none;
+  transition: 0.3s;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody tr td button .icon {
+  color: #dc3545;
+  font-size: 16px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody tr td button:hover {
+  transform: scale(1.1);
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody tr .medium {
+  width: 30%;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody tr .price {
+  width: 15%;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody tr .porcentage {
+  width: 10%;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody tr .remove {
+  width: 5%;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table table tbody tr:hover {
+  background-color: #F8F8F8;
 }
 .compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .table .confirmar {
   margin-top: 40px;

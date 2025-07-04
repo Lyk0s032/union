@@ -23,13 +23,12 @@ export default function AddPrice(props){
                             <h3>Actualizar <strong>{prima.item}</strong></h3>
                         
                             <div className="dataMateria">
-                                <span>Precio promedio: <strong>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(promedio) / prima.prices.length).toFixed(0))}</strong></span><br />
-                                <span>Promedio sin IVA: <strong>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(sinIva) / prima.prices.length).toFixed(0))}</strong></span><br />
-                                <span>Valor del IVA: <strong>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(iva) / prima.prices.length).toFixed(0))}</strong></span><br />
+                                <span>Precio promedio: <strong>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(promedio) / prima.prices.length).toFixed(0))} COP</strong></span><br />
+                                <span>Promedio sin IVA: <strong>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(sinIva) / prima.prices.length).toFixed(0))} COP </strong></span><br />
+                                <span>Valor del IVA: <strong>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(iva) / prima.prices.length).toFixed(0))} COP</strong></span><br />
                                 
                                 <span>Medida: <strong>{prima.medida}</strong></span><br />
                                 <span>Unidad: <strong>{prima.unidad}</strong></span><br /><br />
-                                <span>Última actualización: <strong>Por definir</strong></span>
 
                             </div>
                         </div>
@@ -45,28 +44,28 @@ export default function AddPrice(props){
                     <div className="table">
                             <table>
                                     <thead>
-                                        <tr >
+                                        <tr>
+                                            <th>Proveedor</th>
+                                            <th>Valor base</th>
+                                            <th>Valor con IVA</th>
+                                            <th>Variación</th>
+                                            <th>Nuevo</th>
+                                            <th></th>
+                                        </tr>
+                                        
+                                    </thead>
+                                    <tbody>
                                             {
                                                 prima.prices && prima.prices.length ?
                                                     prima.prices.map((pm, i) => {
                                                         return (
-                                                                <th key={i+1}>
-                                                                    <div className="proveedorData">
-                                                                        <img src="https://isodoc.co/dashboard/wp-content/uploads/2018/08/iconos-isodoc-06.png" alt="" />
-                                                                        <h3>{pm.proveedor.nombre}</h3>
-                                                                        <span style={{color: '#666', fontWeight:400,fontSize:11}}>Ult. {pm.createdAt.split('T')[0]}</span>
-                                                                    </div>
-                                                                </th>
+                                                            <ItemAddPrice precio={pm} key={i+1}/> 
                                                         )
                                                     })
                                                 :
                                                 null
                                             }
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr >
-                                            {
+                                            {/* {
                                                 prima.prices && prima.prices.length ?
                                                     prima.prices.map((pm, i) => {
                                                         return (
@@ -75,9 +74,8 @@ export default function AddPrice(props){
                                                     })
                                                 :
                                                 null
-                                            }
+                                            } */}
 
-                                        </tr>
                                     </tbody>
                             </table>
 

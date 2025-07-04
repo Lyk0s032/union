@@ -16,13 +16,14 @@ export default function NewProviderPrice(props){
         if(!choose) return dispatch(actions.HandleAlerta("Debes seleccionar un cliente", 'mistake'))
 
         // Caso contrario, enviamos consulta
-
+        let iva = valor * 0.19;
+        let total = Number(Number(valor) + Number(iva)).toFixed(0); 
         const body = {
             mtId: prima.id,
             pvId: choose.id,
-            price: valor,
-            iva: null,
-            descuentos: null
+            price: total,
+            iva,
+            descuentos: valor
         }
         console.log(body)
         const sendPetion = await axios.post('/api/mt/price/give', body)

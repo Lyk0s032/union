@@ -692,7 +692,8 @@
                                                         }
                                                     }
                                                     .table{
-                                                        margin-top:20px;
+                                                        margin-top:0px;
+                                                        margin-bottom: 100px;
                                                         width:100%;
                                                         table{
                                                             width:100%;
@@ -807,6 +808,7 @@
                                                                 }
                                                             }
                                                             tbody{
+                                                                width:100%;
                                                                 .input{
                                                                     text-align: center;
                                                                 }
@@ -907,6 +909,72 @@
                                                                     button:hover{
                                                                         transform: scale(1.1);
                                                                     }
+                                                                }
+                                                                tr{
+                                                                    width:100%;
+                                                                    transition: .3s;
+                                                                    td{
+                                                                        width:20%;
+                                                                        border-bottom:1px solid #ccc;
+                                                                        box-sizing: border-box;
+                                                                        padding:15px 0px;
+                                                                        box-sizing: border-box;
+                                                                        .proveedorData{
+                                                                            width:100%;
+                                                                            display: flex;
+                                                                            align-items: center;
+                                                                            .letter{
+                                                                                width:30px;
+                                                                                height:30px;
+                                                                                background-color: @bgAzulDark;
+                                                                                border-radius: 100%;
+                                                                                display: flex;
+                                                                                align-items: center;
+                                                                                justify-content: space-around;
+                                                                                h1{
+                                                                                    color: @bgDefault;
+                                                                                    font-weight: 400;
+                                                                                    font-size: 14px;
+                                                                                }
+                                                                            }
+                                                                            .dataProvider{
+                                                                                margin-left:10px;
+                                                                                h3{
+                                                                                    color: @bgAzulDark;
+                                                                                    font-size: 14px;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                        button{
+                                                                            background-color: transparent;
+                                                                            border:none;
+                                                                            transition: .3s;
+                                                                            .icon{
+                                                                                color: @danger;
+                                                                                font-size:16px
+                                                                            }
+                                                                        }
+                                                                        button:hover{
+                                                                            transform: scale(1.1);
+                                                                        }
+                                                                    }
+                                                                    
+                                                                    .medium{
+                                                                        width:30%;
+                                                                    }
+                                                                    .price{
+                                                                        width:15%;
+                                                                    }
+                                                                    .porcentage{
+                                                                        width:10%;
+                                                                    }
+                                                                    .remove{
+                                                                        width:5%;
+                                                                        
+                                                                    }
+                                                                }
+                                                                tr:hover{
+                                                                        background-color: #F8F8F8;
                                                                 }
                                                             }
                                                         }
