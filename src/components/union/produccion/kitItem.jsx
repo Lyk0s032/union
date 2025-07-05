@@ -117,18 +117,29 @@ function  GetSimilarPrice(props){
     const [valor, setValor] = useState(0) 
 
     const mapear = () => {
-        const a = consumir.map((c, i) => {
-            const getV  =  getPromedio(c);
-            return getV
-        })
-        const promedio = a && a.length ? Number(a.reduce((acc, p) => Number(acc) + Number(p), 0)) : null
         
-        return setValor(promedio);
+        // const a = consumir.map((c, i) => {
+        //     const getV  =  getPromedio(c);
+        //     return getV
+        // })
+        // console.log(a) 
+        // const promedio = a && a.length ? Number(a.reduce((acc, p) => Number(acc) + Number(p), 0)) : null
+        
+        // return setValor(promedio);
+
+        const sumaDePromedios = consumir
+            .map(c => getPromedio(c)) // 1. Obtiene el promedio de cada elemento
+            .reduce((acc, p) => acc + Number(p), 0); // 2. Suma todos los promedios
+
+        // Decide si quieres la suma total o el promedio de los promedios
+        const promedioDePromedios = sumaDePromedios;
+        
+        setValor(promedioDePromedios); // O setValor(sumaDePromedios)
     } 
 
     useEffect(() => {
         mapear()
-    }, [])
+    }, [consumir])
     return (
         <div className="similarPrice">
             <span>{valor > 0 ? new Intl.NumberFormat('es-CO', {currency:'COP'}).format(valor.toFixed(0)) : 0} COP</span>
