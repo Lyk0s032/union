@@ -54,7 +54,7 @@ export default function NewClient(){
         if(form.persona == 'natural' && !form.name) return dispatch(actions.HandleAlerta('Ingresa nombre del proveedor ', 'negative'))
         if(form.persona == 'natural' && !form.lastName) return dispatch(actions.HandleAlerta('Ingresa apellidos del proveedor ', 'negative'))
 
-        if(!form.nit || !form.email || !form.direccion || !form.ciudad ||  !form.fijo || !form.phone){
+        if(!form.nit || !form.email || !form.direccion ||  !form.fijo || !form.phone){
            
             return dispatch(actions.HandleAlerta('No puedes dejar campos vacios', 'negative'))
         }else{
@@ -82,6 +82,7 @@ export default function NewClient(){
                 params.delete('c');
                 setParams(params);
             }).catch(err => {
+                console.log(err)
                 dispatch(actions.HandleAlerta('Ha ocurrido un error', 'mistake'))
             }).finally(f => {
                 setLoading(false);
