@@ -35,9 +35,8 @@ export default function SearchKits({ number }) {
             const porLinea = li ? m.lineaId == li : true;
             
             // 3. El filtro 'diferente' ahora busca correctamente en 'kit.itemKits'
-            const diferente = !idsEnElKit.has(m.id);
 
-            return porTexto && porCategoria && porLinea && diferente;
+            return porTexto && porCategoria && porLinea ;
         });
     }, [primas, kit.itemKits, word, cat, li]);
 

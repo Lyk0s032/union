@@ -335,7 +335,7 @@ function ToFastEdit({ item, ParaElHijo, kit }) {
                 <div className="medida">
                     <input type="text" ref={inputRef} onChange={(e) => setForm({ ...form, medida: e.target.value })} value={form.medida} 
                     onKeyDown={(e)  => {
-                        if(e.code == 'Enter'){
+                        if(e.code == 'Enter' || e.code == 'NumpadEnter'){
                             !loading ? updateKit() : null
                         }
                     }} onBlur={() => HandleClose()}/>
