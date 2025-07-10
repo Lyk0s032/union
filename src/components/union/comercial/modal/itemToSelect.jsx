@@ -27,7 +27,6 @@ export default function ItemToSelect({ dis, kit, number }) {
             cantidad: cantidad,
             precio: (Number(precioUnitarioFinal))
         };
-        console.log(body)
         await axios.post('/api/cotizacion/add/item', body)
             .then(() => {
                 dispatch(actions.axiosToGetCotizacion(false, cotizacion.id));

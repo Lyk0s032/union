@@ -248,7 +248,6 @@ function GetSimilarPrice(props) {
 
     // Estado para guardar el costo total de producción.
     const [valor, setValor] = useState(0);
-    console.log("Datos de la línea para el cálculo de porcentajes:", linea);
     // Función para calcular el costo total del kit.
     const mapear = () => {
         // Primero, una validación de seguridad: si no hay items, el costo es 0.

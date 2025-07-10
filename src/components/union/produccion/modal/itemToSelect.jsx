@@ -16,8 +16,7 @@ export default function ItemToSelect({ number, kitt}){
     const { kit } = kits;
 
     const usuario = useSelector(store => store.usuario);
-    const { user } = usuario;
-            
+    const { user } = usuario;     
     const dispatch = useDispatch();
     const option = kitt;
     const promedio = option.prices && option.prices.length ? Number(option.prices.reduce((acc, p) => Number(acc) + Number(p.valor), 0)) / option.prices.length : null
@@ -28,7 +27,6 @@ export default function ItemToSelect({ number, kitt}){
         kg: option.medida 
     });
 
-    console.log(option)
     const addItem = async () => {
         const body = {
             kitId: kit.id,

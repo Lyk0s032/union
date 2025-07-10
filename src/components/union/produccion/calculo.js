@@ -36,11 +36,28 @@ export function OneElement(objeto) { // 'objeto' es el 'item' completo que le pa
 
     } else if (unidad == 'unidad') {
         if (Number(medida) === 0) return 0;
-        const precioCantidad = promedio / Number(medida);
-        // [OJO]: Aquí probablemente quieres usar la cantidad, no la medida de consumo
-        const unidadesAConsumir = Number(consumirCantidad); 
-        const costo = precioCantidad * unidadesAConsumir;
-        return costo;
+
+            // 1. Calculamos el precio por cada unidad individual.
+            const precioPorUnidad = promedio / Number(medida);
+
+            // 2. Convertimos la cantidad que se va a consumir a un número.
+            const cantidadDeUnidades = Number(consumirMedida);
+
+            // 3. Verificamos que la conversión fue exitosa.
+            if (isNaN(cantidadDeUnidades)) {
+                console.error("Error: 'consumirCantidad' no es un número válido. Valor:", consumirCantidad);
+                return 0; // Retornamos 0 para evitar errores.
+            }
+
+            // 4. Realizamos la multiplicación final.
+            const costoTotal = precioPorUnidad * cantidadDeUnidades;
+
+            // --- Logs de depuración para confirmar ---
+            console.log('Precio por unidad:', precioPorUnidad);
+            console.log('Cantidad de unidades:', cantidadDeUnidades);
+            console.log('Costo total calculado:', costoTotal);
+
+            return costoTotal;
 
     } else if (unidad == 'kg') {
         if (Number(medida) === 0) return 0;
@@ -49,7 +66,7 @@ export function OneElement(objeto) { // 'objeto' es el 'item' completo que le pa
         const costo = precioKg * kgAConsumir;
         return costo;
     }
-
+    console.log('no sé')
     return 0; // Si no es ninguna unidad, retorna 0
 }
 
