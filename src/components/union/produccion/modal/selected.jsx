@@ -1,252 +1,361 @@
-import React, { useState } from "react";
-import { OneElement } from "../calculo";
+import React, { useEffect, useRef, useState } from "react";
+import { OneElement } from "../calculo"; // Asegúrate que OneElement también esté corregida
 import axios from "axios";
 import * as actions from '../../../store/action/action';
 import { useDispatch, useSelector } from "react-redux";
 import { BsPencil, BsThreeDots } from "react-icons/bs";
 import { MdDeleteOutline } from "react-icons/md";
 
-export default function Selected({kit, openMenuId, toggleMenu}){
+// [CORRECCIÓN]: El componente ahora itera sobre `kit.itemKits`
+export default function Selected({ kit, openMenuId, toggleMenu, number, selectArea }) {
     const dispatch = useDispatch();
     const [fast, setFast] = useState(null);
-
+    const [adding, setAdding] = useState(false);
     const usuario = useSelector(store => store.usuario);
     const { user } = usuario;
-            
-    const deleteItem = async (itemId) => {
+    const [codeSeg, setCodeSeg] = useState(null);
+    const segmentoNameRef = useRef(null);
+    const deleteItem = async (item) => { // [CORRECCIÓN]: Recibe el ID del itemKit
         const body = {
-            kitId: kit.id, 
-            itemId: itemId,
-            userId: user.user.id
-        }
+            itemKitId: item.id, // [CORRECCIÓN]: Enviamos el ID del itemKit al backend
+            userId: user.user.id,
+            kitId: kit.id,
+            itemId: item.materium.id
+        } 
 
-        const sendPetion = await axios.delete('api/kit/remove/item', { data: body} )
-        .then((res) => {
-            dispatch(actions.axiosToGetKit(false, kit.id))
-            dispatch(actions.HandleAlerta('Item removido', 'positive'))
-        })
-        .catch(err => {
-            console.log(err);
-            dispatch(actions.HandleAlerta('No hemos logrado remover este item', 'mistake'))
-        })
-        return sendPetion; 
+        // La ruta del API debería ser algo como 'api/kit/item' para borrar por ID
+        const sendPetion = await axios.delete('/api/kit/remove/item', { data: body })
+            .then((res) => {
+                dispatch(actions.axiosToGetKit(false, kit.id))
+                dispatch(actions.HandleAlerta('Item removido', 'positive'))
+            })
+            .catch(err => {
+                console.log(err);
+                dispatch(actions.HandleAlerta('No hemos logrado remover este item', 'mistake'))
+            })
+        return sendPetion;
     }
 
+
+    // Nuevo segmento
+    const changeNameSegmento = async (name, areaId) => {
+        if(!name) return dispatch(actions.HandleAlerta('Debes ingresar nombre al segmento', 'mistake'))
+        const body = {
+            areaId,
+            name,
+            userId: user.user.id
+        }
+        setAdding(true);
+        const send = await axios.put('/api/kit/add/segmento', body)
+        .then((res) => {
+            dispatch(actions.HandleAlerta('¡Nombre actualizado!', 'positive'))
+            dispatch(actions.axiosToGetKit(false, kit.id))
+            setCodeSeg(null)
+            return res
+        }).catch(err => {
+            dispatch(actions.HandleAlerta('No hemos logrado actualizar este segmento, intentalo más tarde', 'mistake'))
+            return err
+        })
+        .finally(e => {
+            setAdding(false)
+            return e;
+        })
+        return send;
+    }
     const AlPadre = (val) => {
         setFast(val)
     }
+
+    useEffect(() => {
+        if(codeSeg && segmentoNameRef.current){
+            segmentoNameRef.current.focus()
+        }
+    }, [codeSeg])
     return (
-        <table>
-            <thead>
-                <tr>
-                    <th>Código</th>
-                    <th>Nombre</th>
-                    <th>Medida</th>
-                    <th>Uni.</th>
-                    <th>Val</th>
-                    <th></th>
-
-                </tr>
-            </thead>
-            <tbody>
-                {
-                    kit.materia && kit.materia.length ?
-                        kit.materia.map((materia, i) => {
+        <div>
+            {
+                    kit.areaKits?.length ?
+                        kit.areaKits.map((ar, i) => {
                             return (
-                                fast == materia.id ?
-                                    <ToFastEdit kit={kit} materia={materia} ParaElHijo={AlPadre} mt={materia} />
-                                :
-                                <tr key={i+1}>
-                                    <td>{materia.id}</td>
-                                    <td>{materia.description}</td>
-                                    <td onClick={() => {
-                                        toggleMenu(materia.id)
-                                        setFast(materia.id);
-                                    }}>{materia.itemKit.medida}</td>
-                                    <td>
-                                        {materia.unidad}
-                                    </td>
-                                    <td> 
-                                        <strong>{<ValorSelected mt={materia} />}</strong>
-                                    </td>
-                                    <td className="option">
-                                        <div className="menu-containerSelected">
-                                            <button className="btnOptions"
-                                                onClick={() => toggleMenu(materia.id)}
-                                                aria-haspopup="true" // Indica que es un botón que abre un menú
-                                                aria-expanded={openMenuId === materia.id} // Indica si el menú está abierto
-                                                aria-label="Opciones del elemento"
-                                            >
-                                                {/* Icono de tres puntos */}
-                                                <BsThreeDots className="icon" />
-                                            </button>
-                                            {openMenuId === materia.id && ( // Renderizado condicional para mostrar/ocultar
-                                                <div 
-                                                    className="menu-dropdown" role="menu"
-                                                    aria-orientation="vertical"
-                                                    aria-labelledby={`menu-button-${materia.id}`}>
-
-                                                    <div className="panel">
-                                                        <div className="title">
-                                                            <strong>Opciones rápidas</strong>
-                                                        </div>
-                                                        <nav>
-                                                            <ul>
-                                                                <li onClick={() => {
-                                                                    toggleMenu(materia.id)
-                                                                    setFast(materia.id);
-                                                                }}> 
-                                                                    <div>
-                                                                        <BsPencil className="icon" />
-                                                                        <span>Editar</span>
-                                                                    </div>
-                                                                </li>
-                                                                <li  onClick={() => deleteItem(materia.id)}> 
-                                                                    <div>
-                                                                        <MdDeleteOutline className="icon" />
-                                                                        <span>Eliminar</span>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
-                                                </div>
-                                            )}
+                                <div className={number == ar.id ? "segmentoKits Active" : "segmentoKits"} key={i+1} 
+                                onDoubleClick={() => {
+                                    if(number == ar.id){
+                                        selectArea(null)
+                                    }else{
+                                        selectArea(ar.id)
+                                    }
+                                }}>
+                                    <div className="titleTopSegmento">
+                                        <div className="titleThis" onClick={() => setCodeSeg(ar.id)}>
+                                            {
+                                                codeSeg && ar.id == codeSeg ?
+                                                    <input type="text" ref={segmentoNameRef} defaultValue={ar.name} onBlur={() => setCodeSeg(null)} 
+                                                    onKeyDown={(e) => {
+                                                        if(e.code == 'Enter'){
+                                                            changeNameSegmento(e.target.value, ar.id)
+                                                        }
+                                                    }}/>
+                                                :
+                                                <h3>{ar.name}</h3>
+                                            }
                                         </div>
-                                    </td>
-                                </tr>
+                                        <div className="optionsTitleThis">
+                                            <nav>
+                                                <ul>
+                                                    <li>
+                                                        <div>
+                                                            <span>Bajar</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+
+                                    <div className="AllElementsHere">
+                                        <div className="data">
+                                            <table>
+                                                <tbody>
+                                            {
+                                                // [CORRECCIÓN]: Iteramos sobre kit.itemKits en lugar de kit.materia
+                                                kit.itemKits && kit.itemKits.length ?
+                                                    kit.itemKits.map((item, i) => { // 'item' es el objeto completo de itemKit
+                                                        return (
+                                                            item.areaId == ar.id ? 
+                                                                fast == item.id ?
+                                                                    <ToFastEdit key={item.id} kit={kit} item={item} ParaElHijo={AlPadre} />
+                                                                :
+                                                                <tr key={i+1}>
+                                                                    {/* [CORRECCIÓN]: Accedemos a los datos anidados */}
+                                                                    <td className="larger">
+                                                                        <div className="codeAndName">
+                                                                                {item.id}
+                                                                            <h3><span>{item.materium.id}</span> -  {item.materium.description}</h3>
+                                                                        </div> 
+                                                                    </td>
+                                                                    <td onClick={() => {
+                                                                        toggleMenu(item.id)
+                                                                        setFast(item.id);
+                                                                    }} className="edit">
+                                                                        <div className="howMany">
+                                                                            <strong>{item.medida} <span>{item.materium.unidad}</span></strong>
+                                                                        </div>
+                                                                    </td> {/* Medida del consumo */}
+                                                                    <td className="edit">
+                                                                        <h3>{<ValorSelected item={item} />}</h3>
+                                                                    </td>
+                                                                    <td className="option">
+                                                                        <div className="menu-containerSelected">
+                                                                            <button className="btnOptions" onClick={() => toggleMenu(item.id)}>
+                                                                                <BsThreeDots className="icon" />
+                                                                            </button>
+                                                                            {openMenuId === item.id && (
+                                                                                <div className="menu-dropdown">
+                                                                                    <div className="panel">
+                                                                                        <strong>Opciones rápidas</strong><br /><br />
+                                                                                        <nav>
+                                                                                            <ul>
+                                                                                                <li onClick={() => setFast(item.id)}>
+                                                                                                    <div>
+                                                                                                        <BsPencil className="icon" />
+                                                                                                        <span>Editar</span>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                                {/* [CORRECCIÓN]: Pasamos el id del itemKit para eliminar */}
+                                                                                                <li onClick={() => deleteItem(item)}>
+                                                                                                    <div>
+                                                                                                        <MdDeleteOutline className="icon" />
+                                                                                                        <span>Eliminar</span>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </nav>
+                                                                                    </div>
+                                                                                </div>
+                                                                            )}
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            : null
+                                                        )
+                                                    })
+                                                    : null
+                                            }
+                                            </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             )
                         })
                     : null
                 }
-
-
-            </tbody>
-        </table>
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th> {/* Título cambiado para mayor claridad */}
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    
+                    {
+                        // [CORRECCIÓN]: Iteramos sobre kit.itemKits en lugar de kit.materia
+                        kit.itemKits && kit.itemKits.length ?
+                            kit.itemKits.map((item, i) => { // 'item' es el objeto completo de itemKit
+                                return (
+                                    !item.areaId ?
+                                    fast === item.id ?
+                                        <ToFastEdit key={item.id} kit={kit} item={item} ParaElHijo={AlPadre} />
+                                        :
+                                        <tr key={i+1}>
+                                            {/* [CORRECCIÓN]: Accedemos a los datos anidados */}
+                                            <td className="larger">
+                                                <div className="codeAndName">
+                                                    
+                                                    <h3><span>{item.materium.id}</span> -  {item.materium.description}</h3>
+                                                </div>
+                                            </td>
+                                            <td onClick={() => {
+                                                toggleMenu(item.id)
+                                                setFast(item.id);
+                                            }} className="edit">
+                                                <div className="howMany">
+                                                    <strong>{item.medida} <span>{item.materium.unidad}</span></strong>
+                                                </div>
+                                            </td> {/* Medida del consumo */}
+                                            <td className="edit">
+                                                <h3>{<ValorSelected item={item} />}</h3>
+                                            </td>
+                                            <td className="option">
+                                                <div className="menu-containerSelected">
+                                                    <button className="btnOptions" onClick={() => toggleMenu(item.id)}>
+                                                        <BsThreeDots className="icon" />
+                                                    </button>
+                                                    {openMenuId === item.id && (
+                                                        <div className="menu-dropdown">
+                                                            <div className="panel">
+                                                                <strong>Opciones rápidas</strong><br /><br />
+                                                                <nav>
+                                                                    <ul>
+                                                                        <li onClick={() => setFast(item.id)}>
+                                                                            <div>
+                                                                                <BsPencil className="icon" />
+                                                                                <span>Editar</span>
+                                                                            </div>
+                                                                        </li>
+                                                                        {/* [CORRECCIÓN]: Pasamos el id del itemKit para eliminar */}
+                                                                        <li onClick={() => deleteItem(item)}>
+                                                                            <div>
+                                                                                <MdDeleteOutline className="icon" />
+                                                                                <span>Eliminar</span>
+                                                                            </div>
+                                                                        </li>
+                                                                    </ul>
+                                                                </nav>
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    : null
+                                )
+                            })
+                            : null
+                    }
+                </tbody>
+            </table>
+        </div>
+        
     )
 }
 
-function ToFastEdit({materia, ParaElHijo, mt, kit}){
-
+// [CORRECCIÓN]: El componente ahora recibe el 'item' completo
+function ToFastEdit({ item, ParaElHijo, kit }) {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(null);
+    
+    // [CORRECCIÓN]: Leemos los datos desde la estructura correcta
     const [form, setForm] = useState({
-        mt2: materia.unidad == 'mt2' ? materia.itemKit.medida : null,
-        other: materia.unidad != 'mt2' ? materia.itemKit.medida : materia.itemKit.medida,
-        cantidad: materia.cantidad ? materia.cantidad : 0,
-        kg: materia.itemKit.medida
+        medida: item.medida || '',
+        cantidad: item.cantidad || 1,
     });
-
+    
     const usuario = useSelector(store => store.usuario);
     const { user } = usuario;
-            
-    
-    const HandleClose = () => {
-        ParaElHijo(null)
-    }
- 
+    const inputRef = useRef(null);
+    const HandleClose = () => ParaElHijo(null);
+
     const updateKit = async () => {
-        if(materia.unidad == 'mt2' && !form.mt2) return dispatch(actions.HandleAlerta('Ingresa una medida', 'mistake')) 
-        if(materia.unidad == 'kg' &&!form.kg) return dispatch(actions.HandleAlerta('Ingresa una medida', 'mistake'))        
-        setLoading(true)
+        // ... (Tu lógica de validación)
+        setLoading(true);
         let body = {
+            itemKitId: item.id, // Enviamos el ID del itemKit para actualizar
+            medida: form.medida,
             kitId: kit.id,
-            materiaId: materia.id,
-            medida: materia.unidad == 'mt2' ? form.mt2 : materia.unidad == 'kg' ? form.kg : form.other,
+            materiaId: item.materium.id,
+            cantidad: form.cantidad,
             userId: user.user.id
         }
 
-        const sendPetion = await axios.put('api/kit/add/item', body )
-        .then((res) => {
-            dispatch(actions.axiosToGetKit(false, kit.id))
-            dispatch(actions.axiosToGetPrimas(false))
-            dispatch(actions.HandleAlerta('Item agregado con éxito', 'positive'))
-
-        })
-        .catch(err => {
-            console.log(err);
-            dispatch(actions.HandleAlerta('No hemos logrado agregar este item', 'mistake'))
-        })
-        .finally((y) => {
-            setLoading(false)
-            HandleClose()
-        }) 
-        return sendPetion; 
+        // La ruta del API debería ser algo como 'api/kit/update/item'
+        const sendPetion = await axios.put('api/kit/add/item', body)
+            .then(() => { 
+                dispatch(actions.axiosToGetKit(false, kit.id));
+                dispatch(actions.HandleAlerta('Item actualizado con éxito', 'positive'));
+                HandleClose()
+            })
+            .catch(err => {
+                console.log(err);
+                dispatch(actions.HandleAlerta('No hemos logrado actualizar este item', 'mistake'));
+            }) 
+            .finally(() => {
+                setLoading(false);
+                HandleClose();
+            });
+        return sendPetion;
     }
+
+    useEffect(() => {
+        inputRef.current.focus();
+    }, [])
     return (
-        <tr className="forEdit">
-            <td>{materia.id}</td>
-            <td>{materia.description}</td>
-            <td>
-                {
-                    materia.unidad == 'mt2' ? 
-                        <div className="medida">
-                            <input type="text"id="one" onChange={(e) => {
-                                setForm({
-                                    ...form,
-                                    mt2:  `${e.target.value}`
-                                })
-                            }} value={form.mt2}/>
-                            {/* <h3>x</h3>
-                            <input type="text" onChange={(e) => {
-                                setForm({
-                                    ...form,
-                                    mt2:  `${form.mt2.split('X')[0]}X${e.target.value}`
-                                })
-                            }} value={form.mt2.split('X')[1]}/> */}
-                        </div>
-                    :
-                        <div className="medida">
-                            {
-                                materia.unidad == 'kg' ?
-                                <input type="text" onChange={(e) => {
-                                    setForm({
-                                        ...form,
-                                        kg: e.target.value
-                                    })
-                                }} value={form.kg}/>
-                                :
-                                <input type="text" onChange={(e) => {
-                                    setForm({
-                                        ...form,
-                                        other: e.target.value
-                                    })
-                                }} value={form.other}/>
-                            }
-                        </div>
-                }
+        <tr> 
+            <td className="larger">
+                <div className="codeAndName">
+                                                
+                   <h3><span>{item.materium.id}</span> -  {item.materium.description}</h3>
+                </div>
             </td>
-            {
-                loading ?
-                <td>
-                    <span>Actualizando...</span>
-                </td>
-                :
-                <td>
-                    <button onClick={() => updateKit()} className="ok">
-                        <span>Confirmar</span>
-                    </button>
-                </td>
-            }
-            {
-                loading ?
-                null: 
-                <td>
-                    <button onClick={() => HandleClose()} className="cancel">
-                        <span>Cancelar</span>
-                    </button>
-                </td> 
-            }
+            <td className="edit">
+                <div className="medida">
+                    <input type="text" ref={inputRef} onChange={(e) => setForm({ ...form, medida: e.target.value })} value={form.medida} 
+                    onKeyDown={(e)  => {
+                        if(e.code == 'Enter'){
+                            !loading ? updateKit() : null
+                        }
+                    }} onBlur={() => HandleClose()}/>
+                </div>
+            </td>
+            <td className="edit">
+                {loading ? <span>Actualizando...</span> : <span>Enter para confirmar</span>}
+            </td>
+            <td></td>
         </tr>
     )
 }
-function ValorSelected(props){
-    const mt = props.mt;
-    const valor = OneElement(mt) 
+
+// [CORRECCIÓN]: El componente ahora recibe el 'item' completo
+function ValorSelected({ item }) {
+    // [CORRECCIÓN]: Le pasamos el 'item' completo a OneElement.
+    // Asegúrate de que la función OneElement en calculo.js también esté corregida
+    // para recibir el 'item' completo, igual que corregimos getPromedio.
+    const valor = OneElement(item);
     return (
-        mt.unidad == 'kg' ?
-        <span>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valor).toFixed(0))}</span>
-        :
-        <span>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valor).toFixed(0))}</span>
+        <span>{new Intl.NumberFormat('es-CO', { currency: 'COP' }).format(Number(valor).toFixed(0))}</span>
     )
 }

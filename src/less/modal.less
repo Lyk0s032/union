@@ -748,6 +748,8 @@
                             box-sizing: border-box;
                             .DataKit{
                                 width:90%;
+                                height:70%;
+                                box-sizing: border-box;
                                 margin:auto;
                                 padding:15px 0px;
                                 padding-bottom: 0px;
@@ -776,6 +778,51 @@
                                 span{
                                     font-size: 12px;
                                     color: @bgDark;
+                                }
+                            }
+                            .optionsForKitsNav{
+                                height:30%;
+                                box-sizing: border-box;
+                                width:90%;
+                                margin:auto;
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+
+                                .leftNavD{
+                                    width:auto;
+                                    nav{
+                                        ul{
+                                            li{
+                                                display: inline-block;
+                                                cursor: pointer;
+                                                div{
+                                                    padding:8px 10px;
+                                                    padding-right: 30px;
+                                                    padding-left:0px;
+                                                    box-sizing: border-box;
+                                                    span{
+                                                        font-size: 12px;
+                                                    }
+                                                    .icon{
+                                                        font-size: 18px;
+                                                        color: @bgAzulDark;
+                                                    }
+                                                    .Great{
+                                                        color: @great;
+                                                    }
+                                                }
+                                            }
+                                            li:hover{
+                                                div{
+                                                    .icon{
+                                                        transform: scale(1.1);
+                                                        transition: .3s;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                             .optionsForCotizacion{
@@ -828,7 +875,25 @@
                                 margin:auto;
                                 padding:10px 0px;
                                 box-sizing: border-box;
-
+                                .newSegmento{
+                                    label{
+                                        font-size: 12px;
+                                        color: #666;
+                                    }
+                                    input{
+                                        width:100%;
+                                        border-radius: 5px;
+                                        border:2px solid #ccc;
+                                        box-sizing: border-box;
+                                        padding:8px 10px;
+                                        color: @bgAzulDark;
+                                        outline: 0px;
+                                        transition: .3s;
+                                    }
+                                    input:focus{
+                                        border:2px solid @bgAzulDark;
+                                    }
+                                }
                                 .addArea{
                                     padding:20px 0px;
                                     box-sizing: border-box;
@@ -1017,6 +1082,92 @@
                                     padding:10px;
                                     border-radius: 10px;
                                 }
+                                    .segmentoKits{
+                                        border-radius: 5px;
+                                        box-sizing: border-box;
+                                        position:relative;
+                                        width:100%;
+                                        border:2px solid #DFD8FD;
+                                        margin-bottom: 5px;
+                                        transition: .3s;
+                                        .titleTopSegmento{
+                                            display:flex;
+                                            align-items: center;
+                                            justify-content: space-between;
+                                            background-color: #DFD8FD;
+                                            border:1px solid #DFD8FD;
+                                            cursor: pointer;
+                                            transition: .3s;
+
+                                            .titleThis{
+                                                padding:15px 10px;
+                                                box-sizing: border-box;
+                                                h3{
+                                                    font-weight: 600;
+                                                    font-size: 12px;
+                                                    margin:2px 0px;
+                                                    box-sizing: border-box;
+                                                    color: @bgAzulDark;
+                                                    
+                                                }
+                                                input{
+                                                    padding:0px 5px;
+                                                    width:auto;
+                                                    box-sizing: border-box;
+                                                    outline: 0px;
+                                                }
+                                            }
+                                            .optionsTitleThis{
+                                                nav{
+                                                    ul{
+                                                        li{
+                                                            display: inline-block;
+                                                            margin-right:10px;
+                                                            cursor: pointer;
+                                                            div{
+                                                                span{
+                                                                    font-size: 12px;
+                                                                    color: @bgAzulDark;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                        }
+                                    }
+                                    .segmentoKits:hover{
+                                        opacity: 0.8;
+                                    }
+                                    .Active{
+                                        border:2px solid #614995;
+                                        .titleTopSegmento{
+                                            background-color: #614995;
+                                            border:1px solid #614995;
+                                            .titleThis{
+                                                h3{
+                                                    color: @bgDefault;
+                                                }
+                                            }
+                                            .optionsTitleThis{
+                                                nav{
+                                                    ul{
+                                                        li{
+                                                            div{
+                                                                span{
+                                                                    color: @bgDefault;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    .Active:hover{
+                                        opacity: 1;
+                                    }
                                         table{
                                             width:100%;
                                             border-collapse: collapse;
@@ -1032,20 +1183,71 @@
                                                     }
                                                 }
                                             }
+                                            
                                             tbody{
+                                                width:100%;
+                                                position:relative;
+
+                                                
                                                 tr{
+                                                    width:100%;
                                                     position:relative;
+                                                    box-sizing: border-box;
+                                                    border-radius: 5px;
+                                                    
                                                     td{
-                                                        padding:8px 0px;
+                                                        width:20%;
+                                                        padding:10px 10px;
                                                         box-sizing: border-box;
                                                         font-size: 11px;
                                                         color: @bgDark;
+                                                        transition: .3s;
+                                                        cursor: pointer;
+                                                        .codeAndName{
+                                                            box-sizing: border-box;
+                                                            transition: .3s;
+                                                            span{
+                                                                font-weight: 400;
+                                                            }
+                                                            h3{
+                                                                font-weight: 400;
+                                                                font-size: 11px;
+                                                                color: @bgAzulDark;
+                                                            }
+                                                        }
+                                                        .howMany{
+                                                            font-weight: 400;
+                                                            color: @bgAzulDark;
+                                                        }
+                                                        .medida{
+                                                            width:auto;
+                                                        }
                                                     }
+                                                    .larger{
+                                                        width:50%;
+                                                    }
+                                                    .edit{
+                                                        width:20%;
+                                                        input{
+                                                            width:100%;
+                                                            border-radius: 5px;
+                                                            border:1px solid #ccc;
+                                                            padding:5px;
+                                                            box-sizing: border-box;
+                                                            transition: .3s;
+                                                            outline:0px;
+                                                        }
+                                                        input:focus{
+                                                            border:1px solid @bgAzulDark;
+                                                        }
+                                                    } 
                                                     .option{
+                                                        opacity: 0;
+                                                        width:5%;
                                                         button{
                                                             padding: 5px 5px;
                                                             margin-left:10px;
-                                                            background-color: white;
+                                                            background-color: transparent;
                                                             border:none;
                                                             .icon{
                                                                 font-size: 16px;
@@ -1070,15 +1272,25 @@
                                                            .panel{
                                                                 padding:10px 0px;
                                                                 box-sizing: border-box;
+                                                                
                                                                 .title{
+                                                                    box-sizing: border-box;
                                                                     margin-bottom: 10px;
                                                                     strong{
                                                                         padding:0px 20px;
                                                                         font-weight: 400;
                                                                         font-size: 12px;
+                                                                        margin-left:10px;
                                                                         color: @bgAzulDark;
         
                                                                     }
+                                                                }
+                                                                strong{
+                                                                    font-weight: 400;
+                                                                    font-size: 12px;
+                                                                    margin-left:10px;
+                                                                    color: @bgAzulDark;
+        
                                                                 }
                                                                 nav{
                                                                     ul{
@@ -1115,11 +1327,42 @@
                                                         }
                                                     }
                                                 }
+                                                tr:hover{
+
+                                                    td{
+                                                        background-color: #F8F8F8;
+                                                        .codeAndName{
+                                                            padding-left:10px;
+                                                            box-sizing: border-box;
+                                                        }
+                                                    }
+                                                    .option{
+                                                        opacity: 1;
+                                                    }
+                                                }
                                                 .forEdit{
                                                     td{
-                                                        font-size: 10px;
-                                                        color: @bgAzulDark;
-        
+                                                        padding:10px 10px;
+                                                        box-sizing: border-box;
+                                                        font-size: 11px;
+                                                        color: @bgDark;
+                                                        transition: .3s;
+                                                        border-radius: 5px;
+                                                        cursor: pointer;
+                                                        .codeAndName{
+                                                            span{
+                                                                font-weight: 400;
+                                                            }
+                                                            h3{
+                                                                font-weight: 400;
+                                                                font-size: 11px;
+                                                                color: @bgAzulDark;
+                                                            }
+                                                        }
+                                                        .howMany{
+                                                            font-weight: 400;
+                                                            color: @bgAzulDark;
+                                                        }
                                                     }
         
                                                     button{
@@ -1227,7 +1470,8 @@
                                 margin:auto;
                                 padding:10px 0px;
                                 box-sizing: border-box; 
-
+                                
+ 
                                 .addArea{
                                     width:90%;
                                     margin:auto;
@@ -1773,27 +2017,39 @@
                             padding:0px 20px;
                             .priceBox{
                                 display: flex;
-                                align-items: center;
+                                width:90%;
+                                margin:auto;
                                 height:100%;
-                                justify-content: space-between;
                                 box-sizing: border-box;
                                 box-sizing: border-box;
-                                div{
-                                    text-align: right;
-                                    span{
-                                        font-size: 12px;
-                                        color: @bgDark;
+                                .listPrices{
+                                    width:100%;
+                                    height:100%;
+                                    .similarPrice{
+                                        display: flex;
+                                        align-items: center;
+                                        height:100%;
+                                        align-items: center;
+                                        justify-content: space-between;
                                     }
-                                    h3{
-                                        font-weight: 400;
-                                        font-size: 22px;
-                                        color: @bgAzulDark;
+                                    div{
+                                        text-align: right;
                                         span{
+                                            font-size: 12px;
+                                            color: @bgDark;
+                                        }
+                                        h3{
+                                            font-weight: 400;
+                                            font-size: 22px;
                                             color: @bgAzulDark;
-                                            font-size: 14px;
+                                            span{
+                                                color: @bgAzulDark;
+                                                font-size: 14px;
+                                            }
                                         }
                                     }
                                 }
+                                
                             }
                             .buttonConfirm{
                                 box-sizing: border-box;

@@ -1,181 +1,147 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { MdArrowForward, MdCheck } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from '../../../store/action/action';
 import { getPromedio } from "../../produccion/calculo";
-import { hasPermission } from "../../acciones";
 
-export default function ItemToSelect({ dis, kit, number }){
+export default function ItemToSelect({ dis, kit, number }) {
     const [active, setActive] = useState(null);
+    const [valorProduccion, setValorProduccion] = useState(0);
+    const { cotizacion } = useSelector(store => store.cotizacions);
+    const dispatch = useDispatch();
 
-    const [form, setForm] = useState({
-        cantidad: 1
-    })
-    const [valor, setValor] = useState(0);
+    const distribuidor = kit?.linea?.percentages?.length ? kit.linea.percentages[0].distribuidor : 0;
+    const final = kit?.linea?.percentages?.length ? kit.linea.percentages[0].final : 0;
 
-    const cotizacions = useSelector(store => store.cotizacions);
-
-    const { cotizacion } = cotizacions; 
- 
-    const dispatch = useDispatch(); 
-    const option = kit;
-    const distribuidor = option.linea.percentages && option.linea.percentages.length ? option.linea.percentages[0].distribuidor : 0
-    const final = option.linea.percentages && option.linea.percentages.length ? option.linea.percentages[0].final : 0
-
-
- 
-    const addItem = async () => {
+    const addItem = async (cantidad, precioUnitarioFinal) => {
+        if (!cantidad || cantidad <= 0) {
+            return dispatch(actions.HandleAlerta('Debes ingresar una cantidad válida', 'mistake'));
+        } 
+        
         const body = {
             cotizacionId: number,
-            kitId: option.id,
-            cantidad: form.cantidad,
-            precio: Number(valor * form.cantidad).toFixed(0),
-            areaId: cotizacion.id
-        }
-        if(!form.cantidad || form.cantidad == 0) return dispatch(actions.HandleAlerta('Debes ingresar una cantidad valida', 'mistake'));
-        const sendPetion = await axios.post('api/cotizacion/add/item', body )
-        .then((res) => {
-            dispatch(actions.axiosToGetCotizacion(false, cotizacion.id))
-            dispatch(actions.axiosToGetCotizaciones(false))
-            dispatch(actions.HandleAlerta('Kit agregado con éxito', 'positive'))
+            areaId: number,
+            kitId: kit.id,
+            cantidad: cantidad,
+            precio: (Number(precioUnitarioFinal))
+        };
+        console.log(body)
+        await axios.post('/api/cotizacion/add/item', body)
+            .then(() => {
+                dispatch(actions.axiosToGetCotizacion(false, cotizacion.id));
+                dispatch(actions.HandleAlerta('Kit agregado con éxito', 'positive'));
+                setActive(null);
+            })
+            .catch(err => {
+                console.log(err);
+                dispatch(actions.HandleAlerta('No hemos logrado agregar este kit', 'mistake'));
+            });
+    };
 
-        })
-        .catch(err => {
-            console.log(err);
-            dispatch(actions.HandleAlerta('No hemos logrado agregar este kit a la cotización', 'mistake'))
-        })
-        return sendPetion; 
-    }  
-    
-    const recibirValor = (data) => {
-        setValor(Number(data));
-    } 
-    return ( 
-        active ?
-        <tr className="active" >
-            <td>{option.name}</td> 
-            <td> 
-                {
+    return active ? (
+        <ActiveRow
+            kit={kit}
+            onCancel={() => setActive(null)}
+            onAdd={addItem}
+            setValorProduccion={setValorProduccion}
+            distribuidor={distribuidor}
+            final={final}
+            dis={dis}
+        />
+    ) : (
+        <DisplayRow
+            kit={kit}
+            onActivate={() => setActive(true)}
+            setValorProduccion={setValorProduccion}
+            distribuidor={distribuidor}
+            final={final}
+            dis={dis}
+        />
+    );
+}
 
-                    <div className="medida">
-                        <input type="text" onChange={(e) => {
-                            setForm({
-                                ...form,
-                                cantidad: e.target.value
-                            })
-                        }} value={form.cantidad}/>
-                    </div>
-                }
-            </td>
-            <td>{option.extension.name}</td>
-            <td>
-                <strong>
-                    {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valor * form.cantidad).toFixed(0))} COP
-                </strong>
-            </td>
-            <td> 
-                <div className="twoButtons">
-                    <button className="great" onClick={() => addItem()}>
-                        <MdCheck />
-                    </button>
-                    <button className="danger" onClick={() => setActive(null)}>
-                        <AiOutlineClose />
-                    </button>
-                </div> 
-            </td>
-        </tr>
-        :
-        <tr >
-            <td className="large">
-                <strong>{option.id} - </strong> 
-                {option.name} 
-            </td>
+function DisplayRow({ kit, onActivate, setValorProduccion, distribuidor, final, dis }) {
+    return (
+        <tr>
+            <td className="large"><strong>{kit.id} - </strong>{kit.name}</td>
+            <td className="short"><strong>1</strong></td>
+            <td>{kit.extension.name}</td>
             <td className="short">
-                <strong>1</strong>
-            </td>
-            <td>
-                {
-                    option.extension.name
-                }
-            </td>
-            <td className="short"> 
                 <strong>
-                    <AllKit kit={option} enviarAlPadre={recibirValor} distribuidor={distribuidor} final={final} dis={dis} />
+                    <PrecioCalculado
+                        kit={kit}
+                        setValorProduccion={setValorProduccion}
+                        distribuidor={distribuidor}
+                        final={final}
+                        dis={dis}
+                    />
                 </strong>
-            </td> 
-
+            </td>
             <td className="btns">
-                <button onClick={() => setActive('active')}>
-                    <MdArrowForward />
-                </button>
+                <button onClick={onActivate}><MdArrowForward /></button>
             </td>
         </tr>
-    )
+    );
 }
 
-function AllKit( { enviarAlPadre, kit, final, distribuidor, dis } ){
-    const kitt = kit;
-    const usuario = useSelector(store => store.usuario);
-    const { user } = usuario;
-    const [valor, setVal] = useState(0)
-    const dist = distribuidor ?  Number(Number(valor) / Number(distribuidor)) : valor
-    const fn = final ? Number(Number(dist) / Number(final)) : Number(dist) 
+function ActiveRow({ kit, onCancel, onAdd, setValorProduccion, distribuidor, final, dis }) {
+    const [cantidad, setCantidad] = useState(1);
 
-    console.log(`valor de ${kitt.name}`, dist)
+    const valorTotal = useMemo(() => {
+        if (!kit.itemKits) return 0;
+        
+        const costoProduccionUnitario = kit.itemKits.map(item => getPromedio(item)).reduce((acc, costo) => acc + costo, 0);
+        setValorProduccion(costoProduccionUnitario);
 
-    // PORCENTAJE A EL VALOR DEL DIST
+        const valorDistribuidorUnitario = (distribuidor > 0) ? (costoProduccionUnitario / Number(distribuidor)) : costoProduccionUnitario;
+        const valorFinalUnitario = (final > 0) ? (valorDistribuidorUnitario / Number(final)) : valorDistribuidorUnitario;
+        
+        const precioUnitarioAMostrar = dis ? valorDistribuidorUnitario : valorFinalUnitario;
 
+        return precioUnitarioAMostrar * cantidad;
+        
+    }, [kit, cantidad, setValorProduccion, distribuidor, final, dis]);
 
-
-    const Mensage = () => {
-        return enviarAlPadre(dis ? Number(dist) : fn) 
-    } 
-
-    const getTrueValor = (val) => {
-        setVal(val)
-        Mensage()
-    } 
-    useEffect(() => {
-        if(valor){ 
-            Mensage() 
-        }
-    })
     return (
-        <div >
-            {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(dis ? dist : fn).toFixed(0))} COP
-            <GetSimilarPrice materia={kitt.materia} realValor={getTrueValor} />
-        </div>
-    )
+        <tr className="active">
+            <td>{kit.name}</td>
+            <td>
+                <div className="medida">
+                    <input type="number" min="1" onChange={(e) => setCantidad(e.target.value)} value={cantidad} />
+                </div>
+            </td>
+            <td>{kit.extension.name}</td>
+            <td>
+                <strong>{new Intl.NumberFormat('es-CO', { currency: 'COP' }).format(Number(valorTotal).toFixed(0))} COP</strong>
+            </td>
+            <td>
+                <div className="twoButtons">
+                    <button className="great" onClick={() => onAdd(cantidad, valorTotal)}><MdCheck /></button>
+                    <button className="danger" onClick={onCancel}><AiOutlineClose /></button>
+                </div>
+            </td>
+        </tr>
+    );
 }
 
+function PrecioCalculado({ kit, setValorProduccion, distribuidor, final, dis }) {
+    const valorProduccion = useMemo(() => {
+        if (!kit.itemKits || kit.itemKits.length === 0) return 0;
+        const costos = kit.itemKits.map(item => getPromedio(item));
+        return costos.reduce((acc, costo) => acc + costo, 0);
+    }, [kit.itemKits]);
 
-function GetSimilarPrice({realValor, materia }){
-    const consumir = materia;
-
-    const [valor, setValor] = useState(0) 
-
-    const mapear = () => {
-        // const a = consumir ? consumir.map((c, i) => {
-        //     const getV  =  getPromedio(c);
-        //     return getV
-        // }) : 0
-        // const promedio = a && a.length ? Number(a.reduce((acc, p) => Number(acc) + Number(p), 0)) : null
-        // realValor(promedio ? promedio.toFixed(0) : 0);
-        // return setValor(promedio);
-
-        const costos = consumir.map((c) => getPromedio(c));
-        const costoTotalKit = costos.reduce((acc, p) => acc + p, 0);
-        realValor(Number(costoTotalKit.toFixed(0)));
-        setValor(costoTotalKit);
-    } 
-
-    
     useEffect(() => {
-        mapear()
-    }, [consumir])
+        setValorProduccion(valorProduccion);
+    }, [valorProduccion, setValorProduccion]);
+
+    const valorDistribuidor = (distribuidor > 0) ? (valorProduccion / Number(distribuidor)) : valorProduccion;
+    const valorFinal = (final > 0) ? (valorDistribuidor / Number(final)) : valorDistribuidor;
+    const valorAMostrar = dis ? valorDistribuidor : valorFinal;
+
     return (
-        <></>
-    )
+        <>{new Intl.NumberFormat('es-CO', { currency: 'COP' }).format(Number(valorAMostrar).toFixed(0))} COP</>
+    );
 }

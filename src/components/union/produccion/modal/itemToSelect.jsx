@@ -7,7 +7,7 @@ import * as actions from '../../../store/action/action';
 import ModalCalibre from "./modalCalibre";
 import { useSearchParams } from "react-router-dom";
 
-export default function ItemToSelect(props){
+export default function ItemToSelect({ number, kitt}){
     const [active, setActive] = useState(null);
     const [params, setParams] = useSearchParams();
     const [valorDelHijo, setValorDelHijo] = useState(null);
@@ -19,7 +19,7 @@ export default function ItemToSelect(props){
     const { user } = usuario;
             
     const dispatch = useDispatch();
-    const option = props.kit;
+    const option = kitt;
     const promedio = option.prices && option.prices.length ? Number(option.prices.reduce((acc, p) => Number(acc) + Number(p.valor), 0)) / option.prices.length : null
     const [form, setForm] = useState({
         mt2: option.unidad == 'mt2' ? Number(Number(option.medida.split('X')[0]) * Number(option.medida.split('X')[1])) : '1',
@@ -28,6 +28,7 @@ export default function ItemToSelect(props){
         kg: option.medida 
     });
 
+    console.log(option)
     const addItem = async () => {
         const body = {
             kitId: kit.id,
@@ -35,7 +36,8 @@ export default function ItemToSelect(props){
             mtId: option.id,
             cantidad: 1,
             medida: option.unidad == 'mt2' ? form.mt2 : option.unidad == 'kg' ? form.kg : form.other,
-            userId: user.user.id
+            userId: user.user.id,
+            areaKitId: number ? number : null
         }
         if(!form.other) return dispatch(actions.HandleAlerta('Debes ingresar una medida valida', 'mistake'));
 
@@ -77,11 +79,11 @@ export default function ItemToSelect(props){
                         <span>Almacen</span>
                     </button>
                 }
-            </td> 
+            </td>  
             <td> 
                 {
                     option.unidad == 'mt2' ? 
-                        <div className="medida">
+                        <div className="medida"> 
                             <input type="text"id="one" onChange={(e) => {
                                 setForm({
                                     ...form,
@@ -117,7 +119,7 @@ export default function ItemToSelect(props){
                         </div>
                 }
             </td>
-            <td>
+            <td> 
                 <strong>
  
                     {   

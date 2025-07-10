@@ -730,6 +730,8 @@ body button {
 }
 .modal .Complete .bodyModalBig .page .selectItems .leftKit .topData .DataKit {
   width: 90%;
+  height: 70%;
+  box-sizing: border-box;
   margin: auto;
   padding: 15px 0px;
   padding-bottom: 0px;
@@ -756,6 +758,42 @@ body button {
 .modal .Complete .bodyModalBig .page .selectItems .leftKit .topData .DataKit span {
   font-size: 12px;
   color: #454f5b;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .topData .optionsForKitsNav {
+  height: 30%;
+  box-sizing: border-box;
+  width: 90%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .topData .optionsForKitsNav .leftNavD {
+  width: auto;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .topData .optionsForKitsNav .leftNavD nav ul li {
+  display: inline-block;
+  cursor: pointer;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .topData .optionsForKitsNav .leftNavD nav ul li div {
+  padding: 8px 10px;
+  padding-right: 30px;
+  padding-left: 0px;
+  box-sizing: border-box;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .topData .optionsForKitsNav .leftNavD nav ul li div span {
+  font-size: 12px;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .topData .optionsForKitsNav .leftNavD nav ul li div .icon {
+  font-size: 18px;
+  color: #046290;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .topData .optionsForKitsNav .leftNavD nav ul li div .Great {
+  color: #388E3C;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .topData .optionsForKitsNav .leftNavD nav ul li:hover div .icon {
+  transform: scale(1.1);
+  transition: 0.3s;
 }
 .modal .Complete .bodyModalBig .page .selectItems .leftKit .topData .optionsForCotizacion {
   box-sizing: border-box;
@@ -802,6 +840,23 @@ body button {
   margin: auto;
   padding: 10px 0px;
   box-sizing: border-box;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP .newSegmento label {
+  font-size: 12px;
+  color: #666;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP .newSegmento input {
+  width: 100%;
+  border-radius: 5px;
+  border: 2px solid #ccc;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  color: #046290;
+  outline: 0px;
+  transition: 0.3s;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP .newSegmento input:focus {
+  border: 2px solid #046290;
 }
 .modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP .addArea {
   padding: 20px 0px;
@@ -964,6 +1019,69 @@ body button {
   padding: 10px;
   border-radius: 10px;
 }
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP .segmentoKits {
+  border-radius: 5px;
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  border: 2px solid #DFD8FD;
+  margin-bottom: 5px;
+  transition: 0.3s;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP .segmentoKits .titleTopSegmento {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #DFD8FD;
+  border: 1px solid #DFD8FD;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP .segmentoKits .titleTopSegmento .titleThis {
+  padding: 15px 10px;
+  box-sizing: border-box;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP .segmentoKits .titleTopSegmento .titleThis h3 {
+  font-weight: 600;
+  font-size: 12px;
+  margin: 2px 0px;
+  box-sizing: border-box;
+  color: #046290;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP .segmentoKits .titleTopSegmento .titleThis input {
+  padding: 0px 5px;
+  width: auto;
+  box-sizing: border-box;
+  outline: 0px;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP .segmentoKits .titleTopSegmento .optionsTitleThis nav ul li {
+  display: inline-block;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP .segmentoKits .titleTopSegmento .optionsTitleThis nav ul li div span {
+  font-size: 12px;
+  color: #046290;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP .segmentoKits:hover {
+  opacity: 0.8;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP .Active {
+  border: 2px solid #614995;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP .Active .titleTopSegmento {
+  background-color: #614995;
+  border: 1px solid #614995;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP .Active .titleTopSegmento .titleThis h3 {
+  color: #FFF;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP .Active .titleTopSegmento .optionsTitleThis nav ul li div span {
+  color: #FFF;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP .Active:hover {
+  opacity: 1;
+}
 .modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table {
   width: 100%;
   border-collapse: collapse;
@@ -976,19 +1094,70 @@ body button {
   color: #046290;
   text-align: left;
 }
-.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr {
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody {
+  width: 100%;
   position: relative;
 }
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr {
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
 .modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr td {
-  padding: 8px 0px;
+  width: 20%;
+  padding: 10px 10px;
   box-sizing: border-box;
   font-size: 11px;
   color: #454f5b;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr td .codeAndName {
+  box-sizing: border-box;
+  transition: 0.3s;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr td .codeAndName span {
+  font-weight: 400;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr td .codeAndName h3 {
+  font-weight: 400;
+  font-size: 11px;
+  color: #046290;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr td .howMany {
+  font-weight: 400;
+  color: #046290;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr td .medida {
+  width: auto;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr .larger {
+  width: 50%;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr .edit {
+  width: 20%;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr .edit input {
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 5px;
+  box-sizing: border-box;
+  transition: 0.3s;
+  outline: 0px;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr .edit input:focus {
+  border: 1px solid #046290;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr .option {
+  opacity: 0;
+  width: 5%;
 }
 .modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr .option button {
   padding: 5px 5px;
   margin-left: 10px;
-  background-color: white;
+  background-color: transparent;
   border: none;
 }
 .modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr .option button .icon {
@@ -1015,12 +1184,20 @@ body button {
   box-sizing: border-box;
 }
 .modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr .option .menu-dropdown .panel .title {
+  box-sizing: border-box;
   margin-bottom: 10px;
 }
 .modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr .option .menu-dropdown .panel .title strong {
   padding: 0px 20px;
   font-weight: 400;
   font-size: 12px;
+  margin-left: 10px;
+  color: #046290;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr .option .menu-dropdown .panel strong {
+  font-weight: 400;
+  font-size: 12px;
+  margin-left: 10px;
   color: #046290;
 }
 .modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr .option .menu-dropdown .panel nav ul li {
@@ -1051,8 +1228,35 @@ body button {
   pointer-events: auto;
   /* Habilita clics cuando está abierto */
 }
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr:hover td {
+  background-color: #F8F8F8;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr:hover td .codeAndName {
+  padding-left: 10px;
+  box-sizing: border-box;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody tr:hover .option {
+  opacity: 1;
+}
 .modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody .forEdit td {
-  font-size: 10px;
+  padding: 10px 10px;
+  box-sizing: border-box;
+  font-size: 11px;
+  color: #454f5b;
+  transition: 0.3s;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody .forEdit td .codeAndName span {
+  font-weight: 400;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody .forEdit td .codeAndName h3 {
+  font-weight: 400;
+  font-size: 11px;
+  color: #046290;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody .forEdit td .howMany {
+  font-weight: 400;
   color: #046290;
 }
 .modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMP table tbody .forEdit button {
@@ -1655,24 +1859,34 @@ body button {
 }
 .modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .priceBox {
   display: flex;
-  align-items: center;
+  width: 90%;
+  margin: auto;
   height: 100%;
-  justify-content: space-between;
   box-sizing: border-box;
 }
-.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .priceBox div {
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .priceBox .listPrices {
+  width: 100%;
+  height: 100%;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .priceBox .listPrices .similarPrice {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .priceBox .listPrices div {
   text-align: right;
 }
-.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .priceBox div span {
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .priceBox .listPrices div span {
   font-size: 12px;
   color: #454f5b;
 }
-.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .priceBox div h3 {
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .priceBox .listPrices div h3 {
   font-weight: 400;
   font-size: 22px;
   color: #046290;
 }
-.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .priceBox div h3 span {
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .priceBox .listPrices div h3 span {
   color: #046290;
   font-size: 14px;
 }

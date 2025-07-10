@@ -68,8 +68,7 @@ export default function KitItem(props){
             <td style={{fontSize:11}}>{kit.categorium ? kit.categorium.name.toUpperCase() : 'SIN CATEGORíA'}</td>
             <td style={{fontSize:11}}>{kit.linea ? kit.linea.name.toUpperCase() : 'SIN CATEGORíA'}</td>
             <td style={{fontSize:11}}>{kit.extension ? kit.extension.name.toUpperCase() : 'SIN CATEGORíA'}</td>
-            <td style={{fontSize:11}}>{kit.materia ? <GetSimilarPrice materia={kit.materia} /> : null}</td>
-            <td className="btnKits">
+            <td style={{fontSize:11}}>{kit.itemKits && kit.itemKits.length > 0 ? <GetSimilarPrice items={kit.itemKits} /> : null}</td>            <td className="btnKits">
                 {
                     loading ?
                     <div className="basic">
@@ -112,37 +111,33 @@ export default function KitItem(props){
     )
 }
 
-function  GetSimilarPrice(props){
-    const consumir = props.materia;
-    const [valor, setValor] = useState(0) 
+function GetSimilarPrice(props) {
+    // 1. Ahora recibimos 'items' en lugar de 'materia'
+    const consumir = props.items; 
+    const [valor, setValor] = useState(0);
 
     const mapear = () => {
-        
-        // const a = consumir.map((c, i) => {
-        //     const getV  =  getPromedio(c);
-        //     return getV
-        // })
-        // console.log(a) 
-        // const promedio = a && a.length ? Number(a.reduce((acc, p) => Number(acc) + Number(p), 0)) : null
-        
-        // return setValor(promedio);
+        // Nos aseguramos de que 'consumir' no sea nulo o vacío
+        if (!consumir || consumir.length === 0) {
+            setValor(0);
+            return;
+        }
 
+        // 2. Mapeamos el arreglo 'itemKits' y accedemos a 'item.materia' en cada iteración
         const sumaDePromedios = consumir
-            .map(c => getPromedio(c)) // 1. Obtiene el promedio de cada elemento
-            .reduce((acc, p) => acc + Number(p), 0); // 2. Suma todos los promedios
+            .map(item => getPromedio(item)) // <-- ¡Este es el cambio principal!
+            .reduce((acc, p) => acc + Number(p), 0);
 
-        // Decide si quieres la suma total o el promedio de los promedios
-        const promedioDePromedios = sumaDePromedios;
-        
-        setValor(promedioDePromedios); // O setValor(sumaDePromedios)
+        setValor(sumaDePromedios);
     } 
 
     useEffect(() => {
-        mapear()
-    }, [consumir])
+        mapear();
+    }, [consumir]); // La dependencia sigue siendo la misma variable
+
     return (
         <div className="similarPrice">
-            <span>{valor > 0 ? new Intl.NumberFormat('es-CO', {currency:'COP'}).format(valor.toFixed(0)) : 0} COP</span>
+            <span>{valor > 0 ? new Intl.NumberFormat('es-CO', { currency: 'COP' }).format(valor.toFixed(0)) : 0} COP</span>
         </div>
-    )
+    );
 }
