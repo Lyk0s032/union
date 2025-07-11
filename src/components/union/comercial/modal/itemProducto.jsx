@@ -103,7 +103,7 @@ export default function ProductoTerminadoItem({ area, terminado, final }){
                         </div>
                     </div> 
                     <div className="titleData" style={{marginTop:-30}}>
-                        <h3>{terminado.item}  </h3> 
+                        <h3>{terminado.item}  {final ? String(final) : 'Falso'} </h3> 
                         <span>{terminado.description}</span><br />
                         <GetPrice getValor={getValor} estado={final} distribuidor={distribuidor} final={Pfinal} precios={terminado.productPrices} terminado={terminado} />
                         <span>{ new Intl.NumberFormat('es-CO', {currency:'COP'}).format(valor) } COP</span>
@@ -193,8 +193,14 @@ function GetPrice({ precios, terminado, getValor, final, distribuidor, estado })
         getValor(estado ? precioFinal.toFixed(0) : precioDistribuidor.toFixed(0))
     }, [promedio, estado]) 
     return (
-    //    <h1>{String(estado)} - {estado ? precioFinal.toFixed(0) : precioDistribuidor.toFixed(0)}</h1>
-        <></>
+        <>
+         {/* <strong>{estado ? new Intl.NumberFormat('es-CO', {currency:'COP'}).format(precioFinal.toFixed(0)) : new Intl.NumberFormat('es-CO', {currency:'COP'}).format(precioDistribuidor.toFixed(0))}</strong><br />
+         <span>Precio básico: {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(promedio)}</span><br />
+         <span>Precio distribuidor: {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(precioDistribuidor.toFixed(0))} - ({distribuidor})</span><br />
+         <span>Precio Final: {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(precioFinal.toFixed(0))} - ({final})</span><br />
+
+        <br /><br /> */}
+        </>
     )
 }
 

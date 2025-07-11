@@ -54,55 +54,55 @@ export default function SearchKitsComercial({ number }){
     return (
         <div className="containerRightSelect">
             <div className="topSelect">
-                <div className="titleSelect">
+                {/* <div className="titleSelect">
                     <h3>Selecciona un kit</h3>
-                </div>
-                <div className="searchInput">
+                </div> */}
+                {/* <div className="searchInput">
                     <input type="text" placeholder='Buscar aquí' onChange={(e) => {
                         searchKitsWithFunction(e.target.value)
                     }}/>
+                </div> */}
+
+                <div className="boxAllInOne">
+                    <div className="containerBoxAll">
+                        <div className="containerSearch">
+                            <div className="searchInputDiv">
+                                <div className="inputDiv">
+                                    <input type="text" placeholder="Pedestal 2X1" onChange={(e) => {
+                                        searchKitsWithFunction(e.target.value)
+                                    }} />
+                                </div>
+                                <div className="filtersInput">
+                                    <select name="" id="">
+                                        <option value="">Categoría</option>
+                                    </select>
+                                    <select className="filterRight" name="" id="">
+                                        <option value="">Linea</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="typePrices">
+                            <div className="chooseFilter">
+                                <button className={dis ? 'distribuidor' : null} onClick={() => {
+                                    setDis(!dis)
+                                }}>
+                                    <span>Distribuidor</span>
+                                </button>
+                                <button className={!dis ? 'final' : null} onClick={() => {
+                                    setDis(false) 
+                                }}>
+                                    <span>Final</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div className="resultsToSelect">
-                <div className="filters">
-                    <div className="divideFilters">
-                        <div> 
-                            <label htmlFor="">Categoría</label><br />
-                            <select name="" id="">
-                                <option value="">Seleccionar</option>
-                                <option value="">A</option>
-                                <option value="">B</option>
-                                <option value="">C</option>
-
-                            </select>
-                        </div>
-                        <div>
-                            <label htmlFor="">Línea</label><br />
-                            <select name="" id="">
-                                <option value="">Seleccionar</option>
-                                <option value="">A</option>
-                                <option value="">B</option>
-                                <option value="">C</option>
-
-                            </select>
-                        </div>
-                    </div>
-                </div>
                 <div className="tabla">
-                <div className="priceFilter">
-                    <div className="">
-                        <label htmlFor="">Cliente distribuidor</label><br />
-                        <input type="checkbox" onChange={(e) => {
-                            setDis(!dis)
-                        }} checked={dis}/><br />
-                    </div>
-                    <div className="">
-                        <label htmlFor="">Cliente final</label><br />
-                        <input type="checkbox" checked={final} onChange={(e) => {
-                            setDis(false)
-                        }}/>
-                    </div>
-                </div>
+                
                 <table>
                     <thead>
                         <tr>
@@ -113,7 +113,15 @@ export default function SearchKitsComercial({ number }){
                     </thead>
                     <tbody>
                         {
-                            loading ? <h1>Cargando</h1>
+                            !loading ? 
+                                <div className="boxMessage">
+                                    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/source/eb7e7769321565.5ba1db95aab9f.gif" />
+                                </div>
+                            :
+                            kitSearch == 404 || kitSearch == 'notrequest' ?
+                                <div className="boxMessage">
+                                    <h3>Sin resultados</h3>
+                                </div>
                             :
                             kitSearch && kitSearch.length ?
                                 kitSearch.map((pv, i) => {

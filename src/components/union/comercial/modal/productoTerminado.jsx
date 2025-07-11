@@ -56,28 +56,38 @@ export default function SearchProductoTerminado({ number }){
     return (
         <div className="containerRightSelect">
             <div className="topSelect">
-                <div className="titleSelect"><br />
-                    <h3>Buscar producto terminado</h3>
-                </div>
-                <div className="searchInput">
-                    <input type="text" placeholder='Buscar aquí' onChange={(e) => {
-                        searchKitsAxios(e.target.value)
-                    }}/>
+                <div className="boxAllInOne">
+                    <div className="containerBoxAll">
+                        <div className="containerSearch">
+                            <div className="searchInputDiv">
+                                <div className="inputDiv">
+                                    <input type="text" placeholder="Superficie..." onChange={(e) => {
+                                        searchKitsAxios(e.target.value)
+                                    }} />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="typePrices">
+                            <div className="chooseFilter">
+                                <button className={dis ? 'distribuidor' : null} onClick={() => {
+                                    setDis(!dis)
+                                }}>
+                                    <span>Distribuidor</span>
+                                </button>
+                                <button className={!dis ? 'final' : null} onClick={() => {
+                                    setDis(false) 
+                                }}>
+                                    <span>Final</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div className="resultsToSelect">
-                    <div className="priceFilter">
-                        <label htmlFor="">Cliente distribuidor</label><br />
-                        <input type="checkbox" onChange={(e) => {
-                            setDis(!dis)
-                        }} checked={dis}/><br />
-                        <label htmlFor="">Cliente final</label><br />
-                        <input type="checkbox" checked={final} onChange={(e) => {
-                            setDis(false)
-                        }}/>
-                    </div>         
                 <div className="containerResults">
-                    <div className="itemResults">
+                    <div className="itemResults"><br /><br />
                         {       
                             loading ? <h1>Cargando</h1> :
                             !data ? null 

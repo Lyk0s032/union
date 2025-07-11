@@ -2022,7 +2022,6 @@ body button {
 }
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .navToSelectFilter {
   box-sizing: border-box;
-  margin-bottom: 10px;
   border-bottom: 1px solid #ccc;
 }
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .navToSelectFilter ul li {
@@ -2050,8 +2049,15 @@ body button {
   height: 100%;
 }
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .topSelect {
-  height: 20%;
+  height: 15%;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+  box-shadow: 0px 4px 5px -1px rgba(171, 164, 164, 0.35);
+  -webkit-box-shadow: 0px 4px 5px -1px rgba(171, 164, 164, 0.35);
+  -moz-box-shadow: 0px 4px 5px -1px rgba(171, 164, 164, 0.35);
 }
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .topSelect .titleSelect {
   width: 90%;
@@ -2080,8 +2086,100 @@ body button {
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .topSelect .searchInput input:focus {
   border: 1px solid #046290;
 }
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .topSelect .boxAllInOne {
+  width: 100%;
+  box-sizing: border-box;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .topSelect .boxAllInOne .containerBoxAll {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .topSelect .boxAllInOne .containerBoxAll .containerSearch {
+  width: 70%;
+  box-sizing: border-box;
+  background-color: #FFF;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px 0px;
+  border-radius: 30px;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .topSelect .boxAllInOne .containerBoxAll .containerSearch .searchInputDiv {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .topSelect .boxAllInOne .containerBoxAll .containerSearch .searchInputDiv .inputDiv {
+  width: 60%;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .topSelect .boxAllInOne .containerBoxAll .containerSearch .searchInputDiv .inputDiv input {
+  padding: 8px 10px;
+  width: 100%;
+  outline: 0px;
+  border-radius: 20px 0px 0px 20px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border: none;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .topSelect .boxAllInOne .containerBoxAll .containerSearch .searchInputDiv .filtersInput {
+  width: 40%;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .topSelect .boxAllInOne .containerBoxAll .containerSearch .searchInputDiv .filtersInput select {
+  padding: 5px 5px;
+  box-sizing: border-box;
+  border: 1px solid #FFF;
+  background-color: #FFF;
+  border-left: 0px;
+  cursor: pointer;
+  border-radius: 20px;
+  text-align: center;
+  margin-right: 5px;
+  color: #046290;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .topSelect .boxAllInOne .containerBoxAll .typePrices {
+  box-sizing: border-box;
+  width: 25%;
+  text-align: right;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .topSelect .boxAllInOne .containerBoxAll .typePrices .chooseFilter {
+  width: 100%;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .topSelect .boxAllInOne .containerBoxAll .typePrices .chooseFilter button {
+  width: 45%;
+  padding: 10px 0px;
+  margin-left: 7px;
+  border-radius: 20px;
+  border: 1px solid transparent;
+  background-color: transparent;
+  transition: 0.3s;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .topSelect .boxAllInOne .containerBoxAll .typePrices .chooseFilter button span {
+  font-size: 12px;
+  color: #046290;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .topSelect .boxAllInOne .containerBoxAll .typePrices .chooseFilter button:hover {
+  transform: scale(1.1);
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .topSelect .boxAllInOne .containerBoxAll .typePrices .chooseFilter .distribuidor {
+  transform: scale(1.1);
+  background-color: #E74B16;
+  border: 1px solid #E74B16;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .topSelect .boxAllInOne .containerBoxAll .typePrices .chooseFilter .distribuidor span {
+  color: #FFF;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .topSelect .boxAllInOne .containerBoxAll .typePrices .chooseFilter .final {
+  transform: scale(1.1);
+  background-color: #046290;
+  border: 1px solid #046290;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .topSelect .boxAllInOne .containerBoxAll .typePrices .chooseFilter .final span {
+  color: #FFF;
+}
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect {
-  height: 80%;
+  height: 85%;
   box-sizing: border-box;
   overflow-y: scroll;
   position: relative;

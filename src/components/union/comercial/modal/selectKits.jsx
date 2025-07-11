@@ -408,11 +408,11 @@ export default function SelectKits({ dist }){
                                     <span>Producto terminado</span>
                                 </div>
                             </li>
-                            <li onClick={() => setNav('superkits')} className={navCoti == 'superkits' ? 'Active' : null}>
+                            {/* <li onClick={() => setNav('superkits')} className={navCoti == 'superkits' ? 'Active' : null}>
                                 <div>
                                     <span>Superkit's</span>
                                 </div>
-                            </li> 
+                            </li>  */}
                         </ul> 
                     </nav> 
                     {
