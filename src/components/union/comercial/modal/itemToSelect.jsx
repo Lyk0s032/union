@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useRef } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { MdArrowForward, MdCheck } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +16,7 @@ export default function ItemToSelect({ dis, kit, number }) {
     const final = kit?.linea?.percentages?.length ? kit.linea.percentages[0].final : 0;
 
     const addItem = async (cantidad, precioUnitarioFinal) => {
+        if(!number) return dispatch(actions.HandleAlerta('Selecciona un área, por favor', 'mistake'))
         if (!cantidad || cantidad <= 0) {
             return dispatch(actions.HandleAlerta('Debes ingresar una cantidad válida', 'mistake'));
         } 
@@ -63,12 +64,25 @@ export default function ItemToSelect({ dis, kit, number }) {
 
 function DisplayRow({ kit, onActivate, setValorProduccion, distribuidor, final, dis }) {
     return (
-        <tr>
-            <td className="large"><strong>{kit.id} - </strong>{kit.name}</td>
-            <td className="short"><strong>1</strong></td>
-            <td>{kit.extension.name}</td>
+        <tr className="uxTable">
+            <td className="titleKit">
+                <div className="divTitleKits">
+                   <div className="leftTitle">
+                         <strong>{kit.id}</strong>
+                   </div>
+                   <div className="right">
+                        <div className="color">
+                            <div className="colorDiv" style={{color: `${kit.extension.code}`}}></div>
+                            <h5>{kit.extension.name}</h5>
+                        </div>
+                        <h3>{kit.name}</h3>
+                        
+                        <h4>{kit.description}</h4>
+                   </div>
+                </div>
+            </td> 
             <td className="short">
-                <strong>
+                <h3>
                     <PrecioCalculado
                         kit={kit}
                         setValorProduccion={setValorProduccion}
@@ -76,7 +90,7 @@ function DisplayRow({ kit, onActivate, setValorProduccion, distribuidor, final, 
                         final={final}
                         dis={dis}
                     />
-                </strong>
+                </h3>
             </td>
             <td className="btns">
                 <button onClick={onActivate}><MdArrowForward /></button>
@@ -87,7 +101,7 @@ function DisplayRow({ kit, onActivate, setValorProduccion, distribuidor, final, 
 
 function ActiveRow({ kit, onCancel, onAdd, setValorProduccion, distribuidor, final, dis }) {
     const [cantidad, setCantidad] = useState(1);
-
+    const howManyRef = useRef(null);
     const valorTotal = useMemo(() => {
         if (!kit.itemKits) return 0;
         
@@ -103,23 +117,43 @@ function ActiveRow({ kit, onCancel, onAdd, setValorProduccion, distribuidor, fin
         
     }, [kit, cantidad, setValorProduccion, distribuidor, final, dis]);
 
+    useEffect(() => {
+        howManyRef.current.focus()
+    }, [])
     return (
-        <tr className="active">
-            <td>{kit.name}</td>
-            <td>
-                <div className="medida">
-                    <input type="number" min="1" onChange={(e) => setCantidad(e.target.value)} value={cantidad} />
+        <tr className="uxTable">
+            <td className="titleKit">
+                <div className="divTitleKits">
+                   <div className="leftTitle">
+                         <strong>{kit.id}</strong>
+                   </div>
+                   <div className="right">
+                        <div className="color">
+                            <div className="colorDiv" style={{color: `${kit.extension.code}`}}></div>
+                            <h5>{kit.extension.name}</h5>
+                        </div>
+                        <h3>{kit.name}</h3>
+                        
+                        <h4>{kit.description}</h4>
+                   </div>
                 </div>
+            </td> 
+            <td className="short">
+                <h3>{new Intl.NumberFormat('es-CO', { currency: 'COP' }).format(Number(valorTotal).toFixed(0))} <span>COP</span></h3>
             </td>
-            <td>{kit.extension.name}</td>
-            <td>
-                <strong>{new Intl.NumberFormat('es-CO', { currency: 'COP' }).format(Number(valorTotal).toFixed(0))} COP</strong>
-            </td>
-            <td>
-                <div className="twoButtons">
-                    <button className="great" onClick={() => onAdd(cantidad, valorTotal)}><MdCheck /></button>
-                    <button className="danger" onClick={onCancel}><AiOutlineClose /></button>
+            <td className="btns">
+                <div className="HowManyHere">
+                    <div className="medida">
+                        <input type="number" ref={howManyRef} min="1" onChange={(e) => setCantidad(e.target.value)} value={cantidad} 
+                        onBlur={() => onCancel()}
+                        onKeyDown={(e) => {
+                            if(e.key == 'Enter'){
+                                onAdd(cantidad, valorTotal)
+                            }
+                        }} />
+                    </div>
                 </div>
+
             </td>
         </tr>
     );
@@ -141,6 +175,6 @@ function PrecioCalculado({ kit, setValorProduccion, distribuidor, final, dis }) 
     const valorAMostrar = dis ? valorDistribuidor : valorFinal;
 
     return (
-        <>{new Intl.NumberFormat('es-CO', { currency: 'COP' }).format(Number(valorAMostrar).toFixed(0))} COP</>
+        <>{new Intl.NumberFormat('es-CO', { currency: 'COP' }).format(Number(valorAMostrar).toFixed(0))} <span>COP</span></>
     );
 }

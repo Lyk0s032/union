@@ -106,10 +106,8 @@ export default function SearchKitsComercial({ number }){
                 <table>
                     <thead>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Cantidad</th>
-                            <th>Color</th>
-                            <th >Precio Promedio</th>
+                            <th></th>
+                            <th ></th>
                             <th className="btns"></th>
                         </tr>
                     </thead>

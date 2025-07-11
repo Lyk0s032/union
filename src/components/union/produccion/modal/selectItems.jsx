@@ -118,10 +118,9 @@ export default function SelectMP(){
                 <div className="leftKit">
                     <div className="topData">
                         <div className="DataKit">
-                            <h3>{kit.name}</h3> 
-                            { kit && kit.linea ? <span>Linea: <strong>{kit.linea.name}</strong></span> : null  }<br />
-                            {/* { kit && kit.extension ? <span>Extensión: <strong>{kit.extension.name}</strong></span> : null  }<br />
-                            { kit && kit.categoria ? <span>Categoría: <strong>{kit.categoria.name}</strong></span> : null  }<br /> */}
+                            <h3>{kit.name} - <strong>({kit.extension.name})</strong></h3> 
+                            { kit && kit.linea ? <span>Linea: <strong>{kit.linea.name}</strong> </span> : null  }<br />
+                            { kit && kit.categorium ? <span>Categoría: <strong>{kit.categorium.name}</strong></span> : null  }<br /> 
                             {/* {
                                 !params.get('update') ?
                                     <button onClick={() => {
