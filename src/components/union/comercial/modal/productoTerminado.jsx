@@ -11,7 +11,8 @@ export default function SearchProductoTerminado({ number }){
     
     const kitStore = useSelector(store => store.kits);
     const {kits, kit, loadingKits} = kitStore;
-
+    const usuario = useSelector(store => store.usuario);
+    const { user } = usuario;
     const cotizacions  = useSelector(store => store.cotizacions);
     const { cotizacion } = cotizacions;
 
@@ -89,8 +90,19 @@ export default function SearchProductoTerminado({ number }){
                 <div className="containerResults">
                     <div className="itemResults"><br /><br />
                         {       
-                            loading ? <h1>Cargando</h1> :
-                            !data ? null 
+                            loading ? 
+                                <div className="boxMessage">
+                                    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/source/eb7e7769321565.5ba1db95aab9f.gif" />
+                                </div>
+                            :
+                            !data ? 
+                                <div className="boxMessage">
+                                    <h3>¿Qué estás buscando {user.user.name}?</h3>
+                                </div>
+                            : data == 404 || data == 'notrequest' ?
+                                <div className="boxMessage">
+                                    <h3>Sin resultados</h3>
+                                </div>
 
                             : data && data.length ?
                                 data.map((m,i) => { 
@@ -99,7 +111,9 @@ export default function SearchProductoTerminado({ number }){
                                     )
                                 }) 
                             :   
-                                <h1>No hemos encontrado esto </h1>
+                                <div className="boxMessage">
+                                    <h3>Hemos encontrado resultados</h3>
+                                </div>
                         }       
                     </div><br /><br /><br /><br />  
                 </div> 

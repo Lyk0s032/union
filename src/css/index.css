@@ -2208,6 +2208,25 @@ body button {
   margin-top: 20px;
   height: 90%;
   box-sizing: border-box;
+  position: relative;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla .boxMessage {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: -20px;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 100%;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla .boxMessage img {
+  width: 30%;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla .boxMessage h3 {
+  font-weight: 400;
+  color: #046290;
+  font-size: 24px;
 }
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla .priceFilter {
   width: 100%;
@@ -2423,9 +2442,29 @@ body button {
   box-sizing: border-box;
   margin: auto;
   width: 90%;
+  height: 90%;
+  position: relative;
 }
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .containerResults .itemResults {
   width: 100%;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .containerResults .itemResults .boxMessage {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: -20px;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 100%;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .containerResults .itemResults .boxMessage img {
+  width: 30%;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .containerResults .itemResults .boxMessage h3 {
+  font-weight: 400;
+  color: #046290;
+  font-size: 24px;
 }
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .containerResults .itemResults .superKitItem {
   width: 100%;

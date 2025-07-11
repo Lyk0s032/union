@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
 export default function SearchKitsComercial({ number }){
-
+    const usuario = useSelector(store => store.usuario);
+    const { user } = usuario;
     const dispatch = useDispatch();
     
 
@@ -113,9 +114,14 @@ export default function SearchKitsComercial({ number }){
                     </thead>
                     <tbody>
                         {
-                            !loading ? 
+                            loading ? 
                                 <div className="boxMessage">
                                     <img src="https://mir-s3-cdn-cf.behance.net/project_modules/source/eb7e7769321565.5ba1db95aab9f.gif" />
+                                </div>
+                            : 
+                            !kitSearch ?
+                                <div className="boxMessage">
+                                    <h3>¿Qué estás buscando {user.user.name}?</h3>
                                 </div>
                             :
                             kitSearch == 404 || kitSearch == 'notrequest' ?
@@ -129,7 +135,9 @@ export default function SearchKitsComercial({ number }){
                                         <ItemToSelect kit={pv} key={i+1} dis={dis} number={number} />
                                     )
                                 })
-                            : null
+                            : <div className="boxMessage">
+                                <h3>Hemos encontrado resultados</h3>
+                            </div>
                         }
                     </tbody><br /><br /><br /><br /><br />
                 </table>
