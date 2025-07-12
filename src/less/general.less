@@ -4,7 +4,7 @@
     .containerRouter{
         height: 100%;
         width:100%;
-        
+        // background: linear-gradient(120deg, #f0f4f8, #d9e2ec);
         .optionsByPanel{
             height:90%;
             width:100%;
@@ -13,7 +13,7 @@
             .leftNav{
                 box-sizing: border-box;
                 height:100%;
-                border-right: 1px solid #ccc;
+                border-right: 1px solid #f8f8f8;
                 
                 .containerLeftNavBig{
                     width:100%;
@@ -85,11 +85,6 @@
                                             }
                                         }
                                     }
-                                    li:hover{
-                                        div{
-                                            padding-left:20px;
-                                        }
-                                    }
                                     .Active{
                                         background-color: @bgAzulDark;
                                         div{
@@ -103,6 +98,90 @@
                         }
                     }
                 }
+            }
+            .UX{
+                border-right: 0px;
+                border-right: 1px solid #f8f8f8;
+
+                .containerLeftNavBig{
+                    box-sizing: border-box;
+                    .topTitle{
+                        height:12%;
+                        .container{
+                            h1{
+                                font-size: 26px;
+                            }
+                        }
+                    }
+                    .optionsLeftNav{
+                        height:85%;
+                        box-sizing: border-box;
+
+                        .containerLeftNav{
+                            nav{
+                                ul{
+                                    li{
+                                      div{
+                                        span{
+                                            color:#666;
+                                            font-weight: 600;
+                                        }
+                                      }
+                                      div{
+                                        padding:10px 0px;
+                                      }
+                                      .divideLi{
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: space-between;
+                                        padding:5px 20px;
+                                        transition: .3s;
+                                            padding-right: 30px;
+                                        .leftOption{
+                                            width:80%;
+                                            display: flex;
+                                            align-items: center;
+                                            .icon{
+                                                margin-right: 10px;
+                                                color: #666;
+                                                font-size: 12px;
+                                            }
+                                            span{
+                                                font-weight: 400;
+                                            }
+                                        }
+                                        .icon{
+                                            font-size: 10px;
+                                        }
+                                      }
+                                    }
+                                    li:hover{
+
+                                        .divideLi{
+                                           .leftOption{
+                                                .icon{
+                                                    color: @bgAzulDark;
+                                                }
+                                                span{
+                                                    color: @bgAzulDark;
+                                                }
+                                           } 
+                                        }
+                                    }
+                                    .Active{
+                                        background-color: transparent;
+                                        div{
+                                            span{
+                                                color: @bgAzulDark;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
             }
         }
         .message{

@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { MdArrowForward, MdCheck } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,6 +19,7 @@ export default function ItemToSelect({ number, kitt}){
     const { user } = usuario;     
     const dispatch = useDispatch();
     const option = kitt;
+    const howManyRef = useRef(null);
     const promedio = option.prices && option.prices.length ? Number(option.prices.reduce((acc, p) => Number(acc) + Number(p.valor), 0)) / option.prices.length : null
     const [form, setForm] = useState({
         mt2: option.unidad == 'mt2' ? Number(Number(option.medida.split('X')[0]) * Number(option.medida.split('X')[1])) : '1',
@@ -57,15 +58,30 @@ export default function ItemToSelect({ number, kitt}){
     const manejarValor = (nuevoValor) => {
         setValorDelHijo(nuevoValor);
       };
+
+    useEffect(() => {
+        if(active){
+            howManyRef.current.focus()
+        }
+    }, [active])
     return ( 
         active ?
-        <tr className="active" >
+       <tr className="uxTable">
+            <td className="titleKit Mini"> 
+                <div className="divTitleKits">
+                    <div className="leftTitle">
+                        <strong>{option.id}</strong>
+                    </div>
+                    <div className="right">
+                        <h3>{option.description.toUpperCase()}</h3>
+                        <h4>{option.medida} {option.unidad == 'mt' ? 'METROS' : option.unidad == 'unidad' ? 'UNIDADES': option.unidad == 'kg' ? 'KILOGRAMOS' : option.unidad == 'mt2' ? 'METROS CUADRADOS' : null} </h4>
+                    </div>
+                </div>
+            </td>
             { 
                 params.get('almacen') ? <ModalCalibre onEnviarValor={manejarValor} />  : null
             }
-            <td style={{width:'30px'}}>{option.id}</td>
-            <td>{option.description.toUpperCase()}</td>  
-            <td>
+            <td className="short">
                 {
                     valorDelHijo ?
                         <span>{valorDelHijo}</span>
@@ -78,48 +94,8 @@ export default function ItemToSelect({ number, kitt}){
                     </button>
                 }
             </td>  
-            <td> 
-                {
-                    option.unidad == 'mt2' ? 
-                        <div className="medida"> 
-                            <input type="text"id="one" onChange={(e) => {
-                                setForm({
-                                    ...form,
-                                    mt2:  `${e.target.value}`
-                                })
-                            }} value={form.mt2}/>
-                            {/* <h3>x</h3>
-                            <input type="text" onChange={(e) => {
-                                setForm({
-                                    ...form,
-                                    mt2:  `${form.mt2.split('X')[0]}X${e.target.value}`
-                                })
-                            }} value={form.mt2.split('X')[1]}/> */}
-                        </div>
-                    :
-                        <div className="medida">
-                            {
-                                option.unidad == 'kg' ?
-                                <input type="text" onChange={(e) => {
-                                    setForm({
-                                        ...form,
-                                        kg: e.target.value
-                                    })
-                                }} value={form.kg}/>
-                                :
-                                <input type="text" onChange={(e) => {
-                                    setForm({
-                                        ...form,
-                                        other: e.target.value
-                                    })
-                                }} value={form.other}/>
-                            }
-                        </div>
-                }
-            </td>
-            <td> 
-                <strong>
- 
+            <td className="short Mini">
+                <h3>
                     {   
                     
                         option.unidad == 'mt2' ?
@@ -132,31 +108,85 @@ export default function ItemToSelect({ number, kitt}){
                             new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(Number(promedio) / Number(option.medida)) * Number(form.kg)).toFixed(0))
                         : 0 
                     } 
-                </strong>
+                    <span> COP</span>
+                </h3>
             </td>
-            <td>
-                <div className="twoButtons">
-                    <button className="great" onClick={() => addItem()}>
-                        <MdCheck />
-                    </button>
-                    <button className="danger" onClick={() => setActive(null)}>
-                        <AiOutlineClose />
-                    </button>
-                </div> 
+            <td className="btns"> 
+                <div className="HowManyHere">
+                    {
+                    option.unidad == 'mt2' ? 
+                        <div className="medida"> 
+                            <input type="text" ref={howManyRef} id="one" onChange={(e) => {
+                                setForm({
+                                    ...form,
+                                    mt2:  `${e.target.value}`
+                                })
+                            }} value={form.mt2} onKeyDown={(e) => {
+                                    if(e.key == 'Enter'){
+                                        addItem()
+                                    }
+                                }} onBlur={() => setActive(null)}/>
+                            {/* <h3>x</h3>
+                            <input type="text" onChange={(e) => {
+                                setForm({
+                                    ...form,
+                                    mt2:  `${form.mt2.split('X')[0]}X${e.target.value}`
+                                })
+                            }} value={form.mt2.split('X')[1]}/> */}
+                        </div>
+                    :
+                        <div className="medida">
+                            {
+                                option.unidad == 'kg' ?
+                                <input type="text" ref={howManyRef} onChange={(e) => {
+                                    setForm({
+                                        ...form,
+                                        kg: e.target.value
+                                    })
+                                }} value={form.kg} onKeyDown={(e) => {
+                                    if(e.key == 'Enter'){
+                                        addItem()
+                                    }
+                                }} onBlur={() => setActive(null)}/>
+                                : 
+                                <input type="text" ref={howManyRef} onChange={(e) => {
+                                    setForm({
+                                        ...form,
+                                        other: e.target.value
+                                    })
+                                }} value={form.other} onKeyDown={(e) => {
+                                    if(e.key == 'Enter'){
+                                        addItem()
+                                    }
+                                    if(e.code == 'Escape') setActive(null)
+                                }} />
+                            }
+                        </div>
+                }
+                </div>
             </td>
         </tr>
         :
-        <tr >
-            <td>{option.id}</td>
-            <td>{option.description.toUpperCase()}</td>
-            <td style={{fontSize:10}}>  
-                {option.unidad.toUpperCase()}
+        <tr className="uxTable">
+            <td className="titleKit Mini"> 
+                <div className="divTitleKits">
+                    <div className="leftTitle">
+                        <strong>{option.id}</strong>
+                    </div>
+                    <div className="right">
+                        <h3>{option.description.toUpperCase()}</h3>
+                        <h4>{option.medida} {option.unidad == 'mt' ? 'METROS' : option.unidad == 'unidad' ? 'UNIDADES': option.unidad == 'kg' ? 'KILOGRAMOS' : option.unidad == 'mt2' ? 'METROS CUADRADOS' : null} </h4>
+                    </div>
+                </div>
             </td>
-            <td>{option.medida}</td>
-            <td>
-                <strong>{promedio ? new Intl.NumberFormat('es-CO', {currency:'COP'}).format(promedio.toFixed(0)) : 0}</strong>
+
+            <td className="short Mini">
+                <h3>{option.medida} </h3>
             </td>
-            <td>
+            <td className="short Mini">
+                <h3>{promedio ? `${new Intl.NumberFormat('es-CO', {currency:'COP'}).format(promedio.toFixed(0))} ` : 0} <span>COP</span></h3>
+            </td>
+            <td className="btns Mini">
                 <button onClick={() => setActive('active')}>
                     <MdArrowForward />
                 </button>

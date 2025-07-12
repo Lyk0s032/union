@@ -59,16 +59,26 @@ export default function KitItem(props){
                 dispatch(actions.axiosToGetKit(true, kit.id))
                 params.set('w', 'newKit')
                 setParams(params);
-            }}>{kit.id}</td>
-            <td onClick={() => {
-                dispatch(actions.axiosToGetKit(true, kit.id))
-                params.set('w', 'newKit')
-                setParams(params);
-            }}>{kit.name.toUpperCase()}</td>
-            <td style={{fontSize:11}}>{kit.categorium ? kit.categorium.name.toUpperCase() : 'SIN CATEGORíA'}</td>
-            <td style={{fontSize:11}}>{kit.linea ? kit.linea.name.toUpperCase() : 'SIN CATEGORíA'}</td>
-            <td style={{fontSize:11}}>{kit.extension ? kit.extension.name.toUpperCase() : 'SIN CATEGORíA'}</td>
-            <td style={{fontSize:11}}>{kit.itemKits && kit.itemKits.length > 0 ? <GetSimilarPrice items={kit.itemKits} /> : null}</td>            <td className="btnKits">
+            }} className="coding">
+                <div className="code">
+                    <h3>{kit.id}</h3>
+                </div>
+            </td>
+            <td className="longer" >
+                <div className="titleNameKitAndData">
+                    <div className="extensionColor">
+                        <div className="boxColor"></div>
+                        <span>{kit.extension ? kit.extension.name.toUpperCase() : null}</span>
+                        <span style={{marginLeft:10}}> | {kit.categorium ? kit.categorium.name.toUpperCase() : 'SIN CATEGORíA'}</span>
+                    </div>
+                    <div className="nameData">
+                        <h3>{kit.name}</h3>
+                    </div>
+                </div>
+            </td>
+            <td className="middle" style={{fontSize:11}}>{kit.linea ? kit.linea.name.toUpperCase() : 'SIN CATEGORíA'}</td>
+            <td></td>
+            <td className="tdPrice" style={{fontSize:11}}>{kit.itemKits && kit.itemKits.length > 0 ? <GetSimilarPrice items={kit.itemKits} /> : null}</td>            <td className="btnKits">
                 {
                     loading ?
                     <div className="basic">
@@ -137,7 +147,7 @@ function GetSimilarPrice(props) {
 
     return (
         <div className="similarPrice">
-            <span>{valor > 0 ? new Intl.NumberFormat('es-CO', { currency: 'COP' }).format(valor.toFixed(0)) : 0} COP</span>
+            <h3>{valor > 0 ? new Intl.NumberFormat('es-CO', { currency: 'COP' }).format(valor.toFixed(0)) : 0} <span>COP</span></h3>
         </div>
     );
 }

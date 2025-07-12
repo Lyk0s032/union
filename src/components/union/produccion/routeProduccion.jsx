@@ -7,14 +7,14 @@ import Lineas from './extension';
 export default function RoutesProduccion(){
     const [params, setParams] = useSearchParams();
     return (
-        <div className="compras">
-            <div className="containerCompras">
+        <div className="compras ProductionPanelUX">
+            <div className="containerCompras OpenUX">
                 <div className="divide">
                     <div className="left">
                         <LeftNav />
                     </div>
 
-                    <div className="right">
+                    <div className="right ProduccionUX">
                         <Routes>
                             <Route path="/*" element={<KitsPanel />} />
                             <Route path="/lineas/*" element={<Lineas />} />

@@ -2338,9 +2338,14 @@ body button {
 }
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody .uxTable {
   box-sizing: border-box;
+  cursor: pointer;
 }
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody .uxTable td {
   padding: 20px 5px;
+  box-sizing: border-box;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody .uxTable .Mini {
+  padding: 0px 5px;
   box-sizing: border-box;
 }
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody .uxTable .titleKit {
@@ -2395,10 +2400,15 @@ body button {
 }
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody .uxTable .short h3 {
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
+  color: #046290;
 }
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody .uxTable .short h3 span {
   font-size: 10px;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody .uxTable .short .calibre {
+  width: 100%;
+  border-radius: 5px;
 }
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody .uxTable .btns {
   width: 10%;
@@ -3621,6 +3631,7 @@ body button {
   width: 80%;
   height: 100%;
   overflow-y: auto;
+  box-sizing: border-box;
 }
 .compras .containerCompras .divide .right .provider {
   width: 100%;
@@ -4728,6 +4739,209 @@ body button {
 .compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .requisicionDocument .bodyDocument table tbody tr:hover {
   background-color: #f8f8f8;
 }
+.ProductionPanelUX {
+  box-sizing: border-box;
+  background-color: white;
+  font-family: 'Inter', sans-serif;
+  color: #333;
+  width: 100%;
+}
+.ProductionPanelUX .OpenUX {
+  width: 100%;
+  height: 100%;
+}
+.ProductionPanelUX .OpenUX .divide {
+  width: 100%;
+}
+.ProductionPanelUX .OpenUX .divide .left {
+  width: 25%;
+}
+.ProductionPanelUX .OpenUX .divide .right {
+  width: 75%;
+  overflow-y: auto;
+  height: 98%;
+  margin-top: auto;
+  position: relative;
+  border-radius: 20px;
+  padding: 25px;
+  box-sizing: border-box;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .topSection .optionsFast nav ul li {
+  margin-right: 10px;
+  transition: 0.3s;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .topSection .optionsFast nav ul li button {
+  transition: 0.3s;
+  background-color: transparent;
+  border: none;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .topSection .optionsFast nav ul li button span {
+  color: #046290;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .topSection .optionsFast nav ul li .Active {
+  background-color: #046290;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .topSection .optionsFast nav ul li .Active span {
+  color: #FFF;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .data {
+  width: 30%;
+  display: flex;
+  align-items: center;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .data h3 {
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0x;
+  margin-right: 30px;
+  padding: 0px;
+  vertical-align: middle;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .data button {
+  transition: 0.3s;
+  margin: 0px;
+  padding: 0px;
+  vertical-align: middle;
+  background-color: transparent;
+  border: none;
+  margin-top: 2px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .data button .icon {
+  margin: 0px;
+  padding: 0px;
+  font-size: 16px;
+  font-weight: bold;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions {
+  width: 60%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA {
+  display: flex;
+  align-items: center;
+  border-radius: 50px;
+  background: linear-gradient(120deg, #f0f4f8, #d9e2ec);
+  box-sizing: border-box;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA .inputUX {
+  box-sizing: border-box;
+  width: 50%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA .inputUX input {
+  padding: 12px 10px;
+  box-sizing: border-box;
+  border-radius: 20px 0px 0px 20px;
+  width: 100%;
+  border: 1px solid transparent;
+  outline: 0px;
+  transition: 0.3s;
+  background: #d9e2ec;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA .inputUX input:focus {
+  color: #046290;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA .filtersUX {
+  width: 50%;
+  box-sizing: border-box;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA .filtersUX select {
+  padding: 12px 10px;
+  width: 31%;
+  cursor: pointer;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  background: #d9e2ec;
+  color: #046290;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody tr td {
+  transition: 0.3s;
+  padding: 25px 0px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #F8F8F8;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody tr td .code {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  background-color: black;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody tr td .code h3 {
+  font-weight: 400;
+  color: #FFF;
+  font-size: 10px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody tr td .titleNameKitAndData {
+  padding-left: 10px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody tr td .titleNameKitAndData .extensionColor {
+  display: flex;
+  align-items: center;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody tr td .titleNameKitAndData .extensionColor .boxColor {
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  background-color: #ccc;
+  margin-right: 10px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody tr td .titleNameKitAndData .extensionColor span {
+  font-size: 10px;
+  color: #666;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody tr td .titleNameKitAndData .nameData {
+  margin-top: 5px;
+  width: 80%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody tr td .titleNameKitAndData .nameData h3 {
+  font-weight: 500;
+  font-size: 13px;
+  color: #046290;
+  margin-bottom: 5px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody tr td .titleNameKitAndData .nameData span {
+  font-size: 11px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody tr .coding {
+  width: 5%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody tr .longer {
+  width: 60%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody tr .middle {
+  width: 10%;
+  padding: 0px 10px;
+  box-sizing: border-box;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody tr .tdPrice {
+  width: 15%;
+  padding: 0px 10px;
+  box-sizing: border-box;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody tr .tdPrice h3 {
+  font-size: 14px;
+  color: #046290;
+  font-weight: 400;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody tr .tdPrice h3 span {
+  font-size: 10px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody tr:hover .coding {
+  padding-left: 10px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody tr:hover .longer {
+  padding-left: 10px;
+}
+.ProductionPanelUX .OpenUX .divide .ProduccionUX {
+  width: 100%;
+}
 .routerPanel {
   width: 100%;
   height: 100vh;
@@ -4744,7 +4958,7 @@ body button {
 .routerPanel .containerRouter .optionsByPanel .leftNav {
   box-sizing: border-box;
   height: 100%;
-  border-right: 1px solid #ccc;
+  border-right: 1px solid #f8f8f8;
 }
 .routerPanel .containerRouter .optionsByPanel .leftNav .containerLeftNavBig {
   width: 100%;
@@ -4813,14 +5027,71 @@ body button {
   font-size: 14px;
   color: #046290;
 }
-.routerPanel .containerRouter .optionsByPanel .leftNav .containerLeftNavBig .optionsLeftNav .containerLeftNav nav ul li:hover div {
-  padding-left: 20px;
-}
 .routerPanel .containerRouter .optionsByPanel .leftNav .containerLeftNavBig .optionsLeftNav .containerLeftNav nav ul .Active {
   background-color: #046290;
 }
 .routerPanel .containerRouter .optionsByPanel .leftNav .containerLeftNavBig .optionsLeftNav .containerLeftNav nav ul .Active div span {
   color: #FFF;
+}
+.routerPanel .containerRouter .optionsByPanel .UX {
+  border-right: 0px;
+  border-right: 1px solid #f8f8f8;
+}
+.routerPanel .containerRouter .optionsByPanel .UX .containerLeftNavBig {
+  box-sizing: border-box;
+}
+.routerPanel .containerRouter .optionsByPanel .UX .containerLeftNavBig .topTitle {
+  height: 12%;
+}
+.routerPanel .containerRouter .optionsByPanel .UX .containerLeftNavBig .topTitle .container h1 {
+  font-size: 26px;
+}
+.routerPanel .containerRouter .optionsByPanel .UX .containerLeftNavBig .optionsLeftNav {
+  height: 85%;
+  box-sizing: border-box;
+}
+.routerPanel .containerRouter .optionsByPanel .UX .containerLeftNavBig .optionsLeftNav .containerLeftNav nav ul li div span {
+  color: #666;
+  font-weight: 600;
+}
+.routerPanel .containerRouter .optionsByPanel .UX .containerLeftNavBig .optionsLeftNav .containerLeftNav nav ul li div {
+  padding: 10px 0px;
+}
+.routerPanel .containerRouter .optionsByPanel .UX .containerLeftNavBig .optionsLeftNav .containerLeftNav nav ul li .divideLi {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 20px;
+  transition: 0.3s;
+  padding-right: 30px;
+}
+.routerPanel .containerRouter .optionsByPanel .UX .containerLeftNavBig .optionsLeftNav .containerLeftNav nav ul li .divideLi .leftOption {
+  width: 80%;
+  display: flex;
+  align-items: center;
+}
+.routerPanel .containerRouter .optionsByPanel .UX .containerLeftNavBig .optionsLeftNav .containerLeftNav nav ul li .divideLi .leftOption .icon {
+  margin-right: 10px;
+  color: #666;
+  font-size: 12px;
+}
+.routerPanel .containerRouter .optionsByPanel .UX .containerLeftNavBig .optionsLeftNav .containerLeftNav nav ul li .divideLi .leftOption span {
+  font-weight: 400;
+}
+.routerPanel .containerRouter .optionsByPanel .UX .containerLeftNavBig .optionsLeftNav .containerLeftNav nav ul li .divideLi .icon {
+  font-size: 10px;
+}
+.routerPanel .containerRouter .optionsByPanel .UX .containerLeftNavBig .optionsLeftNav .containerLeftNav nav ul li:hover .divideLi .leftOption .icon {
+  color: #046290;
+}
+.routerPanel .containerRouter .optionsByPanel .UX .containerLeftNavBig .optionsLeftNav .containerLeftNav nav ul li:hover .divideLi .leftOption span {
+  color: #046290;
+}
+.routerPanel .containerRouter .optionsByPanel .UX .containerLeftNavBig .optionsLeftNav .containerLeftNav nav ul .Active {
+  background-color: transparent;
+}
+.routerPanel .containerRouter .optionsByPanel .UX .containerLeftNavBig .optionsLeftNav .containerLeftNav nav ul .Active div span {
+  color: #046290;
 }
 .routerPanel .containerRouter .message {
   position: fixed;
@@ -4975,8 +5246,9 @@ body button {
 }
 .navigation {
   height: 10%;
-  border: 1px solid #ccc;
   box-sizing: border-box;
+  background-color: transparent;
+  background: #d9e2ec;
 }
 .navigation .containerNav {
   box-sizing: border-box;
@@ -5013,9 +5285,9 @@ body button {
 }
 .navigation .containerNav .optionsGeneral nav ul li div {
   height: 100%;
-  padding: 10px 20px;
+  padding: 10px 40px;
   box-sizing: border-box;
-  border-bottom: 1px solid #FFF;
+  border-bottom: 2px solid #d9e2ec;
   transition: 0.3s;
   display: flex;
   align-items: center;
@@ -5023,9 +5295,17 @@ body button {
 .navigation .containerNav .optionsGeneral nav ul li div span {
   font-size: 12px;
   color: #454f5b;
+  transition: 0.3s;
+}
+.navigation .containerNav .optionsGeneral nav ul li.Active div {
+  border-bottom: 2px solid #046290;
+}
+.navigation .containerNav .optionsGeneral nav ul li.Active div span {
+  color: #046290;
+  font-weight: 600;
 }
 .navigation .containerNav .optionsGeneral nav ul li:hover div {
-  border-bottom: 1px solid #454f5b;
+  border-bottom: 2px solid #454f5b;
 }
 .navigation .containerNav .user {
   width: 20%;
@@ -5050,7 +5330,7 @@ body button {
   color: #046290;
 }
 .navigation .containerNav .user .containerUser nav ul li div button {
-  background-color: #FFF;
+  background-color: transparent;
   border: none;
   cursor: pointer;
   transition: 0.3s;

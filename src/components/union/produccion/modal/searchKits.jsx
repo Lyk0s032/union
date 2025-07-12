@@ -43,43 +43,41 @@ export default function SearchKits({ number }) {
     return (
         <div className="containerRightSelect">
             <div className="topSelect">
-                <div className="titleSelect">
-                    <h3>Selecciona un item</h3>
-                </div>
-                <div className="searchInput">
-                    <input type="text" placeholder='Buscar por código o descripción' onChange={(e) => setWord(e.target.value)} />
+                <div className="boxAllInOne">
+                    <div className="containerBoxAll">
+                        <div className="containerSearch" style={{width:'100%'}}>
+                            <div className="searchInputDiv">
+                                <div className="inputDiv">
+                                    <input type="text" placeholder="Pedestal 2X1" onChange={(e) => {
+                                        setWord(e.target.value)
+                                    }} />
+                                </div>
+                                <div className="filtersInput">
+                                    <select style={{width:'30%'}} value={cat} onChange={(e) => setCat(e.target.value)}>
+                                        <option value="">Categorías</option>
+                                        {categorias?.map((c) => (
+                                            <option key={c.id} value={c.id}>{c.name.toUpperCase()}</option>
+                                        ))}
+                                    </select>
+                                    <select value={li} onChange={(e) => setLi(e.target.value)}>
+                                        <option value="">Líneas</option>
+                                        {lineas?.filter(l => l.type === 'MP').map((c) => (
+                                            <option key={c.id} value={c.id}>{c.name.toUpperCase()}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
             <div className="resultsToSelect">
-                <div className="filters">
-                    <div className="divideFilters">
-                        <div>
-                            <label htmlFor="">Categorías</label><br />
-                            <select value={cat} onChange={(e) => setCat(e.target.value)}>
-                                <option value="">Todas</option>
-                                {categorias?.map((c) => (
-                                    <option key={c.id} value={c.id}>{c.name.toUpperCase()}</option>
-                                ))}
-                            </select>
-                        </div>
-                        <div>
-                            <label htmlFor="">Líneas</label><br />
-                            <select value={li} onChange={(e) => setLi(e.target.value)}>
-                                <option value="">Todas</option>
-                                {lineas?.filter(l => l.type === 'MP').map((c) => (
-                                    <option key={c.id} value={c.id}>{c.name.toUpperCase()}</option>
-                                ))}
-                            </select>
-                        </div>
-                    </div>
-                </div>
                 <div className="tabla">
                     <table>
                         <thead>
                             <tr>
-                                <th>Código</th>
-                                <th>Nombre</th>
-                                <th>Unidad</th>
+                                <th></th>
                                 <th>Medida / Cant.</th>
                                 <th>Precio Promedio</th>
                                 <th></th>

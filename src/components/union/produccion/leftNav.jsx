@@ -1,5 +1,7 @@
 import React from 'react';
+import { MdDesignServices, MdNetworkCheck, MdOutlineAssignment, MdPeople, MdWindow } from 'react-icons/md';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { FaChevronDown } from "react-icons/fa6";
 
 export default function LeftNav(){
     const navigate = useNavigate();
@@ -10,7 +12,7 @@ export default function LeftNav(){
         setParams(params);
     }
     return (
-        <div className="leftNav">
+        <div className="leftNav UX">
             <div className="containerLeftNavBig">
                 <div className="topTitle">
                     <div className="container">
@@ -37,20 +39,66 @@ export default function LeftNav(){
                     <div className="containerLeftNav">
                         <nav>
                             <ul>
+                                {/* <li className={location.pathname == '/produccion' || location.pathname == '/produccion/' ? 'Active' : null} onClick={() => {
+                                    navigate('/produccion')
+                                }}>
+                                    <div className="divideLi">
+                                        <div className="leftOption">
+                                            <MdWindow className="icon" />
+                                            <span>Zona principal</span>
+                                        </div>
+
+                                        <FaChevronDown className="icon" />
+                                    </div> 
+                                </li> */}
                                 <li className={location.pathname == '/produccion' || location.pathname == '/produccion/' ? 'Active' : null} onClick={() => {
                                     navigate('/produccion')
                                 }}>
-                                    <div>
-                                        <span>Kit's</span>
+                                    <div className="divideLi">
+                                        <div className="leftOption">
+                                            <MdDesignServices className="icon" />
+                                            <span>Nuestros Kit's</span>
+                                        </div>
+                                        <FaChevronDown className="icon" />
+                                        
                                     </div>
                                 </li>
                                 <li className={location.pathname == '/produccion/lineas' || location.pathname == '/produccion/lineas/' ? 'Active' : null} onClick={() => {
                                     navigate('lineas/')
                                 }}>
-                                    <div>
-                                        <span>Lineas</span>
+                                    <div className='divideLi'>
+                                        <div className="leftOption">
+                                            <MdOutlineAssignment className="icon" />
+                                            <span>Lineas</span>
+                                        </div>
+                                        <FaChevronDown className="icon" />
+
                                     </div>
                                 </li>
+                                {/* <li className={location.pathname == '/produccion/lineas' || location.pathname == '/produccion/lineas/' ? 'Active' : null} onClick={() => {
+                                    navigate('lineas/')
+                                }}>
+                                    <div className='divideLi'>
+                                        <div className="leftOption">
+                                            <MdNetworkCheck className="icon" />
+                                            <span>Zona de producción</span>
+                                        </div>
+                                        <FaChevronDown className="icon" />
+                                    </div>
+                                </li>
+                                <li className={location.pathname == '/produccion/lineas' || location.pathname == '/produccion/lineas/' ? 'Active' : null} onClick={() => {
+                                    navigate('lineas/')
+                                }}>
+                                    <div className='divideLi'>
+                                        <div className="leftOption">
+                                            <MdPeople className="icon" /> 
+                                            <span>Equipo</span>
+                                        </div>
+                                        <FaChevronDown className="icon" />
+
+                                    </div>
+                                </li> */}
+
                                 {/* <li onClick={() => {
                                     navigate('/compras/mp')
                                 }}>

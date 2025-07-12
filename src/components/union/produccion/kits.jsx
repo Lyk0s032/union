@@ -5,6 +5,7 @@ import ModalNewKit from "./modal/newKit";
 import * as actions from '../../store/action/action';
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../loading";
+import { AiOutlinePlus } from "react-icons/ai";
 
 export default function KitsPanel(){
     const [params, setParams] = useSearchParams();
@@ -31,7 +32,7 @@ export default function KitsPanel(){
     }, [])
     return (
         <div className="provider">
-            <div className="containerProviders">
+            <div className="containerProviders Dashboard-grid">
                 <div className="topSection">
                     <div className="title">
                         <h1>Kit's </h1>
@@ -40,11 +41,17 @@ export default function KitsPanel(){
                         <nav>
                             <ul>
                                 <li> 
-                                    <button onClick={() => {
-                                        params.set('w', 'newKit');
-                                        setParams(params);
+                                    <button className={state == 'completa' ? 'Active' : null} onClick={() => {
+                                       setState('completa')
                                     }}>
-                                        <span>Nuevo Kit</span>
+                                        <span>Completos</span>
+                                    </button>
+                                </li>
+                                <li> 
+                                    <button className={state == 'desarrollo' ? 'Active' : null} onClick={() => {
+                                        setState('desarrollo')
+                                    }}>
+                                        <span>Desarrollo</span>
                                     </button>
                                 </li>
                             </ul>
@@ -53,108 +60,88 @@ export default function KitsPanel(){
                 </div>
                 <div className="listProviders">
                     <div className="containerListProviders">
-                        <div className="topSearch">
-                            <div className="containerTopSearch">
-                                <input type="text" placeholder="Buscar Kit" onChange={(e) => {
-                                    setWord(e.target.value)
-                                }}/>
-                            </div>
-                        </div>
-                        <div className="filters">
-                            <div className="containerFilters">
-                                <div className="divideFilter">
-                                <div className="type">
-                                    <label htmlFor="">Categorías</label><br />
-                                    <select name="" id="" onChange={(e) => {
-                                        return setCat(e.target.value)
+                        <div className="topSearchData">
+                            <div className="divideSearching">
+                                <div className="data">
+                                    <h3>Kits en el sistema ({kits?.length ? kits.length : null})</h3>
+                                    <button onClick={() => {
+                                        params.set('w', 'newKit');
+                                        setParams(params);
                                     }}>
-                                        <option value="">Seleccionar</option>
-                                        {
-                                            categorias && categorias.length ?
-                                            categorias.map((c, i) => {
-                                                return (
-                                                    c.type == 'comercial' ? 
-                                                        <option key={i+1} value={c.id}>{c.name.toUpperCase()}</option>
-                                                    : null
-                                                )
-                                            })
-                                            :null
-                                        }
-
-                                    </select>
+                                        <AiOutlinePlus className="icon" />
+                                    </button>
                                 </div>
-                                    <div className="type">
-                                        <label htmlFor="">Extensión</label><br />
-                                        <select name="" id="" onChange={(e) => {
-                                            return setEx(e.target.value)
-                                        }}>
-                                            <option value="">Seleccionar</option>
-                                            {
-                                                extensiones && extensiones.length ?
-                                                extensiones.map((c, i) => {
-                                                    return (
-                                                        <option value={c.id}>{c.name.toUpperCase()}</option>
-                                                    )
-                                                })
-                                                :null
-                                            }
+                                <div className="filterOptions">
+                                    <div className="inputDivA">
+                                        <div className="inputUX">
+                                            <input type="text" placeholder="Buscar aquí..." onChange={(e) => {
+                                                setWord(e.target.value)
+                                            }} />
+                                        </div>
+                                        <div className="filtersUX">
+                                            <select name="" id="" onChange={(e) => {
+                                                return setCat(e.target.value)
+                                            }}>
+                                                <option value="">Categoría</option>
+                                                {
+                                                    categorias && categorias.length ?
+                                                    categorias.map((c, i) => {
+                                                        return (
+                                                            c.type == 'comercial' ? 
+                                                                <option key={i+1} value={c.id}>{c.name.toUpperCase()}</option>
+                                                            : null
+                                                        )
+                                                    })
+                                                    :null
+                                                }
+
+                                            </select>
+                                            <select name="" id="" onChange={(e) => {
+                                                return setLi(e.target.value)
+                                            }}>
+                                                <option value="">Líneas</option>
+                                                {
+                                                    lineas && lineas.length ?
+                                                    lineas.map((c, i) => {
+                                                        return (
+                                                            c.type == 'comercial' ? 
+                                                                <option key={i+1} value={c.id}>{c.name.toUpperCase()}</option>
+                                                            : null
+                                                        )
+                                                    })
+                                                    :null
+                                                }
+
+                                            </select>
+
+                                            <select name="" id="" onChange={(e) => {
+                                                return setEx(e.target.value)
+                                            }}>
+                                                <option value="">Color</option>
+                                                {
+                                                    extensiones && extensiones.length ?
+                                                    extensiones.map((c, i) => {
+                                                        return (
+                                                            <option value={c.id}>{c.name.toUpperCase()}</option>
+                                                        )
+                                                    })
+                                                    :null
+                                                }
 
                                         </select>
+                                        </div>
                                     </div>
-                                    <div className="options">
-                                        <label htmlFor="">Lista</label><br />
-                                        <select name="" id="" onChange={(e) => {
-                                            return setLi(e.target.value)
-                                        }}>
-                                            <option value="">Seleccionar</option>
-                                            {
-                                                lineas && lineas.length ?
-                                                lineas.map((c, i) => {
-                                                    return (
-                                                        c.type == 'comercial' ? 
-                                                            <option key={i+1} value={c.id}>{c.name.toUpperCase()}</option>
-                                                        : null
-                                                    )
-                                                })
-                                                :null
-                                            }
-
-                                        </select>
-
-                                    </div>
-                                </div>
-
-                                <div className="state">
-                                    <nav>
-                                        <ul>
-                                            <li className={state == 'completa' ? 'Active' : null} onClick={() => {
-                                                setState('completa')
-                                            }}>
-                                                <div>
-                                                    <span>Completos {kits && kits.length ? `(${kits.length})` : null}</span>
-                                                </div>
-                                            </li>
-                                            <li className={state == 'desarrollo' ? 'Active' : null} onClick={() => {
-                                                setState('desarrollo')
-                                            }}>
-                                                <div>
-                                                    <span>En desarrollo</span>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </nav>
                                 </div>
                             </div>
-                        </div>
-                        <div className="table">
+                        </div><br />
+                        <div className="table TableUX">
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>Código</th>
-                                        <th>Nombre</th>
-                                        <th>Categoría</th>
+                                        <th></th>
+                                        <th></th>
                                         <th>Línea</th>
-                                        <th>Extensión</th>
+                                        <th></th>
                                         <th>Precio promedio</th>
                                         <th></th>
                                     </tr>
