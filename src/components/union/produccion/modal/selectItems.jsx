@@ -10,6 +10,7 @@ import axios from 'axios';
 import { useSearchParams } from 'react-router-dom';
 import UpdateKit from './updated';
 import { BsShieldCheck } from 'react-icons/bs';
+import ConfigKit from './configKit';
 
 export default function SelectMP(){
 
@@ -114,13 +115,16 @@ export default function SelectMP(){
       }, [add])
     return (
         <div className="page">
+            {
+                params.get('update') == 'true' ?
+                    <ConfigKit kit={kit} />
+                : null
+            }
             <div className="selectItems">
                 <div className="leftKit">
                     <div className="topData">
                         <div className="DataKit">
                             <h3>{kit.name} - <strong>({kit.extension.name})</strong></h3> 
-                            { kit && kit.linea ? <span>Linea: <strong>{kit.linea.name}</strong> </span> : null  }<br />
-                            { kit && kit.categorium ? <span>Categoría: <strong>{kit.categorium.name}</strong></span> : null  }<br /> 
                             {/* {
                                 !params.get('update') ?
                                     <button onClick={() => {
@@ -203,12 +207,8 @@ export default function SelectMP(){
                                     </div>
                                 : null
                             }
-                            { 
-                                params.get('update') ?
-                                <UpdateKit kit={kit} />
-                                :
-                                <Selected kit={kit} selectArea={selectArea} number={number} toggleMenu={toggleMenu} openMenuId={openMenuId}/>
-                            }
+                            
+                            <Selected kit={kit} selectArea={selectArea} number={number} toggleMenu={toggleMenu} openMenuId={openMenuId}/>
                         </div>
                     </div>
                     <div className="bottomData">

@@ -94,6 +94,7 @@
                                         }
                                         .filterOptions{
                                             width:60%;
+                                            position:relative;
                                             .inputDivA{
                                                 display: flex;
                                                 align-items: center;
@@ -117,8 +118,11 @@
                                                         color: @bgAzulDark;
                                                     }
                                                 }
+                                                .LargerUX{
+                                                    width:70%;
+                                                }
                                                 .filtersUX{
-                                                    width:50%;
+                                                    width:60%;
                                                     box-sizing: border-box;
                                                     select{
                                                         border:1px solid transparent;
@@ -130,9 +134,142 @@
                                                         background: #d9e2ec;
                                                         color: @bgAzulDark;
                                                     }
+                                                    button{
+                                                        width:30%;
+                                                        background-color: transparent;
+                                                        border:none;
+                                                        padding:12px 0px;
+                                                        box-sizing: border-box;
+                                                        span{
+                                                            color: @bgAzulDark;
+                                                            font-size: 12px;
+                                                            vertical-align: middle;
+                                                        }
+                                                        .icon{
+                                                            vertical-align: middle;
+                                                            margin-left:5px;
+                                                            color: @bgAzulDark;
+                                                        }
+                                                    }
+                                                    input{
+                                                        width: 100%;
+                                                        padding:12px;
+                                                        box-sizing: border-box;
+                                                        border-radius: 0px 20px 20px 0px;
+                                                        border:2px solid @bgAzulDark;
+                                                        outline:0px;
+                                                    }
+                                                }
+                                                .ShortUX{
+                                                    width:40%;
+                                                    button{
+                                                        width: 100%;
+                                                        border-radius: 0px 20px 20px 0px;
+                                                    }
                                                 }
                                                 
                                             }
+                                            .resultadosBusqueda{
+                                                position:absolute;
+                                                width:100%;
+                                                border-radius: 5px;
+                                                border:1px solid #d9e2ec;
+                                                box-sizing: border-box;
+                                                margin-top:5px;
+                                                overflow-y: auto;
+                                                max-height:200px;
+                                                background-color: @bgDefault;
+                                                z-index:2;
+                                                .containerResultados{
+                                                    height:100%;
+                                                    box-sizing: border-box;
+                                                
+                                                    .clienteResult{
+                                                        width:100%;
+                                                        cursor: pointer;
+                                                        transition: .3s;
+                                                        background-color: @bgDefault;
+                                                        padding:20px 25px;
+                                                        box-sizing: border-box;
+                                                        .divideResult{
+                                                            display: flex;
+                                                            align-items: center;
+                                                            box-sizing: border-box;
+                                                            .letter{
+                                                                width:30px;
+                                                                height:30px;
+                                                                border-radius: 20px;
+                                                                background-color: @bgAzulDark;
+                                                                display: flex;
+                                                                align-items: center;
+                                                                justify-content: space-around;
+                                                                margin-right: 15px;
+                                                                h3{
+                                                                    font-size: 12px;
+                                                                    color: @bgDefault;
+                                                                    font-weight: 400;
+                                                                }
+                                                            }
+                                                            .nameResult{
+                                                                h3{
+                                                                    font-weight: 400;
+                                                                    font-size: 12px;
+                                                                    color: @bgAzulDark;
+                                                                }
+                                                                span{
+                                                                    font-size: 12px;
+                                                                    color: @bgDark;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    .clienteResult:hover{
+                                                        background-color: #d9e2ec;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                .clientsChoose{
+                                    box-sizing: border-box;
+                                    height: 30px;
+                                    .containerClientsChoose{
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: end;
+
+                                        .client{
+                                            padding:5px 10px;
+                                            border-radius: 20px;
+                                            cursor:pointer;
+                                            border:1px solid @bgAzulDark;
+                                            margin-left: 8px;
+                                            background-color: @bgAzulDark;
+                                            display: flex;
+                                            align-items: center;
+                                            transition: .3s;
+                                            h3{
+                                                font-size: 12px;
+                                                color: @bgDefault;
+                                                margin-right:10px;
+                                                font-weight: 400;
+                                                vertical-align: middle;
+                                            }
+                                            button{
+                                                background-color: transparent;
+                                                border:none;
+                                                cursor:pointer;
+                                                vertical-align: middle;
+
+                                                span{
+                                                    color: @bgDefault;
+                                                }
+
+                                            }
+                                        }
+                                        .client:hover{
+                                            transform: scale(1.1);
                                         }
                                     }
                                 }

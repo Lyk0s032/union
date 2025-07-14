@@ -500,6 +500,7 @@ body button {
   height: 100%;
   box-sizing: border-box;
   border-radius: 0px;
+  z-index: 4;
 }
 .modal .Complete .topBigModal {
   height: 10%;
@@ -514,6 +515,7 @@ body button {
   height: 90%;
   width: 100%;
   box-sizing: border-box;
+  z-index: 4;
 }
 .modal .Complete .bodyModalBig .page {
   width: 100%;
@@ -719,13 +721,13 @@ body button {
 }
 .modal .Complete .bodyModalBig .page .selectItems .leftKit {
   width: 40%;
-  border-right: 1px solid #ccc;
+  border-right: 1px solid #F8F8F8;
   box-sizing: border-box;
   height: 100%;
 }
 .modal .Complete .bodyModalBig .page .selectItems .leftKit .topData {
-  height: 20%;
-  border-bottom: 1px solid #ccc;
+  height: 15%;
+  border-bottom: 1px solid #F8F8F8;
   box-sizing: border-box;
 }
 .modal .Complete .bodyModalBig .page .selectItems .leftKit .topData .DataKit {
@@ -1850,7 +1852,7 @@ body button {
 .modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData {
   height: 15%;
   box-sizing: border-box;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid #F8F8F8;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2183,6 +2185,7 @@ body button {
   box-sizing: border-box;
   overflow-y: scroll;
   position: relative;
+  z-index: 4;
 }
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .filters {
   height: 10%;
@@ -2209,6 +2212,7 @@ body button {
   height: 90%;
   box-sizing: border-box;
   position: relative;
+  z-index: 4;
 }
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla .boxMessage {
   box-sizing: border-box;
@@ -2244,6 +2248,10 @@ body button {
   width: 100%;
   margin-bottom: 30px;
   border-collapse: collapse;
+  z-index: 4;
+}
+.modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table thead tr {
+  z-index: 4;
 }
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table thead tr th {
   font-size: 12px;
@@ -2258,6 +2266,7 @@ body button {
   box-sizing: border-box;
   font-size: 12px;
   color: #454f5b;
+  z-index: 4;
 }
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .tabla table tbody tr td button {
   border: none;
@@ -2688,6 +2697,267 @@ body button {
 }
 .modal .Small .bodyModalTable .dataScroll table tbody tr.Currently {
   background-color: #CCC;
+}
+.modal .Zoom {
+  width: 80%;
+  z-index: 5;
+  background-color: #FFF;
+  height: 90%;
+}
+.modal .Zoom .headerConfiguration {
+  height: 10%;
+  box-sizing: border-box;
+  border-bottom: 1px solid #F8F8F9;
+}
+.modal .Zoom .headerConfiguration .divideHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 95%;
+  margin: auto;
+  height: 100%;
+}
+.modal .Zoom .headerConfiguration .divideHeader .titleHeader h3 {
+  font-weight: 400;
+  font-size: 14px;
+  color: #046290;
+}
+.modal .Zoom .headerConfiguration .divideHeader .optionsConfiguration nav ul li {
+  display: inline-block;
+}
+.modal .Zoom .headerConfiguration .divideHeader .optionsConfiguration nav ul li div button {
+  background-color: transparent;
+  border: none;
+}
+.modal .Zoom .headerConfiguration .divideHeader .optionsConfiguration nav ul li div button .icon {
+  font-size: 16px;
+}
+.modal .Zoom .bodyModalConfiguration {
+  height: 90%;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal {
+  width: 100%;
+  height: 100%;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .leftBasicOptions {
+  width: 60%;
+  height: 100%;
+  border-right: 1px solid #F8F8F9;
+  overflow-y: auto;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .leftBasicOptions .topTitle {
+  width: 90%;
+  margin: auto;
+  margin-top: 30px;
+  display: flex;
+  align-items: start;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .leftBasicOptions .topTitle .icon {
+  margin-right: 10px;
+  color: #388E3C;
+  font-size: 22px;
+  margin-top: 5px;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .leftBasicOptions .topTitle h3 {
+  font-weight: 400;
+  color: #454f5b;
+  font-size: 28px;
+  margin-top: 3px;
+  margin-left: 1px;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .leftBasicOptions .topTitle .inputDiv {
+  box-sizing: border-box;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .leftBasicOptions .topTitle .inputDiv input {
+  padding: 5px 5px;
+  box-sizing: border-box;
+  outline: 0px;
+  font-size: 26px;
+  border: 1px solid #ccc;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .leftBasicOptions .topTitle .inputDiv input:focus {
+  border: 1px solid #046290;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .leftBasicOptions .optionsModalConfigurationBody {
+  width: 80%;
+  margin: auto;
+  margin-top: 30px;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .leftBasicOptions .optionsModalConfigurationBody .titleHere {
+  display: flex;
+  align-items: center;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .leftBasicOptions .optionsModalConfigurationBody .titleHere .icon {
+  margin-right: 5px;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .leftBasicOptions .optionsModalConfigurationBody .titleHere span {
+  font-size: 12px;
+  color: #666;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .leftBasicOptions .optionsModalConfigurationBody nav {
+  margin-top: 10px;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .leftBasicOptions .optionsModalConfigurationBody nav ul li {
+  display: inline-block;
+  margin-right: 10px;
+  width: 30%;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .leftBasicOptions .optionsModalConfigurationBody nav ul li div select {
+  padding: 8px 20px;
+  background-color: #FFF;
+  border: 1px solid #CCC;
+  cursor: pointer;
+  width: 100%;
+  font-size: 12px;
+  color: black;
+  border-radius: 5px;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .leftBasicOptions .descriptionKitConfiguration {
+  width: 80%;
+  margin: auto;
+  margin-top: 40px;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .leftBasicOptions .descriptionKitConfiguration .titleConfiguration {
+  display: flex;
+  align-items: center;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .leftBasicOptions .descriptionKitConfiguration .titleConfiguration .icon {
+  margin-right: 5px;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .leftBasicOptions .descriptionKitConfiguration .titleConfiguration span {
+  font-size: 12px;
+  color: #666;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .leftBasicOptions .descriptionKitConfiguration .inputDiv {
+  margin-top: 10px;
+  width: 100%;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .leftBasicOptions .descriptionKitConfiguration .inputDiv textarea {
+  width: 100%;
+  height: 200px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: none;
+  outline: 0px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .leftBasicOptions .descriptionKitConfiguration .inputDiv .optionsBottons {
+  margin-top: 10px;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .leftBasicOptions .descriptionKitConfiguration .inputDiv .optionsBottons button {
+  padding: 8px 30px;
+  background-color: #046290;
+  border: 1px solid #046290;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .leftBasicOptions .descriptionKitConfiguration .inputDiv .optionsBottons button span {
+  font-size: 12px;
+  color: #FFF;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .rightMovements {
+  background-color: #F8F8F9;
+  box-sizing: border-box;
+  width: 40%;
+  height: 100%;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .rightMovements .containerMovements .headerAndTitleMovements {
+  width: 90%;
+  margin: auto;
+  margin-top: 30px;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .rightMovements .containerMovements .headerAndTitleMovements .divideText .icon {
+  font-size: 16px;
+  vertical-align: middle;
+  margin-right: 10px;
+  color: #046290;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .rightMovements .containerMovements .headerAndTitleMovements .divideText span {
+  vertical-align: middle;
+  font-size: 14px;
+  font-weight: 600;
+  color: #046290;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .rightMovements .containerMovements .headerAndTitleMovements .sendMessageOrRegister {
+  margin-top: 20px;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .rightMovements .containerMovements .headerAndTitleMovements .sendMessageOrRegister label {
+  font-size: 12px;
+  color: #666;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .rightMovements .containerMovements .headerAndTitleMovements .sendMessageOrRegister textarea {
+  resize: none;
+  padding: 10px 5px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  margin-top: 10px;
+  width: 100%;
+  border-radius: 5px;
+  height: 100px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  outline: 0px;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .rightMovements .containerMovements .registersDetails {
+  width: 90%;
+  margin: auto;
+  margin-top: 20px;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .rightMovements .containerMovements .registersDetails .containerDetails .detailItem {
+  width: 100%;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .rightMovements .containerMovements .registersDetails .containerDetails .detailItem .divideItemDetails {
+  display: flex;
+  align-items: start;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .rightMovements .containerMovements .registersDetails .containerDetails .detailItem .divideItemDetails .logoItemDetail {
+  width: 35px;
+  height: 35px;
+  border-radius: 20px;
+  background-color: #E74B16;
+  border: 1px solid #E74B16;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .rightMovements .containerMovements .registersDetails .containerDetails .detailItem .divideItemDetails .logoItemDetail h3 {
+  font-weight: 500;
+  font-size: 14px;
+  color: #FFF;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .rightMovements .containerMovements .registersDetails .containerDetails .detailItem .divideItemDetails .dataDetailsItem .note {
+  display: flex;
+  align-items: center;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .rightMovements .containerMovements .registersDetails .containerDetails .detailItem .divideItemDetails .dataDetailsItem .note h3 {
+  font-size: 14px;
+  color: #046290;
+  font-weight: 500;
+  margin-right: 5px;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .rightMovements .containerMovements .registersDetails .containerDetails .detailItem .divideItemDetails .dataDetailsItem .note span {
+  cursor: pointer;
+  font-size: 12px;
+  color: #666;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .rightMovements .containerMovements .registersDetails .containerDetails .detailItem .divideItemDetails .dataDetailsItem .note span:hover {
+  text-decoration: underline;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .rightMovements .containerMovements .registersDetails .containerDetails .detailItem .divideItemDetails .dataDetailsItem .time {
+  margin-top: 2px;
+}
+.modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .rightMovements .containerMovements .registersDetails .containerDetails .detailItem .divideItemDetails .dataDetailsItem .time span {
+  font-size: 14px;
+}
+.Superior {
+  z-index: 5;
 }
 .modalQuestion {
   position: fixed;
@@ -4819,6 +5089,7 @@ body button {
 }
 .ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions {
   width: 60%;
+  position: relative;
 }
 .ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA {
   display: flex;
@@ -4844,8 +5115,11 @@ body button {
 .ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA .inputUX input:focus {
   color: #046290;
 }
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA .LargerUX {
+  width: 70%;
+}
 .ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA .filtersUX {
-  width: 50%;
+  width: 60%;
   box-sizing: border-box;
 }
 .ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA .filtersUX select {
@@ -4856,6 +5130,133 @@ body button {
   border: 1px solid transparent;
   background: #d9e2ec;
   color: #046290;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA .filtersUX button {
+  width: 30%;
+  background-color: transparent;
+  border: none;
+  padding: 12px 0px;
+  box-sizing: border-box;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA .filtersUX button span {
+  color: #046290;
+  font-size: 12px;
+  vertical-align: middle;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA .filtersUX button .icon {
+  vertical-align: middle;
+  margin-left: 5px;
+  color: #046290;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA .filtersUX input {
+  width: 100%;
+  padding: 12px;
+  box-sizing: border-box;
+  border-radius: 0px 20px 20px 0px;
+  border: 2px solid #046290;
+  outline: 0px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA .ShortUX {
+  width: 40%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA .ShortUX button {
+  width: 100%;
+  border-radius: 0px 20px 20px 0px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .resultadosBusqueda {
+  position: absolute;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #d9e2ec;
+  box-sizing: border-box;
+  margin-top: 5px;
+  overflow-y: auto;
+  max-height: 200px;
+  background-color: #FFF;
+  z-index: 2;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .resultadosBusqueda .containerResultados {
+  height: 100%;
+  box-sizing: border-box;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .resultadosBusqueda .containerResultados .clienteResult {
+  width: 100%;
+  cursor: pointer;
+  transition: 0.3s;
+  background-color: #FFF;
+  padding: 20px 25px;
+  box-sizing: border-box;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .resultadosBusqueda .containerResultados .clienteResult .divideResult {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .resultadosBusqueda .containerResultados .clienteResult .divideResult .letter {
+  width: 30px;
+  height: 30px;
+  border-radius: 20px;
+  background-color: #046290;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-right: 15px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .resultadosBusqueda .containerResultados .clienteResult .divideResult .letter h3 {
+  font-size: 12px;
+  color: #FFF;
+  font-weight: 400;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .resultadosBusqueda .containerResultados .clienteResult .divideResult .nameResult h3 {
+  font-weight: 400;
+  font-size: 12px;
+  color: #046290;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .resultadosBusqueda .containerResultados .clienteResult .divideResult .nameResult span {
+  font-size: 12px;
+  color: #454f5b;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .resultadosBusqueda .containerResultados .clienteResult:hover {
+  background-color: #d9e2ec;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .clientsChoose {
+  box-sizing: border-box;
+  height: 30px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .clientsChoose .containerClientsChoose {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .clientsChoose .containerClientsChoose .client {
+  padding: 5px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  border: 1px solid #046290;
+  margin-left: 8px;
+  background-color: #046290;
+  display: flex;
+  align-items: center;
+  transition: 0.3s;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .clientsChoose .containerClientsChoose .client h3 {
+  font-size: 12px;
+  color: #FFF;
+  margin-right: 10px;
+  font-weight: 400;
+  vertical-align: middle;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .clientsChoose .containerClientsChoose .client button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .clientsChoose .containerClientsChoose .client button span {
+  color: #FFF;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .clientsChoose .containerClientsChoose .client:hover {
+  transform: scale(1.1);
 }
 .ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody tr td {
   transition: 0.3s;

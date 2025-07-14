@@ -63,23 +63,27 @@ export default function CotizacionItem({ cotizacionn, openMenuId, toggleMenu }){
     } 
     return (
         <tr>
-            <td onClick={() => openCoti()}>{cotizacion.name}</td>
-            <td>{cotizacion.client.nombre}</td>
-            <td>{Number(21719) + cotizacion.id}</td>
-            
-            <td>{dayjs(cotizacion.createdAt.split('T')[0]).format('DD [de] MMMM [de] YYYY')}</td>
-            {/* <td>
-                <strong>{<ValorKit cotizacion={cotizacion} />} COP</strong>
-            </td> */}
-            <td>{cotizacion.state}</td>
-            {/* <td> 
-                <button onClick={() => {
-                    params.set('w', 'updateMp');
-                    setParams(params);
-                }}>
-                    <span>Editar</span>
-                </button>
-            </td> */}
+            <td className="coding">
+                <div className="code">
+                    <h3>{Number(21719) + cotizacion.id}</h3>
+                </div>
+            </td>
+            <td className="longer" onClick={() => openCoti()}>
+                <div className="titleNameKitAndData">
+                    <div className="extensionColor">
+                        <div className="boxColor"></div>
+                        <span>{cotizacion.state.toUpperCase()}</span>
+                        <span style={{marginLeft:10}}> | {cotizacion.client ? cotizacion.client.nombre.toUpperCase() : 'SIN CATEGORíA'}</span>
+                    </div>
+                    <div className="nameData">
+                        <h3>{cotizacion.name}</h3>
+                        <span>{dayjs(cotizacion.time.split('T')[0]).format('DD [de] MMMM [de] YYYY')}</span>
+                    </div>
+                </div>
+            </td>
+            <td></td>
+            <td></td> 
+
             <td>
                 <div className="menu-container">
                 <button className="btnOptions"

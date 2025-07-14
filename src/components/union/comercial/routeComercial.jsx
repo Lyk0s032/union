@@ -8,14 +8,14 @@ import RouteClient from './clientes/routeClient';
 export default function RoutesComercial(){
     const [params, setParams] = useSearchParams();
     return (
-        <div className="compras">
-            <div className="containerCompras">
+        <div className="compras ProductionPanelUX">
+            <div className="containerCompras OpenUX">
                 <div className="divide">
                     <div className="left">
                         <LeftNav />
                     </div>
 
-                    <div className="right">
+                    <div className="right ProduccionUX">
                         <Routes>
                             <Route path="/*" element={<ComercialPanel />} />
                             <Route path="/galeria/*" element={<PanelGaleria />} />

@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import * as actions from '../../store/action/action';
 import ModalNewCotizacion from "./modal/newCotizacion";
 import DocumentCotizacion from "./modal/documentCotizacion";
+import { AiOutlinePlus } from "react-icons/ai";
+import axios from "axios";
 
 export default function ComercialPanel(){
     const [params, setParams] = useSearchParams();
@@ -19,13 +21,34 @@ export default function ComercialPanel(){
     const [word, setWord] = useState('');
     const [metodo, setMetodo] = useState(null); // METODO DE BUSQUEDA LINEA O CATEGORIA
     const [filter, setFilter] = useState(cotizaciones);
-        
+    const [cliente, setCliente] = useState([]);
+    const [resultados, setResultados] = useState(null);
+    const [searchCliente, setSearchCliente] = useState(null);
 
     const [openMenuId, setOpenMenuId] = useState(null);
 
     const toggleMenu = (id) => {
         setOpenMenuId(openMenuId === id ? null : id); // Si ya está abierto, ciérralo; si no, ábrelo
     };
+
+    const searchQuery = async (query) => {
+        if(!query || query == '') return setResultados(null);
+
+        const search = await axios.get('/api/cotizacion/search', {
+            params: { query: query },
+        })
+        .then((res) => {
+            setResultados(res.data)
+        })
+        .catch(err => {
+            console.log(err);
+            setResultados(null)
+            return null
+        });
+        return search
+        
+       
+    }
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -48,7 +71,7 @@ export default function ComercialPanel(){
     }, []) 
     return (
         <div className="provider">
-            <div className="containerProviders"> 
+            <div className="containerProviders Dashboard-grid"> 
                 <div className="topSection">
                     <div className="title">
                         <h1>Cotizaciones</h1>
@@ -57,11 +80,17 @@ export default function ComercialPanel(){
                         <nav>
                             <ul>
                                 <li> 
-                                    <button onClick={() => {
-                                        params.set('w', 'newCotizacion');
-                                        setParams(params);
+                                    <button className={state == 'completa' ? 'Active' : null} onClick={() => {
+                                       setState('completa')
                                     }}>
-                                        <span>Nueva Cotización</span>
+                                        <span>Completos</span>
+                                    </button>
+                                </li>
+                                <li> 
+                                    <button className={state == 'desarrollo' ? 'Active' : null} onClick={() => {
+                                        setState('desarrollo')
+                                    }}>
+                                        <span>Desarrollo</span>
                                     </button>
                                 </li>
                             </ul>
@@ -70,22 +99,114 @@ export default function ComercialPanel(){
                 </div>
                 <div className="listProviders">
                     <div className="containerListProviders">
-                        <div className="topSearch">
-                            <div className="containerTopSearch">
-                                <input type="text" placeholder="Buscar cotización" onChange={(e) => {
-                                    setWord(e.target.value)
-                                }} value={word}/>
+                        <div className="topSearchData">
+                            <div className="divideSearching">
+                                <div className="data">
+                                    <h3>Cotizaciones en el sistema ({cotizaciones?.length ? cotizaciones.length : null})</h3>
+                                    <button onClick={() => {
+                                        params.set('w', 'newCotizacion');
+                                        setParams(params);
+                                    }}>
+                                        <AiOutlinePlus className="icon" />
+                                    </button>
+                                </div>
+                                <div className="filterOptions">
+                                    <div className="inputDivA">
+                                        <div className="inputUX LargerUX">
+                                            <input type="text" placeholder="Buscar aquí..." onChange={(e) => {
+                                                setWord(e.target.value)
+                                            }} value={word} />
+                                        </div>
+                                        <div className="filtersUX ShortUX">
+                                            {
+                                                !searchCliente ?
+                                                    <button style={{width:'95%'}} name="" id="" onClick={() => {
+                                                        setSearchCliente(true)
+                                                    }} > 
+                                                        <span>Filtrar por clientes</span>
+                                                        <AiOutlinePlus className="icon" />
+                                                    </button>
+                                                :
+                                                <div className="searchResults">
+                                                    <input type="text" placeholder="Buscar cliente" onChange={(e) => {
+                                                        searchQuery(e.target.value) 
+                                                    }} onBlur={() => setSearchCliente(false)} onKeyDown={(e) => {
+                                                        if(e.key == 'Escape'){
+                                                            setSearchCliente(null);
+                                                            setResultados(null)
+                                                        }
+                                                    }}/>
+                                                </div>
+                                            }
+                                            
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                    {
+
+                                        resultados?.length ?
+                                    <div className="resultadosBusqueda">
+                                        <div className="containerResultados">
+                                                {
+                                                    resultados?.length ?
+                                                        resultados.map((r, i) => {
+                                                            return (
+                                                                    <div className="clienteResult" key={i+1} onClick={() => {
+                                                                            setCliente([...cliente, { name: r.nombre, id:r.id}])
+                                                                            setResultados(null)
+                                                                        }}>
+                                                                        <div className="divideResult">
+                                                                            <div className="letter">
+                                                                                <h3>{r.nombre.split('')[0]}</h3>
+                                                                            </div>
+                                                                            <div className="nameResult">
+                                                                                <h3>{r.nombre.toUpperCase()}</h3>
+                                                                                <span>{r.nit}</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                            )
+                                                        })
+                                                    : null
+                                                }
+                                            
+                                        </div>
+                                    </div> : null
+                                    }
+                                </div>
+                            </div>
+                        </div><br /><br />
+
+                        <div className="clientsChoose">
+                            <div className="containerClientsChoose">
+                                {
+                                    cliente?.length ?  
+                                        cliente.map((cl, i) => {
+                                            return (
+                                                <div className="client" key={i+1} onClick={() => {
+                                                    let filtado = cliente.filter(c => c.id != cl.id)
+                                                    setCliente(filtado)
+                                                }}>
+                                                    <h3>{cl.name}</h3>
+                                                    <button >
+                                                        <span>X</span>
+                                                    </button>
+                                                </div>
+                                            )
+                                        })
+                                    : null
+                                }
                             </div>
                         </div>
-                        <div className="table">
+                        <div className="table TableUX">
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>Nombre</th>
-                                        <th>Cliente</th>
-                                        <th>Nro</th>
-                                        <th>fecha</th>
-                                        <th>Estado</th>
+                                        <th>Número</th>
+                                        <th>Cotizacion</th>
+                                        <th></th>
+                                        <th></th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -101,8 +222,10 @@ export default function ComercialPanel(){
                                                 const busqueda = word ? pro.name.toLowerCase().includes(word.toLowerCase()) : true;
                                                 const idVisible = String(21719 + Number(pro.id));
                                                 const coincidePorId = idVisible.includes(searchTerm);
-
-                                                return busqueda || coincidePorId; 
+                                                const porCliente = cliente.length > 0 
+                                                ? cliente.some(cliente => cliente.id === pro.clientId) 
+                                                : true;
+                                                return (busqueda || coincidePorId) && porCliente; 
                                             }).map((coti, i) => {
                                                 return (
                                                     <CotizacionItem cotizacionn={coti} key={i+1} openMenuId={openMenuId} toggleMenu={toggleMenu} />
