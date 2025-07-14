@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import ModalNewKit from "./modal/newCotizacion";
 import CotizacionItem from "./cotizacionItem";
@@ -24,7 +24,7 @@ export default function ComercialPanel(){
     const [cliente, setCliente] = useState([]);
     const [resultados, setResultados] = useState(null);
     const [searchCliente, setSearchCliente] = useState(null);
-
+    const inputRef = useRef(null);
     const [openMenuId, setOpenMenuId] = useState(null);
 
     const toggleMenu = (id) => {
@@ -66,6 +66,11 @@ export default function ComercialPanel(){
       }, [openMenuId]); 
 
     
+      useEffect(() => {
+        if(inputRef && searchCliente){
+            inputRef.current.focus()
+        }
+      }, [searchCliente])
     useEffect(() => {
         dispatch(actions.axiosToGetCotizaciones(true, user.user.id))
     }, []) 
@@ -93,8 +98,8 @@ export default function ComercialPanel(){
                                         <span>Aprobadas</span>
                                     </button>
                                 </li>
-                            </ul> */}
-                        </nav>
+                            </ul> 
+                        </nav>*/}
                     </div>
                 </div>
                 <div className="listProviders">
@@ -113,7 +118,7 @@ export default function ComercialPanel(){
                                 <div className="filterOptions">
                                     <div className="inputDivA">
                                         <div className="inputUX LargerUX">
-                                            <input type="text" placeholder="Buscar aquí..." onChange={(e) => {
+                                            <input type="text"  placeholder="Buscar aquí..." onChange={(e) => {
                                                 setWord(e.target.value)
                                             }} value={word} />
                                         </div>
@@ -128,7 +133,7 @@ export default function ComercialPanel(){
                                                     </button>
                                                 :
                                                 <div className="searchResults">
-                                                    <input type="text" placeholder="Buscar cliente" onChange={(e) => {
+                                                    <input type="text" ref={inputRef} placeholder="Buscar cliente" onChange={(e) => {
                                                         searchQuery(e.target.value) 
                                                     }} onBlur={() => setSearchCliente(false)} onKeyDown={(e) => {
                                                         if(e.key == 'Escape'){
