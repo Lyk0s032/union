@@ -77,23 +77,23 @@ export default function ComercialPanel(){
                         <h1>Cotizaciones</h1>
                     </div>
                     <div className="optionsFast">
-                        <nav>
+                        {/* <nav>
                             <ul>
                                 <li> 
                                     <button className={state == 'completa' ? 'Active' : null} onClick={() => {
                                        setState('completa')
                                     }}>
-                                        <span>Completos</span>
+                                        <span>Pendientes</span>
                                     </button>
                                 </li>
                                 <li> 
                                     <button className={state == 'desarrollo' ? 'Active' : null} onClick={() => {
                                         setState('desarrollo')
                                     }}>
-                                        <span>Desarrollo</span>
+                                        <span>Aprobadas</span>
                                     </button>
                                 </li>
-                            </ul>
+                            </ul> */}
                         </nav>
                     </div>
                 </div>
