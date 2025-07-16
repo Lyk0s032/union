@@ -41,7 +41,7 @@ export default function Analisis(props){
                                         data.requisicion && data.requisicion.length ? 
                                             data.requisicion.map((r,i) => {
                                                 return (
-                                                    <h4 key={i+1}>#{i+1} {r.nombre}</h4>
+                                                    <h4 key={i+1}>#{i+1} {r.name}</h4>
                                                 )
                                             })
                                         :null
@@ -51,6 +51,47 @@ export default function Analisis(props){
                             </div>
                         </div> 
                     </div>
+                    <div className="allMateriaPrima">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>KIT'S</th>
+                                <th></th>
+                                <th></th>
+                                <th>Cantidad a pedir</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                data.resumenKits && data.resumenKits.length ?
+                                    data.resumenKits.map((r,i) => {
+                                        return (
+                                            <tr key={i+1}>
+                                                <td>
+                                                    <div className='about'>
+                                                        <span>Item id: {r.id}</span><br />
+                                                        <strong>{r.nombre}</strong>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                </td>
+                                                <td>
+                                                </td>
+                                                <td>
+                                                    <div className="price">
+                                                        <span>{r.cantidad}</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        )
+                                    })
+                                :
+                                <h1>Nada</h1>
+                            }
+                                        
+                            </tbody>
+                        </table>
+                    </div><br />
                     <div className="allMateriaPrima">
                     <table>
                         <thead>

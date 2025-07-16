@@ -345,7 +345,7 @@ body button {
 .modal .containerModal .cotizacionBody .cotizacionFuente .topCoti .divideTop .left h1 {
   font-weight: 600;
   margin-bottom: 15px;
-  font-size: 12px;
+  font-size: 14px;
   color: #454f5b;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .topCoti .divideTop .left .item {
@@ -357,12 +357,12 @@ body button {
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .topCoti .divideTop .left .item h3 {
   font-weight: 500;
-  font-size: 12px;
+  font-size: 14px;
   color: #454f5b;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .topCoti .divideTop .left .item h4 {
   font-weight: 400;
-  font-size: 12px;
+  font-size: 14px;
   color: #666;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .clientTopData {
@@ -395,12 +395,12 @@ body button {
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .clientTopData .divideTopData .left .item h3 {
   font-weight: 500;
-  font-size: 12px;
+  font-size: 14px;
   color: #454f5b;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .clientTopData .divideTopData .left .item h4 {
   font-weight: 400;
-  font-size: 12px;
+  font-size: 14px;
   color: #666;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias {
@@ -414,7 +414,7 @@ body button {
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias .titleHere h3 {
   font-weight: 400;
-  font-size: 12px;
+  font-size: 14px;
   color: #046290;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData {
@@ -425,7 +425,7 @@ body button {
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla h4 {
   font-weight: 500;
-  font-size: 12px;
+  font-size: 14px;
   color: #454f5b;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla .final {
@@ -446,7 +446,7 @@ body button {
   border-bottom: 1px solid #ccc;
   text-align: right;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 14px;
   color: #454f5b;
   width: auto;
 }
@@ -457,7 +457,7 @@ body button {
   cursor: pointer;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla table tbody tr td {
-  font-size: 12px;
+  font-size: 14px;
   padding: 15px 10px;
   box-sizing: border-box;
   color: #666;
@@ -473,9 +473,8 @@ body button {
   width: 10%;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla table tbody .total td {
-  font-weight: 5
-                                        00;
-  font-size: 12px;
+  font-weight: 600;
+  font-size: 14px;
 }
 .modal .containerModal .cotizacionBody .optionDownload {
   box-sizing: border-box;
@@ -1422,6 +1421,7 @@ body button {
   display: flex;
   align-items: center;
   justify-content: end;
+  position: initial;
 }
 .modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMPKits .area .topTitleArea .divide .right .menu-container button {
   background-color: transparent;
@@ -1434,15 +1434,14 @@ body button {
   color: #FFF;
 }
 .modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMPKits .area .topTitleArea .divide .right .menu-container .menu-dropdown {
-  background-color: red;
   /* Posicionamiento y tamaño base */
   right: 0;
   top: 0;
   padding: 5px 0px;
   border-radius: 5px;
   margin-right: 20px;
-  width: 40%;
   position: absolute;
+  width: 100%;
   z-index: 5;
   background-color: #FFF;
   border: 1px solid #ccc;
@@ -1494,6 +1493,10 @@ body button {
   /* Escala normal */
   pointer-events: auto;
   /* Habilita clics cuando está abierto */
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMPKits .area .topTitleArea .divide .right .menu-container .Exception {
+  position: absolute;
+  width: 50%;
 }
 .modal .Complete .bodyModalBig .page .selectItems .leftKit .middleData .tableItemsMPKits .area .topTitleArea .divide .right .btn {
   background-color: transparent;
@@ -5131,6 +5134,27 @@ body button {
   background: #d9e2ec;
   color: #046290;
 }
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA .filtersUX .choose {
+  background-color: #d9e2ec;
+  border-radius: 0px 20px 20px 0px;
+  height: 100%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA .filtersUX .choose button {
+  border: 1px solid #d9e2ec;
+  margin-left: 5px;
+  border-radius: 30px;
+  transition: 0.3s;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA .filtersUX .choose button span {
+  transition: 0.3s;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA .filtersUX .choose .Active {
+  border: 1px solid #046290;
+  background-color: #046290;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA .filtersUX .choose .Active span {
+  color: #FFF;
+}
 .ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA .filtersUX button {
   width: 30%;
   background-color: transparent;
@@ -5257,6 +5281,130 @@ body button {
 }
 .ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .clientsChoose .containerClientsChoose .client:hover {
   transform: scale(1.1);
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody .long {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0px 10px;
+  margin-bottom: 5px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody .long tr {
+  width: 100%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody .long tr td {
+  vertical-align: middle;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody .long tr td input {
+  width: 70%;
+  padding: 5px 10px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody .long tr td .type {
+  width: 55%;
+  border-radius: 5px;
+  border: 1px solid #d9e2ec;
+  box-sizing: border-box;
+  padding: 5px 10px;
+  background-color: #d9e2ec;
+  color: #046290;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody .long tr td .timeSelect {
+  width: 100%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody .long .divListSubCondicions {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0px 0px;
+  border: 1px solid #f0f4f8;
+  display: grid;
+  /* Por defecto, la fila del grid tiene tamaño 0, por lo que está colapsado */
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s ease-in-out;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody .long .divListSubCondicions .containerThat {
+  width: 92.8%;
+  margin-left: auto;
+  overflow: hidden;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody .long .divListSubCondicions .containerThat .subCondicions {
+  cursor: pointer;
+  padding: 15px 0px;
+  box-sizing: border-box;
+  /* La magia de la transición suave */
+  transition: max-height 0.35s ease-in-out;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody .long .divListSubCondicions .containerThat .subCondicions .containerSubCondicions {
+  display: flex;
+  align-items: center;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody .long .divListSubCondicions .containerThat .subCondicions .containerSubCondicions .step {
+  width: 30px;
+  height: 30px;
+  border-radius: 20px;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody .long .divListSubCondicions .containerThat .subCondicions .containerSubCondicions .step h3 {
+  font-weight: 400;
+  font-size: 12px;
+  color: #FFF;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody .long .divListSubCondicions .containerThat .subCondicions .containerSubCondicions .description {
+  margin-left: 10px;
+  width: 65%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody .long .divListSubCondicions .containerThat .subCondicions .containerSubCondicions .description h3 {
+  font-weight: 400;
+  font-size: 14px;
+  color: #046290;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody .long .divListSubCondicions .containerThat .subCondicions .containerSubCondicions .momentoPago {
+  width: 20%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody .long .divListSubCondicions .containerThat .subCondicions .containerSubCondicions .momentoPago span {
+  font-size: 12px;
+  color: #666;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody .long .divListSubCondicions.Open {
+  grid-template-rows: 1fr;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody .New {
+  width: 100%;
+  border: 2px solid #046290;
+  border-radius: 5px;
+  padding: 10px 10px;
+  box-sizing: border-box;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody .New td {
+  width: 100%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody .New .codingg {
+  width: 5%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody .New .largo {
+  width: 74%;
+  padding: 10px 20px;
+  box-sizing: border-box;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody .New .days {
+  width: 15%;
+  padding-right: 10px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody .New .days select {
+  width: 100%;
+  background-color: #d9e2ec;
+  border: 1px solid #d9e2ec;
+  padding: 5px 10px;
+  box-sizing: border-box;
+  color: #046290;
+  border-radius: 5px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody .New .btns {
+  width: 10;
 }
 .ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody tr td {
   transition: 0.3s;

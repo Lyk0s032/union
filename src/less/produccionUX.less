@@ -134,6 +134,27 @@
                                                         background: #d9e2ec;
                                                         color: @bgAzulDark;
                                                     }
+                                                    .choose{
+                                                        background-color: #d9e2ec;
+                                                        border-radius: 0px 20px 20px 0px;
+                                                        height:100%;
+                                                        button{
+                                                            border:1px solid #d9e2ec;
+                                                            margin-left:5px;
+                                                            border-radius: 30px;
+                                                            transition: .3s;
+                                                            span{
+                                                                transition: .3s;
+                                                            }
+                                                        }
+                                                        .Active{
+                                                            border:1px solid @bgAzulDark;
+                                                            background-color: @bgAzulDark;
+                                                            span{
+                                                                color: @bgDefault;
+                                                            }
+                                                        }
+                                                    }
                                                     button{
                                                         width:30%;
                                                         background-color: transparent;
@@ -275,8 +296,140 @@
                                 }
                                 .TableUX{
                                     table{
-                                       
                                         tbody{
+                                            
+                                            .long{
+                                                box-sizing: border-box;
+                                                width:100%;
+                                                padding:0px 10px;
+                                                margin-bottom: 5px;
+                                                tr{
+                                                    width:100%;
+                                                    td{
+                                                        vertical-align: middle;
+                                                    
+                                                        input{
+                                                            width:70%;
+                                                            padding:5px 10px;
+                                                            box-sizing: border-box;
+                                                            border-radius: 5px;
+                                                            border:1px solid #ccc;
+                                                        }
+                                                        .type{
+                                                            width:55%;
+                                                            border-radius: 5px;
+                                                            border:1px solid #d9e2ec;
+                                                            box-sizing: border-box;
+                                                            padding:5px 10px;
+                                                            background-color: #d9e2ec;
+                                                            color: @bgAzulDark;
+                                                        }
+                                                        .timeSelect{
+                                                            width:100%;
+                                                        }
+                                                    }
+                                                    
+                                                }
+                                                
+                                                .divListSubCondicions{
+                                                    box-sizing: border-box;
+                                                    width:100%;
+                                                    padding:0px 0px;
+                                                    border:1px solid #f0f4f8;
+                                                    display: grid;
+                                                    /* Por defecto, la fila del grid tiene tamaño 0, por lo que está colapsado */
+                                                    grid-template-rows: 0fr;
+                                                    transition: grid-template-rows 0.35s ease-in-out;
+                                                    .containerThat{
+                                                        width:92.8%;
+                                                        margin-left: auto;
+                                                        overflow: hidden;
+                                                        .subCondicions{
+                                                            box-sizing: border-box;
+                                                            cursor: pointer;
+                                                            padding:15px 0px;
+                                                            box-sizing: border-box;
+                                                            
+
+                                                            /* La magia de la transición suave */
+                                                            transition: max-height 0.35s ease-in-out;
+                                                            .containerSubCondicions{
+                                                                display: flex;
+                                                                align-items: center;
+                                                                .step{
+                                                                    width:30px;
+                                                                    height: 30px;
+                                                                    border-radius: 20px;
+                                                                    background-color: black;
+                                                                    display: flex;
+                                                                    align-items: center;
+                                                                    justify-content: space-around;
+                                                                    h3{
+                                                                        font-weight: 400;
+                                                                        font-size: 12px;
+                                                                        color: @bgDefault;
+                                                                    }
+                                                                }
+                                                                .description{
+                                                                    margin-left:10px;
+                                                                    width:65%;
+                                                                    h3{
+                                                                        font-weight: 400;
+                                                                        font-size: 14px;
+                                                                        color: @bgAzulDark;
+                                                                    }
+                                                                    
+                                                                }
+                                                                .momentoPago{
+                                                                    width:20%;
+                                                                    span{
+                                                                        font-size: 12px;
+                                                                        color: #666;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        
+                                                    } 
+                                                }
+                                                .divListSubCondicions.Open{
+                                                    grid-template-rows: 1fr;
+                                                }
+                                            }
+                                            .New{
+                                                    width:100%;
+                                                    border:2px solid @bgAzulDark;
+                                                    border-radius: 5px;
+                                                    padding:10px 10px;
+                                                    box-sizing: border-box;
+                                                    td{
+                                                        width:100%;
+                                                    }
+                                                    .codingg{
+                                                        width:5%;
+                                                    }
+                                                    .largo{
+                                                        width: 74%;
+                                                        padding:10px 20px;
+                                                        box-sizing: border-box;
+                                                    }
+                                                    .days{
+                                                        width: 15%;
+                                                        padding-right: 10px;
+                                                        select{
+                                                            width:100%;
+                                                            background-color: #d9e2ec;
+                                                            border:1px solid #d9e2ec;
+                                                            padding:5px 10px;
+                                                            box-sizing: border-box;
+                                                            color: @bgAzulDark;
+                                                            border-radius: 5px;
+                                                        }
+                                                    }
+                                                    .btns{
+                                                        width:10;
+                                                    }
+                                                }
                                             tr{
                                                 td{
                                                     transition: .3s;

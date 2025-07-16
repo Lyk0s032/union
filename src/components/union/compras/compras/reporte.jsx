@@ -32,7 +32,7 @@ export default function ReporteTable(props){
         })
         return getData; 
     } 
-
+    console.log(data)
     return (
         <div className="reporte">
             <table>

@@ -4,6 +4,8 @@ import LeftNav from './leftNav';
 import ComercialPanel from './comercial';
 import PanelGaleria from './galeria/panelGaleria';
 import RouteClient from './clientes/routeClient';
+import CondicionesPanel from './condiciones/condiciones';
+import ListaDePreciosPanel from './listaPrecios/listaPrecios';
 
 export default function RoutesComercial(){
     const [params, setParams] = useSearchParams();
@@ -20,7 +22,8 @@ export default function RoutesComercial(){
                             <Route path="/*" element={<ComercialPanel />} />
                             <Route path="/galeria/*" element={<PanelGaleria />} />
                             <Route path="/clients/*" element={<RouteClient />} />
-                        
+                            <Route path="/condiciones/*" element={<CondicionesPanel />} />
+                            <Route path="/precios/*" element={<ListaDePreciosPanel />} />
                         </Routes>
                     </div> 
                 </div>

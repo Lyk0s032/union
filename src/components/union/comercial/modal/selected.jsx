@@ -121,7 +121,7 @@ export default function SelectedKits({ number, selectArea, cotizacion, area}){
                 selectArea(area.id)
             }}>
                 <div className="divide">
-                    <div className="left">  {console.log(area)}
+                    <div className="left">
                         {
                              edit ?
                              <input type="text" id={area.id} ref={inputRef} className="inputVisible"  value={name} 
@@ -138,13 +138,13 @@ export default function SelectedKits({ number, selectArea, cotizacion, area}){
                                 }else{
                                     selectArea(area.id)
                                 }
-                            }}>{area.name}</h3>
+                            }}>{area.name} </h3>
                         }
                     </div>
                     <div className="right">
                         <div className="menu-container">
                             {openMenuId === area.id && ( // Renderizado condicional para mostrar/ocultar
-                                <div className="menu-dropdown" role="menu" aria-orientation="vertical"
+                                <div className="menu-dropdown Exception" role="menu" aria-orientation="vertical"
                                     aria-labelledby={`menu-button-${area.id}`}>
                                         <div className="panel">
                                             <div className="title">
@@ -202,7 +202,7 @@ export default function SelectedKits({ number, selectArea, cotizacion, area}){
                                         </div>
                                 </div>
                             )}
-                                    </div>
+                        </div>
                         <button onClick={handleAccordionToggle} className={isAccordionOpen ? 'btn Rotated' : 'btn'}>
                             <MdOutlineKeyboardArrowDown className={isAccordionOpen ? 'icon Rotated' : 'icon'} />
                         </button> 

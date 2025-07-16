@@ -59,6 +59,20 @@ export default function LeftNav(){
                                         <span>Clientes</span>
                                     </div>
                                 </li>
+                                <li className={location.pathname === '/comercial/condiciones' ||  location.pathname === '/comercial/clients/' ? 'Active' : null } onClick={() => {
+                                    navigate('/comercial/condiciones')
+                                }}>
+                                    <div>
+                                        <span>Condiciones comerciales</span>
+                                    </div>
+                                </li>
+                                <li className={location.pathname === '/comercial/precios' ||  location.pathname === '/comercial/clients/' ? 'Active' : null } onClick={() => {
+                                    navigate('/comercial/precios')
+                                }}>
+                                    <div>
+                                        <span>Lista de precios</span>
+                                    </div>
+                                </li>
                                 {/* <li onClick={() => {
                                     navigate('/compras/mp')
                                 }}>
