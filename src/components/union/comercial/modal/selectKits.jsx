@@ -566,7 +566,7 @@ function ModalServices({ number, cotizacion, closeOpen }){
         searchServices()
     }, [])
     return (
-            <div className="modal">
+            <div className="modal" style={{zIndex:5}}>
                 <div className="hiddenModal" onClick={() => closeOpen()}></div>
                     <div className="containerModal Small">
                         <div className="headerModal" style={{paddingLeft:40}}>
