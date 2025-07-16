@@ -41,7 +41,7 @@ export default function Analisis(props){
                                         data.requisicion && data.requisicion.length ? 
                                             data.requisicion.map((r,i) => {
                                                 return (
-                                                    <h4 key={i+1}>#{i+1} {r.name}</h4>
+                                                    <h4 key={i+1}>{`${Number(21719 + r.id)}`} {r.name} {r.cotizacionId}</h4>
                                                 )
                                             })
                                         :null
