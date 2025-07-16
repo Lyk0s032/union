@@ -62,6 +62,46 @@ export default function ShowRequisicion(){
                                     <thead>
                                         <tr>
                                             <th>Item</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th>Cantidad a pedir</th>
+                                        </tr>
+                                    </thead>{console.log(requisicion)}
+                                    <tbody>
+                                        {
+                                            requisicion.resumenKits && requisicion.resumenKits.length ?
+                                                requisicion.resumenKits.map((r,i) => {
+                                                    return (
+                                                        <tr key={i+1}>
+                                                            <td>
+                                                                <div className='about'>
+                                                                    <span>Código Kit: {r.id}</span><br />
+                                                                    <strong>{r.nombre}</strong>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                            </td>
+                                                            <td>
+                                                                
+                                                            </td>
+                                                            <td>
+                                                                <div className="price">
+                                                                    <span>{r.cantidad}</span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                })
+                                            :
+                                            null
+                                        }
+                                        
+                                    </tbody>
+                                </table><br /><br />
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Item</th>
                                             <th>Medida Original</th>
                                             <th>M. consumo</th>
                                             <th>Cantidad a pedir</th>
@@ -121,7 +161,7 @@ export default function ShowRequisicion(){
                                                     )
                                                 })
                                             :
-                                            <h1>Nada</h1>
+                                            null
                                         }
                                         
                                     </tbody>
