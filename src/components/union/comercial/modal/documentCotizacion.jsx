@@ -392,7 +392,7 @@ export default function DocumentCotizacion(){
                                                                                         <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.kitCotizacion.precio - it.kitCotizacion.descuento + Number(Number(it.kitCotizacion.precio - it.kitCotizacion.descuento).toFixed(0) * (0.19))).toFixed(0))}</td>
                                                                                         :
                                                                                          it.cantidad ?
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.precio - it.descuento + Number(Number(it.precio - it.descuento).toFixed(0)) ).toFixed(0))}</td>
+                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.precio - it.descuento + Number(Number(it.precio - it.descuento).toFixed(0) * (0.19)) ).toFixed(0))}</td>
                                                                                         :
                                                                                         <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.precio  - it.armadoCotizacion.descuento + Number(Number(it.armadoCotizacion.precio - it.armadoCotizacion.descuento).toFixed(0)) * (0.19)).toFixed(0))}</td>
                                                                                     
