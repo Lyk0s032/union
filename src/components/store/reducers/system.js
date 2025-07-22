@@ -19,7 +19,10 @@ const initialState = {
     loadingFiltros: null,
 
     porcentajes: null,
-    loadingPorcentajes: false
+    loadingPorcentajes: false,
+
+    condiciones: null,
+    loadingCondiciones: false
 
 }
 
@@ -102,6 +105,22 @@ export default function (state = initialState, action) {
                 loadingPorcentajes: false
             }
         }
+
+        case types.GET_CONDICIONES:{
+            return {
+                ...state,
+                condiciones: action.payload,
+                loadingCondiciones: false
+            }
+        }
+
+        case types.GETTING_CONDICIONES: {
+            return {
+                ...state,
+                loadingCondiciones: false
+            }
+        }
+
         default:
             return {...state}
     }

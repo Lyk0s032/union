@@ -11,23 +11,20 @@ export default function CondicionesPanel(){
     const [params, setParams] = useSearchParams();
 
     const dispatch = useDispatch();
-    const cotizacions = useSelector(store => store.cotizacions);
-    const { cotizaciones, loadingCotizaciones } = cotizacions;
+    const system = useSelector(store => store.system);
+    const { condiciones, loadingCondiciones } = system;
+
     const usuario = useSelector(store => store.usuario);
     const { user } = usuario;
-    const [state, setState] = useState('completa');      
     const [word, setWord] = useState('');
-    const [metodo, setMetodo] = useState(null); // METODO DE BUSQUEDA LINEA O CATEGORIA
-    const [filter, setFilter] = useState(cotizaciones);
     const [cliente, setCliente] = useState([]);
-    const [resultados, setResultados] = useState(null);
-    const [searchCliente, setSearchCliente] = useState(null);
-    const inputRef = useRef(null);
     const [openMenuId, setOpenMenuId] = useState(null);
     const [create, setCreate] = useState(null);
 
 
-    
+    useEffect(() => { 
+        dispatch(actions.axiosToGetCondiciones(true))
+    }, [])
     return (
         <div className="provider">
             <div className="containerProviders Dashboard-grid"> 
@@ -61,7 +58,7 @@ export default function CondicionesPanel(){
                         <div className="topSearchData">
                             <div className="divideSearching">
                                 <div className="data">
-                                    <h3>Condiciones en el sistema ({cotizaciones?.length ? cotizaciones.length : null})</h3>
+                                    <h3>Condiciones en el sistema ({condiciones?.length ? condiciones.length : null})</h3>
                                     <button onClick={() => {
                                         setCreate(true)
                                     }}>
@@ -91,28 +88,24 @@ export default function CondicionesPanel(){
                                         :null
                                     }
                                     {
-                                        !cotizaciones || loadingCotizaciones ?
+                                        
+                                        !condiciones && loadingCondiciones ?
                                             <h1>Cargando</h1>
-                                        : cotizaciones == 404 || cotizaciones == 'notrequest' ? null
+                                        :!condiciones ? <h1>Espera</h1>
+                                        : condiciones == 404 || condiciones == 'notrequest' ?
+                                            <div className="boxMessage">
+                                                <h3>No hemos logrado cargar esto</h3>
+                                            </div>
                                         :
-                                        cotizaciones?.length ?
-                                            cotizaciones.filter(pro => {
-                                                const searchTerm = word.toLowerCase();
-                                                const busqueda = word ? pro.name.toLowerCase().includes(word.toLowerCase()) : true;
-                                                const idVisible = String(21719 + Number(pro.id));
-                                                const coincidePorId = idVisible.includes(searchTerm);
-                                                const porCliente = cliente.length > 0 
-                                                ? cliente.some(cliente => cliente.id === pro.clientId) 
-                                                : true;
-                                                return (busqueda || coincidePorId) && porCliente; 
-                                            }).map((coti, i) => {
+                                        condiciones?.length ?
+                                            condiciones.map((condi, i) => {
                                                 return (
-                                                    <CondicionesItem cotizacionn={coti} key={i+1} openMenuId={openMenuId} />
+                                                    <CondicionesItem condicion={condi} key={i+1} openMenuId={openMenuId} />
                                                 )
                                             })
                                         :null
                                     }
-                                </tbody>
+                                </tbody> 
                             </table>
                         </div>
                     </div>

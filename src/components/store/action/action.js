@@ -513,6 +513,41 @@ export function axiosToGetSuperKit(carga, spkit){
 
 
 
+// CONDICIONES
+// ------------------------------
+export function getCondiciones(data){
+    return {
+        type: types.GET_CONDICIONES,
+        payload: data
+    }
+}
+export function gettingCondiciones(carga){
+    return {
+        type: types.GETTING_CONDICIONES,
+        payload: carga
+    }
+}
+
+export function axiosToGetCondiciones(carga){
+    return function(dispatch){ 
+        dispatch(gettingCondiciones(carga))
+        axios.get(`/api/cotizacion/condiciones/get/all`)
+        .then((info) => info.data) 
+        .then(inf => {
+            return dispatch(getCondiciones(inf))
+        })
+        .catch((e) => {
+            console.log(e)
+            if(e.request){
+                return dispatch(getCondiciones('notrequest'));
+            }else{
+                return dispatch(getCondiciones(404))
+
+            }
+        });
+    }
+}
+
 
 
 // COTIZACIONES
@@ -726,3 +761,145 @@ export function axiosToGetClient(carga, ruta){
     }
 }
 
+// ADMINISTRACIÓN
+// CONDICIONES
+// ------------------------------
+export function getGraphProducto(data){
+    return {
+        type: types.GET_GRAPH_PRODUCTO,
+        payload: data
+    }
+}
+export function gettingGraphProducto(carga){
+    return {
+        type: types.GETTING_GRAPH_PRODUCTO,
+        payload: carga
+    }
+}
+
+export function axiosToGetGraphProducto(carga, ahora, atras, categoriaId, lineaId){
+    return function(dispatch){ 
+        dispatch(gettingGraphProducto(carga))
+         const queryParams = {
+            categoriaId: categoriaId || undefined,
+            lineaId: lineaId || undefined,  
+        }; 
+        axios.get(`/api/materia/producto/get/graph/groups/${ahora}/${atras}`, {params: queryParams})
+        .then((info) => info.data) 
+        .then(inf => {
+            return dispatch(getGraphProducto(inf))
+        })
+        .catch((e) => {
+            console.log(e)
+            if(e.request){
+                return dispatch(getGraphProducto('notrequest'));
+            }else{
+                return dispatch(getGraphProducto(404))
+            }
+        });
+    }
+}
+
+// OK
+export function getProduccionKits(data){
+    return {
+        type: types.GET_PRODUCCION,
+        payload: data
+    }
+}
+export function gettingProduccionKits(carga){
+    return {
+        type: types.GETTING_PRODUCCION,
+        payload: carga
+    }
+}
+
+export function axiosToGetProduccionKits(carga){
+    return function(dispatch){ 
+        dispatch(gettingProduccionKits(carga))
+        axios.get(`/api/kit/get/administration/kits`)
+        .then((info) => info.data) 
+        .then(inf => {
+            return dispatch(getProduccionKits(inf))
+        })
+        .catch((e) => {
+            if(e.request){
+                return dispatch(getProduccionKits('notrequest'));
+            }else{
+                return dispatch(getProduccionKits(404))
+            }
+        });
+    }
+}
+
+
+export function getGraphKits(data){
+    return {
+        type: types.GET_GRAPH_KITS,
+        payload: data
+    }
+}
+export function gettingGraphKits(carga){
+    return {
+        type: types.GETTING_GRAPH_KITS,
+        payload: carga
+    }
+}
+
+export function axiosToGetGraphKits(carga, ahora, atras, categoriaId, lineaId, extensionId){
+    return function(dispatch){ 
+        dispatch(gettingGraphKits(carga))
+         const queryParams = {
+            categoriaId: categoriaId || undefined,
+            lineaId: lineaId || undefined, 
+            extensionId: extensionId || undefined 
+        }; 
+        axios.get(`/api/kit/get/graph/groups/${ahora}/${atras}`, {params: queryParams})
+        .then((info) => info.data) 
+        .then(inf => {
+            return dispatch(getGraphKits(inf))
+        })
+        .catch((e) => {
+            console.log(e)
+            if(e.request){
+                return dispatch(getGraphKits('notrequest'));
+            }else{
+                return dispatch(getGraphKits(404))
+            }
+        });
+    }
+}
+
+
+
+export function getCotizacionesAdmin(data){
+    return {
+        type: types.GET_COTIZACIONES_ADMIN,
+        payload: data
+    }
+}
+export function gettingCotizacionesAdmin(carga){
+    return {
+        type: types.GETTING_COTIZACIONES_ADMIN,
+        payload: carga
+    }
+}
+
+export function axiosToGetCotizacionesAdmin(carga){
+    return function(dispatch){ 
+        dispatch(gettingCotizacionesAdmin(carga))
+        axios.get(`/api/cotizacion/admin/getAll`)
+        .then((info) => info.data) 
+        .then(inf => {
+            return dispatch(getCotizacionesAdmin(inf))
+        })
+        .catch((e) => {
+            console.log(e)
+            if(e.request){
+                return dispatch(getCotizacionesAdmin('notrequest'));
+            }else{
+                return dispatch(getCotizacionesAdmin(404))
+            }
+        });
+    }
+}

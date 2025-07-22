@@ -5,7 +5,6 @@ import html2pdf from "html2pdf.js";
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import axios from 'axios';
-
 export default function DocumentCotizacion(){
     const [params, setParams] = useSearchParams(); 
 
@@ -63,7 +62,6 @@ export default function DocumentCotizacion(){
     const obtenerNombreMunicipio = useCallback(async (codigoConPunto) => {
         try {
             const codigoLimpio = String(codigoConPunto).replace('.', '');
-            console.log('Código limpio', codigoLimpio)
             const url = `https://www.datos.gov.co/resource/xdk5-pm3f.json?c_digo_dane_del_municipio=${codigoLimpio}`;
             const respuesta = await axios.get(url);
 
@@ -87,7 +85,7 @@ export default function DocumentCotizacion(){
     // // Ahora esta lista de dependencias es segura y estable
     // }, [cotizacion, obtenerNombreMunicipio]);
     return ( 
-        <div className="modal" style={{zIndex:10}}> 
+        <div className="modal" style={{zIndex:10}}> {console.log(cotizacion)}
             <div className="hiddenModal" onClick={() => {
                 params.delete('watch');
                 setParams(params);
@@ -106,7 +104,7 @@ export default function DocumentCotizacion(){
                             <div className="topCoti">
                                 <div className="divideTop">
                                     <div className="left">
-                                        <h1>Modulares Costa Gomez SAS</h1>
+                                        <h1>MODULARES COSTA GOMEZ SAS</h1>
                                         <div className="item">
                                             <h3>
                                                 NIT:
@@ -129,7 +127,7 @@ export default function DocumentCotizacion(){
                                     <div className="left">
                                         <div className="item">
                                             <h3>
-                                                NÚMERO:
+                                                NRO. COTIZACIÓN:
                                             </h3>
                                             <h4> MDC-CV-{Number(21719)+Number(cotizacion.id)}</h4>
                                         </div>
@@ -139,6 +137,24 @@ export default function DocumentCotizacion(){
                                             </h3>
                                             <h4>{cotizacion.time ? cotizacion.time.split('T')[0] : 0}</h4>
                                         </div>
+                                        <div className="item">
+                                            <h3>
+                                                ASESOR COMERCIAL:
+                                            </h3>
+                                            <h4>{cotizacion.user.name.toUpperCase()} {cotizacion.user.lastName.toUpperCase()}</h4>
+                                        </div>
+                                        <div className="item">
+                                            <h3>
+                                                CORREO DEL ASESOR:
+                                            </h3>
+                                            <h4>{cotizacion.user.email.toUpperCase()}</h4>
+                                        </div>
+                                        <div className="item">
+                                            <h3>
+                                                TELÉFONO DEL ASESOR:
+                                            </h3>
+                                            <h4>{cotizacion.user.phone.toUpperCase()}</h4>
+                                        </div>
                                     </div> 
                                 </div>
                             </div>
@@ -147,15 +163,9 @@ export default function DocumentCotizacion(){
                                     <div className="left">
                                         <div className="item">
                                             <h3>
-                                                Cliente:
+                                                CLIENTE:
                                             </h3>
                                             <h4> {cotizacion.client.nombre.toUpperCase()}</h4>
-                                        </div>
-                                        <div className="item">
-                                            <h3>
-                                                CONTACTO:
-                                            </h3>
-                                            <h4> {cotizacion.client.phone}</h4>
                                         </div>
                                         <div className="item">
                                             <h3>
@@ -185,12 +195,7 @@ export default function DocumentCotizacion(){
                                         </div>
                                     </div> 
                                     <div className="left">
-                                        <div className="item">
-                                            <h3>
-                                                VENDEDOR:
-                                            </h3>
-                                            <h4>{cotizacion.user.nick.toUpperCase()}</h4>
-                                        </div>
+                                        
                                         {/* <div className="item">
                                             <h3>
                                                 FORMA DE PAGO:
@@ -203,6 +208,24 @@ export default function DocumentCotizacion(){
                                             </h3>
                                             <h4>PESOS</h4>
                                         </div>
+                                        <div className="item">
+                                            <h3>
+                                                TIEMPO ENTREGA:
+                                            </h3>
+                                            <h4>{cotizacion.days} DÍAS</h4>
+                                        </div>
+                                        <div className="item">
+                                            <h3>
+                                                CONDICIÓN COMERCIAL:
+                                            </h3>
+                                            <h4>
+                                                {
+                                                    cotizacion.condicionesPago ?
+                                                        cotizacion.condicionesPago.nombre.toUpperCase()
+                                                    :null
+                                                }
+                                            </h4>
+                                        </div>
                                         {/* <div className="item">
                                             <h3>
                                                 VALIDA HASTA:
@@ -214,40 +237,69 @@ export default function DocumentCotizacion(){
                             </div>
 
                             <div className="referencias">
-                                <div className="titleHere">
-                                    <h3>
-                                        Cotización
-                                    </h3>
-                                </div>
+
                                 <div className="tableData">
                                     {
                                         cotizacion.areaCotizacions?.length ?
                                             cotizacion.areaCotizacions.map((area, i) => {
+                                                let a = 0;
                                                 return (
                                                     <div className="tabla">
-                                                        <h4>{area.name}</h4>
+                                                        <h4>{area.name.toUpperCase()}</h4>
                                                         <table key={i+1}>
                                                             <thead>
                                                                 <tr>
-                                                                    <th className='left'>Referencia</th>
-                                                                    <th className='left'>Descripción</th>
-                                                                    <th>Cantidad</th>
-                                                                    <th>Valor Unitario</th>
-                                                                    <th>Subtotal</th>
-                                                                    <th>Descuento</th>
-                                                                    <th>IVA</th>
-                                                                    <th>Antes de IVA</th>
-                                                                    <th>Total</th>
+                                                                    <th className='left Small'>REFERENCIA</th>
+                                                                    <th className='left Longer'>DESCRIPCIÓN</th>
+                                                                    <th className="Cantidad">CANTIDAD</th>
+                                                                    <th className="Valor">VALOR UNITARIO</th>
+                                                                    <th className="Valor">SUBTOTAL</th>
+                                                                    {/* <th>Descuento</th> */}
+                                                                    {/* <th>IVA</th> */}
+                                                                    {/* <th>Antes de IVA</th> */}
+                                                                    {/* <th>Total</th> */}
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 {
                                                                     area && area.kits?.length || area.armados?.length || area.productoCotizacions?.length ? 
                                                                         area.productoCotizacions.concat(area.serviciosCotizados).concat(area.kits).concat(area.armados).map((it,i) => {
+
+                                                                        const itemsDelArea = area.productoCotizacions.concat(area.serviciosCotizados).concat(area.kits).concat(area.armados);
+                                                                        // 1. Función auxiliar para calcular el precio total de cualquier item
+                                                                        const calcularPrecioTotal = (item) => {
+                                                                            let precioBase = 0;
+                                                                            let descuento = 0;
+
+                                                                            if (item.kitCotizacion) {
+                                                                                precioBase = Number(item.kitCotizacion.precio);
+                                                                                descuento = Number(item.kitCotizacion.descuento);
+                                                                            } else if (item.armadoCotizacion) {
+                                                                                precioBase = Number(item.armadoCotizacion.precio);
+                                                                                descuento = Number(item.armadoCotizacion.descuento);
+                                                                            } else if (item.cantidad) { // Para productos y servicios
+                                                                                precioBase = Number(item.precio);
+                                                                                descuento = Number(item.descuento);
+                                                                            }
+
+                                                                            const subtotal = precioBase - descuento;
+                                                                            // Asumo un IVA del 19% basado en el cálculo de tu columna TOTAL
+                                                                            const totalConIva = subtotal * 1.19;
+                                                                            return totalConIva;
+                                                                        };
+
+                                                                        // 2. Usa .reduce() para sumar los totales y obtener el subtotal del área
+                                                                        a = itemsDelArea.reduce((acumulador, itemActual) => {
+                                                                            // A la suma acumulada, le añade el precio total del item actual
+                                                                            return acumulador + calcularPrecioTotal(itemActual);
+                                                                        }, 0); // El '0' es el valor inicial del acumulador
+                                                                                        
+                                                                                    
                                                                             return (
                                                                                 <tr key={i+1}>
                                                                                     
-                                                                                    {
+                                                                                    
+                                                                                    { // ID
                                                                                         it.kitCotizacion ?
                                                                                             <td className='left Small'>0{it.id}</td>
                                                                 
@@ -260,87 +312,90 @@ export default function DocumentCotizacion(){
                                                                                         :
                                                                                         <td className='left Small'>SP{it.id}</td>
                                                                                     }
-                                                                                    {
+                                                                                    { // NOMBRE
                                                                                         it.cantidad && it.producto ?
-                                                                                            <td className='left'>{it.producto.item} {it.medida && (`| ${it.medida}`)}</td>
+                                                                                            <td className='left Longer'>{it.producto.item.toUpperCase()} {it.medida && (`| ${it.medida}`)}</td>
                                                                                         :
                                                                                         it.cantidad && it.service ?
-                                                                                            <td className='left'>{it.service.name}</td>
+                                                                                            <td className='left Longer'>{it.service.name.toUpperCase()}</td>
                                                                                         :
                                                                                         it.armadoCotizacion ?
-                                                                                            <td className="left">{it.name}</td>
+                                                                                            <td className="left Longer">{it.name.toUpperCase()}</td>
                                                                                         :
-                                                                                            <td className='left'> {console.log(it)} {it.name} - {it.extension.name} </td>
+                                                                                            <td className='left Longer'> {it.name.toUpperCase()} - {it.extension.name.toUpperCase()} </td>
                                                                                     }
-                                                                                    {
+                                                                                    { // CANTIDAD
                                                                                         it.kitCotizacion ?
-                                                                                        <td>{it.kitCotizacion.cantidad}</td>
+                                                                                        <td className="Cantidad">{it.kitCotizacion.cantidad}</td>
                                                                                         :
                                                                                         it.cantidad && it.producto ?
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.cantidad).toFixed(0))}</td>
+                                                                                        <td className="Cantidad" >{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.cantidad).toFixed(0))}</td>
                                                                                         :
                                                                                         it.cantidad && it.service ?
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.cantidad).toFixed(0))}</td>
+                                                                                        <td className="Cantidad">{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.cantidad).toFixed(0))}</td>
                                                                                         :
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.cantidad).toFixed(0))}</td>
+                                                                                        <td className="Cantidad">{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.cantidad).toFixed(0))}</td>
                                                                                     } 
                                                                                     
 
-                                                                                    { 
+                                                                                    { // VALOR UNITARIO
                                                                                         it.kitCotizacion ?
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.kitCotizacion.precio / it.kitCotizacion.cantidad).toFixed(0))}</td>
+                                                                                        <td className="Valor">{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number((it.kitCotizacion.precio - Number(it.kitCotizacion.descuento)) / it.kitCotizacion.cantidad).toFixed(0))}</td>
                                                                                         :
                                                                                         it.cantidad ?
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.precio / it.cantidad).toFixed(0))}</td>
+                                                                                        <td className="Valor">{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number((it.precio - Number(it.descuento)) / it.cantidad).toFixed(0))}</td>
                                                                                         :
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.precio / it.armadoCotizacion.cantidad).toFixed(0))}</td>
+                                                                                        <td className="Valor">{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number((it.armadoCotizacion.precio - Number(it.armadoCotizacion.descuento)) / it.armadoCotizacion.cantidad).toFixed(0))}</td>
                                                                                     }
-                                                                                    { 
-                                                                                        it.kitCotizacion ?
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.kitCotizacion.precio).toFixed(0))} </td>
-                                                                                        :
-                                                                                        it.cantidad ?
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.precio).toFixed(0))} </td>
-                                                                                        :
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.precio).toFixed(0))} </td>
+                                                                                    {   // SUB TOTAL 1
+                                                                                        // it.kitCotizacion ?
+                                                                                        // <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.kitCotizacion.precio).toFixed(0))} </td>
+                                                                                        // :
+                                                                                        // it.cantidad ?
+                                                                                        // <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.precio).toFixed(0))} </td>
+                                                                                        // :
+                                                                                        // <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.precio).toFixed(0))} </td>
+                                                                                    
                                                                                     }
-                                                                                    {
-                                                                                        it.kitCotizacion ?
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(it.kitCotizacion.descuento)}</td>
-                                                                                        :
-                                                                                         it.cantidad ?
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(it.descuento)}</td>
-                                                                                        :
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.descuento).toFixed(0))}</td>
+                                                                                    { // DESCUENTOS
+                                                                                        // it.kitCotizacion ?
+                                                                                        // <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(it.kitCotizacion.descuento)}</td>
+                                                                                        // :
+                                                                                        //  it.cantidad ?
+                                                                                        // <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(it.descuento)}</td>
+                                                                                        // :
+                                                                                        // <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.descuento).toFixed(0))}</td>
                                                                                     }
-                                                                                    {
-                                                                                        it.kitCotizacion ?
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.kitCotizacion.precio - it.kitCotizacion.descuento).toFixed(0) * (0.19)).toFixed(0))}</td>
-                                                                                        : 
-                                                                                         it.cantidad ?
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.precio - it.descuento).toFixed(0) * (0.19)).toFixed(0))}</td>
-                                                                                        :
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.armadoCotizacion.precio - it.armadoCotizacion.descuento) * (0.19)).toFixed(0))}</td>
+                                                                                    { // IVA
+                                                                                        // it.kitCotizacion ?
+                                                                                        // <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.kitCotizacion.precio - it.kitCotizacion.descuento).toFixed(0) * (0.19)).toFixed(0))}</td>
+                                                                                        // : 
+                                                                                        //  it.cantidad ?
+                                                                                        // <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.precio - it.descuento).toFixed(0) * (0.19)).toFixed(0))}</td>
+                                                                                        // :
+                                                                                        // <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.armadoCotizacion.precio - it.armadoCotizacion.descuento) * (0.19)).toFixed(0))}</td>
+                                                                                    
                                                                                     }
                                                                                     
-                                                                                    {
-                                                                                        it.kitCotizacion ?
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.kitCotizacion.precio - it.kitCotizacion.descuento).toFixed(0))}</td>
-                                                                                        :
-                                                                                         it.cantidad ?
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.precio - it.descuento).toFixed(0))}</td>
-                                                                                        :
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.precio  - it.armadoCotizacion.descuento).toFixed(0))}</td>
+                                                                                    { // ANTES DE IVA
+                                                                                        //     it.kitCotizacion ?
+                                                                                        //     <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.kitCotizacion.precio - it.kitCotizacion.descuento).toFixed(0))}</td>
+                                                                                        //     :
+                                                                                        //      it.cantidad ?
+                                                                                        //     <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.precio - it.descuento).toFixed(0))}</td>
+                                                                                        //     :
+                                                                                        //     <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.precio  - it.armadoCotizacion.descuento).toFixed(0))}</td>
                                                                                     }
 
-                                                                                    {
+                                                                                    { // TOTAL
                                                                                         it.kitCotizacion ?
                                                                                         <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.kitCotizacion.precio - it.kitCotizacion.descuento + Number(Number(it.kitCotizacion.precio - it.kitCotizacion.descuento).toFixed(0) * (0.19))).toFixed(0))}</td>
                                                                                         :
                                                                                          it.cantidad ?
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.precio - it.descuento + Number(Number(it.precio - it.descuento).toFixed(0)) * (0.19)).toFixed(0))}</td>
+                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.precio - it.descuento + Number(Number(it.precio - it.descuento).toFixed(0)) ).toFixed(0))}</td>
                                                                                         :
                                                                                         <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.precio  - it.armadoCotizacion.descuento + Number(Number(it.armadoCotizacion.precio - it.armadoCotizacion.descuento).toFixed(0)) * (0.19)).toFixed(0))}</td>
+                                                                                    
                                                                                     }
                                                                                 </tr>
                                                                             )
@@ -349,6 +404,25 @@ export default function DocumentCotizacion(){
                                                                 }
                                                                 
                                                                 
+                                                            </tbody>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th></th>
+                                                                    <th></th>
+                                                                    <th></th>
+                                                                    <th></th>
+                                                                    <th>SUBTOTAL ÁREA</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(a).toFixed(0))}</td>
+                                                                </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -361,11 +435,11 @@ export default function DocumentCotizacion(){
                                         <table className='final'>
                                             <thead>
                                                 <tr>
-                                                    <th>Valor sin descuento</th>
-                                                    <th>Descuento global</th>
-                                                    <th>Subtotal</th>
-                                                    <th>Valor Iva</th>
-                                                    <th>Total</th>
+                                                    <th>SUBTOTAL INICIAL</th>
+                                                    <th>DESCUENTO GLOBAL</th>
+                                                    <th>SUBTOTAL</th>
+                                                    <th>VALOR IVA</th>
+                                                    <th>TOTAL</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -461,7 +535,7 @@ function TotalSub({ cotizacion }){
     const suma = area.serviciosCotizados?.reduce((accKit, kit) => {
             return accKit + Number(kit.descuento || 0);
         }, 0) || 0;
-        return accArea + suma;
+        return accArea + suma; 
     }, 0) || 0;
 
     const sumaDescuento = descuentoKits + descuentoArmados + descuentoProductos + descuentoServicios;

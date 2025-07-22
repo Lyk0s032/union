@@ -15,6 +15,7 @@ import AddNotes from './addNotesAndImg';
 import dayjs from 'dayjs';
 import localeData from 'dayjs/plugin/localeData';
 import 'dayjs/locale/es'; // Idioma español
+import Condiciones from './condiciones';
 
 
 export default function SelectKits({ dist }){
@@ -31,7 +32,7 @@ export default function SelectKits({ dist }){
     const [editTime, setEditTime] = useState(null);
     const [title, setTitle] = useState(cotizacion && (cotizacion.name))
     const [name, setName] = useState(null);
-
+    const [condiciones, setCondiciones] = useState(null)
     const [loading, setLoading] = useState(false);
     // const system = useSelector(store => store.system);
 
@@ -181,6 +182,9 @@ export default function SelectKits({ dist }){
         params.set('watch', 'cotizacion');
         setParams(params);
     }
+    const closeTheCondicions = () => {
+        setCondiciones(false)
+    }
     return (
         <div className="page">
             {cotizacion.state == 'version' && (
@@ -251,10 +255,9 @@ export default function SelectKits({ dist }){
                                     :
                                         <div className="DataKit">
                                             <h3 onDoubleClick={() => setEdit(true)}>
-                                                {cotizacion.name} {number}
+                                                {cotizacion.name} {number} - <strong>{21719 +cotizacion.id}</strong>
                                             </h3> 
                                             <span onDoubleClick={() => setEditTime(true)}>Fecha creada: <strong>{dayjs(cotizacion.time.split('T')[0]).format('dddd, D [de] MMMM [de] YYYY')}</strong></span><br />
-                                            <span>Nro: <strong>{21719 +cotizacion.id}</strong></span>
                                         </div>  
                                 }
                                  
@@ -262,6 +265,14 @@ export default function SelectKits({ dist }){
                                         <div className="containerOptions">
                                             <nav>
                                                 <ul>
+                                                    <li onClick={() => {
+                                                        setCondiciones(true)
+                                                    }}>
+                                                        <div className="" >
+                                                            <BsPlusLg  className="icon" />
+                                                            <span>Condiciones</span>
+                                                        </div>
+                                                    </li>
                                                     <li onClick={() => {
                                                         setOpenServices(!openServices)
                                                     }}>
@@ -357,6 +368,11 @@ export default function SelectKits({ dist }){
                                 { params.get('area') == 'move' && (<MoveArea area={area} />) }
                             </div>
                             <div className="bottomData">
+                                {
+                                    condiciones ?
+                                        <Condiciones cotizacion={cotizacion} close={closeTheCondicions}  />
+                                    :null
+                                }
                                 <div className="priceBox">
                                     {/* <div>
                                         <span>Precio promedio</span><br />

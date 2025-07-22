@@ -56,11 +56,22 @@ export default function Nav(){
                                 )
                             } 
 
-                                    <li onClick={() => navigate('/comercial')}>
+                            <li onClick={() => navigate('/comercial')}>
+                                    <div>
+                                    <span>Comercial</span>
+                                </div>
+                            </li>
+
+                            {
+                                hasPermission(user.user, 'administracion') && (
+                                    <li onClick={() => navigate('/admin')}>
                                         <div>
-                                            <span>Comercial</span>
+                                            <span>Administración</span>
                                         </div>
                                     </li>
+                                )
+                            } 
+                            
                         </ul>
                         }
                     </nav> 

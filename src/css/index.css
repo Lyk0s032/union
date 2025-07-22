@@ -324,7 +324,6 @@ body button {
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .title span {
   font-size: 14px;
-  color: red;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .topCoti {
   padding: 10px 0px;
@@ -333,20 +332,20 @@ body button {
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .topCoti .divideTop {
   display: flex;
-  align-items: end;
+  align-items: start;
   justify-content: space-between;
   width: 95%;
   margin: auto;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .topCoti .divideTop .left {
-  width: 35%;
+  width: 40%;
   text-align: left;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .topCoti .divideTop .left h1 {
   font-weight: 600;
   margin-bottom: 15px;
   font-size: 14px;
-  color: #454f5b;
+  color: black;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .topCoti .divideTop .left .item {
   width: 100%;
@@ -356,35 +355,36 @@ body button {
   margin-bottom: 5px;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .topCoti .divideTop .left .item h3 {
-  font-weight: 500;
+  font-weight: 600;
   font-size: 14px;
-  color: #454f5b;
+  color: black;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .topCoti .divideTop .left .item h4 {
   font-weight: 400;
   font-size: 14px;
-  color: #666;
+  color: black;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .clientTopData {
+  margin-top: 20px;
   padding: 10px 0px;
   border-bottom: 1px solid #F8F8F8;
   box-sizing: border-box;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .clientTopData .divideTopData {
   display: flex;
-  align-items: end;
+  align-items: start;
   justify-content: space-between;
   width: 95%;
   margin: auto;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .clientTopData .divideTopData .left {
-  width: 35%;
+  width: 40%;
   text-align: left;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .clientTopData .divideTopData .left h1 {
   font-weight: 500;
   margin-bottom: 15px;
-  color: #046290;
+  color: black;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .clientTopData .divideTopData .left .item {
   width: 100%;
@@ -394,14 +394,14 @@ body button {
   margin-bottom: 5px;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .clientTopData .divideTopData .left .item h3 {
-  font-weight: 500;
+  font-weight: 600;
   font-size: 14px;
-  color: #454f5b;
+  color: black;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .clientTopData .divideTopData .left .item h4 {
   font-weight: 400;
   font-size: 14px;
-  color: #666;
+  color: black;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias {
   width: 100%;
@@ -415,7 +415,7 @@ body button {
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias .titleHere h3 {
   font-weight: 400;
   font-size: 14px;
-  color: #046290;
+  color: black;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData {
   width: 100%;
@@ -424,9 +424,9 @@ body button {
   margin-top: 40px;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla h4 {
-  font-weight: 500;
+  font-weight: 600;
   font-size: 14px;
-  color: #454f5b;
+  color: black;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla .final {
   border-top: 2px solid #ccc;
@@ -436,31 +436,46 @@ body button {
   width: 100%;
   text-align: left;
   margin-top: 10px;
+  margin-bottom: 10px;
   border-collapse: collapse;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla table thead tr th {
   padding: 10px 10px;
   box-sizing: border-box;
+  font-weight: 500;
   font-size: 11px;
   color: #666;
   border-bottom: 1px solid #ccc;
   text-align: right;
-  font-weight: 500;
-  font-size: 14px;
-  color: #454f5b;
+  font-weight: 600;
+  font-size: 16px;
+  color: black;
   width: auto;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla table thead tr .left {
   text-align: left;
 }
+.modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla table thead tr .Small {
+  box-sizing: border-box;
+  width: 10%;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla table thead tr .Longer {
+  width: 45%;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla table thead tr .Valor {
+  width: 20%;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla table thead tr .Cantidad {
+  width: 5%;
+}
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla table tbody tr {
   cursor: pointer;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla table tbody tr td {
-  font-size: 14px;
+  font-size: 14.5px;
   padding: 15px 10px;
   box-sizing: border-box;
-  color: #666;
+  color: black;
   font-weight: 400;
   text-align: right;
   width: auto;
@@ -472,9 +487,18 @@ body button {
   box-sizing: border-box;
   width: 10%;
 }
+.modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla table tbody tr .Longer {
+  width: 45%;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla table tbody tr .Valor {
+  width: 20%;
+}
+.modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla table tbody tr .Cantidad {
+  width: 5%;
+}
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla table tbody .total td {
   font-weight: 600;
-  font-size: 14px;
+  font-size: 14.5px;
 }
 .modal .containerModal .cotizacionBody .optionDownload {
   box-sizing: border-box;
@@ -1861,6 +1885,74 @@ body button {
   justify-content: space-between;
   width: 100%;
   padding: 0px 20px;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .condiciones {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #FFF;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .condiciones .containerCondiciones {
+  width: 90%;
+  height: 80%;
+  margin: auto;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .condiciones .containerCondiciones .title {
+  box-sizing: border-box;
+  height: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .condiciones .containerCondiciones .title h1 {
+  font-weight: 400;
+  color: #046290;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .condiciones .containerCondiciones .bodyCondiciones {
+  box-sizing: border-box;
+  height: 90%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .condiciones .containerCondiciones .bodyCondiciones .containerBodyCondiciones {
+  width: 50%;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .condiciones .containerCondiciones .bodyCondiciones .containerBodyCondiciones .inputDiv {
+  padding: 15px 0px;
+  box-sizing: border-box;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .condiciones .containerCondiciones .bodyCondiciones .containerBodyCondiciones .inputDiv label {
+  font-size: 14px;
+  color: #046290;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .condiciones .containerCondiciones .bodyCondiciones .containerBodyCondiciones .inputDiv select {
+  margin-top: 5px;
+  padding: 10px 10px;
+  box-sizing: border-box;
+  width: 100%;
+  background-color: #FFF;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .condiciones .containerCondiciones .bodyCondiciones .containerBodyCondiciones .inputDiv button {
+  width: 100%;
+  padding: 10px 0px;
+  border-radius: 20px;
+  background-color: #046290;
+  border: 1px solid #046290;
+}
+.modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .condiciones .containerCondiciones .bodyCondiciones .containerBodyCondiciones .inputDiv button span {
+  color: #FFF;
 }
 .modal .Complete .bodyModalBig .page .selectItems .leftKit .bottomData .priceBox {
   display: flex;
@@ -5687,6 +5779,637 @@ body button {
 .routerPanel .containerRouter .loadingComponentes .container h3 {
   font-weight: 400;
   color: #046290;
+}
+.dashboard {
+  height: 100%;
+}
+.dashboard .containerDashboard {
+  height: 100%;
+}
+.dashboard .containerDashboard .panelDashboardType {
+  height: 100%;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard {
+  height: 100%;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .topHeaderPanel {
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .topHeaderPanel .divideHeader {
+  display: flex;
+  align-items: start;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .topHeaderPanel .divideHeader .bottonChange {
+  width: 5%;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .topHeaderPanel .divideHeader .bottonChange button {
+  width: 50px;
+  height: 50px;
+  border-radius: 30px;
+  border: 1px solid #d9e2ec;
+  background-color: #d9e2ec;
+  transition: 0.3s;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .topHeaderPanel .divideHeader .bottonChange button .icon {
+  transition: 0.3s;
+  font-size: 22px;
+  color: #046290;
+  vertical-align: middle;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .topHeaderPanel .divideHeader .bottonChange button:hover {
+  transform: scale(1.1);
+  background-color: #046290;
+  border: 1px solid #046290;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .topHeaderPanel .divideHeader .bottonChange button:hover .icon {
+  color: #FFF;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .topHeaderPanel .divideHeader .dataHeaderPrincipal {
+  width: 90%;
+  box-sizing: border-box;
+  padding: 0px 20px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .topHeaderPanel .divideHeader .dataHeaderPrincipal .containerDataHeader {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .topHeaderPanel .divideHeader .dataHeaderPrincipal .containerDataHeader .area {
+  width: 25%;
+  padding: 10px 5px;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .topHeaderPanel .divideHeader .dataHeaderPrincipal .containerDataHeader .area h2 {
+  font-weight: 500;
+  font-size: 24px;
+  color: #046290;
+  margin: 0px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .topHeaderPanel .divideHeader .dataHeaderPrincipal .containerDataHeader .area .optionsData {
+  display: flex;
+  align-items: end;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .topHeaderPanel .divideHeader .dataHeaderPrincipal .containerDataHeader .area .optionsData h4 {
+  font-weight: 100;
+  color: #666;
+  margin-right: 5px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .topHeaderPanel .divideHeader .dataHeaderPrincipal .containerDataHeader .area .optionsData button {
+  background-color: #d9e2ec;
+  border: 1px solid #d9e2ec;
+  padding: 5px 15px;
+  border-radius: 5px;
+  font-size: 11px;
+  color: #046290;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .topHeaderPanel .divideHeader .dataHeaderPrincipal .containerDataHeader .datosBox {
+  width: 20%;
+  padding: 5px 10px;
+  box-sizing: border-box;
+  padding-top: 20px;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .topHeaderPanel .divideHeader .dataHeaderPrincipal .containerDataHeader .datosBox span {
+  font-size: 12px;
+  color: #046290;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .topHeaderPanel .divideHeader .dataHeaderPrincipal .containerDataHeader .datosBox h1 {
+  font-weight: 400;
+  font-size: 24px;
+  color: #d9e2ec;
+  transition: 0.3s;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .topHeaderPanel .divideHeader .dataHeaderPrincipal .containerDataHeader .datosBox:hover {
+  transform: scale(1.05);
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .topHeaderPanel .divideHeader .dataHeaderPrincipal .containerDataHeader .datosBox:hover h1 {
+  color: #046290;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData {
+  margin-top: 20px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 86%;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide {
+  display: flex;
+  height: 100%;
+  align-items: start;
+  justify-content: space-between;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .leftDivideLogs {
+  width: 38%;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .leftDivideLogs .boxLogs {
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .leftDivideLogs .boxLogs .headerBox {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .leftDivideLogs .boxLogs .headerBox h3 {
+  font-size: 14px;
+  font-weight: 400;
+  color: #046290;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .leftDivideLogs .boxLogs .headerBox button {
+  width: 40px;
+  height: 40px;
+  border: 1px solid transparent;
+  background-color: transparent;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .leftDivideLogs .boxLogs .headerBox button .icon {
+  font-size: 18px;
+  color: #666;
+  transition: 0.3s;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .leftDivideLogs .boxLogs .headerBox button:hover {
+  transform: scale(1.1);
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .leftDivideLogs .boxLogs .headerBox button:hover .icon {
+  color: #046290;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .leftDivideLogs .boxLogs .containerListsLogs {
+  box-sizing: border-box;
+  max-height: 150px;
+  overflow-y: auto;
+  padding: 10px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .leftDivideLogs .boxLogs .containerListsLogs table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .leftDivideLogs .boxLogs .containerListsLogs table tbody .itemLog {
+  cursor: pointer;
+  transition: 0.3s;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .leftDivideLogs .boxLogs .containerListsLogs table tbody .itemLog td {
+  padding: 10px 0px;
+  box-sizing: border-box;
+  transition: 0.3s;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .leftDivideLogs .boxLogs .containerListsLogs table tbody .itemLog .short {
+  width: 10%;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .leftDivideLogs .boxLogs .containerListsLogs table tbody .itemLog .short .coding {
+  width: 35px;
+  height: 35px;
+  border-radius: 100%;
+  border: 2px solid black;
+  background-color: black;
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: space-around;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .leftDivideLogs .boxLogs .containerListsLogs table tbody .itemLog .short .coding h3 {
+  font-weight: 400;
+  color: #FFF;
+  font-size: 12px;
+  margin: auto;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .leftDivideLogs .boxLogs .containerListsLogs table tbody .itemLog .short .btn button {
+  width: 30px;
+  height: 30px;
+  border-radius: 100px;
+  background-color: #FFF;
+  transition: 0.3s;
+  border: 1px solid #FFF;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .leftDivideLogs .boxLogs .containerListsLogs table tbody .itemLog .short .btn button span {
+  font-size: 12px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .leftDivideLogs .boxLogs .containerListsLogs table tbody .itemLog .short .btn button .icon {
+  font-size: 16px;
+  color: black;
+  transition: 0.3s;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .leftDivideLogs .boxLogs .containerListsLogs table tbody .itemLog .short .btn button:hover .icon {
+  color: #046290;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .leftDivideLogs .boxLogs .containerListsLogs table tbody .itemLog .longer {
+  width: 70%;
+  padding: 0px 10px;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .leftDivideLogs .boxLogs .containerListsLogs table tbody .itemLog .longer h3 {
+  font-size: 12px;
+  font-weight: 400;
+  color: #046290;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .leftDivideLogs .boxLogs .containerListsLogs table tbody .itemLog .longer span {
+  font-size: 12px;
+  color: #666;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .leftDivideLogs .boxLogs .containerListsLogs table tbody .itemLog:hover {
+  transform: translateX(2%);
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists {
+  width: 60%;
+  height: 100%;
+  overflow-y: auto;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal {
+  height: 100%;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .headerTitle {
+  height: 10%;
+  display: flex;
+  align-items: center;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .headerTitle h3 {
+  font-weight: 400;
+  font-size: 18px;
+  color: #046290;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask {
+  height: 90%;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask {
+  height: 100%;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .notFound {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .notFound h3 {
+  font-weight: 400;
+  color: #666;
+  font-size: 18px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData {
+  width: 100%;
+  padding-bottom: 150px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table {
+  width: 100%;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr {
+  cursor: pointer;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr td {
+  transition: 0.3s;
+  padding: 25px 0px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #F8F8F8;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr td .code {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  background-color: black;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr td .code h3 {
+  font-weight: 400;
+  color: #FFF;
+  font-size: 10px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr td .titleNameKitAndData {
+  padding-left: 10px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr td .titleNameKitAndData .extensionColor {
+  display: flex;
+  align-items: center;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr td .titleNameKitAndData .extensionColor .boxColor {
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  background-color: #ccc;
+  margin-right: 10px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr td .titleNameKitAndData .extensionColor span {
+  font-size: 10px;
+  color: #666;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr td .titleNameKitAndData .nameData {
+  margin-top: 5px;
+  width: 80%;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr td .titleNameKitAndData .nameData h3 {
+  font-weight: 500;
+  font-size: 13px;
+  color: #046290;
+  margin-bottom: 5px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr td .titleNameKitAndData .nameData span {
+  font-size: 11px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr .coding {
+  width: 5%;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr .longer {
+  width: 60%;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr .middle {
+  width: 10%;
+  padding: 0px 10px;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr .tdPrice {
+  width: 15%;
+  padding: 0px 10px;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr .tdPrice h3 {
+  font-size: 14px;
+  color: #046290;
+  font-weight: 400;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr .tdPrice h3 span {
+  font-size: 10px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr:hover .longer {
+  padding-left: 10px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData h1 {
+  font-weight: 100;
+  color: #666;
+  margin-top: 50px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData {
+  box-sizing: border-box;
+  height: 90%;
+  overflow-y: auto;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits {
+  width: 100%;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .headerSeccion {
+  padding: 20px 0px;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .headerSeccion h3 {
+  font-size: 26px;
+  color: #046290;
+  font-weight: 400;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .topDataKits {
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .topDataKits .divide .leftGraph {
+  width: 60%;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .topDataKits .divide .leftGraph .graphGraph {
+  width: 100%;
+  height: 100%;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .topDataKits .divide .leftGraph .messageGraph {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .topDataKits .divide .leftGraph .messageGraph h1 {
+  font-size: 18px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .topDataKits .divide .leftGraph h1 {
+  font-weight: 400;
+  font-size: 24px;
+  color: #666;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .topDataKits .divide .rightDataGraph {
+  box-sizing: border-box;
+  width: 35%;
+  height: 300px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .topDataKits .divide .rightDataGraph .containerDataRightGraph .box {
+  border: 1px solid #FFF;
+  box-sizing: border-box;
+  padding: 20px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: 0.3s;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .topDataKits .divide .rightDataGraph .containerDataRightGraph .box .headerBox {
+  margin-bottom: 5px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .topDataKits .divide .rightDataGraph .containerDataRightGraph .box .headerBox h3 {
+  font-weight: 400;
+  color: #454f5b;
+  font-size: 12px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .topDataKits .divide .rightDataGraph .containerDataRightGraph .box h3 {
+  font-size: 24px;
+  color: #046290;
+  font-weight: 400;
+  transition: 0.3s;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .topDataKits .divide .rightDataGraph .containerDataRightGraph .box:hover .h3 {
+  margin-left: 10px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters {
+  box-sizing: border-box;
+  margin-top: 70px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .filtersOptions {
+  box-sizing: border-box;
+  width: 100%;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .filtersOptions .containerFiltersOption {
+  width: 100%;
+  display: flex;
+  align-content: end;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .filtersOptions .containerFiltersOption .time {
+  width: 40%;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .filtersOptions .containerFiltersOption .time label {
+  font-size: 12px;
+  color: #666;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .filtersOptions .containerFiltersOption .time input {
+  width: 90%;
+  padding: 10px 0px;
+  box-sizing: border-box;
+  border: 1px solid #FFF;
+  cursor: pointer;
+  outline: 0px;
+  border-radius: 5px;
+  color: #666;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .filtersOptions .containerFiltersOption .time input:focus {
+  border: 1px solid #046290;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .filtersOptions .containerFiltersOption .categoriums {
+  width: 60%;
+  display: flex;
+  align-items: end;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .filtersOptions .containerFiltersOption .categoriums .inputDiv {
+  width: 33%;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .filtersOptions .containerFiltersOption .categoriums .inputDiv label {
+  font-size: 12px;
+  color: #666;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .filtersOptions .containerFiltersOption .categoriums .inputDiv select {
+  color: #666;
+  padding: 10px 5px;
+  border-radius: 5px;
+  outline: 0px;
+  cursor: pointer;
+  border: 1px solid #FFF;
+  background-color: #FFF;
+  font-size: 12px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters {
+  box-sizing: border-box;
+  margin-top: 30px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .tableData {
+  width: 60%;
+  padding-bottom: 150px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .tableData table {
+  width: 100%;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .tableData table tbody tr {
+  cursor: pointer;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .tableData table tbody tr td {
+  transition: 0.3s;
+  padding: 25px 0px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #F8F8F8;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .tableData table tbody tr td .code {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  background-color: black;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .tableData table tbody tr td .code h3 {
+  font-weight: 400;
+  color: #FFF;
+  font-size: 10px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .tableData table tbody tr td .titleNameKitAndData {
+  padding-left: 10px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .tableData table tbody tr td .titleNameKitAndData .extensionColor {
+  display: flex;
+  align-items: center;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .tableData table tbody tr td .titleNameKitAndData .extensionColor .boxColor {
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  background-color: #ccc;
+  margin-right: 10px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .tableData table tbody tr td .titleNameKitAndData .extensionColor span {
+  font-size: 10px;
+  color: #666;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .tableData table tbody tr td .titleNameKitAndData .nameData {
+  margin-top: 5px;
+  width: 80%;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .tableData table tbody tr td .titleNameKitAndData .nameData h3 {
+  font-weight: 500;
+  font-size: 13px;
+  color: #046290;
+  margin-bottom: 5px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .tableData table tbody tr td .titleNameKitAndData .nameData span {
+  font-size: 11px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .tableData table tbody tr .coding {
+  width: 5%;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .tableData table tbody tr .longer {
+  width: 60%;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .tableData table tbody tr .middle {
+  width: 10%;
+  padding: 0px 10px;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .tableData table tbody tr .tdPrice {
+  width: 15%;
+  padding: 0px 10px;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .tableData table tbody tr .tdPrice h3 {
+  font-size: 14px;
+  color: #046290;
+  font-weight: 400;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .tableData table tbody tr .tdPrice h3 span {
+  font-size: 10px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .tableData table tbody tr:hover .longer {
+  padding-left: 10px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .tableData h1 {
+  font-weight: 100;
+  color: #666;
+  margin-top: 50px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .ContainerResultFilter {
+  width: 35%;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .ContainerResultFilter .dataContainer {
+  width: 100%;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .ContainerResultFilter .dataContainer .boxContainer {
+  border: 1px solid #FFF;
+  box-sizing: border-box;
+  padding: 20px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: 0.3s;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .ContainerResultFilter .dataContainer .boxContainer .headerBox {
+  margin-bottom: 5px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .ContainerResultFilter .dataContainer .boxContainer .headerBox h3 {
+  font-weight: 400;
+  color: #454f5b;
+  font-size: 12px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .ContainerResultFilter .dataContainer .boxContainer h3 {
+  font-size: 42px;
+  color: #046290;
+  font-weight: 400;
+  transition: 0.3s;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .ContainerResultFilter .dataContainer .boxContainer:hover .h3 {
+  margin-left: 10px;
 }
 .loginComponent {
   box-sizing: border-box;

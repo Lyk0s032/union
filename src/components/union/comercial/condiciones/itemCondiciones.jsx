@@ -9,9 +9,10 @@ import dayjs from "dayjs";
 import localeData from 'dayjs/plugin/localeData';
 import 'dayjs/locale/es'; // Idioma español
 import SubCondicions from "./itemSubCondiciones";
+import NewPlan from "./newPlan";
 
-export default function CondicionesItem(){
-
+export default function CondicionesItem({condicion, openMenuId}){
+    const [newPlan, setNew] = useState(null);
      // 1. Se añade un estado para controlar si el acordeón está abierto o cerrado
     const [isOpen, setIsOpen] = useState(false);
 
@@ -23,30 +24,34 @@ export default function CondicionesItem(){
 
     return (
         <div className="long" style={{width:'100%'}}>
+            {console.log(condicion)}
             <tr  > 
                 <td style={{width:'7%'}}>
                     <div className="code">
-                        <h3>{Number(21719) + 1}</h3>
+                        <h3>{condicion.id}</h3>
                     </div>
                 </td>
                 <td style={{width:'70%'}} onClick={toggleAccordion} >
                     <div className="titleNameKitAndData">
                         <div className="extensionColor">
                             <div className="boxColor"></div>
-                            <span>Crédito</span>
+                            <span>{condicion.type.toUpperCase()}</span>
                             <span style={{marginLeft:10}}></span>
                         </div>
                         <div className="nameData">
-                            <h3>50% ANTICIPO - 50% ENTREGA</h3>
-                            <span>Disponible</span>
+                            <h3>{condicion.nombre}</h3>
+                            <span>{condicion.state ? 'Disponible' : 'Inhabilitado'}</span>
                         </div>
                     </div>
                 </td>
-                <td style={{width:'20%'}}> <span>30 Días de plazo</span></td>
+                <td style={{width:'20%'}}> <span>{condicion.plazo} Días de plazo</span></td>
 
                 <td style={{width:'5%'}}>
                     <div className="menu-container">
-                    <button className="btnOptions">
+                    <button className="btnOptions" onClick={() => {
+                        setNew(true)
+                        toggleAccordion()
+                    }}>
                     {/* Icono de tres puntos */}
                         <BsThreeDots className="icon" />
                     </button>
@@ -61,14 +66,22 @@ export default function CondicionesItem(){
             </tr>
                     <div className={`divListSubCondicions ${isOpen ? 'Open' : ''}`}>
                         <div className="containerThat">
-                            <SubCondicions />
-                            <SubCondicions />
-                            <SubCondicions />
-                            <SubCondicions />
-                            <SubCondicions />
-                            <SubCondicions />
+                            {
+                                newPlan ? 
+                                    <NewPlan condicion={condicion.id} />
+                                :null
+                            }
+                            {
+                                condicion.planes?.length ?
+                                    condicion.planes.map((p, i) => {
+                                        return (
+                                            <SubCondicions p={p} i={i+1} />
+                                        )
+                                    })
+                                :null
+                            }
 
-                        </div>
+                        </div> 
                     </div>
         </div>
     )

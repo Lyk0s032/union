@@ -8,6 +8,8 @@ import kits from "./kit";
 import cotizacions from "./cotizacion";
 import requisicion from "./requisicion";
 import clients from "./clients";
+import admin from "./administration";
+
 
 
 
@@ -20,6 +22,7 @@ const appReducer = combineReducers({
     cotizacions,
     requisicion,
     clients,
+    admin
 });
 
 export default appReducer 

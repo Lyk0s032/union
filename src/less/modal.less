@@ -319,7 +319,6 @@
                     box-sizing: border-box;
                     span{
                         font-size: 14px;
-                        color: red;
                     } 
                 }
 
@@ -329,18 +328,18 @@
                     box-sizing: border-box;
                     .divideTop{
                         display: flex;
-                        align-items: end;
+                        align-items: start;
                         justify-content: space-between;
                         width:95%;
                         margin:auto;
                         .left{
-                            width:35%;
+                            width:40%;
                             text-align: left;
                             h1{
                                 font-weight: 600;
                                 margin-bottom: 15px;
                                 font-size: 14px;
-                                color: @bgDark;
+                                color: black;
                             }
                             .item{
                                 width:100%;
@@ -349,37 +348,38 @@
                                 justify-content: space-between;
                                 margin-bottom: 5px;
                                 h3{
-                                    font-weight: 500;
+                                    font-weight: 600;
                                     font-size: 14px;
-                                    color: @bgDark;
+                                    color: black;
                                     
                                 }
                                 h4{
                                     font-weight: 400;
                                     font-size: 14px;
-                                    color: #666;
+                                    color: black;
                                 }
                             }
                         }
                     }
                 }
                 .clientTopData{
+                    margin-top:20px;
                     padding:10px 0px;
                     border-bottom: 1px solid #F8F8F8;
                     box-sizing: border-box;
                     .divideTopData{
                         display: flex;
-                        align-items: end;
+                        align-items: start;
                         justify-content: space-between;
                         width:95%;
                         margin:auto;
                         .left{
-                            width:35%;
+                            width:40%;
                             text-align: left;
                             h1{
                                 font-weight: 500;
                                 margin-bottom: 15px;
-                                color: @bgAzulDark;
+                                color: black;
                             }
                             .item{
                                 width:100%;
@@ -388,14 +388,14 @@
                                 justify-content: space-between;
                                 margin-bottom: 5px;
                                 h3{
-                                    font-weight: 500;
+                                    font-weight: 600;
                                     font-size: 14px;
-                                    color: @bgDark;
+                                    color: black;
                                 }
                                 h4{
                                     font-weight: 400;
                                     font-size: 14px;
-                                    color: #666;
+                                    color: black;
                                 }
                             }
                         }
@@ -412,7 +412,7 @@
                         h3{
                             font-weight: 400;
                             font-size: 14px;
-                            color: @bgAzulDark;
+                            color: black;
                         }
                     }
                     .tableData{
@@ -420,9 +420,9 @@
                         .tabla{
                             margin-top: 40px;
                             h4{
-                                font-weight: 500;
+                                font-weight: 600;
                                 font-size: 14px;
-                                color: @bgDark;
+                                color: black;
                             }
                             .final{
                                 border-top:2px solid #ccc;
@@ -432,6 +432,7 @@
                             width:100%;
                             text-align: left;
                             margin-top:10px;
+                            margin-bottom: 10px;
                             border-collapse: collapse;
                             thead{
                                 tr{
@@ -443,13 +444,26 @@
                                         color: #666;
                                         border-bottom: 1px solid #ccc;
                                         text-align: right;
-                                        font-weight: 500;
-                                        font-size: 14px;
-                                        color: @bgDark;
+                                        font-weight: 600;
+                                        font-size: 16px;
+                                        color: black;
                                         width:auto;
                                     }
                                     .left{
                                         text-align: left;
+                                    }
+                                    .Small{
+                                        box-sizing: border-box;
+                                        width:10%;
+                                    }
+                                    .Longer{
+                                        width:45%;   
+                                    }
+                                    .Valor{
+                                        width:20%;
+                                    }
+                                    .Cantidad{
+                                        width:5%;
                                     }
                                 }
                             }
@@ -457,10 +471,10 @@
                                 tr{
                                     cursor: pointer;
                                     td{
-                                        font-size: 14px;
+                                        font-size: 14.5px;
                                         padding:15px 10px;
                                         box-sizing: border-box;
-                                        color: #666;
+                                        color: black;
                                         font-weight: 400;
                                         text-align: right;
                                         width:auto;
@@ -472,11 +486,21 @@
                                         box-sizing: border-box;
                                         width:10%;
                                     }
+                                    .Longer{
+                                        width:45%;   
+                                    }
+                                    .Valor{
+                                        width:20%;
+                                    }
+                                    .Cantidad{
+                                        width:5%;
+                                    }
+                                    
                                 }
                                 .total{
                                     td{
                                         font-weight: 600;
-                                        font-size: 14px;
+                                        font-size: 14.5px;
                                     }
                                     
                                 }
@@ -2022,6 +2046,77 @@
                             justify-content: space-between;
                             width:100%;
                             padding:0px 20px;
+
+                            .condiciones{
+                                box-sizing: border-box;
+                                position:absolute;
+                                top:0;
+                                left:0;
+                                right:0;
+                                bottom:0;
+                                background-color: @bgDefault;
+                                z-index:5;
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-around;
+                                .containerCondiciones{
+                                    width:90%;
+                                    height:80%;
+                                    margin:auto;
+                                    .title{
+                                        box-sizing: border-box;
+                                        height: 10%;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content:space-between;
+
+                                        h1{
+                                            font-weight: 400;
+                                            color: @bgAzulDark;
+                                        }
+                                    }
+                                    .bodyCondiciones{
+                                        box-sizing: border-box;
+                                        height:90%;
+                                        width:100%;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: space-around;
+                                        .containerBodyCondiciones{
+                                            width:50%;
+                                            .inputDiv{
+                                                padding:15px 0px;
+                                                box-sizing: border-box;
+                                                label{
+                                                    font-size: 14px;
+                                                    color: @bgAzulDark;
+                                                }
+                                                select{
+                                                    margin-top:5px;
+                                                    padding:10px 10px;
+                                                    box-sizing: border-box;
+                                                    width:100%;
+                                                    background-color: @bgDefault;
+                                                    border:1px solid #e5e7eb;
+                                                    border-radius: 20px;
+                                                    cursor: pointer;
+                                                }
+
+                                                button{
+                                                    width:100%;
+                                                    padding:10px 0px;
+                                                    border-radius: 20px;
+                                                    background-color: @bgAzulDark;
+                                                    border:1px solid @bgAzulDark;
+                                                    span{
+                                                        color: @bgDefault;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                             .priceBox{
                                 display: flex;
                                 width:90%;

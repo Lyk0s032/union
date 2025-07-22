@@ -7,7 +7,8 @@ import RoutesComercial from "./comercial/routeComercial";
 import Message from "./message";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from '../store/action/action';
-
+import RoutesFinanciero from "./admin/adminRoutes";
+ 
 export default function RouterPanel(){
     const system = useSelector(store => store.system);
     const { alerta, typeAlerta } = system;
@@ -32,6 +33,8 @@ export default function RouterPanel(){
                         <Route path="/compras/*" element={<RoutesCompras />} />
                         <Route path="/produccion/*" element={<RoutesProduccion />} />
                         <Route path="/comercial/*" element={<RoutesComercial />} />
+                        <Route path="/admin/*" element={<RoutesFinanciero />} />
+
                     </Routes>
                 </div>
                 {
