@@ -184,7 +184,7 @@ export default function ProductoTerminadoItem({ area, terminado, final }){
 
 
 function GetPrice({ precios, terminado, getValor, final, distribuidor, estado }){
-    const valor = precios.reduce((a,b) => Number(a) + Number(b.valor), 0)
+    const valor = precios.reduce((a,b) => Number(a) + Number(b.descuentos), 0)
     const promedio = Number(valor) / precios.length
 
     const  precioDistribuidor = promedio / distribuidor
