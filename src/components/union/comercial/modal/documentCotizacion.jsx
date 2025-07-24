@@ -121,7 +121,7 @@ export default function DocumentCotizacion(){
                                             <h3>
                                                 TELÉFONO:
                                             </h3>
-                                            <h4> 4371651</h4>
+                                            <h4> 3739940</h4>
                                         </div>
                                     </div>
                                     <div className="left">
@@ -210,13 +210,13 @@ export default function DocumentCotizacion(){
                                         </div>
                                         <div className="item">
                                             <h3>
-                                                TIEMPO ENTREGA:
+                                                VALIDEZ DE LA OFERTA:
                                             </h3>
                                             <h4>{cotizacion.days} DÍAS</h4>
                                         </div>
                                         <div className="item">
                                             <h3>
-                                                CONDICIÓN COMERCIAL:
+                                                FORMA DE PAGO:
                                             </h3>
                                             <h4>
                                                 {
@@ -284,8 +284,7 @@ export default function DocumentCotizacion(){
 
                                                                             const subtotal = precioBase - descuento;
                                                                             // Asumo un IVA del 19% basado en el cálculo de tu columna TOTAL
-                                                                            const totalConIva = subtotal * 1.19;
-                                                                            return totalConIva;
+                                                                            return subtotal;
                                                                         };
 
                                                                         // 2. Usa .reduce() para sumar los totales y obtener el subtotal del área
@@ -340,12 +339,12 @@ export default function DocumentCotizacion(){
 
                                                                                     { // VALOR UNITARIO
                                                                                         it.kitCotizacion ?
-                                                                                        <td className="Valor">{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number((it.kitCotizacion.precio - Number(it.kitCotizacion.descuento)) / it.kitCotizacion.cantidad).toFixed(0))}</td>
+                                                                                        <td className="Valor">{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number((it.kitCotizacion.precio) / it.kitCotizacion.cantidad).toFixed(0))}</td>
                                                                                         :
                                                                                         it.cantidad ?
-                                                                                        <td className="Valor">{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number((it.precio - Number(it.descuento)) / it.cantidad).toFixed(0))}</td>
+                                                                                        <td className="Valor">{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number((it.precio) / it.cantidad).toFixed(0))}</td>
                                                                                         :
-                                                                                        <td className="Valor">{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number((it.armadoCotizacion.precio - Number(it.armadoCotizacion.descuento)) / it.armadoCotizacion.cantidad).toFixed(0))}</td>
+                                                                                        <td className="Valor">{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number((it.armadoCotizacion.precio) / it.armadoCotizacion.cantidad).toFixed(0))}</td>
                                                                                     }
                                                                                     {   // SUB TOTAL 1
                                                                                         // it.kitCotizacion ?
@@ -389,12 +388,12 @@ export default function DocumentCotizacion(){
 
                                                                                     { // TOTAL
                                                                                         it.kitCotizacion ?
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.kitCotizacion.precio - it.kitCotizacion.descuento + Number(Number(it.kitCotizacion.precio - it.kitCotizacion.descuento).toFixed(0) * (0.19))).toFixed(0))}</td>
+                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.kitCotizacion.precio - it.kitCotizacion.descuento).toFixed(0))}</td>
                                                                                         :
                                                                                          it.cantidad ?
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.precio - it.descuento + Number(Number(it.precio - it.descuento).toFixed(0) * (0.19)) ).toFixed(0))}</td>
+                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.precio - it.descuento).toFixed(0))}</td>
                                                                                         :
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.precio  - it.armadoCotizacion.descuento + Number(Number(it.armadoCotizacion.precio - it.armadoCotizacion.descuento).toFixed(0)) * (0.19)).toFixed(0))}</td>
+                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.precio  - it.armadoCotizacion.descuento).toFixed(0))}</td>
                                                                                     
                                                                                     }
                                                                                 </tr>
@@ -411,7 +410,7 @@ export default function DocumentCotizacion(){
                                                                     <th></th>
                                                                     <th></th>
                                                                     <th></th>
-                                                                    <th>SUBTOTAL ÁREA</th>
+                                                                    <th>VALOR ÁREA</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -437,7 +436,7 @@ export default function DocumentCotizacion(){
                                                 <tr>
                                                     <th>SUBTOTAL INICIAL</th>
                                                     <th>DESCUENTO GLOBAL</th>
-                                                    <th>SUBTOTAL</th>
+                                                    <th>SUBTOTAL CON DESCUENTO</th>
                                                     <th>VALOR IVA</th>
                                                     <th>TOTAL</th>
                                                 </tr>
