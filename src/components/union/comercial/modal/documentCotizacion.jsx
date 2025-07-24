@@ -282,7 +282,7 @@ export default function DocumentCotizacion(){
                                                                                 descuento = Number(item.descuento);
                                                                             }
 
-                                                                            const subtotal = precioBase - descuento;
+                                                                            const subtotal = precioBase;
                                                                             // Asumo un IVA del 19% basado en el cálculo de tu columna TOTAL
                                                                             return subtotal;
                                                                         };
@@ -388,12 +388,12 @@ export default function DocumentCotizacion(){
 
                                                                                     { // TOTAL
                                                                                         it.kitCotizacion ?
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.kitCotizacion.precio - it.kitCotizacion.descuento).toFixed(0))}</td>
+                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.kitCotizacion.precio).toFixed(0))}</td>
                                                                                         :
                                                                                          it.cantidad ?
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.precio - it.descuento).toFixed(0))}</td>
+                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.precio).toFixed(0))}</td>
                                                                                         :
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.precio  - it.armadoCotizacion.descuento).toFixed(0))}</td>
+                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.precio).toFixed(0))}</td>
                                                                                     
                                                                                     }
                                                                                 </tr>
@@ -435,7 +435,7 @@ export default function DocumentCotizacion(){
                                             <thead>
                                                 <tr>
                                                     <th>SUBTOTAL INICIAL</th>
-                                                    <th>DESCUENTO GLOBAL</th>
+                                                    <th>DESCUENTO</th>
                                                     <th>SUBTOTAL CON DESCUENTO</th>
                                                     <th>VALOR IVA</th>
                                                     <th>TOTAL</th>
