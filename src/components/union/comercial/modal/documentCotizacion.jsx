@@ -124,7 +124,7 @@ export default function DocumentCotizacion(){
                                             <h4> 3739940</h4>
                                         </div>
                                     </div>
-                                    <div className="left">
+                                    <div className="left" style={{width:'55%'}}>
                                         <div className="item">
                                             <h3>
                                                 NRO. COTIZACIÓN:
@@ -194,7 +194,7 @@ export default function DocumentCotizacion(){
                                             }</h4>
                                         </div>
                                     </div> 
-                                    <div className="left">
+                                    <div className="left" style={{width:'55%'}}>
                                         
                                         {/* <div className="item">
                                             <h3>

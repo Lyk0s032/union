@@ -338,7 +338,7 @@ body button {
   margin: auto;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .topCoti .divideTop .left {
-  width: 45%;
+  width: 40%;
   text-align: left;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .topCoti .divideTop .left h1 {
@@ -356,12 +356,12 @@ body button {
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .topCoti .divideTop .left .item h3 {
   font-weight: 600;
-  font-size: 16px;
+  font-size: 18px;
   color: black;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .topCoti .divideTop .left .item h4 {
   font-weight: 400;
-  font-size: 16px;
+  font-size: 15px;
   color: black;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .clientTopData {
@@ -378,7 +378,7 @@ body button {
   margin: auto;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .clientTopData .divideTopData .left {
-  width: 45%;
+  width: 40%;
   text-align: left;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .clientTopData .divideTopData .left h1 {
@@ -400,7 +400,7 @@ body button {
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .clientTopData .divideTopData .left .item h4 {
   font-weight: 400;
-  font-size: 16px;
+  font-size: 15px;
   color: black;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias {
@@ -448,7 +448,7 @@ body button {
   border-bottom: 1px solid #ccc;
   text-align: right;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 20px;
   color: black;
   width: auto;
 }
@@ -472,7 +472,7 @@ body button {
   cursor: pointer;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla table tbody tr td {
-  font-size: 17px;
+  font-size: 18px;
   padding: 15px 10px;
   box-sizing: border-box;
   color: black;
@@ -498,7 +498,7 @@ body button {
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla table tbody .total td {
   font-weight: 600;
-  font-size: 16px;
+  font-size: 18px;
 }
 .modal .containerModal .cotizacionBody .optionDownload {
   box-sizing: border-box;
