@@ -3,10 +3,12 @@ import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos, MdOutlineArrowOutward,
 import * as actions from '../../../../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
 import CotizacionItemGeneral from './itemCotizacion';
+import DocumentCotizacion from './cotizacion/cotizacion';
+import { useSearchParams } from 'react-router-dom';
 
 export default function GeneralComercial(){
     const dispatch = useDispatch()
-    
+    const [params, setParams] = useSearchParams();
     const admin = useSelector(store => store.admin)
     const { cotizaciones, loadingCotizaciones } = admin;
 
@@ -52,6 +54,11 @@ export default function GeneralComercial(){
                                     }
                                         
                                     </div>
+                                    {
+                                        params.get('watch') == 'cotizacion' ?
+                                            <DocumentCotizacion />
+                                        : null
+                                    }
                                 </div>
                             </div>
                         </div>

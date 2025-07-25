@@ -12,34 +12,21 @@ export default function CotizacionItemGeneral(props){
     const { user } = usuario; 
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
-
-        // Aprobar 
-    const handleAprobar = async() => {
-        setLoading(true)
-        const sendAprobation = await axios.put(`/api/cotizacion/admin/accept/${r.id}`)
-        .then(res => {
-            dispatch(actions.HandleAlerta('Cotización aprobada', 'positive')) 
-            dispatch(actions.axiosToGetCotizacionesAdmin(false))
-
-            return res
-        })
-        .catch(err => {
-            dispatch(actions.HandleAlerta('Ha ocurrido un error', 'mistake'))
-            return err;
-        })
-        .finally(() => {
-            setLoading(false)
-        })
-        return sendAprobation;
-    } 
+    const [params, setParams] = useSearchParams();
+    
+    const openCoti = async () => {
+        dispatch(actions.axiosToGetCotizacion(true, r.id))
+        params.set('watch', 'cotizacion');
+        setParams(params);
+    }
     return (
     <tr>
         <td className="coding">
-            <div className="code">
+            <div className="code" onClick={() => openCoti()}>
                 <h3>{Number(21719) + r.id}</h3>
             </div>
         </td>
-        <td className="longer" style={{width:'40%'}}> 
+        <td className="longer" style={{width:'40%'}} onClick={() => openCoti()}> 
             <div className="titleNameKitAndData">
                 <div className="extensionColor"> 
                     <span>{r.createdAt.split('T')[0] }</span>
