@@ -11,7 +11,10 @@ export default function ItemRequisicion(props){
                 params.set('requisicion', requisicion.id) 
                 setParams(params); 
             }}>{requisicion.id}</td>
-            <td >{requisicion.nombre}</td>
+            <td >
+                <span style={{marginRight:10}}>{requisicion.cotizacion.id + Number(21719) } - </span>
+                {requisicion.nombre}
+            </td>
             <td>{requisicion.cotizacion.client.nombre}</td>
             <td>{requisicion.fecha.split('T')[0]}</td>
             <td>{requisicion.fechaNecesaria.split('T')[0]}</td>
