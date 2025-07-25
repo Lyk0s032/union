@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import * as actions from '../../../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
+import * as XLSX from 'xlsx'; // <-- 1. IMPORTA LA LIBRERÍA
 
 export default function ShowRequisicion(){
     const [params, setParams] = useSearchParams();
@@ -12,6 +13,48 @@ export default function ShowRequisicion(){
     const mt = useSelector(store => store.requisicion);
     const { requisicion, loadingRequisicion } = mt;
     
+     // --- 2. CREA LA FUNCIÓN PARA EXPORTAR ---
+    const handleExportToExcel = () => {
+        // --- PREPARAR DATOS PARA LA PRIMERA HOJA: KITS ---
+        const kitsData = requisicion.resumenKits.map(r => ({
+            'Código Kit': r.id,
+            'Nombre': r.nombre,
+            'Cantidad': r.cantidad,
+        }));
+        const kitsWorksheet = XLSX.utils.json_to_sheet(kitsData);
+
+        // --- PREPARAR DATOS PARA LA SEGUNDA HOJA: MATERIA PRIMA ---
+        const materiaPrimaData = requisicion.cantidades.map(r => {
+            let cantidadAPedir = '';
+            if (r.unidad === 'mt2') {
+                const area = Number(r.medidaOriginal.split('X')[0]) * Number(r.medidaOriginal.split('X')[1]);
+                cantidadAPedir = r.cantidad / area < 0.5 ? 1 : Math.round(r.cantidad / area);
+            } else if (r.unidad === 'mt' || r.unidad === 'kg') {
+                cantidadAPedir = r.cantidad / Number(r.medidaOriginal) < 0.5 ? 1 : (r.cantidad / Number(r.medidaOriginal));
+            } else {
+                cantidadAPedir = r.cantidad / r.medidaOriginal;
+            }
+
+            return {
+                'Código Item': r.id,
+                'Nombre': r.nombre,
+                'Medida de Compra': `${r.medidaOriginal} ${r.unidad}`,
+                'Medida de Consumo (Total)': r.cantidad % 1 === 0 ? r.cantidad : r.cantidad.toFixed(3),
+                'Cantidad a Pedir': cantidadAPedir,
+            };
+        });
+        const materiaPrimaWorksheet = XLSX.utils.json_to_sheet(materiaPrimaData);
+
+        // --- CREAR EL ARCHIVO Y DESCARGAR ---
+        // Crear un nuevo libro de trabajo
+        const workbook = XLSX.utils.book_new();
+        // Añadir las hojas con sus nombres
+        XLSX.utils.book_append_sheet(workbook, kitsWorksheet, "Resumen de Kits");
+        XLSX.utils.book_append_sheet(workbook, materiaPrimaWorksheet, "Materia Prima Requerida");
+        // Descargar el archivo
+        XLSX.writeFile(workbook, `Requisicion_${requisicion.requisicion.id}.xlsx`);
+    };
+
     useEffect(() => {
         dispatch(actions.axiosToGetRequisicion(true, params.get('requisicion')))
     }, [params.get('requisicion')])
@@ -41,13 +84,18 @@ export default function ShowRequisicion(){
                 <div className="bodyProvider">
                     
                     <div className="containerBodyProvider">
+                        <button onClick={handleExportToExcel}>
+                            <span>Descargar excel</span>
+                        </button><br /><br />
                         <div className="requisicionDocument">
-                            <div className="topHeader">
+                            <div className="topHeader"> {console.log(requisicion)}
                                 <div className="topTitle">
-                                    <h1>{requisicion.requisicion.nombre}</h1>
+                                    <h1>{Number(21719) + requisicion.requisicion.cotizacion.id} - {requisicion.requisicion.cotizacion.name}</h1>
+                                    <span style={{fontSize:12, color: 'white'}}>{requisicion.requisicion.cotizacion.client.nombre}</span>
                                 </div>
                                 <div className="fechaDiv">
                                     <div className="left">
+                                        
                                         <span>Fecha</span><br />
                                         <strong>{requisicion.requisicion.fecha.split('T')[0]}</strong>
                                     </div>
@@ -66,7 +114,7 @@ export default function ShowRequisicion(){
                                             <th></th>
                                             <th>Cantidad a pedir</th>
                                         </tr>
-                                    </thead>{console.log(requisicion)}
+                                    </thead>
                                     <tbody>
                                         {
                                             requisicion.resumenKits && requisicion.resumenKits.length ?

@@ -67,6 +67,7 @@ export default function GeneralCompras(){
                                         <tr>
                                             <th>Código</th>
                                             <th>Nombre</th>
+                                            <th>Cliente</th>
                                             <th>Fecha</th>
                                             <th>Fecha necesaria</th>
                                             <th>Estado</th>

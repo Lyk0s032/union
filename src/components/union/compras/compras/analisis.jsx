@@ -1,10 +1,10 @@
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import React from "react";
+import * as XLSX from 'xlsx'; // <-- 1. IMPORTA LA LIBRERÍA
 
 export default function Analisis(props){
     const data = props.data;
-    console.log(data);
 
     const exportToPDF = () => {
         html2canvas(document.getElementById("downReq"), {
@@ -19,7 +19,56 @@ export default function Analisis(props){
             pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
             pdf.save("exportado.pdf");
           }); 
-      };
+    };
+
+    // --- 2. CREA LA FUNCIÓN PARA EXPORTAR A EXCEL ---
+    const exportToExcel = () => {
+        // --- HOJA 1: PROYECTOS ---
+        const proyectosData = data.requisicion.map(r => ({
+            'ID Requisición': Number(21719 + r.id),
+            'Nombre Proyecto': r.name,
+            'ID Cotización': r.cotizacionId,
+        }));
+        const proyectosWorksheet = XLSX.utils.json_to_sheet(proyectosData);
+
+        // --- HOJA 2: RESUMEN DE KITS ---
+        const kitsData = data.resumenKits.map(r => ({
+            'Código Kit': r.id,
+            'Nombre Kit': r.nombre,
+            'Cantidad Total': r.cantidad,
+        }));
+        const kitsWorksheet = XLSX.utils.json_to_sheet(kitsData);
+
+        // --- HOJA 3: MATERIA PRIMA ---
+        const materiaPrimaData = data.cantidades.map(r => {
+            let cantidadAPedir = '';
+            if (r.unidad === 'mt2') {
+                const area = Number(r.medidaOriginal.split('X')[0]) * Number(r.medidaOriginal.split('X')[1]);
+                cantidadAPedir = r.cantidad / area < 0.5 ? 1 : Math.round(r.cantidad / area);
+            } else if (r.unidad === 'mt' || r.unidad === 'kg') {
+                cantidadAPedir = r.cantidad / Number(r.medidaOriginal) < 0.5 ? 1 : (r.cantidad / Number(r.medidaOriginal));
+            } else {
+                cantidadAPedir = r.cantidad / r.medidaOriginal;
+            }
+
+            return {
+                'Código Item': r.id,
+                'Nombre Materia Prima': r.nombre,
+                'Medida de Compra': `${r.medidaOriginal} ${r.unidad}`,
+                'Consumo Total': r.cantidad % 1 === 0 ? r.cantidad : r.cantidad.toFixed(3),
+                'Cantidad a Pedir (Unidades de Compra)': cantidadAPedir,
+            };
+        });
+        const materiaPrimaWorksheet = XLSX.utils.json_to_sheet(materiaPrimaData);
+
+        // --- CREAR Y DESCARGAR EL ARCHIVO ---
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, proyectosWorksheet, "Proyectos Incluidos");
+        XLSX.utils.book_append_sheet(workbook, kitsWorksheet, "Resumen de Kits");
+        XLSX.utils.book_append_sheet(workbook, materiaPrimaWorksheet, "Materia Prima Requerida");
+        
+        XLSX.writeFile(workbook, "Requisicion_Multiple.xlsx");
+    };
     return (
         <div className="reqForDownload" >
             <div className="scrollBottom" id="downReq">
@@ -168,6 +217,9 @@ export default function Analisis(props){
             <div className="bottomToDownload">
                 <button onClick={() => exportToPDF()}> 
                     Descargar pdf 
+                </button>
+                <button onClick={exportToExcel}> 
+                    Descargar excel 
                 </button>
             </div>
         </div>
