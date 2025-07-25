@@ -14,6 +14,26 @@ export default function CotizacionItemGeneral(props){
     const dispatch = useDispatch();
     const [params, setParams] = useSearchParams();
     
+    // Aprobar 
+    const handleAprobar = async() => {
+        setLoading(true)
+        const sendAprobation = await axios.put(`/api/cotizacion/admin/accept/${r.id}`)
+        .then(res => {
+            dispatch(actions.HandleAlerta('Cotización aprobada', 'positive')) 
+            dispatch(actions.axiosToGetCotizacionesAdmin(false))
+
+            return res
+        })
+        .catch(err => {
+            dispatch(actions.HandleAlerta('Ha ocurrido un error', 'mistake'))
+            return err;
+        })
+        .finally(() => {
+            setLoading(false)
+        })
+        return sendAprobation;
+    } 
+
     const openCoti = async () => {
         dispatch(actions.axiosToGetCotizacion(true, r.id))
         params.set('watch', 'cotizacion');
