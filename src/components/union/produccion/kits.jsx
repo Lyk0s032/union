@@ -154,11 +154,27 @@ export default function KitsPanel(){
                                                 <Loading />
                                             : kits && kits.length ?
                                                     kits.filter(m => {
-                                                        const porLetra = word ? m.name.toLowerCase().includes(word.toLowerCase()) : true
                                                         const porLinea = li ? m.lineaId == li : true
                                                         const porCategoria = cat ? m.categoriumId == cat : true
                                                         const porExtension = ex ? m.extensionId == ex : true
-                                                        return porLetra && porLinea && porCategoria && porExtension
+                                                    
+                                                        let coincidePalabra = true; // Por defecto, la condición es verdadera
+
+                                                        // Solo aplicamos el filtro si hay algo escrito en el buscador
+                                                        if (word && word.trim() !== '') {
+                                                            const searchTerm = word.toLowerCase();
+
+                                                            // Revisa si el término de búsqueda es un número
+                                                            if (!isNaN(searchTerm)) {
+                                                                // SI ES NÚMERO: busca solo en el ID del producto.
+                                                                coincidePalabra = String(m.id).includes(searchTerm);
+                                                            } else {
+                                                                // SI ES TEXTO: busca solo en el nombre del ítem.
+                                                                coincidePalabra = m.name.toLowerCase().includes(searchTerm);
+                                                            }
+                                                        }
+                                                        return porLinea && porCategoria && porExtension && coincidePalabra
+                                                    
                                                     }
                                                         ).map((pv, i) => { 
                                                             return (

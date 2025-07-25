@@ -59,7 +59,6 @@ export default function ItemProductoTerminado(props){
           setLoading(false); // Finaliza el loading
         }
     };
-    console.log(MP)
     return (
         <tr > 
             <td onClick={() => {

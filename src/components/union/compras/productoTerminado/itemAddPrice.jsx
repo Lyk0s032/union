@@ -2,21 +2,21 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from '../../../store/action/action';
 import axios from "axios";
-import { MdCheck } from "react-icons/md";
+import { MdCheck, MdClose } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
  
 export default function ItemAddPrice(props){
     const precio = props.precio;
-    const [valor, setValor] = useState(precio.valor)
+    const [valor, setValor] = useState(precio.descuentos)
     const [confirmar, setConfirmar] = useState(false);
     const materiaPrima = useSelector(store => store.prima);
     const { producto } = materiaPrima;
-
+    const [update, setUpdate] = useState(null);
     const [porcentaje, setPorcentaje] = useState(0)
     const dispatch = useDispatch();
 
     const porcentaChange = () => {
-        const p = ((Number(valor) - Number(precio.valor)) / Number(precio.valor)) * 100 
+        const p = ((Number(valor) - Number(precio.descuentos)) / Number(precio.descuentos)) * 100 
         setPorcentaje(p)
     }
 
@@ -32,6 +32,7 @@ export default function ItemAddPrice(props){
             iva,
             descuentos: valor
         } 
+        
         const sendPetion = await axios.post('/api/mt/price/pt/give', body)
         .then((res) => {
             dispatch(actions.axiosToGetProducto(false, producto.id))
@@ -39,6 +40,7 @@ export default function ItemAddPrice(props){
             setValor(valor)
             setConfirmar(null)
             dispatch(actions.axiosToGetProductos(false))
+            setUpdate(null)
             return res;
         })
         .catch(err => { 
@@ -47,49 +49,87 @@ export default function ItemAddPrice(props){
         })
         return sendPetion;
     }
+
+    // Remover
+    const RemovePrice = async () => {
+        const body = { 
+            priceId: precio.id
+        }
+        const sendPetion = await axios.put('/api/mt/price/pt/remove', body)
+        .then((res) => {
+            dispatch(actions.axiosToGetProducto(false, producto.id))
+            dispatch(actions.HandleAlerta("Valor removido con éxito", 'positive'))
+            dispatch(actions.axiosToGetPrimas(false))
+            setUpdate(null)
+        })
+        .catch(err => {
+            console.log(err);
+            dispatch(actions.HandleAlerta("No hemos logrado remover esto.", 'mistake'))
+        })
+        return sendPetion;
+    }
+    
     useEffect(() => {
         porcentaChange()
     }, [valor])
     return( 
-        <td className='input' >
-            <input type="text" id={precio.id} onChange={(e) => setValor(e.target.value)} value={valor}/><br />
-            <div className="data">
-                <div className="title">
-                    <span>Actual: <strong>{precio.valor} <span>COP</span></strong></span><br />
+        <>
+            <tr>
+                <td className="medium" >
+                    <div className="proveedorData">
+                        <div className="letter">
+                            <h1>{precio.proveedor.nombre[0]}</h1>
+                        </div>
+                        <div className="dataProvider">
+                            <h3>{precio.proveedor.nombre}</h3>
+                        <span style={{color: '#666', fontWeight:400,fontSize:11}}>Ult. {precio.createdAt.split('T')[0]}</span>
+                        </div>
+                    </div>
+                </td>
+                <td className='price'>
+                    <h3>{valor && (new Intl.NumberFormat('es-CO', {currency:'COP'}).format(precio.descuentos))} COP</h3>
+                </td>
+                <td className='price'>
+                    <h3>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(precio.valor)} COP</h3>
+                </td>
+                <td className='porcentage'>
                     {
-                        valor ?
-                        <span>Actual: {valor} <span>COP</span></span>
-                        : null
-                    }<br/>
-                    <div className="promedio">
-                        {
-                            valor ? 
-                                <span className={porcentaje > 0  ? 'porcentaje Danger' : 'porcentaje Less'}>{Number(porcentaje).toFixed(2)} %</span>
-                            : <span> </span>
-                        }
-                    </div>
-                </div>
-                {
-                !confirmar ?
-                    <button onClick={() => {
-                        if(!valor) return dispatch(actions.HandleAlerta('Ingresa un valor', 'mistake'))
-                        setConfirmar(true)
-                    }} >
-                        <span>Actualizar</span>
-                    </button>
-                :
-                    <div className="div">
-                        <button onClick={() => updatePrice()} className="confirm">
-                            <span><MdCheck /></span>
+                        valor ? 
+                            <span className={porcentaje > 0  ? 'porcentaje Danger' : 'porcentaje Less'}>{Number(porcentaje).toFixed(2)} %</span>
+                        : <span> </span>
+                    }
+                </td>
+                
+                    {
+                        !update ?
+                        <td className="price" onDoubleClick={() => setUpdate(true)}>
+                            <h3>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(valor)}</h3>
+                        </td>
+                        :
+                        <td className=''>
+                            <div className="inputDiv">
+                                <input type="text" placeholder='' 
+                                id={precio.id} onChange={(e) => setValor(e.target.value)} value={valor}
+                                onKeyDown={(e) => {
+                                    if(e.code == 'Enter'){
+                                        if(!valor || valor == 0) dispatch(actions.HandleAlerta('Debes ingresar un valor'))
+                                        updatePrice()
+                                    } if(e.code == 'Escape'){
+                                        setUpdate(null)
+                                    }
+                                }} />
+                            </div>
+                        </td>
+                    }
+                    <td className="remove">
+                        <button onClick={() => {
+                            RemovePrice()
+                        }} >
+                            <MdClose className="icon" />
                         </button>
-                        <button className="cancel" onClick={() => {
-                            setConfirmar(null)
-                        }}>
-                            <span><AiOutlineClose /></span>
-                        </button>
-                    </div>
-                }
-            </div>
-        </td>
+                    </td>
+            </tr>
+        </>
+
     )
 }

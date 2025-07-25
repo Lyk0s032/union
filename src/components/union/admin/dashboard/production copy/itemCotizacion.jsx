@@ -36,12 +36,12 @@ export default function CotizacionItemGeneral(props){
     <tr>
         <td className="coding">
             <div className="code">
-                <h3>{r.id}</h3>
+                <h3>{Number(21719) + r.id}</h3>
             </div>
         </td>
         <td className="longer" style={{width:'40%'}}> 
             <div className="titleNameKitAndData">
-                <div className="extensionColor">
+                <div className="extensionColor"> 
                     <span>{r.createdAt.split('T')[0] }</span>
                 </div>
                 <div className="nameData">

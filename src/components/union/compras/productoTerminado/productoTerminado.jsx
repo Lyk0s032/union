@@ -154,7 +154,7 @@ export default function ProductoTerminado(){
                                                           })
                                               : <h1>No hay resultados</h1>
                                         }
-                                    </tbody>{console.log(productos)} 
+                                    </tbody>
                                 </table>
                             }
                         </div>

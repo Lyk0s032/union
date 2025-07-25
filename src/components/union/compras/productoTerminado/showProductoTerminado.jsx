@@ -13,7 +13,6 @@ export default function ShowProductoTerminado(){
 
     const mt = useSelector(store => store.prima);
     const { producto, loadingProducto } = mt;
-    console.log(producto)
 
     useEffect(() => {
         dispatch(actions.axiosToGetProducto(true, params.get('producto')))
