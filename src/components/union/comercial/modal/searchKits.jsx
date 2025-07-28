@@ -10,22 +10,33 @@ export default function SearchKitsComercial({ number }){
     const dispatch = useDispatch();
     
 
+    const system = useSelector(store => store.system);
+    const { categorias, lineas } = system;
     const kitStore = useSelector(store => store.kits);
     const {kits, kit, loadingKits} = kitStore;
 
     const cotizacions  = useSelector(store => store.cotizacions);
     const { cotizacion } = cotizacions;
 
+    const [categoria, setCategoria] = useState(null)
+    const [linea, setLinea] = useState(null)
     
     const [kitSearch, setSearchKit] = useState();
     const [loading, setLoading] = useState(false);
+
+
     const searchKitsWithFunction = async (query) => {
+        
         if(!query || query == '') return setSearchKit(null);
         setLoading(true);
         setSearchKit(null);
 
         const search = await axios.get('/api/kit/get/cotizar/search', {
-            params: { query: query },
+            params: { 
+                query: query,
+                cateriumId: categoria,
+                lineaId: linea
+             },
         })
         .then((res) => {
             setSearchKit(res.data)
@@ -35,7 +46,7 @@ export default function SearchKitsComercial({ number }){
             setSearchKit(null)
             return null
         })
-        .finally(e => setLoading(false))
+        .finally(() => setLoading(false))
         return search
     }
 
@@ -74,11 +85,34 @@ export default function SearchKitsComercial({ number }){
                                     }} />
                                 </div>
                                 <div className="filtersInput">
-                                    <select name="" id="">
+                                    <select name="" id="" style={{width:'40%'}} onChange={(e) => setCategoria(e.target.value)} value={categoria}>
                                         <option value="">Categoría</option>
+                                        {
+                                            categorias && categorias.length && (
+                                                categorias.filter(c => c.type == 'comercial').map((c,i) => {
+                                                    return (
+                                                        <option key={i+1} value={c.id}>
+                                                            {c.name}
+                                                        </option>
+                                                    )
+                                                })
+                                            )
+                                        }
                                     </select>
-                                    <select className="filterRight" name="" id="">
-                                        <option value="">Linea</option>
+                                    <select className="filterRight" name="" id=""  style={{width:'40%'}}
+                                    onChange={(e) => setLinea(e.target.value)} value={linea}>
+                                        <option value="">Líneas</option>
+                                        {
+                                            lineas && lineas.length && (
+                                                lineas.filter(c => c.type == 'comercial').map((c,i) => {
+                                                    return (
+                                                        <option key={i+1} value={c.id}>
+                                                            {c.name}
+                                                        </option>
+                                                    )
+                                                })
+                                            )
+                                        }
                                     </select>
                                 </div>
                             </div>

@@ -134,7 +134,7 @@ export default function CotizacionItem({ cotizacionn, openMenuId, toggleMenu }){
                             <nav>
                                 <ul>
                                     {
-                                        cotizacion.state != 'aprobada' && (
+                                        cotizacion.state == 'desarrollo' && (
                                         <li onClick={() => {
                                             toggleMenu(cotizacion.id)
                                             dispatch(actions.getCotizacion(cotizacion))

@@ -11,7 +11,10 @@ export default function ItemRequisicion(props){
                 params.set('requisicion', requisicion.id) 
                 setParams(params); 
             }}>{requisicion.id}</td>
-            <td >
+            <td onClick={() => {
+                params.set('requisicion', requisicion.id) 
+                setParams(params); 
+            }}>
                 <span style={{marginRight:10}}>{requisicion.cotizacion.id + Number(21719) } - </span>
                 {requisicion.nombre}
             </td>
@@ -19,7 +22,7 @@ export default function ItemRequisicion(props){
             <td>{requisicion.fecha.split('T')[0]}</td>
             <td>{requisicion.fechaNecesaria.split('T')[0]}</td>
 
-            <td style={{fontSize:11}}>{requisicion.estado}</td> 
+            <td style={{fontSize:11, color: requisicion.estado == 'comprando' ? '#E74B16' : '#666' }}>{requisicion.estado}</td> 
         </tr>
     )
 }

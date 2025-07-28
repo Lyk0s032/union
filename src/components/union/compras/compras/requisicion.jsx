@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import * as actions from '../../../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
 import * as XLSX from 'xlsx'; // <-- 1. IMPORTA LA LIBRERÍA
+import axios from 'axios';
 
 export default function ShowRequisicion(){
     const [params, setParams] = useSearchParams();
@@ -55,6 +56,26 @@ export default function ShowRequisicion(){
         XLSX.writeFile(workbook, `Requisicion_${requisicion.requisicion.id}.xlsx`);
     };
 
+    const sendCS = async (estado) => {
+        if(!estado) return dispatch(actions.HandleAlerta('No hemos logrado hacer esto.', 'mistake'))
+        // Caso contrario, avanzamos
+        let body = {
+            reqId: requisicion.requisicion.id,
+            state: estado
+        }
+        const send = await axios.put('/api/requisicion/put/estado', body)
+        .then(() => {
+            dispatch(actions.HandleAlerta('¡Perfecto!', 'positive'))
+            dispatch(actions.axiosToGetRequisicion(false, params.get('requisicion')))
+            dispatch(actions.axiosToGetRequisicions(false))
+
+        })
+        .catch(() => {
+            dispatch(actions.HandleAlerta('No hemos logrado hacer esto.', 'mistake'))
+        })
+
+        return send;
+    }
     useEffect(() => {
         dispatch(actions.axiosToGetRequisicion(true, params.get('requisicion')))
     }, [params.get('requisicion')])
@@ -84,9 +105,39 @@ export default function ShowRequisicion(){
                 <div className="bodyProvider">
                     
                     <div className="containerBodyProvider">
-                        <button onClick={handleExportToExcel}>
-                            <span>Descargar excel</span>
-                        </button><br /><br />
+                        <div className="topRequisicion">
+                            <button onClick={handleExportToExcel}>
+                                <span>Descargar excel</span>
+                            </button>
+
+
+                            <div className="optionsRequisicion">
+                                    <span>Estado</span>
+                                    <h3>
+                                        {requisicion.requisicion.estado.toUpperCase()}
+                                    </h3>
+                                    {
+                                        requisicion.requisicion.estado == 'pendiente' ?
+                                            <nav>
+                                                <ul>
+                                                    <li onClick={() => sendCS('comprando')}>Comprar</li>
+                                                </ul>
+                                            </nav>
+                                        :
+                                        requisicion.requisicion.estado == 'comprando' ?
+                                            <nav>
+                                                <ul>
+                                                    <li onClick={() => sendCS('pendiente')}>Regresar a pendiente</li>
+                                                    <li onClick={() => sendCS('cumplido')}>Finalizar</li>
+
+                                                </ul>
+                                            </nav>
+                                        :null
+                                    }
+                                    
+                            </div>
+                        </div>
+
                         <div className="requisicionDocument">
                             <div className="topHeader"> {console.log(requisicion)}
                                 <div className="topTitle">
@@ -215,6 +266,7 @@ export default function ShowRequisicion(){
                                     </tbody>
                                 </table>
                             </div>
+                            
                         </div>
                     </div>
                 </div>

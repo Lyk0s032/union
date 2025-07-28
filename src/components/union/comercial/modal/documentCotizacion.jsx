@@ -78,6 +78,48 @@ export default function DocumentCotizacion(){
     // El arreglo vacío [] al final le dice a useCallback que nunca necesita recrear la función.
     }, []); 
 
+
+    const generatePdf = async () => {
+        // 1. Obtén el HTML que quieres imprimir
+        // Puedes construirlo dinámicamente o tomarlo de un elemento renderizado
+        const reportElement = document.getElementById('cotizacion-pdf');
+        if (!reportElement) return;
+        
+        const htmlContent = reportElement.innerHTML;
+
+        try {
+        const response = await fetch('http://192.168.1.15:3000/api/cotizacion/generatePdf', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            // Envías el HTML y el tamaño de hoja deseado
+            body: JSON.stringify({ htmlContent, pageSize: 'Letter' }), 
+        });
+ 
+        if (!response.ok) {
+            throw new Error(`Error del servidor: ${response.statusText}`);
+        }
+
+        // 2. Recibe el PDF como un "blob"
+        const blob = await response.blob();
+
+        // 3. Crea una URL para el blob y simula un clic para descargarlo
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = 'reporte.pdf';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+
+        } catch (error) {
+        console.error('Error al generar el PDF:', error);
+        alert('No se pudo generar el PDF.');
+        }
+    };
     // useEffect(() => {
     //     if (cotizacion && cotizacion.client && cotizacion.client.ciudad) {
     //         obtenerNombreMunicipio(cotizacion.client.ciudad);
@@ -85,7 +127,7 @@ export default function DocumentCotizacion(){
     // // Ahora esta lista de dependencias es segura y estable
     // }, [cotizacion, obtenerNombreMunicipio]);
     return ( 
-        <div className="modal" style={{zIndex:10}}> {console.log(cotizacion)}
+        <div className="modal"  style={{zIndex:10}}>
             <div className="hiddenModal" onClick={() => {
                 params.delete('watch');
                 setParams(params);
@@ -452,7 +494,7 @@ export default function DocumentCotizacion(){
                         
                     </div>
                     <div className="optionDownload">
-                        <button  onClick={exportToPDF}>
+                        <button onClick={generatePdf}>
                             <span>Descargar</span>
                         </button>
                     </div>

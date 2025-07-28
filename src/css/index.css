@@ -5001,6 +5001,41 @@ body button {
 .compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .newPriceOnProvider .containerProvider .searchInput .inputValor .back span {
   color: #046290;
 }
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .topRequisicion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .topRequisicion .optionsRequisicion {
+  text-align: right;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .topRequisicion .optionsRequisicion span {
+  font-size: 12px;
+  margin-right: 10px;
+  color: #666;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .topRequisicion .optionsRequisicion h3 {
+  font-weight: 400;
+  color: #046290;
+  font-size: 16px;
+  margin-right: 10px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .topRequisicion .optionsRequisicion nav {
+  margin-top: 5px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .topRequisicion .optionsRequisicion nav ul li {
+  display: inline-block;
+  padding: 5px 10px;
+  box-sizing: border-box;
+  color: #666;
+  font-size: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .topRequisicion .optionsRequisicion nav ul li:hover {
+  color: #046290;
+}
 .compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .requisicionDocument {
   box-sizing: border-box;
 }
@@ -6138,6 +6173,83 @@ body button {
 }
 .dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr .tdPrice h3 span {
   font-size: 10px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr .hiddenBtn {
+  position: relative;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr .hiddenBtn .menu-container button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr .hiddenBtn .menu-container button .icon {
+  font-size: 15px;
+  color: #666;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr .hiddenBtn .menu-container .menu-dropdown {
+  /* Posicionamiento y tamaño base */
+  right: 0;
+  top: 0;
+  padding: 5px 0px;
+  border-radius: 5px;
+  margin-right: 20px;
+  position: absolute;
+  width: 150%;
+  z-index: 5;
+  background-color: #FFF;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  /* Estado cuando el menú está abierto (anidado en Less) */
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr .hiddenBtn .menu-container .menu-dropdown .panel {
+  padding: 10px 0px;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr .hiddenBtn .menu-container .menu-dropdown .panel .title {
+  margin-bottom: 10px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr .hiddenBtn .menu-container .menu-dropdown .panel .title strong {
+  padding: 0px 20px;
+  font-weight: 400;
+  font-size: 12px;
+  color: #046290;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr .hiddenBtn .menu-container .menu-dropdown .panel nav ul li {
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  transition: 0.3s;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr .hiddenBtn .menu-container .menu-dropdown .panel nav ul li div {
+  display: flex;
+  padding: 10px 20px;
+  align-items: center;
+  transition: 0.3s;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr .hiddenBtn .menu-container .menu-dropdown .panel nav ul li div .icon {
+  margin-right: 10px;
+  font-size: 16px;
+  color: #046290;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr .hiddenBtn .menu-container .menu-dropdown .panel nav ul li div span {
+  font-size: 12px;
+  color: #046290;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr .hiddenBtn .menu-container .menu-dropdown .panel nav ul li:hover {
+  background-color: #f8f8f8;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr .hiddenBtn .menu-container .menu-dropdown.menu-open {
+  opacity: 1;
+  max-height: 12rem;
+  /* Altura máxima suficiente para tu contenido (ajusta si es necesario) */
+  transform: scale(1);
+  /* Escala normal */
+  pointer-events: auto;
+  /* Habilita clics cuando está abierto */
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr .hiddenBtn .menu-container .Exception {
+  position: absolute;
+  width: 50%;
 }
 .dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr:hover .longer {
   padding-left: 10px;
