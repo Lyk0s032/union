@@ -85,7 +85,7 @@ export default function DocumentCotizacion(){
     // // Ahora esta lista de dependencias es segura y estable
     // }, [cotizacion, obtenerNombreMunicipio]);
     return ( 
-        <div className="modal" style={{zIndex:10}}> {console.log(cotizacion)}
+        <div className="modal" style={{zIndex:10}}>
             <div className="hiddenModal" onClick={() => {
                 params.delete('watch');
                 setParams(params);
@@ -135,25 +135,25 @@ export default function DocumentCotizacion(){
                                             <h3>
                                                 FECHA:
                                             </h3>
-                                            <h4>{cotizacion.time ? cotizacion.time.split('T')[0] : 0}</h4>
+                                            <h4>{cotizacion.time ? cotizacion.time.split('T')[0] : null}</h4>
                                         </div>
                                         <div className="item">
                                             <h3>
                                                 ASESOR COMERCIAL:
                                             </h3>
-                                            <h4>{cotizacion.user.name.toUpperCase()} {cotizacion.user.lastName.toUpperCase()}</h4>
+                                            <h4>{cotizacion.user ?cotizacion.user.name.toUpperCase() : null} {cotizacion.user ? cotizacion.user.lastName.toUpperCase() : 0}</h4>
                                         </div>
                                         <div className="item">
                                             <h3>
                                                 CORREO DEL ASESOR:
                                             </h3>
-                                            <h4>{cotizacion.user.email.toUpperCase()}</h4>
+                                            <h4>{cotizacion.user ?  cotizacion.user.email.toUpperCase() : null}</h4>
                                         </div>
                                         <div className="item">
                                             <h3>
                                                 TELÉFONO DEL ASESOR:
                                             </h3>
-                                            <h4>{cotizacion.user.phone.toUpperCase()}</h4>
+                                            <h4>{cotizacion.user ? cotizacion.user.phone.toUpperCase() : null}</h4>
                                         </div>
                                     </div> 
                                 </div>

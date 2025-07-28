@@ -6094,6 +6094,7 @@ body button {
 }
 .dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table {
   width: 100%;
+  border-collapse: collapse;
 }
 .dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData .containerDivide .rigthOtheInformationLists .listDataPrincipal .dataTableTask .containerDataTask .tableData table tbody tr {
   cursor: pointer;

@@ -16,7 +16,10 @@ const initialState = {
 
     // COTIZACIONES POR APROBAR
     cotizaciones: null,
-    loadingCotizaciones: false
+    loadingCotizaciones: false,
+
+    cotizacionesProduccion: null,
+    loadingCotizacionesProduccion: false
 }
 
 export default function (state = initialState, action) {
@@ -91,6 +94,23 @@ export default function (state = initialState, action) {
                 cotizaciones: action.payload
             }
         } 
+
+        // COTIZACIONES
+        case types.GET_COTIZACIONES_PRODUCCION: {
+            return {
+                ...state,
+                cotizacionesProduccion: action.payload,
+                loadingCotizacionesProduccion: false
+            }
+        }
+        case types.GETTING_COTIZACIONES_PRODUCCION: {
+            return {
+                ...state,
+                cotizacionesProduccion: action.payload
+            }
+        } 
+
+
         default:
             return {...state}
     }

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import * as actions from '../../../../../store/action/action';
+import * as actions from '../../../../store/action/action';
 import { MdDeleteOutline, MdOutlineContentCopy } from "react-icons/md";
 import axios from "axios";
 
-export default function CotizacionItemProceso(props){
+export default function CotizacionItemProduccion(props){
     const r = props.item;
 
     const usuario = useSelector(store => store.usuario);
@@ -17,7 +17,7 @@ export default function CotizacionItemProceso(props){
     // Aprobar 
     const handleAprobar = async() => {
         setLoading(true)
-        const sendAprobation = await axios.put(`/api/cotizacion/admin/gotoproduction/${r.id}`)
+        const sendAprobation = await axios.put(`/api/cotizacion/admin/listo/cotizacion/${r.id}`)
         .then(res => {
             dispatch(actions.HandleAlerta('Cotización aprobada', 'positive')) 
             dispatch(actions.axiosToGetCotizacionesAdmin(false))
@@ -38,9 +38,9 @@ export default function CotizacionItemProceso(props){
         dispatch(actions.axiosToGetCotizacion(true, r.id))
         params.set('watch', 'cotizacion');
         setParams(params);
-    }
+    } 
     return (
-    <tr>
+    <tr> 
         <td className="coding">
             <div className="code" onClick={() => openCoti()}>
                 <h3>{Number(21719) + r.id}</h3>
@@ -67,7 +67,7 @@ export default function CotizacionItemProceso(props){
         </td>
         <td >
            <button onClick={() => handleAprobar()}>
-             <span>A producción</span>
+             <span>Entregado</span>
            </button>
         </td>
     </tr>

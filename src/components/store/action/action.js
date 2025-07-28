@@ -903,3 +903,36 @@ export function axiosToGetCotizacionesAdmin(carga){
         });
     }
 }
+
+
+export function getCotizacionesProduccion(data){
+    return {
+        type: types.GET_COTIZACIONES_PRODUCCION,
+        payload: data
+    }
+}
+export function gettingCotizacionesProduccion(carga){
+    return {
+        type: types.GETTING_COTIZACIONES_PRODUCCION,
+        payload: carga
+    }
+}
+
+export function axiosToGetCotizacionesProduccion(carga){
+    return function(dispatch){ 
+        dispatch(gettingCotizacionesAdmin(carga))
+        axios.get(`/api/cotizacion/admin/produccion/getAll`)
+        .then((info) => info.data) 
+        .then(inf => {
+            return dispatch(gettingCotizacionesProduccion(inf))
+        })
+        .catch((e) => {
+            console.log(e)
+            if(e.request){
+                return dispatch(getCotizacionesProduccion('notrequest'));
+            }else{
+                return dispatch(getCotizacionesProduccion(404))
+            }
+        });
+    }
+}

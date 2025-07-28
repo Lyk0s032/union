@@ -494,7 +494,7 @@ export default function DocumentCotizacion(){
                         
                     </div>
                     <div className="optionDownload">
-                        <button onClick={generatePdf}>
+                        <button onClick={exportToPDF}>
                             <span>Descargar</span>
                         </button>
                     </div>

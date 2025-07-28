@@ -1,7 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos, MdOutlineArrowOutward, MdOutlineOpenInNew } from "react-icons/md";
-
+import * as actions from '../../../../store/action/action';
+import { useDispatch, useSelector } from 'react-redux';
+import CotizacionItemProduccion from './itemCotizacion';
+import { useSearchParams } from 'react-router-dom';
+import DocumentCotizacion from '../production copy/cotizacion/cotizacion';
 export default function GeneralProduction(){
+    
+    const dispatch = useDispatch();
+    const administracion = useSelector(store => store.admin);
+    const [params, setParams] = useSearchParams();
+    const { cotizacionesProduccion, loadingCotizacionesProduccion } = administracion;
+    
+    useEffect(() => {
+        dispatch(actions.axiosToGetCotizacionesProduccion(false))
+    }, []) 
+
     return (
             <div className="divideMiddleData">
                     <div className="containerDivide">
@@ -170,11 +184,41 @@ export default function GeneralProduction(){
                                 </div>
                                 <div className="dataTableTask">
                                     <div className="containerDataTask">
-                                        <div className="notFound">
-                                            <h3>No hay proyectos por el momento</h3>
+                                        <div className="tableData">
+                                            <table>
+                                            <tbody>
+                                                {
+                                                    !cotizacionesProduccion || loadingCotizacionesProduccion ?
+                                                        <div className="notFound">
+                                                            <h3>Cargando</h3>
+                                                        </div>
+
+                                                    : cotizacionesProduccion == 404 || cotizacionesProduccion == 'notrequest' ?
+                                                        <div className="notFound">
+                                                            <h3>No hay proyectos por el momento</h3>
+                                                        </div>
+                                                    : cotizacionesProduccion?.length ?
+                                                        cotizacionesProduccion.map((r, i) => {
+                                                        return (
+                                                                <CotizacionItemProduccion item={r} key={i+1} />
+                                                        )
+                                                        })
+                                                    :
+                                                        <div className="notFound">
+                                                            <h3>No hay proyectos por el momento</h3>
+                                                        </div>
+                                                }
+                                            </tbody>
+                                        </table>
                                         </div>
+
                                     </div>
                                 </div>
+                                {
+                                    params.get('watch') == 'cotizacion' ?
+                                        <DocumentCotizacion />
+                                    : null
+                                }
                             </div>
                         </div>
                     </div>
