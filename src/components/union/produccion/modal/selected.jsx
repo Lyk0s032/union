@@ -4,7 +4,7 @@ import axios from "axios";
 import * as actions from '../../../store/action/action';
 import { useDispatch, useSelector } from "react-redux";
 import { BsPencil, BsThreeDots } from "react-icons/bs";
-import { MdDeleteOutline } from "react-icons/md";
+import { MdDeleteOutline, MdOutlineDeleteOutline } from "react-icons/md";
 
 // [CORRECCIÓN]: El componente ahora itera sobre `kit.itemKits`
 export default function Selected({ kit, openMenuId, toggleMenu, number, selectArea }) {
@@ -62,6 +62,25 @@ export default function Selected({ kit, openMenuId, toggleMenu, number, selectAr
         })
         return send;
     }
+
+    const deleteSegmento = async (areaId) => {
+        if(!areaId) return dispatch(actions.HandleAlerta('Debes ingresar nombre al segmento', 'mistake'))
+
+        const send = await axios.delete(`/api/kit/segmento/delete/segmento/${areaId}`)
+        .then((res) => {
+            dispatch(actions.HandleAlerta('¡Segmento eliminado!', 'positive'))
+            dispatch(actions.axiosToGetKit(false, kit.id))
+            console.log('pasa')
+            return res
+        }).catch(err => {
+            dispatch(actions.HandleAlerta('No hemos logrado eliminar este segmento, intentalo más tarde', 'mistake'))
+            return err
+        })
+        .finally(e => {
+            return e;
+        })
+        return send;
+    }
     const AlPadre = (val) => {
         setFast(val)
     }
@@ -104,7 +123,10 @@ export default function Selected({ kit, openMenuId, toggleMenu, number, selectAr
                                                 <ul>
                                                     <li>
                                                         <div>
-                                                            <span>Bajar</span>
+                                                            <button style={{zIndex:5,background: 'transparent', borderWidth:0}}
+                                                            onClick={() => deleteSegmento(ar.id)}>
+                                                                <span style={{fontSize:16}}><MdOutlineDeleteOutline /></span>
+                                                            </button>
                                                         </div>
                                                     </li>
                                                 </ul>

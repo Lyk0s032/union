@@ -52,10 +52,6 @@ export function OneElement(objeto) { // 'objeto' es el 'item' completo que le pa
             // 4. Realizamos la multiplicación final.
             const costoTotal = precioPorUnidad * cantidadDeUnidades;
 
-            // --- Logs de depuración para confirmar ---
-            console.log('Precio por unidad:', precioPorUnidad);
-            console.log('Cantidad de unidades:', cantidadDeUnidades);
-            console.log('Costo total calculado:', costoTotal);
 
             return costoTotal;
 

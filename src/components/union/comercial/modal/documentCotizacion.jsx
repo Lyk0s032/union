@@ -1,10 +1,13 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import html2pdf from "html2pdf.js";
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import axios from 'axios';
+import fileDownload from 'js-file-download';
+import * as actions from '../../../store/action/action';
+
 export default function DocumentCotizacion(){
     const [params, setParams] = useSearchParams(); 
 
@@ -57,75 +60,64 @@ export default function DocumentCotizacion(){
         });
     }, 100); // Espera opcional de 100ms para asegurar render
     };
+    const dispatch = useDispatch();
 
-// 2. Envuelve tu función en useCallback
-    const obtenerNombreMunicipio = useCallback(async (codigoConPunto) => {
-        try {
-            const codigoLimpio = String(codigoConPunto).replace('.', '');
-            const url = `https://www.datos.gov.co/resource/xdk5-pm3f.json?c_digo_dane_del_municipio=${codigoLimpio}`;
-            const respuesta = await axios.get(url);
+    const [loading, setLoading] = useState(false);
+    const getPDF = async () => {
+        try{
+            setLoading(true)
+            let data = {
+                cotizacion: { numero: 'MDC-CV-21841', fecha: '29 DE JUL 2025' },
+                asesor: {nombre: 'KEVIN ANDRES BOLAÑOS ORREGO', correo: 'ANDRES200127@HOTMAIL.COM', telefono: '3212207563'},
+                cliente: { nombre: 'GRUPO EMPRESARIAL SUGA', telefono: '3165519920', direccion: 'CALLE EXITO 75', ciudad: 'CALI' },
+                condiciones: { validez: '30', formaPago: '50% ANTICIPO, 50% ENTREGA' },
+                areas: [
+                    { 
+                    nombre: 'Recepción',
+                    productos: [
+                        { referencia: 'R001', descripcion: 'Mostrador blanco', cantidad: 1, valorUnitario: 1500000, subtotal: 1500000 },
+                        { referencia: 'R002', descripcion: 'Silla visitante', cantidad: 2, valorUnitario: 450000, subtotal: 900000 },
+                    ],
+                    totalArea: 2400000,
+                    },
+                ],
+                totales: {
+                    subtotal: 2400000,
+                    descuento: 0,
+                    subtotalConDescuento: 2400000,
+                    iva: 456000,
+                    total: 2856000,
+                },
+            };
 
-            if (respuesta.data.length > 0) {
-                setMuni(respuesta.data[0].municipio);
-                // No es necesario el return aquí si solo actualizas el estado
-            } else {
-                setMuni("No encontrado");
-            } 
-        } catch (error) {
-            console.error("Hubo un error buscando el municipio:", error);
-            setMuni("Error de búsqueda");
+            const response = await axios.post('/api/cotizacion/generatePdf', { data }, {
+            responseType: 'blob', // 👈 necesario para recibir el PDF como binario
+            })
+            .then((res) => {
+                setLoading(false)
+                return res;
+            })
+
+            const blob = new Blob([response.data], { type: 'application/pdf' });
+            const url = window.URL.createObjectURL(blob);
+
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'cotizacion.pdf');
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            dispatch(actions.HandleAlerta('PDF GENERADO', 'positive'))
+
+        }catch(error){
+            console.log(error) 
+            dispatch(actions.HandleAlerta('No hemos logrado generar pdf', 'mistake'))
+            if (error.response) {
+            console.log('➡️ Detalles:', error.response.data);
+            console.log('📦 Status:', error.response.status);
+    }
         }
-    // El arreglo vacío [] al final le dice a useCallback que nunca necesita recrear la función.
-    }, []); 
-
-
-    const generatePdf = async () => {
-        // 1. Obtén el HTML que quieres imprimir
-        // Puedes construirlo dinámicamente o tomarlo de un elemento renderizado
-        const reportElement = document.getElementById('cotizacion-pdf');
-        if (!reportElement) return;
-        
-        const htmlContent = reportElement.innerHTML;
-
-        try {
-        const response = await fetch('http://192.168.1.15:3000/api/cotizacion/generatePdf', {
-            method: 'POST',
-            headers: {
-            'Content-Type': 'application/json',
-            },
-            // Envías el HTML y el tamaño de hoja deseado
-            body: JSON.stringify({ htmlContent, pageSize: 'Letter' }), 
-        });
- 
-        if (!response.ok) {
-            throw new Error(`Error del servidor: ${response.statusText}`);
-        }
-
-        // 2. Recibe el PDF como un "blob"
-        const blob = await response.blob();
-
-        // 3. Crea una URL para el blob y simula un clic para descargarlo
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.style.display = 'none';
-        a.href = url;
-        a.download = 'reporte.pdf';
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-
-        } catch (error) {
-        console.error('Error al generar el PDF:', error);
-        alert('No se pudo generar el PDF.');
-        }
-    };
-    // useEffect(() => {
-    //     if (cotizacion && cotizacion.client && cotizacion.client.ciudad) {
-    //         obtenerNombreMunicipio(cotizacion.client.ciudad);
-    //     }
-    // // Ahora esta lista de dependencias es segura y estable
-    // }, [cotizacion, obtenerNombreMunicipio]);
+    }
     return ( 
         <div className="modal"  style={{zIndex:10}}>
             <div className="hiddenModal" onClick={() => {
@@ -496,6 +488,14 @@ export default function DocumentCotizacion(){
                     <div className="optionDownload">
                         <button onClick={exportToPDF}>
                             <span>Descargar</span>
+                        </button>
+
+                        <button onClick={() => {
+                            if(!loading){
+                                getPDF()
+                            }
+                        }}>
+                            <span>{loading ? 'Generando pdf' : 'Descarga liviana'}</span>
                         </button>
                     </div>
                     
