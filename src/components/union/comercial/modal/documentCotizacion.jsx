@@ -67,10 +67,10 @@ export default function DocumentCotizacion(){
         try{
             setLoading(true)
             let data = {
-                cotizacion: { numero: 'MDC-CV-21841', fecha: '29 DE JUL 2025' },
-                asesor: {nombre: 'KEVIN ANDRES BOLAÑOS ORREGO', correo: 'ANDRES200127@HOTMAIL.COM', telefono: '3212207563'},
-                cliente: { nombre: 'GRUPO EMPRESARIAL SUGA', telefono: '3165519920', direccion: 'CALLE EXITO 75', ciudad: 'CALI' },
-                condiciones: { validez: '30', formaPago: '50% ANTICIPO, 50% ENTREGA' },
+                cotizacion: { numero: `MDC-CV-${cotizacion.id + 21719}'`, fecha: cotizacion.time.split('T')[0] },
+                asesor: {nombre: `${cotizacion.user.name.toUpperCase()} ${cotizacion.user.lastName.toUpperCase()}`, correo: `${cotizacion.user.email.toUpperCase()}`, telefono: cotizacion.user.phone},
+                cliente: { nombre: `${cotizacion.client.nombre.toUpperCase()}`, telefono: '3165519920', direccion: cotizacion.client.direccion.toUpperCase(), ciudad: cotizacion.client.ciudad.toUpperCase() },
+                condiciones: { validez: '30', formaPago: cotizacion.condicionesPago ? cotizacion.condicionesPago.nombre.toUpperCase() : null },
                 areas: [
                     { 
                     nombre: 'Recepción',
