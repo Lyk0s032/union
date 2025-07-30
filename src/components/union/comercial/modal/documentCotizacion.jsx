@@ -190,10 +190,11 @@ export default function DocumentCotizacion(){
                 departamento: municipio.dpto,
                 cod_departamento: municipio.cod_dpto
             };
-            console.log('llega pero nah')
+            
             setMuni(resultado)
+
+            return resultado;
             } else {
-                console.log('no llega')
                 const resultado = {
                     nombre: null
                 }
@@ -213,7 +214,7 @@ export default function DocumentCotizacion(){
     }, [cotizacion])
 
     useEffect(() => {
-        if(cotizacion.client.ciudad){
+        if(cotizacion && cotizacion.client.ciudad){
             getMun(cotizacion.client.ciudad)
         }
     }, [])
