@@ -194,7 +194,10 @@ export default function DocumentCotizacion(){
             setMuni(resultado)
             } else {
                 console.log('no llega')
-                return null;
+                const resultado = {
+                    nombre: null
+                }
+                 setMuni(resultado)
             }
         } catch (error) {
             console.error("Error consultando municipio:", error);
