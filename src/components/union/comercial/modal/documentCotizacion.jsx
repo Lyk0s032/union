@@ -15,6 +15,8 @@ export default function DocumentCotizacion(){
     const { cotizacion, loadingCotizacion } = cotizacionn;
     const [municipio, setMuni] = useState(null);
     const pdfRef = useRef();
+    const [datos, setDatos] = useState(null);
+    const [totales, setTotales] = useState(null);
 
     const exportToPDF = () => {
     const input = document.getElementById("cotizacion-pdf");
@@ -71,23 +73,9 @@ export default function DocumentCotizacion(){
                 asesor: {nombre: `${cotizacion.user.name.toUpperCase()} ${cotizacion.user.lastName.toUpperCase()}`, correo: `${cotizacion.user.email.toUpperCase()}`, telefono: cotizacion.user.phone},
                 cliente: { nombre: `${cotizacion.client.nombre.toUpperCase()}`, telefono: '3165519920', direccion: cotizacion.client.direccion.toUpperCase(), ciudad: cotizacion.client.ciudad.toUpperCase() },
                 condiciones: { validez: '30', formaPago: cotizacion.condicionesPago ? cotizacion.condicionesPago.nombre.toUpperCase() : null },
-                areas: [
-                    { 
-                    nombre: 'Recepción',
-                    productos: [
-                        { referencia: 'R001', descripcion: 'Mostrador blanco', cantidad: 1, valorUnitario: 1500000, subtotal: 1500000 },
-                        { referencia: 'R002', descripcion: 'Silla visitante', cantidad: 2, valorUnitario: 450000, subtotal: 900000 },
-                    ],
-                    totalArea: 2400000,
-                    },
-                ],
-                totales: {
-                    subtotal: 2400000,
-                    descuento: 0,
-                    subtotalConDescuento: 2400000,
-                    iva: 456000,
-                    total: 2856000,
-                },
+                areas: datos,
+                totales,
+                notas: cotizacion.notaCotizacions
             };
 
             const response = await axios.post('/api/cotizacion/generatePdf', { data }, {
@@ -118,6 +106,79 @@ export default function DocumentCotizacion(){
     }
         }
     }
+
+    const valores = (valor) => {
+        setTotales(valor)
+    }
+
+    const transformarAreas = () => {
+        if (!cotizacion || !cotizacion.areaCotizacions) return [];
+
+        return cotizacion.areaCotizacions.map(area => {
+            const items = []
+            .concat(area.productoCotizacions || [])
+            .concat(area.serviciosCotizados || [])
+            .concat(area.kits || [])
+            .concat(area.armados || []);
+
+            const productos = items.map(item => {
+            let referencia = '';
+            let descripcion = '';
+            let cantidad = 0;
+            let valorUnitario = 0;
+            let subtotal = 0;
+
+            if (item.kitCotizacion) {
+                referencia = `0${item.id}`;
+                descripcion = `${item.name.toUpperCase()} - ${item.extension.name.toUpperCase()}`;
+                cantidad = Number(item.kitCotizacion.cantidad);
+                valorUnitario = Number(item.kitCotizacion.precio / cantidad).toFixed(0);
+                subtotal = Number(item.kitCotizacion.precio).toFixed(0);
+            } else if (item.armadoCotizacion) {
+                referencia = `SP${item.id}`;
+                descripcion = item.name.toUpperCase();
+                cantidad = Number(item.armadoCotizacion.cantidad);
+                valorUnitario = Number(item.armadoCotizacion.precio / cantidad).toFixed(0);
+                subtotal = Number(item.armadoCotizacion.precio).toFixed(0);
+            } else if (item.cantidad && item.producto) {
+                referencia = `PT${item.id}`;
+                descripcion = item.producto.item.toUpperCase() + (item.medida ? ` | ${item.medida}` : '');
+                cantidad = Number(item.cantidad);
+                valorUnitario = Number(item.precio / cantidad).toFixed(0);
+                subtotal = Number(item.precio).toFixed(0);
+            } else if (item.cantidad && item.service) {
+                referencia = `SV${item.id}`;
+                descripcion = item.service.name.toUpperCase();
+                cantidad = Number(item.cantidad);
+                valorUnitario = Number(item.precio / cantidad).toFixed(0);
+                subtotal = Number(item.precio).toFixed(0);
+            }
+
+            return {
+                referencia,
+                descripcion,
+                cantidad,
+                valorUnitario: Number(valorUnitario),
+                subtotal: Number(subtotal),
+            };
+            });
+
+            const totalArea = productos.reduce((acc, p) => acc + p.subtotal, 0);
+
+            return {
+            nombre: area.name.toUpperCase(),
+            productos,
+            totalArea: Number(totalArea.toFixed(0)),
+            };
+        });
+    };
+    console.log(cotizacion)
+    useEffect(() => {
+        if (cotizacion && cotizacion.areaCotizacions) {
+            const transformadas = transformarAreas();
+            setDatos(transformadas);
+        }
+    }, [cotizacion])
     return ( 
         <div className="modal"  style={{zIndex:10}}>
             <div className="hiddenModal" onClick={() => {
@@ -476,12 +537,28 @@ export default function DocumentCotizacion(){
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <TotalSub cotizacion={cotizacion} />
+                                                <TotalSub cotizacion={cotizacion} valores={valores}  />
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-                            </div>
+                            </div><br /><br />
+                            
+                                {
+                                cotizacion.notaCotizacions?.length ?
+                                    <div className="referencias">
+                                        <strong>Nota</strong><br /><br />
+                                        {
+                                            cotizacion.notaCotizacions.map((n, i) => {
+                                                return (
+                                                    <span key={i+1}>{n.texto}</span>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                : null
+                                }
+                            
                         </div>
                         
                     </div>
@@ -507,7 +584,7 @@ export default function DocumentCotizacion(){
     )
 }
 
-function TotalSub({ cotizacion }){
+function TotalSub({ cotizacion, valores }){
     
     // const valor = cotizacion.kits && cotizacion.kits.length ? Number(cotizacion.kits.reduce((acc, p) => Number(acc) + Number(p.kitCotizacion ? p.kitCotizacion.precio : 0), 0)) : null
     // const valorSuper = cotizacion.armados && cotizacion.armados.length ? Number(cotizacion.armados.reduce((acc, p) => Number(acc) + Number(p.armadoCotizacion ? p.armadoCotizacion.precio : 0), 0)) : null
@@ -584,6 +661,17 @@ function TotalSub({ cotizacion }){
     const totalSub = subTotal - sumaDescuento;
     const valorIva = Number(subTotal - sumaDescuento) * (19 / 100)
     const total = totalSub + valorIva;
+
+
+    useEffect(() => {
+        valores({
+            subtotal: subTotal.toFixed(0),
+            descuentos: sumaDescuento.toFixed(0),
+            subtotalConDescuento: totalSub.toFixed(0),
+            iva: valorIva.toFixed(0),
+            total: total.toFixed(0),
+        })
+    },[])
     return (
         <tr className='total'>
             {/* <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(sumaValor).toFixed(0))} COP</td> */}

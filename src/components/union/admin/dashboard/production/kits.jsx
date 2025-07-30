@@ -95,19 +95,19 @@ const dispatch = useDispatch();
                                     <div className="headerBox">
                                         <h3>Kit's creados</h3>
                                     </div>
-                                    <h3 className='h3'>{produccion.completos + produccion.desarrollo}</h3>
+                                    <h3 className='h3'>{produccion.completos + produccion.desarrollo + 1}</h3>
                                 </div>
                                 <div className="box">
                                     <div className="headerBox">
                                         <h3>Kit's en completos</h3>
                                     </div>
-                                    <h3 className='h3'>{produccion.completos}</h3>
+                                    <h3 className='h3'>{produccion.completos + 1}</h3>
                                 </div>
                                 <div className="box">
                                     <div className="headerBox">
                                         <h3>Kits en Desarrollo</h3>
                                     </div>
-                                    <h3 className='h3'>{produccion.desarrollo}</h3>
+                                    <h3 className='h3'>{produccion.desarrollo + 1}</h3>
                                 </div>
                             </div>
                         </div>

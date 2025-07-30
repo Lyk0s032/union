@@ -55,7 +55,7 @@ export default function ProductionDashboard(){
                                         navigate('/admin/production/kits')
                                     }}>
                                         <span>Kit's en el sistema</span>
-                                        <h1>{produccion.completos + produccion.desarrollo}</h1>
+                                        <h1>{produccion.completos + produccion.desarrollo + 1}</h1>
                                     </div>
                                     <div className="datosBox" onClick={() => {
                                         navigate('/admin/production/productos')
