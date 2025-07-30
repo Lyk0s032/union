@@ -11,7 +11,8 @@ export default function Condiciones({ cotizacion, close}){
     const { user } = usuario;
     const [form, setForm] = useState({
         time: 1,
-        condiciones: null
+        condiciones: null,
+        validez: 30
     });
     const [loading, setLoading] = useState(false);
 
@@ -23,6 +24,7 @@ export default function Condiciones({ cotizacion, close}){
             cotizacionId: cotizacion.id,
             days: form.time,
             condicionId: form.condiciones,
+            validez: form.validez,
             userId: user.user.id
         }
         const send =  await axios.put('/api/cotizacion/condiciones/give', body)
@@ -63,31 +65,33 @@ export default function Condiciones({ cotizacion, close}){
                                     time: e.target.value
                                 })
                             }} value={form.time}>
-                                <option value="5">5 Día</option>
-                                <option value="6">6 Día</option>
-                                <option value="7">7 Día</option>
-                                <option value="8">8 Día</option>
-                                <option value="9">9 Día</option>
-                                <option value="10">10 Día</option>
-                                <option value="11">11 Día</option>
-                                <option value="12">12 Día</option>
-                                <option value="13">13 Día</option>
-                                <option value="14">14 Día</option>
-                                <option value="15">15 Día</option>
-                                <option value="16">16 Día</option>
-                                <option value="17">17 Día</option>
-                                <option value="18">18 Día</option>
-                                <option value="19">19 Día</option>
-                                <option value="20">20 Día</option>
-                                <option value="21">21 Día</option>
-                                <option value="22">22 Día</option>
-                                <option value="23">23 Día</option>
-                                <option value="24">24 Día</option>
-                                <option value="25">25 Día</option>
-                                <option value="26">26 Día</option>
-                                <option value="27">27 Día</option>
-                                <option value="28">28 Día</option>
-                                <option value="29">29 Día</option>
+                                <option value="5">5 Días</option>
+                                <option value="6">6 Días</option>
+                                <option value="7">7 Días</option>
+                                <option value="8">8 Días</option>
+                                <option value="9">9 Días</option>
+                                <option value="10">10 Días</option>
+                                <option value="11">11 Días</option>
+                                <option value="12">12 Días</option>
+                                <option value="13">13 Días</option>
+                                <option value="14">14 Días</option>
+                                <option value="15">15 Días</option>
+                                <option value="16">16 Días</option>
+                                <option value="17">17 Días</option>
+                                <option value="18">18 Días</option>
+                                <option value="19">19 Días</option>
+                                <option value="20">20 Días</option>
+                                <option value="21">21 Días</option>
+                                <option value="22">22 Días</option>
+                                <option value="23">23 Días</option>
+                                <option value="24">24 Días</option>
+                                <option value="25">25 Días</option>
+                                <option value="26">26 Días</option>
+                                <option value="27">27 Días</option>
+                                <option value="28">28 Días</option>
+                                <option value="29">29 Días</option>
+                                <option value="30">30 Días</option>
+
                             </select> 
                         </div>
                         <div className="inputDiv">
@@ -111,6 +115,29 @@ export default function Condiciones({ cotizacion, close}){
                                 }
 
                             </select>
+                        </div>
+                        <div className="inputDiv">
+                            <label htmlFor="">Validez de la oferta</label><br />
+                            <select name="" id="" onChange={(e) => {
+                                setForm({
+                                    ...form,
+                                    validez: e.target.value
+                                })
+                            }} value={form.validez}>
+                                <option value="30">30 Días</option>
+                                <option value="35">35 Días</option>
+                                <option value="40">40 Días</option>
+                                <option value="45">45 Días</option>
+                                <option value="50">50 Días</option>
+                                <option value="55">55 Días</option>
+                                <option value="60">60 Días</option>
+                                <option value="70">70 Días</option>
+                                <option value="80">80 Días</option>
+                                <option value="90">90 Días</option>
+                                
+
+
+                            </select> 
                         </div>
                         <div className="inputDiv">
                             <button onClick={() => {

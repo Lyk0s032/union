@@ -29,6 +29,7 @@ export default function DocumentCotizacion(){
     input.style.height = 'auto';
     input.style.overflow = 'visible';
 
+
     // Esperar a que se renderice visualmente (opcional pero recomendable)
     setTimeout(() => {
         html2canvas(input, { scale: 2 }).then((canvas) => {
@@ -72,7 +73,7 @@ export default function DocumentCotizacion(){
                 cotizacion: { numero: `MDC-CV-${cotizacion.id + 21719}'`, fecha: cotizacion.time.split('T')[0] },
                 asesor: {nombre: `${cotizacion.user.name.toUpperCase()} ${cotizacion.user.lastName.toUpperCase()}`, correo: `${cotizacion.user.email.toUpperCase()}`, telefono: cotizacion.user.phone},
                 cliente: { nombre: `${cotizacion.client.nombre.toUpperCase()}`, telefono: '3165519920', direccion: cotizacion.client.direccion.toUpperCase(), ciudad: cotizacion.client.ciudad.toUpperCase() },
-                condiciones: { validez: '30', formaPago: cotizacion.condicionesPago ? cotizacion.condicionesPago.nombre.toUpperCase() : null },
+                condiciones: { validez: cotizacion.validez, entrega: cotizacion.days, formaPago: cotizacion.condicionesPago ? cotizacion.condicionesPago.nombre.toUpperCase() : null },
                 areas: datos,
                 totales,
                 notas: cotizacion.notaCotizacions
@@ -172,13 +173,47 @@ export default function DocumentCotizacion(){
             };
         });
     };
-    console.log(cotizacion)
+
+    const getMun = async (codigo) => {
+        try {
+            const res = await axios.get(`https://www.datos.gov.co/resource/gdxc-w37w.json`, {
+            params: {
+                cod_mpio: codigo
+            }
+            });
+
+            if (res.data.length > 0) {
+            const municipio = res.data[0];
+            const resultado = {
+                nombre: municipio.nom_mpio,
+                codigo: municipio.cod_mpio,
+                departamento: municipio.dpto,
+                cod_departamento: municipio.cod_dpto
+            };
+            console.log('llega pero nah')
+            setMuni(resultado)
+            } else {
+                console.log('no llega')
+                return null;
+            }
+        } catch (error) {
+            console.error("Error consultando municipio:", error);
+            return null;
+        }
+    };
+
     useEffect(() => {
         if (cotizacion && cotizacion.areaCotizacions) {
             const transformadas = transformarAreas();
             setDatos(transformadas);
         }
     }, [cotizacion])
+
+    useEffect(() => {
+        if(cotizacion.client.ciudad){
+            getMun(cotizacion.client.ciudad)
+        }
+    }, [])
     return ( 
         <div className="modal"  style={{zIndex:10}}>
             <div className="hiddenModal" onClick={() => {
@@ -272,7 +307,7 @@ export default function DocumentCotizacion(){
                                             <h3>
                                                 CIUDAD:
                                             </h3>
-                                            <h4> {cotizacion.client.ciudad.toUpperCase()}</h4>
+                                            <h4> {municipio ? municipio.nombre : null}</h4>
                                         </div>
                                         <div className="item">
                                             <h3>
@@ -306,6 +341,12 @@ export default function DocumentCotizacion(){
                                         <div className="item">
                                             <h3>
                                                 VALIDEZ DE LA OFERTA:
+                                            </h3>
+                                            <h4>{cotizacion.validez} DÍAS</h4>
+                                        </div>
+                                        <div className="item">
+                                            <h3> 
+                                                TiEMPO DE ENTREGA:
                                             </h3>
                                             <h4>{cotizacion.days} DÍAS</h4>
                                         </div>

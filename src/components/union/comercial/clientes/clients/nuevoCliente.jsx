@@ -8,9 +8,13 @@ export default function NewClient(){
     const [params, setParams] = useSearchParams();
     const dispatch = useDispatch();
 
+
+
     const [divipolaData, setDivipolaData] = useState([]);
     const [departamentos, setDepartamentos] = useState([]);
     const [municipios, setMunicipios] = useState([]);
+    const [departamentoSeleccionado, setDepartamentoSeleccionado] = useState('');
+    const [municipioSeleccionado, setMunicipioSeleccionado] = useState('');
 
     const [loading, setLoading] = useState(false);
     const [form, setForm] = useState({
@@ -32,23 +36,21 @@ export default function NewClient(){
     const usuario = useSelector(store => store.usuario);
     const { user } = usuario;
 
-     const searchDeparamentos = async () => {
-        try {
-            const res = await axios.get("https://www.datos.gov.co/resource/gt2j-8ykr.json?$limit=2000");
-            setDivipolaData(res.data);
-            
-            // CAMBIO: Usamos los nuevos nombres de campo de la API
-            const uniqueDepartamentos = Array.from(new Set(res.data.map(d =>
-                `${d.departamento_nom}-${d.departamento}` 
-            )));
+    const cargarDivipola = async () => {
+    try {
+        const res = await axios.get("https://www.datos.gov.co/resource/gdxc-w37w.json?$limit=10000");
+        setDivipolaData(res.data);
 
-            setDepartamentos(uniqueDepartamentos);
-        } catch (error) {
-            console.error("Error fetching Divipola data:", error);
-            dispatch(actions.HandleAlerta('No se pudo cargar la lista de departamentos', 'negative'));
-        }
+        // Sacamos los departamentos únicos
+        const mapa = new Map();
+        res.data.forEach(item => {
+        mapa.set(item.cod_dpto, { codigo: item.cod_dpto, nombre: item.dpto });
+        });
+        setDepartamentos(Array.from(mapa.values()));
+    } catch (error) {
+        console.error("Error cargando Divipola:", error);
     }
-
+    };
     const createClient = async() => {
         if(form.persona == 'juridica' && !form.nombre) return dispatch(actions.HandleAlerta('Ingresa un nombre de empresa', 'negative'))
         if(form.persona == 'natural' && !form.name) return dispatch(actions.HandleAlerta('Ingresa nombre del proveedor ', 'negative'))
@@ -92,8 +94,24 @@ export default function NewClient(){
         } 
     } 
 
+    const handleDepartamentoChange = (e) => {
+        const codigo = e.target.value;
+        setDepartamentoSeleccionado(codigo);
+
+        const municipiosFiltrados = divipolaData
+            .filter(item => item.cod_dpto === codigo)
+            .map(item => ({ codigo: item.cod_mpio, nombre: item.nom_mpio }));
+
+        setMunicipios(municipiosFiltrados);
+        setMunicipioSeleccionado(''); // Reiniciar municipio seleccionado
+    };
+
+    const handleMunicipioChange = (e) => {
+        setMunicipioSeleccionado(e.target.value);
+    };
+
     useEffect(() => {
-        searchDeparamentos()
+        cargarDivipola()
     }, [])
 
 
@@ -231,39 +249,20 @@ export default function NewClient(){
                         </div>
                         <div className="inputDiv">
                             <label htmlFor="">Departamento </label><br />
-                            <select onChange={(e) => {
-                                setForm({
-                                    ...form,
-                                    departamento: e.target.value,
-                                    // Reseteamos la ciudad al cambiar de depto
-                                    ciudad: ""
-                                })
-                            }} value={form.departamento} >
+                            <select value={departamentoSeleccionado} onChange={handleDepartamentoChange}  >
                                 <option value="">Selecciona un Departamento</option>
-                                {departamentos.map(dep => {
-                                    const [codigo, nombre] = dep.split('-');
-                                    return <option key={codigo} value={dep}>{codigo}</option>;
-                                })}
+                                {departamentos.map(dep => (
+                                    <option key={dep.codigo} value={dep.codigo}>{dep.nombre}</option>
+                                ))}
                             </select>
                         </div>
                         <div className="inputDiv">
                             <label htmlFor="">Municipio </label><br />
-                            <select onChange={(e) => {
-                                setForm({
-                                    ...form,
-                                    ciudad: e.target.value
-                                })
-                            }} value={form.ciudad} >
-                                <option value="">Selecciona un municipio</option>
-                                {municipios
-    .filter(mun => mun && mun.municipio_nom && mun.municipio) // Filtramos por los nuevos nombres de campo
-    .map(mun => (
-        // Usamos mun.municipio para la 'key' y mun.municipio_nom para el valor y el texto
-        <option key={mun.municipio} value={mun.municipio_nom}>
-            {mun.municipio_nom}
-        </option>
-    ))
-}
+                            <select value={municipioSeleccionado} onChange={handleMunicipioChange} disabled={!departamentoSeleccionado} >
+                            <option value="">Selecciona un municipio</option>
+                                {municipios.map(mun => (
+                                    <option key={mun.codigo} value={mun.codigo}>{mun.nombre}</option>
+                                ))}
                             </select>
                         </div>
                         <div className="inputDiv">

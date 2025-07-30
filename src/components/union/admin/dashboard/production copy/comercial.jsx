@@ -35,7 +35,7 @@ export default function ComercialDashboard(){
                 <div className="containerTypeDashboard">
                 <div className="topHeaderPanel">
                     <div className="divideHeader">
-                        <div className="bottonChange"> {console.log(cotizaciones)}
+                        <div className="bottonChange"> 
                             <button>
                                 <MdOutlineArrowBackIos className='icon' />
                             </button> 

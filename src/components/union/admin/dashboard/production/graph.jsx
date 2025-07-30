@@ -6,7 +6,13 @@ import { useDispatch } from 'react-redux';
 import * as actions from '../../../../store/action/action';
 
 const formatMonthAxis = (date) => date.toLocaleString('es-CO', { month: 'short' });
-
+const formatAxis = (date) => {
+    return new Date(date).toLocaleDateString('es-CO', {
+        timeZone: 'UTC', // La clave está aquí
+        month: 'short',
+        day: 'numeric',
+    });
+};
 
 export default function GraphSerial({ datos, carga }){
   // 2. Usa useMemo para procesar los datos de forma segura y eficiente
@@ -54,7 +60,7 @@ export default function GraphSerial({ datos, carga }){
                     {
                       dataKey: 'fecha',
                       scaleType: 'time',
-                      valueFormatter: formatMonthAxis,
+                      valueFormatter: formatAxis,
                       disableLine: true,
                     },
                   ]}
@@ -71,14 +77,11 @@ export default function GraphSerial({ datos, carga }){
                       area: true,
                       // --- AQUÍ ESTÁ LA NUEVA LÓGICA ---
                     valueFormatter: (value, { dataIndex }) => {
-                      // Obtenemos la fecha completa usando el índice del dato
-                      const date = datosProcesados[dataIndex].fecha;
-                      const dayOfMonth = date.getDate();
-                      const MonthOfDate = date.getMonth();
-
-                      // Devolvemos el texto personalizado
-                      return `Día ${dayOfMonth}: ${value}`;
-                    },
+                                    const date = datosProcesados[dataIndex].fecha;
+                                    // Usamos getUTCDate() en lugar de getDate() para obtener el día correcto
+                                    const dayOfMonth = date.getUTCDate();
+                                    return `Día ${dayOfMonth}: ${value}`;
+                                },
                     },
                   ]}
                   sx={{

@@ -8,7 +8,9 @@ import ProductoTerminadoItem from "./itemProducto";
 
 export default function SearchProductoTerminado({ number }){
     const dispatch = useDispatch();
-    
+
+    const system = useSelector(store => store.system);
+    const { categorias, lineas } = system;
     const kitStore = useSelector(store => store.kits);
     const {kits, kit, loadingKits} = kitStore;
     const usuario = useSelector(store => store.usuario);
@@ -19,6 +21,8 @@ export default function SearchProductoTerminado({ number }){
     const [loading, setLoading] = useState(false)
     const [data, setData] = useState(null);
 
+    const [linea, setLinea] = useState(null)
+    
     const searchKitsAxios = async (searchTerm) => {
         if(!searchTerm || searchTerm == '') return setData(null);
         setLoading(true);
@@ -26,7 +30,8 @@ export default function SearchProductoTerminado({ number }){
 
         const response = await axios.get('api/materia/producto/searching',{
         params: { // Aquí definimos los parámetros de consulta que irán en la URL (ej: ?query=...)
-          q: searchTerm // El nombre del parámetro 'query' debe coincidir con req.query.query en tu backend
+            q: searchTerm, // El nombre del parámetro 'query' debe coincidir con req.query.query en tu backend
+            lineaId: linea
         },
             // Si tu backend requiere autenticación, añade headers aquí:
             // headers: { 'Authorization': `Bearer TU_TOKEN_DEL_USUARIO` }
@@ -37,7 +42,7 @@ export default function SearchProductoTerminado({ number }){
             console.log(err)
             setData(404)
         })
-        .finally(e => setLoading(false))
+        .finally(() => setLoading(false))
         return response
     }
 
@@ -65,6 +70,23 @@ export default function SearchProductoTerminado({ number }){
                                     <input type="text" placeholder="Superficie..." onChange={(e) => {
                                         searchKitsAxios(e.target.value)
                                     }} />
+                                </div>
+                                <div className="filtersInput">
+                                    <select className="filterRight" name="" id=""  style={{width:'40%'}}
+                                    onChange={(e) => setLinea(e.target.value)} value={linea}>
+                                        <option value="">Líneas</option>
+                                        {
+                                            lineas && lineas.length && (
+                                                lineas.filter(c => c.type == 'comercial').map((c,i) => {
+                                                    return (
+                                                        <option key={i+1} value={c.id}>
+                                                            {c.name}
+                                                        </option>
+                                                    )
+                                                })
+                                            )
+                                        }
+                                    </select>
                                 </div>
                             </div>
                         </div>
