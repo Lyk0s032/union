@@ -26,11 +26,11 @@ export default function SelectKits({ dist }){
     const { user } = usuario;
     const [area, setArea] = useState(null); 
     const [edit, setEdit] = useState(false);
-    const [time, setTime] = useState(cotizacion && (cotizacion.time.split('T')[0])) 
+    const [time, setTime] = useState(cotizacion && cotizacion != 404 && cotizacion != 'notrequest' ? cotizacion.time.split('T')[0] : null) 
     const [openServices, setOpenServices] = useState(null);
     // Datos para actualizar cotizacion
     const [editTime, setEditTime] = useState(null);
-    const [title, setTitle] = useState(cotizacion && (cotizacion.name))
+    const [title, setTitle] = useState(cotizacion && cotizacion != 404 && cotizacion != 'notrequest' ? cotizacion.name : null)
     const [name, setName] = useState(null);
     const [condiciones, setCondiciones] = useState(null)
     const [loading, setLoading] = useState(false);
@@ -186,6 +186,15 @@ export default function SelectKits({ dist }){
         setCondiciones(false)
     }
     return (
+        !cotizacion || loadingCotizacion ?
+            <div className="loadingLoading">
+                <h1>Cargando...</h1>
+            </div>
+        : cotizacion == 404 || cotizacion == 'notrequest' ?
+            <div className="loadingLoading">
+                <h1>No hemos logrado cargar esto.</h1>
+            </div>
+        :
         <div className="page">
             {cotizacion.state == 'version' && (
                 <div className="mode">

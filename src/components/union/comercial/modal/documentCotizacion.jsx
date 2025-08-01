@@ -228,7 +228,7 @@ export default function DocumentCotizacion(){
                 !cotizacion || loadingCotizacion ?
                     <h1 style={{zIndex:10}}>Cargando cotización...</h1>
                 : 
-                cotizacion == 404 || cotizacion == 'notrequest' ? <h1>No carga</h1> : 
+                !cotizacion || cotizacion == 404 || cotizacion == 'notrequest' ? <h1>No carga</h1> : 
                 <div className="containerModal Large" style={{width:'90%'}}>
                     <div className="cotizacionBody" id="cotizacion-pdf">
                         <div className="top">
