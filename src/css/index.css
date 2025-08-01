@@ -46,7 +46,7 @@ body button {
   z-index: 2;
 }
 .modal .containerModal {
-  z-index: 3;
+  z-index: 4;
   width: 50%;
   height: 90%;
   margin: auto;
@@ -523,7 +523,7 @@ body button {
   height: 100%;
   box-sizing: border-box;
   border-radius: 0px;
-  z-index: 4;
+  z-index: 3;
 }
 .modal .Complete .topBigModal {
   height: 10%;
@@ -2650,6 +2650,10 @@ body button {
 .modal .Large {
   width: 70%;
 }
+.modal .Small {
+  z-index: 100;
+  position: relative;
+}
 .modal .Small .headerModal {
   box-sizing: border-box;
   padding: 20px 10px;
@@ -3050,6 +3054,9 @@ body button {
 }
 .modal .Zoom .bodyModalConfiguration .containerBodyModal .divideModal .rightMovements .containerMovements .registersDetails .containerDetails .detailItem .divideItemDetails .dataDetailsItem .time span {
   font-size: 14px;
+}
+.BIGGEST {
+  z-index: 5;
 }
 .Superior {
   z-index: 5;

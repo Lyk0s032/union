@@ -20,7 +20,6 @@ export default function ItemKitLista({ kit }){
     const final = kit?.linea?.percentages?.length ? kit.linea.percentages[0].final : 0;
 
 
-
     return (
         <div className="long" style={{width:'100%'}}>
             <tr  > 
@@ -49,6 +48,7 @@ export default function ItemKitLista({ kit }){
                                     setValorProduccion={setValorProduccion}
                                     distribuidor={distribuidor}
                                     final={final}
+                                    precio={kit.priceKits}
                                 />
                                 
                             </div>
@@ -68,12 +68,8 @@ export default function ItemKitLista({ kit }){
     )
 }
 
-function PrecioCalculado({ kit, setValorProduccion, distribuidor, final }) {
-    const valorProduccion = useMemo(() => {
-        if (!kit.itemKits || kit.itemKits.length === 0) return 0;
-        const costos = kit.itemKits.map(item => getPromedio(item));
-        return costos.reduce((acc, costo) => acc + costo, 0);
-    }, [kit.itemKits]);
+function PrecioCalculado({ kit, setValorProduccion, distribuidor, final, precio }) {
+    const valorProduccion = precio[0].bruto
 
     useEffect(() => {
         setValorProduccion(valorProduccion);

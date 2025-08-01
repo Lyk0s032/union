@@ -11,7 +11,6 @@ export default function ItemToSelect({ dis, kit, number }) {
     const [valorProduccion, setValorProduccion] = useState(0);
     const { cotizacion } = useSelector(store => store.cotizacions);
     const dispatch = useDispatch();
-
     const distribuidor = kit?.linea?.percentages?.length ? kit.linea.percentages[0].distribuidor : 0;
     const final = kit?.linea?.percentages?.length ? kit.linea.percentages[0].final : 0;
 
@@ -49,6 +48,7 @@ export default function ItemToSelect({ dis, kit, number }) {
             distribuidor={distribuidor}
             final={final}
             dis={dis}
+            precio={kit.priceKits}
         />
     ) : (
         <DisplayRow
@@ -66,6 +66,10 @@ function DisplayRow({ kit, onActivate, setValorProduccion, distribuidor, final, 
     return (
         <tr className="uxTable">
             <td className="titleKit">
+                {
+                    console.log(kit)
+
+                }
                 <div className="divTitleKits">
                    <div className="leftTitle">
                          <strong>{kit.id}</strong>
@@ -89,6 +93,7 @@ function DisplayRow({ kit, onActivate, setValorProduccion, distribuidor, final, 
                         distribuidor={distribuidor}
                         final={final}
                         dis={dis}
+                        precio={kit.priceKits}
                     />
                 </h3>
             </td>
@@ -99,13 +104,12 @@ function DisplayRow({ kit, onActivate, setValorProduccion, distribuidor, final, 
     );
 }
 
-function ActiveRow({ kit, onCancel, onAdd, setValorProduccion, distribuidor, final, dis }) {
+function ActiveRow({ kit, onCancel, precio, onAdd, setValorProduccion, distribuidor, final, dis }) {
     const [cantidad, setCantidad] = useState(1);
     const howManyRef = useRef(null);
     const valorTotal = useMemo(() => {
-        if (!kit.itemKits) return 0;
-        
-        const costoProduccionUnitario = kit.itemKits.map(item => getPromedio(item)).reduce((acc, costo) => acc + costo, 0);
+        if (!precio) return 0; 
+        const costoProduccionUnitario = precio[0].bruto
         setValorProduccion(costoProduccionUnitario);
 
         const valorDistribuidorUnitario = (distribuidor > 0) ? (costoProduccionUnitario / Number(distribuidor)) : costoProduccionUnitario;
@@ -159,12 +163,8 @@ function ActiveRow({ kit, onCancel, onAdd, setValorProduccion, distribuidor, fin
     );
 }
 
-function PrecioCalculado({ kit, setValorProduccion, distribuidor, final, dis }) {
-    const valorProduccion = useMemo(() => {
-        if (!kit.itemKits || kit.itemKits.length === 0) return 0;
-        const costos = kit.itemKits.map(item => getPromedio(item));
-        return costos.reduce((acc, costo) => acc + costo, 0);
-    }, [kit.itemKits]);
+function PrecioCalculado({ kit, precio, setValorProduccion, distribuidor, final, dis }) {
+    const valorProduccion = precio[0].bruto 
 
     useEffect(() => {
         setValorProduccion(valorProduccion);

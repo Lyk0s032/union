@@ -72,7 +72,7 @@ export default function DocumentCotizacion(){
             let data = {
                 cotizacion: { numero: `MDC-CV-${cotizacion.id + 21719}'`, fecha: cotizacion.time.split('T')[0] },
                 asesor: {nombre: `${cotizacion.user.name.toUpperCase()} ${cotizacion.user.lastName.toUpperCase()}`, correo: `${cotizacion.user.email.toUpperCase()}`, telefono: cotizacion.user.phone},
-                cliente: { nombre: `${cotizacion.client.nombre.toUpperCase()}`, telefono: '3165519920', direccion: cotizacion.client.direccion.toUpperCase(), ciudad: cotizacion.client.ciudad.toUpperCase() },
+                cliente: { nombre: `${cotizacion.client.nombre.toUpperCase()}`, telefono: '3165519920', direccion: cotizacion.client.direccion.toUpperCase(), ciudad: municipio.nombre.toUpperCase() },
                 condiciones: { validez: cotizacion.validez, entrega: cotizacion.days, formaPago: cotizacion.condicionesPago ? cotizacion.condicionesPago.nombre.toUpperCase() : null },
                 areas: datos,
                 totales,

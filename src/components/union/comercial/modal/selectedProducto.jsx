@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../../store/action/action';
 import axios from 'axios';
 
 export default function SelectedProducto({ kt, cotizacion, area }){
     const [active, setActive] = useState(false);
     const [descuento, setDescuento] = useState(kt.descuento ? kt.descuento : 0);
+    const { user } = useSelector(store => store.usuario);
     const dispatch = useDispatch();
     const [porcentaje, setPorcentaje] = useState(0);
     const porcentForDescuento = (porcentaje) => {
@@ -14,7 +15,7 @@ export default function SelectedProducto({ kt, cotizacion, area }){
         return setDescuento(descuentico.toFixed(0))    
     }
     const giveDescuento = async () => {
-        if(Number(porcentaje) > 10) return dispatch(actions.HandleAlerta('Este descuento es muy alto', 'mistake'));
+        if(Number(porcentaje) > 9 && user.user.area == 'asesor') return dispatch(actions.HandleAlerta('Este descuento es muy alto', 'mistake'));
         if(!descuento) return dispatch(actions.HandleAlerta('Debes dar un descuento', 'mistake'))
         if(descuento == kt.descuento) return dispatch(actions.HandleAlerta('Debes dar un descuento diferente', 'mistake'))
             // Caso contrario, avanzamos

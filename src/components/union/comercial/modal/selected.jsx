@@ -113,6 +113,7 @@ export default function SelectedKits({ number, selectArea, cotizacion, area}){
       }, [openMenuId]);  
     
 
+
     return (
         <div className={number == area.id ? 'area Active' : 'area'}>
             <div className="topTitleArea" onContextMenu={(e) => {

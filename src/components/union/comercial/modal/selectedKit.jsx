@@ -21,6 +21,7 @@ export default function SelectedKit({ kt, cotizacion, area }){
 
     // Dar descuento
     const giveDescuento = async () => {
+        if(Number(porcentaje) > 9 && user.user.area == 'asesor') return dispatch(actions.HandleAlerta('Este descuento es muy alto', 'mistake'));
         if(!descuento) return dispatch(actions.HandleAlerta('Debes dar un descuento', 'mistake'))
         if(descuento == kt.kitCotizacion.descuento) return dispatch(actions.HandleAlerta('Debes dar un descuento diferente', 'mistake'))
             // Caso contrario, avanzamos

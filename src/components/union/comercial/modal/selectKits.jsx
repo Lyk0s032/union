@@ -197,7 +197,7 @@ export default function SelectKits({ dist }){
                     <div className="txt">
                         <div className="back">
                             
-                            <span>Modo versión - Versión Nro 3</span>
+                            <span>Modo versión - Versión: {cotizacion && cotizacion.name ? `"${cotizacion.name}"` : null}</span>
                         </div>
                     </div>
                     <button  onClick={() => {
@@ -443,19 +443,19 @@ export default function SelectKits({ dist }){
             {
                 openServices && (<ModalServices closeOpen={closeOpen} number={number} cotizacion={cotizacion} />)
             } 
-            {version &&(<div className="modal">
+            {version &&(<div className="modal BIGGEST">
                 <div className="hiddenModal" onClick={() => setVersion(null)}></div>
-                <div className="containerModal Small">
+                <div className="containerModal Small" style={{zIndex:8}}>
                     <div className="headerModal" style={{paddingLeft:40}}>
                         <div className="divide">
-                            <h3>Versiones {cotizacion.versionCotizacion?.cotizacions?.length && (`(${cotizacion.versionCotizacion?.cotizacions?.length})`)}</h3>
+                            <h3>Versiones {cotizacion.versionCotizacion?.cotizacions?.length && (`(${cotizacion.versionCotizacion?.cotizacions?.length -1})`)}</h3>
                             <div className="boton">
                                 <button onClick={() => {
                                     if(!loading){
                                         newVersión()
                                     }
                                 }}>
-                                    <span>{!loading ? 'Nueva versión' : 'Creando nueva versión...'}</span>
+                                    <span style={{color:'white'}}>{!loading ? 'Nueva versión' : 'Creando nueva versión...'}</span>
                                 </button>
                             </div>
                         </div>
