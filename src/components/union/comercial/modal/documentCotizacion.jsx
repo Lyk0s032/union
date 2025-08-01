@@ -75,7 +75,7 @@ export default function DocumentCotizacion(){
                 cliente: { nombre: `${cotizacion.client.nombre.toUpperCase()}`, 
                 telefono: '3165519920', 
                 direccion: cotizacion.client.direccion.toUpperCase(), 
-                ciudad:  municipio.nombre ? municipio.nombre.toUpperCase() : null },
+                ciudad:  municipio && municipio.nombre ? municipio.nombre.toUpperCase() : null },
                 condiciones: { validez: cotizacion.validez, entrega: cotizacion.days, formaPago: cotizacion.condicionesPago ? cotizacion.condicionesPago.nombre.toUpperCase() : null },
                 areas: datos,
                 totales,
