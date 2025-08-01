@@ -75,6 +75,9 @@ export default function ComercialPanel(){
         dispatch(actions.axiosToGetCotizaciones(true, user.user.id))
     }, []) 
     return (
+        !cotizaciones || loadingCotizaciones ?
+            <h1>Cargando</h1>
+        :
         <div className="provider">
             <div className="containerProviders Dashboard-grid"> 
                 <div className="topSection">
