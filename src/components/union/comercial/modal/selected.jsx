@@ -114,7 +114,7 @@ export default function SelectedKits({ number, selectArea, cotizacion, area}){
     
 
 
-    return (
+    return ( 
         <div className={number == area.id ? 'area Active' : 'area'}>
             <div className="topTitleArea" onContextMenu={(e) => {
                 e.preventDefault()
