@@ -31,6 +31,9 @@ export default function KitsPanel(){
         dispatch(actions.axiosToGetKits(true))
     }, [])
     return (
+        !kits || loadingKits ?
+            <h1>Cargando</h1>
+        :
         <div className="provider">
             <div className="containerProviders Dashboard-grid">
                 <div className="topSection">
