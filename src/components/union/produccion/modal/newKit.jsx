@@ -14,6 +14,7 @@ export default function ModalNewCotizacion(){
     const { kit, loadingKit } = kits;
     const usuario = useSelector(store => store.usuario);
     const { user } = usuario;
+    const dispatch = useDispatch();
     
     useEffect(() => {
         // dispatch(actions.getKit(null))
@@ -33,7 +34,7 @@ export default function ModalNewCotizacion(){
                     <div className="page">
                         {   
                             !kit && loadingKit ?
-                                    <Loading />
+                                <Loading />
                             : kit == 'notrequest' || kit == 404 ?
                                 <div className="loading">
                                     <h1>No hemos encontrado esto</h1>
