@@ -33,6 +33,25 @@ export default function CotizacionItemProceso(props){
         })
         return sendAprobation;
     } 
+    // Cancelar
+    const handleCancelar = async() => {
+        setLoading(true)
+        const sendAprobation = await axios.put(`/api/cotizacion/admin/put/comeback/desarrollo/${r.id}`)
+        .then(res => {
+            dispatch(actions.HandleAlerta('Proyecto cancelado', 'positive')) 
+            dispatch(actions.axiosToGetCotizacionesAdmin(false))
+
+            return res
+        })
+        .catch(err => {
+            dispatch(actions.HandleAlerta('No hemos logrado cancelar este proyecto', 'mistake'))
+            return err;
+        })
+        .finally(() => {
+            setLoading(false)
+        })
+        return sendAprobation;
+    } 
 
     const openCoti = async () => {
         dispatch(actions.axiosToGetCotizacion(true, r.id))
@@ -66,6 +85,9 @@ export default function CotizacionItemProceso(props){
             <span>{r.days} Días de entrega</span>
         </td>
         <td >
+            <button onClick={() => handleCancelar()} style={{marginRight:5}}>
+             <span>Cancelar</span>
+           </button>
            <button onClick={() => handleAprobar()}>
              <span>A producción</span>
            </button>

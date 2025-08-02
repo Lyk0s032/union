@@ -6,6 +6,7 @@ import * as actions from '../../store/action/action';
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../loading";
 import { AiOutlinePlus } from "react-icons/ai";
+import axios from "axios";
 
 export default function KitsPanel(){
     const [params, setParams] = useSearchParams();
@@ -20,7 +21,7 @@ export default function KitsPanel(){
 
     const system = useSelector(store => store.system);
     const { categorias, lineas, extensiones } = system;
-
+    const [loading, setLoading] = useState(false);
     const [state, setState] = useState('completa');       
     const [word, setWord] = useState(null);
     const [metodo, setMetodo] = useState(null); // METODO DE BUSQUEDA LINEA O CATEGORIA
@@ -30,6 +31,24 @@ export default function KitsPanel(){
     useEffect(() => {
         dispatch(actions.axiosToGetKits(true))
     }, [])
+
+    const handleUpdatePrices = async() => {
+        setLoading(true)
+        const sendAprobation = await axios.get(`/api/kit/kits/getPrices`)
+        .then(res => {
+            dispatch(actions.HandleAlerta('Actualizado con éxito', 'positive')) 
+
+            return res
+        })
+        .catch(err => {
+            dispatch(actions.HandleAlerta('No hemos logrado actualizar esto', 'mistake'))
+            return err;
+        })
+        .finally(() => {
+            setLoading(false)
+        })
+        return sendAprobation;
+    } 
     return (
         !kits || loadingKits ?
             <h1>Cargando</h1>
@@ -43,6 +62,13 @@ export default function KitsPanel(){
                     <div className="optionsFast">
                         <nav>
                             <ul>
+                                <li style={{marginRight:10}}>
+                                    <button className='Active' onClick={() => {
+                                       handleUpdatePrices()
+                                    }}>
+                                        <span>{loading ? 'Actualizando' : 'Actualizar'}</span>
+                                    </button>
+                                </li>
                                 <li> 
                                     <button className={state == 'completa' ? 'Active' : null} onClick={() => {
                                        setState('completa')
