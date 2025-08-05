@@ -222,7 +222,7 @@ export default function DocumentCotizacion(){
         }
     }, [])
     return ( 
-        <div className="modal"  style={{zIndex:10}}>
+        <div className="modal"  style={{zIndex:10}}> {console.log(cotizacion)}
             <div className="hiddenModal" onClick={() => {
                 params.delete('watch');
                 setParams(params);
@@ -405,7 +405,7 @@ export default function DocumentCotizacion(){
                                                             </thead>
                                                             <tbody>
                                                                 {
-                                                                    area && area.kits?.length || area.armados?.length || area.productoCotizacions?.length ? 
+                                                                    area && area.kits?.length || area.serviciosCotizados?.length || area.armados?.length || area.productoCotizacions?.length ? 
                                                                         area.productoCotizacions.concat(area.serviciosCotizados).concat(area.kits).concat(area.armados).map((it,i) => {
 
                                                                         const itemsDelArea = area.productoCotizacions.concat(area.serviciosCotizados).concat(area.kits).concat(area.armados);

@@ -225,7 +225,7 @@ export default function SelectedKits({ number, selectArea, cotizacion, area}){
                     <tbody> 
  
                         {
-                            area && area.kits?.length || area.armados?.length || area.productoCotizacions?.length ? 
+                            area && area.kits?.length || area.serviciosCotizados?.length || area.armados?.length || area.productoCotizacions?.length ? 
   
                             area.productoCotizacions.concat(area.serviciosCotizados).concat(area.armados).concat(area.kits).map((kt, i) => {
                                     return (
