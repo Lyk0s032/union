@@ -459,7 +459,7 @@ export default function DocumentCotizacion(){
                                                                                             <td className='left Longer'>{it.producto.item.toUpperCase()} {it.medida && (`| ${it.medida}`)}</td>
                                                                                         :
                                                                                         it.cantidad && it.service ?
-                                                                                            <td className='left Longer'>{it.service.name.toUpperCase()}</td>
+                                                                                            <td className='left Longer'>{it.service.name.toUpperCase()} - {it.services.description.toUpperCase()}</td>
                                                                                         :
                                                                                         it.armadoCotizacion ?
                                                                                             <td className="left Longer">{it.name.toUpperCase()}</td>
