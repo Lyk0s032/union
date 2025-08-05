@@ -607,7 +607,7 @@ function ModalServices({ number, cotizacion, closeOpen }){
                             </div>
                         </div>
                         <div className="bodyModalTable">
-                            <div className="dataScroll">
+                            <div className="dataScroll" style={{overflowY: auto}}>
                                 
                                     <table>
                                         <thead>
