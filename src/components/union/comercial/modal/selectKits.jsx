@@ -469,7 +469,7 @@ export default function SelectKits({ dist }){
                             </div>
                         </div>
                     </div>
-                    <div className="bodyModalTable">
+                    <div className="bodyModalTable" >
                         <div className="dataScroll">
                             <table>
                                 <thead>
@@ -593,7 +593,7 @@ function ModalServices({ number, cotizacion, closeOpen }){
     return (
             <div className="modal" style={{zIndex:5}}>
                 <div className="hiddenModal" onClick={() => closeOpen()}></div>
-                    <div className="containerModal Small">
+                    <div className="containerModal Small" style={{width:'55%'}}>
                         <div className="headerModal" style={{paddingLeft:40}}>
                             <div className="divide">
                                 <h3>Servicios</h3>
@@ -607,7 +607,7 @@ function ModalServices({ number, cotizacion, closeOpen }){
                             </div>
                         </div>
                         <div className="bodyModalTable">
-                            <div className="dataScroll" style={{overflowY: 'auto'}}>
+                            <div className="dataScroll" style={{width:'100%',overflowX: 'hidden', overflowY: 'scroll', height:'85%',boxSizing: 'border-box'}}>
                                 
                                     <table>
                                         <thead>
