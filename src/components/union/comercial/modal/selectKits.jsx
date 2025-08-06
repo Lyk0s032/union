@@ -18,7 +18,7 @@ import 'dayjs/locale/es'; // Idioma español
 import Condiciones from './condiciones';
 
 
-export default function SelectKits({ dist }){
+export default function SelectKits(){
     const cotizacions = useSelector(store => store.cotizacions);
     const [params, setParams] = useSearchParams();
     const { cotizacion, loadingCotizacion } = cotizacions;
@@ -177,11 +177,7 @@ export default function SelectKits({ dist }){
         })
         return send;
     }
-    // Abrir cotización
-    const openCoti = async () => {
-        params.set('watch', 'cotizacion');
-        setParams(params);
-    }
+
     const closeTheCondicions = () => {
         setCondiciones(false)
     }
@@ -606,8 +602,8 @@ function ModalServices({ number, cotizacion, closeOpen }){
                                 </div>
                             </div>
                         </div>
-                        <div className="bodyModalTable">
-                            <div className="dataScroll" style={{width:'100%',overflowX: 'hidden', overflowY: 'scroll', height:'85%',boxSizing: 'border-box'}}>
+                        <div className="bodyModalTable" style={{width:'100%',overflowX: 'hidden', overflowY: 'scroll', height:'85%',boxSizing: 'border-box'}}>
+                            <div className="dataScroll" >
                                 
                                     <table>
                                         <thead>

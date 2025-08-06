@@ -459,11 +459,7 @@ export default function DocumentCotizacion(){
                                                                                             <td className='left Longer'>{it.producto.item.toUpperCase()} {it.medida && (`| ${it.medida}`)}</td>
                                                                                         :
                                                                                         it.cantidad && it.service ?
-<<<<<<< HEAD
-                                                                                            <td className='left Longer'>{it.service.name.toUpperCase()} - {it.services.description.toUpperCase()}</td>
-=======
-                                                                                            <td className='left Longer'>{console.log(it)}{it.service.name.toUpperCase()} {it.service.description ? it.service.description.toUpperCase() : null}</td>
->>>>>>> 64a8e8b (fixing cotization)
+                                                                                            <td className='left Longer'>{it.service.name.toUpperCase()} - {it.service ? it.service.description.toUpperCase() : null}</td>
                                                                                         :
                                                                                         it.armadoCotizacion ?
                                                                                             <td className="left Longer">{it.name.toUpperCase()}</td>
