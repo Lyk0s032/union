@@ -459,7 +459,11 @@ export default function DocumentCotizacion(){
                                                                                             <td className='left Longer'>{it.producto.item.toUpperCase()} {it.medida && (`| ${it.medida}`)}</td>
                                                                                         :
                                                                                         it.cantidad && it.service ?
+<<<<<<< HEAD
                                                                                             <td className='left Longer'>{it.service.name.toUpperCase()} - {it.services.description.toUpperCase()}</td>
+=======
+                                                                                            <td className='left Longer'>{console.log(it)}{it.service.name.toUpperCase()} {it.service.description ? it.service.description.toUpperCase() : null}</td>
+>>>>>>> 64a8e8b (fixing cotization)
                                                                                         :
                                                                                         it.armadoCotizacion ?
                                                                                             <td className="left Longer">{it.name.toUpperCase()}</td>
@@ -611,16 +615,16 @@ export default function DocumentCotizacion(){
                         
                     </div>
                     <div className="optionDownload">
-                        <button onClick={exportToPDF}>
+                        {/* <button onClick={exportToPDF}>
                             <span>Descargar</span>
-                        </button>
+                        </button> */}
 
                         <button onClick={() => {
                             if(!loading){
                                 getPDF()
                             }
                         }}>
-                            <span>{loading ? 'Generando pdf' : 'Descarga liviana'}</span>
+                            <span>{loading ? 'Generando pdf' : 'Descargar'}</span>
                         </button>
                     </div>
                     
