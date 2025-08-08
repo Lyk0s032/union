@@ -152,7 +152,7 @@ export default function DocumentCotizacion(){
                 subtotal = Number(item.precio).toFixed(0);
             } else if (item.cantidad && item.service) {
                 referencia = `SV${item.id}`;
-                descripcion = item.service.name.toUpperCase();
+                descripcion = `${item.service.name.toUpperCase()} ${item.service.description ? ` - ${item.service.description.toUpperCase()}` : null}`;
                 cantidad = Number(item.cantidad);
                 valorUnitario = Number(item.precio / cantidad).toFixed(0);
                 subtotal = Number(item.precio).toFixed(0);
@@ -222,7 +222,7 @@ export default function DocumentCotizacion(){
         }
     }, [])
     return ( 
-        <div className="modal"  style={{zIndex:10}}> {console.log(cotizacion)}
+        <div className="modal"  style={{zIndex:10}}> 
             <div className="hiddenModal" onClick={() => {
                 params.delete('watch');
                 setParams(params);
