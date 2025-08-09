@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../../store/action/action';
 import axios from 'axios';
+import UpdatePrice from './updatePrice/UpdateKit';
 
 export default function SelectedKit({ kt, cotizacion, area }){
     const [active, setActive] = useState(false);
@@ -11,7 +12,7 @@ export default function SelectedKit({ kt, cotizacion, area }){
 
     const dispatch = useDispatch();
     const [porcentaje, setPorcentaje] = useState(0);
-
+    const [pri, setPri] = useState(null);
     // Convertir descuento
     const porcentForDescuento = (porcentaje) => {
         let  precio = kt.kitCotizacion.precio;
@@ -62,6 +63,11 @@ export default function SelectedKit({ kt, cotizacion, area }){
         return sendPetion; 
     }
 
+    // Close pri
+    const closePri = () => {
+        setPri(null)
+    }
+
     return (
         <tr >
             <td>
@@ -90,7 +96,13 @@ export default function SelectedKit({ kt, cotizacion, area }){
                 :
                     <td onDoubleClick={() => setActive(true)}>{kt.kitCotizacion.descuento ? new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(kt.kitCotizacion.descuento).toFixed(0)) : 0 } COP</td>
             }
-            <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(kt.kitCotizacion.precio).toFixed(0))} COP</td>
+            <td onDoubleClick={() => setPri(true)}>
+                {  
+                    !pri ?
+                        new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(kt.kitCotizacion.precio).toFixed(0))
+                    :
+                        <UpdatePrice cotizacion={cotizacion} close={closePri} valor={kt.kitCotizacion.precio} idKit={kt.kitCotizacion.id} tipo={'kit'} />
+                } COP</td>
             <td>
 
             </td>

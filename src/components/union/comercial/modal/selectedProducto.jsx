@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../../store/action/action';
 import axios from 'axios';
+import UpdatePrice from './updatePrice/UpdateKit';
 
 export default function SelectedProducto({ kt, cotizacion, area }){
     const [active, setActive] = useState(false);
@@ -9,6 +10,7 @@ export default function SelectedProducto({ kt, cotizacion, area }){
     const { user } = useSelector(store => store.usuario);
     const dispatch = useDispatch();
     const [porcentaje, setPorcentaje] = useState(0);
+    const [pri, setPri] = useState(null)
     const porcentForDescuento = (porcentaje) => {
         let  precio = kt.precio;
         const descuentico = Number(porcentaje / 100) * Number(precio)
@@ -56,6 +58,10 @@ export default function SelectedProducto({ kt, cotizacion, area }){
         })
         return sendPetion; 
     }
+        // Close pri
+    const closePri = () => {
+        setPri(null)
+    }
 
     return ( 
         <tr>
@@ -92,10 +98,16 @@ export default function SelectedProducto({ kt, cotizacion, area }){
                 :
                 <td onDoubleClick={() => setActive(true)}>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(kt.descuento).toFixed(0))} COP</td>
             }
-            <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(kt.precio).toFixed(0))} COP</td>
-            <td>
-
-            </td>
+            
+                {
+                !pri ?
+                    <td onDoubleClick={() => setPri(true)}>
+                        {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(kt.precio).toFixed(0))}
+                    </td>
+                :
+                    <UpdatePrice cotizacion={cotizacion} close={closePri} valor={kt.precio} idKit={kt.id} tipo={'producto'} />
+                }
+            <td></td>
             <td>
                 {/* <strong>{<ValorSelected mt={materia} />}</strong> */}
             </td> 
