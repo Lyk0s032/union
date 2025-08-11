@@ -5729,9 +5729,6 @@ body button {
 .ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .leftNoti .resultsNotificationsKits .containerResultsNoti table tbody tr .percentage {
   width: 20%;
 }
-.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .leftNoti .resultsNotificationsKits .containerResultsNoti table tbody .Active td {
-  background-color: #046290;
-}
 .ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .leftNoti .resultsNotificationsKits .containerResultsNoti table tbody tr:hover {
   transform: translateX(5%);
 }
