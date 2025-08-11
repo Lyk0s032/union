@@ -936,3 +936,69 @@ export function axiosToGetCotizacionesProduccion(carga){
         });
     }
 }
+
+
+// Peticiones
+export function getRequerimientos(data){
+    return {
+        type: types.GET_REQUERIMIENTOS,
+        payload: data
+    }
+}
+export function gettingRequerimiento(carga){
+    return {
+        type: types.GETTING_REQUERIMIENTOS,
+        payload: carga
+    }
+}
+
+export function axiosToGetRequerimientos(carga){
+    return function(dispatch){ 
+        dispatch(gettingRequerimiento(carga))
+        axios.get(`/api/kit/requerimientos/get/all`)
+        .then((info) => info.data) 
+        .then(inf => {
+            return dispatch(getRequerimientos(inf))
+        })
+        .catch((e) => {
+            console.log(e)
+            if(e.request){
+                return dispatch(getRequerimientos('notrequest'));
+            }else{
+                return dispatch(getRequerimientos(404))
+            }
+        });
+    }
+}
+
+export function getRequerimiento(data){
+    return {
+        type: types.GET_REQUERIMIENTO,
+        payload: data
+    }
+}
+export function gettingRequerimient(carga){
+    return {
+        type: types.GETTING_REQUERIMIENTO,
+        payload: carga
+    }
+}
+
+export function axiosToGetRequerimiento(carga, reqId){
+    return function(dispatch){ 
+        dispatch(gettingRequerimient(carga))
+        axios.get(`/api/kit/requerimiento/get/one/${reqId}`)
+        .then((info) => info.data) 
+        .then(inf => {
+            return dispatch(getRequerimiento(inf))
+        })
+        .catch((e) => {
+            console.log(e)
+            if(e.request){
+                return dispatch(getRequerimiento('notrequest'));
+            }else{
+                return dispatch(getRequerimiento(404))
+            }
+        });
+    }
+}

@@ -524,6 +524,679 @@
                                 }
                             }
                        } 
+                       .notificationsPanel{
+                            height:100%;
+                            .divideNotifications{
+                                display:flex;
+                                height:100%;
+                                .leftNoti{
+                                    width:30%;
+                                    padding:0px 10px;
+                                    padding-bottom: 10px;
+                                    box-sizing: border-box;
+                                    height:100%;
+                                    overflow-x: hidden;
+                                    overflow-y: auto;
+                                    .title{
+                                        padding:10px 0px;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: space-between;
+                                        padding-right: 10px;
+                                        margin-bottom: 10px;
+                                        h3{
+                                            font-weight: 400;
+                                        }
+
+                                        button{
+                                            font-size: 28px;
+                                            border:none;
+                                            color: @bgAzulDark;
+                                            background-color: transparent;
+                                        }
+                                    }
+                                    .resultsNotificationsKits{
+                                        .containerResultsNoti{
+                                            table{
+                                                border-collapse: collapse;
+                                                width:100%;
+                                                tbody{
+                                                    tr{
+                                                        cursor:pointer;
+                                                        transition: .3s;
+                                                       td{
+                                                        padding:10px 0px;
+                                                        box-sizing: border-box;
+                                                            .circle-container{
+                                                                width: 40px;
+                                                                height: 40px;
+                                                                border-radius: 50%;
+                                                                background: conic-gradient(
+                                                                    @bgAzulDark calc(var(--percentage) * 1%),
+                                                                    #e0e0e0 0);
+
+                                                                 display: flex;
+                                                                align-items: center;
+                                                                justify-content: center;
+                                                                font-family: sans-serif;
+                                                                font-weight: bold;
+                                                                font-size: 1.2em;
+                                                                color: #333;
+                                                                position: relative;    
+                                                                
+                                                             
+                                                                .circle-inner {
+                                                                    width: 30px;
+                                                                    height: 30px;
+                                                                    background-color: #fff;
+                                                                    border-radius: 50%;
+                                                                    display: flex;
+                                                                    align-items: center;
+                                                                    justify-content: center;
+
+                                                                    h3{
+                                                                        font-size: 10px;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        .coding{
+                                                            width:5%;
+                                                            .code{
+                                                                h3{
+                                                                    font-size: 12px;
+                                                                    font-weight: 400;
+                                                                }
+                                                            }
+                                                        }
+                                                        .longer{
+                                                            width:60%;
+                                                            .titleNameKitAndData{
+                                                                box-sizing: border-box;
+                                                                span{
+                                                                    font-size: 12px;
+                                                                    color: #666;
+                                                                }
+                                                                .nameData{
+                                                                    h3{
+                                                                        font-weight: 500;
+                                                                        font-size: 15px;
+                                                                        color: @bgAzulDark;
+
+                                                                    }
+                                                                    span{
+                                                                        color: #333;
+                                                                        font-size: 12px;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        .middle{
+                                                            width:20%;
+                                                            span{
+                                                                color: @bgAzulDark;
+                                                                font-size: 12px;
+                                                            }
+                                                        }
+                                                        .percentage{
+                                                            width:20%;
+                                                        }
+                                                    } 
+                                                    .Active{
+                                                        td{
+                                                            background-color: @bgAzulDark;
+                                                        }
+                                                    }
+                                                    tr:hover{
+                                                        transform: translateX(5%);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                }
+                                .rightNoti{
+                                    border-left:1px solid #ccc;
+                                    width:70%;
+                                    box-sizing: border-box;
+
+                                    .containerRightNoti{
+                                        width:100%;
+                                        height:100%;
+                                        overflow-y: auto;
+                                        
+                                        .boxNotiRight{
+                                            box-sizing: border-box;
+
+                                            .titleNoti{
+                                                padding:10px 20px;
+                                                box-sizing: border-box;
+                                                border-bottom: 1px solid #f8f8f8;
+                                                .solicitud{
+                                                    width:100%;
+                                                    display: flex;
+                                                    align-items: center;
+                                                    justify-content: space-between;
+                                                    margin-bottom: 10px;
+                                                    span{
+                                                        font-size: 13px;
+                                                        color: #666;
+                                                    }
+                                                }
+                                                .data{
+                                                    padding:10px 0px;
+                                                    box-sizing: border-box;
+                                                    display: flex;
+                                                    align-items: start;
+                                                    justify-content: space-between;
+                                                    .leftData{
+                                                        h3{
+                                                            color: @bgAzulDark;
+                                                            font-size: 16px;
+                                                            font-weight: 500;
+                                                        }
+                                                        h4{
+                                                            margin-top: 5px;
+                                                            font-size: 12px;
+                                                            color: @bgDark;
+                                                            font-weight: 400;
+                                                        }
+                                                        span{
+                                                            font-size: 12px;
+                                                            color: #666;
+                                                        }
+                                                    }
+                                                    .rightData{
+                                                        span{
+                                                            font-size: 12px;
+                                                            color: #666;
+                                                        }
+                                                        strong{
+                                                            color: @bgAzulDark;
+                                                            font-size: 12px;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            .containerDataSolicitud{
+                                                box-sizing: border-box;
+                                                .description{
+                                                    width:100%;
+                                                    padding:10px 20px;
+                                                    box-sizing: border-box;
+                                                    strong{
+                                                        font-weight: bold;
+                                                        color: #666;
+                                                        font-size: 12px;
+                                                    }
+                                                    h3{
+                                                        font-weight: 400;
+                                                        font-size: 12px;
+                                                        margin-top:5px;
+                                                        color: #666;
+                                                    }
+                                                }
+                                                .create{
+                                                    box-sizing: border-box;
+                                                    margin:20px 0px;
+                                                    box-sizing: border-box;
+                                                
+                                                    .kitDescription{
+                                                        .finishToCreate{
+                                                            width:90%;
+                                                            margin:auto;
+                                                            span{
+                                                                font-size: 12px;
+                                                                color: #666;
+                                                            }
+                                                            h3{
+                                                                font-weight: 400;
+                                                                font-size: 16px;
+                                                                color: @bgAzulDark;
+                                                            }
+                                                            button{
+                                                                padding:5px 10px;
+                                                                box-sizing: border-box;
+                                                                border-radius: 5px;
+                                                                margin-top:5px;
+                                                                background-color: @bgAzulDark;
+                                                                border:1px solid @bgAzulDark;
+                                                                span{
+                                                                    color: @bgDefault;
+                                                                }
+                                                            }
+                                                        }
+                                                        .containerKitDescription{
+                                                            width:90%;
+                                                            margin:auto;
+                                                            .form{
+                                                                .containerForm{
+                                                                    .inputDiv{
+                                                                        padding:10px 0px;
+                                                                        box-sizing: border-box;
+                                                                        h3{
+                                                                            font-weight: 600;
+                                                                            font-size: 14px;
+                                                                        }
+                                                                        input{
+                                                                            width:100%;
+                                                                            border:1px solid #ccc;
+                                                                            box-sizing: border-box;
+                                                                            margin-top:5px;
+                                                                            padding:6px 10px;
+                                                                            border-radius: 5px;
+                                                                        }
+                                                                        textarea{
+                                                                            width:100%;
+                                                                            height:100px;
+                                                                            resize: none;
+                                                                            margin-top:5px;
+                                                                            border:1px solid #ccc;
+                                                                            box-sizing: border-box;
+                                                                            border-radius: 5px;
+                                                                        }
+                                                                        select{
+                                                                            width:100%;
+                                                                            background-color: @bgDefault;
+                                                                            border:1px solid #ccc;
+                                                                            margin-top:5px;
+                                                                            border-radius: 5px;
+                                                                            padding:5px 10px;
+                                                                            box-sizing: border-box;
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                            .bottom{
+                                                                margin-top:10px;
+                                                                button{
+                                                                    padding:8px 20px;
+                                                                    background-color: @bgAzulDark;
+                                                                    border:1px solid @bgAzulDark;
+                                                                    width:100%;
+                                                                    span{
+                                                                        font-size: 14px;
+                                                                        color: @bgDefault;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                .messangeAndAdj{
+                                                    margin-top:20px;
+                                                    box-sizing: border-box;
+                                                    padding:10px 20px;
+                                                    box-sizing: border-box;
+                                                    .containerMessageUser{
+                                                        padding: 40px 0px;
+                                                        .titleMessage{
+                                                            display: flex;
+                                                            align-items: center;
+                                                            justify-content: space-between;
+
+                                                            .leftMessageUser{
+                                                                width:60%;
+                                                                display: flex;
+                                                                align-items: center;
+
+                                                                .letter{
+                                                                    width:20%;
+                                                                    .circle{
+                                                                        width:50px;
+                                                                        height: 50px;
+                                                                        border-radius: 30px;
+                                                                        background-color: black;
+                                                                        display: flex;
+                                                                        align-items: center;
+                                                                        justify-content: space-around;
+                                                                        
+                                                                        h3{
+                                                                            font-weight: 600;
+                                                                            font-size: 16px;
+                                                                            color: @bgDefault;
+                                                                        }
+                                                                    }
+                                                                }
+                                                                .dataUserMessage{
+                                                                    box-sizing: border-box;
+                                                                    h3{
+                                                                        font-weight: 400;
+                                                                        color: @bgAzulDark;
+                                                                    }
+                                                                    span{
+                                                                        font-size: 12px;
+                                                                    }
+                                                                }
+                                                            }
+                                                            .rightUserMessage{
+                                                                span{
+                                                                    font-size: 12px;
+                                                                    color: #666;
+                                                                }
+                                                            }
+                                                        }
+
+                                                        .titleMessage.Me{
+                                                            flex-direction: row-reverse;
+
+                                                            .leftMessageUser{
+                                                                flex-direction: row-reverse;
+                                                                text-align: right;
+                                                                .letter{
+                                                                    .circle{
+                                                                        margin-left:auto;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        
+                                                        .messegeContainerUser{
+                                                            box-sizing: border-box;
+                                                            display: flex;
+                                                            align-items: start;
+                                                            justify-content: space-between;
+                                                            margin-top:40px;
+                                                            .leftFilterMessage{
+                                                                width:7.5%;
+
+                                                                nav{
+                                                                    ul{
+                                                                        li{
+                                                                            display: flex;
+                                                                            width:100%;
+                                                                            box-sizing: border-box;
+                                                                            justify-content: space-around;
+                                                                            margin-bottom: 20px;
+                                                                            cursor: pointer;
+                                                                            transition: .3s;
+                                                                            div{
+                                                                                width:30px;
+                                                                                height:30px;
+                                                                                display: flex;
+                                                                                align-items: center;
+                                                                                justify-content: space-around;
+                                                                                border-radius: 20px;
+                                                                                background-color: @bgAzulDark;
+                                                                                h3{
+                                                                                    font-weight: 400;
+                                                                                    color: @bgDefault;
+                                                                                    font-size: 10px;
+                                                                                }
+                                                                                .icon{
+                                                                                    font-size:14px;
+                                                                                    color: @bgDefault;
+                                                                                    transition: .3s;
+                                                                                }
+                                                                                
+                                                                            }
+                                                                            .text{
+                                                                                background-color: #f67732;
+                                                                            }
+                                                                        }
+                                                                        li.Active{
+                                                                            transform: scale(1.2);
+                                                                        }
+                                                                        li:hover{
+                                                                            transform: translateX(10%);
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                            .rightMessageContainer{
+                                                                width:88%;
+                                                                h3{
+                                                                    font-weight: 500;
+                                                                    font-size: 14px;
+                                                                    color: @bgDark;
+                                                                    white-space: pre-line;
+                                                                }
+                                                                .containerImages{
+                                                                    box-sizing: border-box;
+                                                                    display: flex;
+                                                                    align-items: center;
+                                                                    flex-wrap: nowrap;
+                                                                    img{
+                                                                        transition: .3s;
+                                                                        width:150px;
+                                                                        height:150px;
+                                                                        border-radius: 5px;
+                                                                        object-fit: cover;
+                                                                        margin-right: 10px;
+                                                                        margin-bottom: 15px;
+                                                                        cursor: pointer;
+                                                                    }
+                                                                    img:hover{
+                                                                        transform: translateY(-5%);
+                                                                    }
+
+                                                                    
+                                                                }
+                                                                .Edit{
+                                                                    box-sizing: border-box;
+                                                                    display: flex;
+                                                                    align-items: center;
+                                                                    flex-wrap: wrap;
+                                                                    .image{
+                                                                        border:1px solid #ccc;
+                                                                        box-sizing: border-box;
+                                                                        border-radius: 10px;
+                                                                        margin-right: 15px;
+                                                                        margin-bottom: 15px;
+                                                                        transition: .3s;
+                                                                        width:150px;
+                                                                        height:150px;
+                                                                        img{
+                                                                            width:100%;
+                                                                            height:100%;
+                                                                            object-fit: cover;
+                                                                            border-radius: 10px;
+                                                                        }
+                                                                        img:hover{
+                                                                            transform: translateY(0%);
+                                                                        }
+                                                                    }
+                                                                    .image:hover{
+                                                                        transform: scale(1.1);
+                                                                    }
+                                                                    .File{
+                                                                        box-sizing: border-box;
+                                                                        height:100px;
+                                                                        border:none;
+                                                                    }
+                                                                }
+                                                                .messageNotiSmall{
+                                                                    display: flex;
+                                                                    align-items: center;
+                                                                    justify-content: space-around;
+                                                                    height:300px;
+                                                                    width:100%;
+                                                                    .containerThis{
+                                                                        text-align: center;
+                                                                        h3{
+                                                                            font-weight: 400;
+                                                                            color: #666;
+                                                                            font-size: 24px;
+                                                                        }
+                                                                        button{
+                                                                            background-color: transparent;
+                                                                            border:none;
+                                                                            margin-top:10px;
+                                                                            .icon{
+                                                                                font-size: 40px;
+                                                                                color: @bgAzulDark;
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                                .writeMessage{
+                                                                    textarea{
+                                                                        width:100%;
+                                                                        min-height: 300px;
+                                                                        border:none;
+                                                                        padding:10px;
+                                                                        box-sizing: border-box;
+                                                                        font-family: roboto;
+                                                                        outline: 0px;
+                                                                        border-bottom: 1px solid #ccc;
+                                                                        resize: none;
+                                                                    }   
+                                                                }
+                                                            }
+                                                        }
+                                                        
+                                                    }
+
+                                                    .plusNewMessage{
+                                                        box-sizing: border-box;
+                                                        display: flex;
+                                                        align-items: center;
+                                                        justify-content: space-around;
+                                                        margin-bottom: 20px;
+                                                        button{
+                                                            background-color: transparent;
+                                                            border:none;
+                                                            transition: .3s;
+                                                            .icon{
+                                                                font-size: 52px;
+                                                                color: @bgDark;
+                                                                transition: .3s;
+                                                            }
+                                                        }
+                                                        button:hover{
+                                                            transform: scale(1.2);
+                                                            .icon{
+                                                                color: @bgAzulDark;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                                .lastOption{
+                                                    width:100%;
+                                                    text-align: center;
+                                                    margin-top: 100px;
+
+                                                    .kitCreado{
+                                                        box-sizing: border-box;
+                                                        margin-bottom: 50px;
+                                                        h3{
+                                                            font-weight: 400;
+                                                            color: @bgAzulDark;
+                                                            font-size:32px;
+                                                            margin-bottom: 30px;
+                                                        }
+
+                                                        .data{
+                                                            span{
+                                                                font-size: 12px;
+                                                                color: #666;
+                                                            }
+                                                            h3{
+                                                                color: black;
+                                                            }
+                                                        }
+                                                    }
+                                                    button{
+                                                        padding:6px 20px;
+                                                        border-radius: 5px;
+                                                        border:1px solid @danger;
+                                                        background-color: @danger;
+
+                                                        span{
+                                                            color: @bgDefault;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        .messageNoti{
+                                            width:100%;
+                                            height:100%;
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: space-around;
+                                            h1{
+                                                font-weight: 400;
+                                                color: #ccc;
+                                            }
+                                        }
+                                    }
+
+                                    .newReqForm{
+                                        width:100%;
+                                        box-sizing: border-box;
+
+                                        .containerNewReq{
+                                            .title{
+                                                width:100%;
+                                                padding:30px 0px;
+                                                box-sizing: border-box;
+                                                text-align: center;
+                                                h3{
+                                                    font-weight: 600;
+                                                    color: @bgAzulDark;
+                                                }
+                                            }
+                                            .dataForm{
+                                                margin-top:20px;
+                                                width:90%;
+                                                margin:auto;
+                                                .inputDiv{
+                                                    margin-bottom: 20px;
+                                                    label{
+                                                        font-size: 12px;
+                                                        color: #666
+                                                    }
+                                                    input{
+                                                        width:100%;
+                                                        border:1px solid #ccc;
+                                                        border-radius: 20px;
+                                                        margin-top:10px;
+                                                        padding:8px 15px;
+                                                        box-sizing: border-box;
+                                                    }
+
+                                                    button{
+                                                        margin-top:10px;
+                                                        padding:7px 15px;
+                                                        border:1px solid #ccc;
+                                                        border-radius: 5px;
+                                                        margin-right: 10px;
+                                                        background-color: @bgDefault;
+                                                        cursor: pointer;
+                                                        span{
+                                                            color: @bgAzulDark;
+                                                            font-size: 12px;
+                                                        }
+                                                    }
+                                                    button.Active{
+                                                        background-color: @bgAzulDark;
+                                                        border:1px solid @bgAzulDark;
+                                                        span{
+                                                            color: @bgDefault;
+                                                        }
+                                                    }
+                                                    textarea{
+                                                        margin-top: 10px;
+                                                        width:100%;
+                                                        height:100px;
+                                                        border:1px solid #ccc;
+                                                        box-sizing: border-box;
+                                                        padding:10px;
+                                                        box-sizing: border-box;
+                                                        resize: none;
+                                                        font-family: Roboto;
+                                                        font-size: 12px;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                       } 
                     }
                 }
             }

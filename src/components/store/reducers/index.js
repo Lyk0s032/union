@@ -9,11 +9,12 @@ import cotizacions from "./cotizacion";
 import requisicion from "./requisicion";
 import clients from "./clients";
 import admin from "./administration";
-
+import noti from "./notificaciones";
 
 
 
 const appReducer = combineReducers({
+    noti,
     usuario,
     system,
     provider,

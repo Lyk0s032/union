@@ -3,6 +3,7 @@ import { Route, Routes, useSearchParams } from 'react-router-dom';
 import LeftNav from './leftNav';
 import KitsPanel from './kits';
 import Lineas from './extension';
+import Solicitudes from './solicitudes/solicitudes';
 
 export default function RoutesProduccion(){
     const [params, setParams] = useSearchParams();
@@ -18,6 +19,7 @@ export default function RoutesProduccion(){
                         <Routes>
                             <Route path="/*" element={<KitsPanel />} />
                             <Route path="/lineas/*" element={<Lineas />} />
+                            <Route path="/solicitudes/*" element={<Solicitudes />} />
 
                         </Routes>
                     </div> 

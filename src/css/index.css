@@ -5622,6 +5622,608 @@ body button {
 .ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .TableUX table tbody tr:hover .longer {
   padding-left: 10px;
 }
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel {
+  height: 100%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications {
+  display: flex;
+  height: 100%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .leftNoti {
+  width: 30%;
+  padding: 0px 10px;
+  padding-bottom: 10px;
+  box-sizing: border-box;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .leftNoti .title {
+  padding: 10px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 10px;
+  margin-bottom: 10px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .leftNoti .title h3 {
+  font-weight: 400;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .leftNoti .title button {
+  font-size: 28px;
+  border: none;
+  color: #046290;
+  background-color: transparent;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .leftNoti .resultsNotificationsKits .containerResultsNoti table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .leftNoti .resultsNotificationsKits .containerResultsNoti table tbody tr {
+  cursor: pointer;
+  transition: 0.3s;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .leftNoti .resultsNotificationsKits .containerResultsNoti table tbody tr td {
+  padding: 10px 0px;
+  box-sizing: border-box;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .leftNoti .resultsNotificationsKits .containerResultsNoti table tbody tr td .circle-container {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: conic-gradient(#046290 calc(var(--percentage) * 1%), #e0e0e0 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #333;
+  position: relative;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .leftNoti .resultsNotificationsKits .containerResultsNoti table tbody tr td .circle-container .circle-inner {
+  width: 30px;
+  height: 30px;
+  background-color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .leftNoti .resultsNotificationsKits .containerResultsNoti table tbody tr td .circle-container .circle-inner h3 {
+  font-size: 10px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .leftNoti .resultsNotificationsKits .containerResultsNoti table tbody tr .coding {
+  width: 5%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .leftNoti .resultsNotificationsKits .containerResultsNoti table tbody tr .coding .code h3 {
+  font-size: 12px;
+  font-weight: 400;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .leftNoti .resultsNotificationsKits .containerResultsNoti table tbody tr .longer {
+  width: 60%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .leftNoti .resultsNotificationsKits .containerResultsNoti table tbody tr .longer .titleNameKitAndData {
+  box-sizing: border-box;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .leftNoti .resultsNotificationsKits .containerResultsNoti table tbody tr .longer .titleNameKitAndData span {
+  font-size: 12px;
+  color: #666;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .leftNoti .resultsNotificationsKits .containerResultsNoti table tbody tr .longer .titleNameKitAndData .nameData h3 {
+  font-weight: 500;
+  font-size: 15px;
+  color: #046290;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .leftNoti .resultsNotificationsKits .containerResultsNoti table tbody tr .longer .titleNameKitAndData .nameData span {
+  color: #333;
+  font-size: 12px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .leftNoti .resultsNotificationsKits .containerResultsNoti table tbody tr .middle {
+  width: 20%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .leftNoti .resultsNotificationsKits .containerResultsNoti table tbody tr .middle span {
+  color: #046290;
+  font-size: 12px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .leftNoti .resultsNotificationsKits .containerResultsNoti table tbody tr .percentage {
+  width: 20%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .leftNoti .resultsNotificationsKits .containerResultsNoti table tbody .Active td {
+  background-color: #046290;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .leftNoti .resultsNotificationsKits .containerResultsNoti table tbody tr:hover {
+  transform: translateX(5%);
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti {
+  border-left: 1px solid #ccc;
+  width: 70%;
+  box-sizing: border-box;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight {
+  box-sizing: border-box;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .titleNoti {
+  padding: 10px 20px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #f8f8f8;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .titleNoti .solicitud {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .titleNoti .solicitud span {
+  font-size: 13px;
+  color: #666;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .titleNoti .data {
+  padding: 10px 0px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .titleNoti .data .leftData h3 {
+  color: #046290;
+  font-size: 16px;
+  font-weight: 500;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .titleNoti .data .leftData h4 {
+  margin-top: 5px;
+  font-size: 12px;
+  color: #454f5b;
+  font-weight: 400;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .titleNoti .data .leftData span {
+  font-size: 12px;
+  color: #666;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .titleNoti .data .rightData span {
+  font-size: 12px;
+  color: #666;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .titleNoti .data .rightData strong {
+  color: #046290;
+  font-size: 12px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud {
+  box-sizing: border-box;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .description {
+  width: 100%;
+  padding: 10px 20px;
+  box-sizing: border-box;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .description strong {
+  font-weight: bold;
+  color: #666;
+  font-size: 12px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .description h3 {
+  font-weight: 400;
+  font-size: 12px;
+  margin-top: 5px;
+  color: #666;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .create {
+  margin: 20px 0px;
+  box-sizing: border-box;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .create .kitDescription .finishToCreate {
+  width: 90%;
+  margin: auto;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .create .kitDescription .finishToCreate span {
+  font-size: 12px;
+  color: #666;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .create .kitDescription .finishToCreate h3 {
+  font-weight: 400;
+  font-size: 16px;
+  color: #046290;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .create .kitDescription .finishToCreate button {
+  padding: 5px 10px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin-top: 5px;
+  background-color: #046290;
+  border: 1px solid #046290;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .create .kitDescription .finishToCreate button span {
+  color: #FFF;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .create .kitDescription .containerKitDescription {
+  width: 90%;
+  margin: auto;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .create .kitDescription .containerKitDescription .form .containerForm .inputDiv {
+  padding: 10px 0px;
+  box-sizing: border-box;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .create .kitDescription .containerKitDescription .form .containerForm .inputDiv h3 {
+  font-weight: 600;
+  font-size: 14px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .create .kitDescription .containerKitDescription .form .containerForm .inputDiv input {
+  width: 100%;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  margin-top: 5px;
+  padding: 6px 10px;
+  border-radius: 5px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .create .kitDescription .containerKitDescription .form .containerForm .inputDiv textarea {
+  width: 100%;
+  height: 100px;
+  resize: none;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .create .kitDescription .containerKitDescription .form .containerForm .inputDiv select {
+  width: 100%;
+  background-color: #FFF;
+  border: 1px solid #ccc;
+  margin-top: 5px;
+  border-radius: 5px;
+  padding: 5px 10px;
+  box-sizing: border-box;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .create .kitDescription .containerKitDescription .bottom {
+  margin-top: 10px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .create .kitDescription .containerKitDescription .bottom button {
+  padding: 8px 20px;
+  background-color: #046290;
+  border: 1px solid #046290;
+  width: 100%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .create .kitDescription .containerKitDescription .bottom button span {
+  font-size: 14px;
+  color: #FFF;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj {
+  margin-top: 20px;
+  padding: 10px 20px;
+  box-sizing: border-box;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser {
+  padding: 40px 0px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .titleMessage {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .titleMessage .leftMessageUser {
+  width: 60%;
+  display: flex;
+  align-items: center;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .titleMessage .leftMessageUser .letter {
+  width: 20%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .titleMessage .leftMessageUser .letter .circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 30px;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .titleMessage .leftMessageUser .letter .circle h3 {
+  font-weight: 600;
+  font-size: 16px;
+  color: #FFF;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .titleMessage .leftMessageUser .dataUserMessage {
+  box-sizing: border-box;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .titleMessage .leftMessageUser .dataUserMessage h3 {
+  font-weight: 400;
+  color: #046290;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .titleMessage .leftMessageUser .dataUserMessage span {
+  font-size: 12px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .titleMessage .rightUserMessage span {
+  font-size: 12px;
+  color: #666;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .titleMessage.Me {
+  flex-direction: row-reverse;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .titleMessage.Me .leftMessageUser {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .titleMessage.Me .leftMessageUser .letter .circle {
+  margin-left: auto;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .messegeContainerUser {
+  box-sizing: border-box;
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  margin-top: 40px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .messegeContainerUser .leftFilterMessage {
+  width: 7.5%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .messegeContainerUser .leftFilterMessage nav ul li {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .messegeContainerUser .leftFilterMessage nav ul li div {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 20px;
+  background-color: #046290;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .messegeContainerUser .leftFilterMessage nav ul li div h3 {
+  font-weight: 400;
+  color: #FFF;
+  font-size: 10px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .messegeContainerUser .leftFilterMessage nav ul li div .icon {
+  font-size: 14px;
+  color: #FFF;
+  transition: 0.3s;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .messegeContainerUser .leftFilterMessage nav ul li .text {
+  background-color: #f67732;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .messegeContainerUser .leftFilterMessage nav ul li.Active {
+  transform: scale(1.2);
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .messegeContainerUser .leftFilterMessage nav ul li:hover {
+  transform: translateX(10%);
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .messegeContainerUser .rightMessageContainer {
+  width: 88%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .messegeContainerUser .rightMessageContainer h3 {
+  font-weight: 500;
+  font-size: 14px;
+  color: #454f5b;
+  white-space: pre-line;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .messegeContainerUser .rightMessageContainer .containerImages {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .messegeContainerUser .rightMessageContainer .containerImages img {
+  transition: 0.3s;
+  width: 150px;
+  height: 150px;
+  border-radius: 5px;
+  object-fit: cover;
+  margin-right: 10px;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .messegeContainerUser .rightMessageContainer .containerImages img:hover {
+  transform: translateY(-5%);
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .messegeContainerUser .rightMessageContainer .Edit {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .messegeContainerUser .rightMessageContainer .Edit .image {
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border-radius: 10px;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  transition: 0.3s;
+  width: 150px;
+  height: 150px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .messegeContainerUser .rightMessageContainer .Edit .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .messegeContainerUser .rightMessageContainer .Edit .image img:hover {
+  transform: translateY(0%);
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .messegeContainerUser .rightMessageContainer .Edit .image:hover {
+  transform: scale(1.1);
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .messegeContainerUser .rightMessageContainer .Edit .File {
+  box-sizing: border-box;
+  height: 100px;
+  border: none;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .messegeContainerUser .rightMessageContainer .messageNotiSmall {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 300px;
+  width: 100%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .messegeContainerUser .rightMessageContainer .messageNotiSmall .containerThis {
+  text-align: center;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .messegeContainerUser .rightMessageContainer .messageNotiSmall .containerThis h3 {
+  font-weight: 400;
+  color: #666;
+  font-size: 24px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .messegeContainerUser .rightMessageContainer .messageNotiSmall .containerThis button {
+  background-color: transparent;
+  border: none;
+  margin-top: 10px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .messegeContainerUser .rightMessageContainer .messageNotiSmall .containerThis button .icon {
+  font-size: 40px;
+  color: #046290;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .containerMessageUser .messegeContainerUser .rightMessageContainer .writeMessage textarea {
+  width: 100%;
+  min-height: 300px;
+  border: none;
+  padding: 10px;
+  box-sizing: border-box;
+  font-family: roboto;
+  outline: 0px;
+  border-bottom: 1px solid #ccc;
+  resize: none;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .plusNewMessage {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .plusNewMessage button {
+  background-color: transparent;
+  border: none;
+  transition: 0.3s;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .plusNewMessage button .icon {
+  font-size: 52px;
+  color: #454f5b;
+  transition: 0.3s;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .plusNewMessage button:hover {
+  transform: scale(1.2);
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .messangeAndAdj .plusNewMessage button:hover .icon {
+  color: #046290;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .lastOption {
+  width: 100%;
+  text-align: center;
+  margin-top: 100px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .lastOption .kitCreado {
+  box-sizing: border-box;
+  margin-bottom: 50px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .lastOption .kitCreado h3 {
+  font-weight: 400;
+  color: #046290;
+  font-size: 32px;
+  margin-bottom: 30px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .lastOption .kitCreado .data span {
+  font-size: 12px;
+  color: #666;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .lastOption .kitCreado .data h3 {
+  color: black;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .lastOption button {
+  padding: 6px 20px;
+  border-radius: 5px;
+  border: 1px solid #dc3545;
+  background-color: #dc3545;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .boxNotiRight .containerDataSolicitud .lastOption button span {
+  color: #FFF;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .messageNoti {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .containerRightNoti .messageNoti h1 {
+  font-weight: 400;
+  color: #ccc;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .newReqForm {
+  width: 100%;
+  box-sizing: border-box;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .newReqForm .containerNewReq .title {
+  width: 100%;
+  padding: 30px 0px;
+  box-sizing: border-box;
+  text-align: center;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .newReqForm .containerNewReq .title h3 {
+  font-weight: 600;
+  color: #046290;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .newReqForm .containerNewReq .dataForm {
+  margin-top: 20px;
+  width: 90%;
+  margin: auto;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .newReqForm .containerNewReq .dataForm .inputDiv {
+  margin-bottom: 20px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .newReqForm .containerNewReq .dataForm .inputDiv label {
+  font-size: 12px;
+  color: #666;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .newReqForm .containerNewReq .dataForm .inputDiv input {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  margin-top: 10px;
+  padding: 8px 15px;
+  box-sizing: border-box;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .newReqForm .containerNewReq .dataForm .inputDiv button {
+  margin-top: 10px;
+  padding: 7px 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+  background-color: #FFF;
+  cursor: pointer;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .newReqForm .containerNewReq .dataForm .inputDiv button span {
+  color: #046290;
+  font-size: 12px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .newReqForm .containerNewReq .dataForm .inputDiv button.Active {
+  background-color: #046290;
+  border: 1px solid #046290;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .newReqForm .containerNewReq .dataForm .inputDiv button.Active span {
+  color: #FFF;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .notificationsPanel .divideNotifications .rightNoti .newReqForm .containerNewReq .dataForm .inputDiv textarea {
+  margin-top: 10px;
+  width: 100%;
+  height: 100px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-sizing: border-box;
+  resize: none;
+  font-family: Roboto;
+  font-size: 12px;
+}
 .ProductionPanelUX .OpenUX .divide .ProduccionUX {
   width: 100%;
 }
