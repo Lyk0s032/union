@@ -12,7 +12,7 @@ export default function NewReq({ close }){
     const [loading, setLoading] = useState(false);
     const [form, setForm] = useState({
         nombre: '',
-        tipo: '',
+        tipo: 'kit',
         description: '',
         userId: user.user.id,
     }); 
@@ -65,14 +65,7 @@ export default function NewReq({ close }){
                         }}>
                             <span>Kit</span>
                         </button>
-                        <button  className={form.tipo == 'producto' ? 'Active' : null} onClick={() => {
-                            setForm({
-                                ...form,
-                                tipo: 'producto'
-                            })
-                        }}>
-                            <span>Producto terminado</span>
-                        </button>
+
                     </div>
                     <div className="inputDiv">
                         <label htmlFor="">Descripción</label><br />
