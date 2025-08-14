@@ -30,13 +30,16 @@ export default function SearchKits({ number }) {
 
         return primas.filter(m => {
             // 2. Lógica de filtrado corregida y más clara
+
             const porTexto = word ? m.description.toLowerCase().includes(word.toLowerCase()) || String(m.item).includes(word) : true;
+            const busqueda = !isNaN(word) && word.trim() !== '' ? word == m.id : porTexto;
+            
             const porCategoria = cat ? m.categoriumId == cat : true;
             const porLinea = li ? m.lineaId == li : true;
             
             // 3. El filtro 'diferente' ahora busca correctamente en 'kit.itemKits'
 
-            return porTexto && porCategoria && porLinea ;
+            return busqueda && porCategoria && porLinea ;
         });
     }, [primas, kit.itemKits, word, cat, li]);
 
