@@ -125,7 +125,10 @@ export default function ItemToSelect({ number, kitt}){
                                     if(e.key == 'Enter'){
                                         addItem()
                                     }
-                                }} onBlur={() => setActive(null)}/>
+                                    if(e.key == 'Escape'){
+                                        setActive(null)
+                                    }
+                                }}/>
                             {/* <h3>x</h3>
                             <input type="text" onChange={(e) => {
                                 setForm({

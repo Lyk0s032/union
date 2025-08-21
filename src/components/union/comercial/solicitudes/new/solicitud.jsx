@@ -5,6 +5,10 @@ import ResponseMessage from './responseMessage';
 import * as actions from './../../../../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
 import AdjuntMessage from '../mensajeAdjunto';
+import { io } from 'socket.io-client';
+
+const SOCKET_URL = "http://192.168.1.15:3000"; // ajusta al dominio/puerto real
+const socket = io(SOCKET_URL, { transports: ["websocket"] });
 
 export default function Solicitud(){
     const [imagenes, setImages] = useState(null);
@@ -18,7 +22,30 @@ export default function Solicitud(){
     
     const closeWrite = () => {
         setWrite(false);
-    }
+    } 
+
+    useEffect(() => {
+        if(!requerimiento?.id) return;
+
+        // Unirse al room
+        socket.emit("join:requerimiento", requerimiento.id );
+
+        // Escuchar actualizaciones
+        const handler = (payload) => {
+            console.log("📡 Actualización recibida desde socket:", payload);
+            dispatch({ type: "SET_REQUERIMIENTO", payload }); 
+        };
+        socket.on("requerimiento:update", handler);
+
+        // Cargar datos iniciales
+        dispatch(actions.axiosToGetRequerimiento(false, requerimiento.id))
+
+        // Cleanup
+        return () => {
+            socket.emit("leave:requerimiento", requerimiento.id );
+            socket.off("requerimiento:update", handler);
+        };
+    }, [requerimiento?.id, dispatch]); 
 
     return (
         <div className="containerRightNoti">
@@ -68,7 +95,6 @@ export default function Solicitud(){
                                     null
                                 : !write ?
                                 <div className="plusNewMessage">
-                                
                                     <button onClick={() => {
                                         setWrite(true)
                                     }}>
@@ -95,14 +121,10 @@ export default function Solicitud(){
                            {
                             requerimiento.state == 'finish' ?
                                 <h3>Este pedido ya finalizo</h3>
-                            
                             : requerimiento.state == 'cancel' ?
                                 <h1>Esta solicitud se cancelo</h1>
                             :
                                 null
-                            //  <button className="cancels">
-                            //     <span>Cancelar pedido</span>
-                            // </button>
                            }
                         </div>
                     </div>
@@ -110,4 +132,4 @@ export default function Solicitud(){
             }
         </div>
     )
-}
+} 

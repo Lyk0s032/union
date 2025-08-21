@@ -447,10 +447,10 @@ export default function DocumentCotizacion(){
                                                                 
                                                                                         :
                                                                                         it.cantidad && it.service ?
-                                                                                            <td className='left Small'>SV{it.id}</td>
+                                                                                            <td className='left Small'>SV{it.service.id}</td>
                                                                                         :
                                                                                         it.cantidad && it.producto ?
-                                                                                            <td className='left Small'>PT{it.id}</td>
+                                                                                            <td className='left Small'>PT{it.producto.id}</td>
                                                                                         :
                                                                                         <td className='left Small'>SP{it.id}</td>
                                                                                     }

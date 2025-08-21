@@ -253,7 +253,10 @@ export default function DocumentCotizacion(){
                                                                     <th className='left Longer'>DESCRIPCIÓN</th>
                                                                     <th className="Cantidad">CANTIDAD</th>
                                                                     <th className="Valor">VALOR UNITARIO</th>
+                                                                    <th className='valor'>DESCUENTO</th> 
+                                                                    <th className="valor">IVA</th>
                                                                     <th className="Valor">SUBTOTAL</th>
+
                                                                     {/* <th>Descuento</th> */}
                                                                     {/* <th>IVA</th> */}
                                                                     {/* <th>Antes de IVA</th> */}
@@ -356,35 +359,37 @@ export default function DocumentCotizacion(){
                                                                                         // <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.precio).toFixed(0))} </td>
                                                                                     
                                                                                     }
-                                                                                    { // DESCUENTOS
-                                                                                        // it.kitCotizacion ?
-                                                                                        // <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(it.kitCotizacion.descuento)}</td>
-                                                                                        // :
-                                                                                        //  it.cantidad ?
-                                                                                        // <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(it.descuento)}</td>
-                                                                                        // :
-                                                                                        // <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.descuento).toFixed(0))}</td>
+                                                                                     {/* DESCUENTOS  */}
+                                                                                    {
+                                                                                        it.kitCotizacion ?
+                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(it.kitCotizacion.descuento)} ({((it.kitCotizacion.descuento / it.kitCotizacion.precio) * 100).toFixed(1)}%)</td>
+                                                                                        :
+                                                                                          it.cantidad ?
+                                                                                         <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(it.descuento)} ({((it.descuento / it.precio) * 100).toFixed(1)}%)</td>
+                                                                                         :
+                                                                                         <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.descuento).toFixed(0))}</td>
                                                                                     }
-                                                                                    { // IVA
-                                                                                        // it.kitCotizacion ?
-                                                                                        // <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.kitCotizacion.precio - it.kitCotizacion.descuento).toFixed(0) * (0.19)).toFixed(0))}</td>
-                                                                                        // : 
-                                                                                        //  it.cantidad ?
-                                                                                        // <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.precio - it.descuento).toFixed(0) * (0.19)).toFixed(0))}</td>
-                                                                                        // :
-                                                                                        // <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.armadoCotizacion.precio - it.armadoCotizacion.descuento) * (0.19)).toFixed(0))}</td>
+                                                                                    {/* IVA */}
+                                                                                    { 
+                                                                                        it.kitCotizacion ?
+                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.kitCotizacion.precio - it.kitCotizacion.descuento).toFixed(0) * (0.19)).toFixed(0))}</td>
+                                                                                        : 
+                                                                                        it.cantidad ?
+                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.precio - it.descuento).toFixed(0) * (0.19)).toFixed(0))}</td>
+                                                                                        :
+                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(it.armadoCotizacion.precio - it.armadoCotizacion.descuento) * (0.19)).toFixed(0))}</td>
                                                                                     
                                                                                     }
                                                                                     
-                                                                                    { // ANTES DE IVA
-                                                                                        //     it.kitCotizacion ?
-                                                                                        //     <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.kitCotizacion.precio - it.kitCotizacion.descuento).toFixed(0))}</td>
-                                                                                        //     :
-                                                                                        //      it.cantidad ?
-                                                                                        //     <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.precio - it.descuento).toFixed(0))}</td>
-                                                                                        //     :
-                                                                                        //     <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.precio  - it.armadoCotizacion.descuento).toFixed(0))}</td>
-                                                                                    }
+                                                                                    {/* {
+                                                                                             it.kitCotizacion ?
+                                                                                            <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.kitCotizacion.precio - it.kitCotizacion.descuento).toFixed(0))}</td>
+                                                                                             :
+                                                                                            it.cantidad ?
+                                                                                            <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.precio - it.descuento).toFixed(0))}</td>
+                                                                                             :
+                                                                                             <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.precio  - it.armadoCotizacion.descuento).toFixed(0))}</td>
+                                                                                    } */}
 
                                                                                     { // TOTAL
                                                                                         it.kitCotizacion ?
@@ -410,12 +415,16 @@ export default function DocumentCotizacion(){
                                                                     <th></th>
                                                                     <th></th>
                                                                     <th></th>
+                                                                    <th></th>
+                                                                    <th></th>
                                                                     <th>VALOR ÁREA</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 
                                                                 <tr>
+                                                                    <td></td>
+                                                                    <td></td>
                                                                     <td></td>
                                                                     <td></td>
                                                                     <td></td>

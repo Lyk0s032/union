@@ -22,13 +22,13 @@ export default function ModalCalibre({ onEnviarValor }){
         return response;
     }
 
-    const enviarValor = () => {
-        onEnviarValor(calibre);
+    const enviarValor = async  () => {
+        await onEnviarValor(calibre);
         params.delete('almacen');
         return setParams(params);
     }
     return (
-        <div className="modal">
+        <div className="modal" style={{zIndex:8}}>
             <div className="hiddenModal"  onClick={() => {
                 params.delete('almacen');
                 setParams(params);

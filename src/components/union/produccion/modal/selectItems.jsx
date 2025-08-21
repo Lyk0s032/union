@@ -35,6 +35,7 @@ export default function SelectMP(){
         .then((res) => {
             dispatch(actions.HandleAlerta('¡Kit esta listo!', 'positive'))
             dispatch(actions.axiosToGetKit(false, kit.id))
+            dispatch(actions.axiosToGetKits(false))
             return res
         }).catch(err => {
             dispatch(actions.HandleAlerta('No hemos logrado finalizar este kit, intentalo más tarde', 'mistake'))

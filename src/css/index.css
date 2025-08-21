@@ -448,7 +448,7 @@ body button {
   border-bottom: 1px solid #ccc;
   text-align: right;
   font-weight: 600;
-  font-size: 20px;
+  font-size: 16px;
   color: black;
   width: auto;
 }
@@ -472,7 +472,7 @@ body button {
   cursor: pointer;
 }
 .modal .containerModal .cotizacionBody .cotizacionFuente .referencias .tableData .tabla table tbody tr td {
-  font-size: 18px;
+  font-size: 13px;
   padding: 15px 10px;
   box-sizing: border-box;
   color: black;
