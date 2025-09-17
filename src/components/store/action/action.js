@@ -688,8 +688,61 @@ export function axiosToGetRequisicion(carga, reqId){
     }
 }
 
+export function getIDs(data){
+    return {
+        type: types.GET_IDS,
+        payload: data
+    }
+}
 
+export function getProyectos(data){
+    return {
+        type: types.GET_PROYECTOS_REQUISICION,
+        payload: data
+    }
+}
 
+export function getMaterias(data){
+    return {
+        type: types.GET_MATERIA_PRIMA_REQUISICION,
+        payload: data
+    }
+}
+
+export function getItemRequisicion(data){
+    return {
+        type: types.GET_UNA_MATERIA_PRIMA_REQUISICION,
+        payload: data
+    }
+}
+
+export function gettingItemRequisicion(data){
+    return {
+        type: types.GETTING_UNA_MATERIA_PRIMA_REQUISICION,
+        payload: data
+    }
+}
+
+export function getMateriasIds(data){
+    return {
+        type: types.GET_MATERIAS_IDS,
+        payload: data
+    }
+}
+
+export function getCotizacionFast(data){
+    return {
+        type: types.GET_COTIZACION_FAST,
+        payload: data
+    }
+}
+
+export function gettingCotizacionFast(data){
+    return {
+        type: types.GETTING_COTIZACION_FAST,
+        payload: data
+    }
+}
 
 
 // PROVEEDORES
@@ -998,6 +1051,226 @@ export function axiosToGetRequerimiento(carga, reqId){
                 return dispatch(getRequerimiento('notrequest'));
             }else{
                 return dispatch(getRequerimiento(404))
+            }
+        });
+    }
+}
+
+
+
+// ---------------------------------
+// --------------------------------
+// Almacen
+// ---------------------------------
+// ---------------------------------
+
+export function getCabeceras(data){
+    return {
+        type: types.GET_CABECERAS,
+        payload: data
+    }
+}
+export function gettingCabeceras(carga){
+    return {
+        type: types.GETTING_CABECERAS,
+        payload: carga
+    }
+}
+
+export function axiosToGetCabeceras(carga, data){
+    console.log('llega acá')
+    return function(dispatch){ 
+        dispatch(gettingCabeceras(carga))
+        let body = {
+            bodegas: data
+        }
+        axios.post(`/api/inventario/post/get/bodegasData`, body)
+        .then((info) => info.data) 
+        .then(inf => {
+             dispatch(getCabeceras(inf))
+            return console.log(inf)
+        })
+        .catch((e) => {
+            console.log(e)
+            if(e.request){
+                return dispatch(getCabeceras('notrequest'));
+            }else{
+                return dispatch(getCabeceras(404))
+            }
+        });
+    }
+}
+
+
+// ITEMS DENTRO DE UNA BODEGA
+export function getProductosBodega(data){
+    return {
+        type: types.GET_PRODUCTOS_BODEGA,
+        payload: data
+    }
+}
+export function gettingProductosBodega(carga){
+    return {
+        type: types.GETTING_PRODUCTOS_BODEGA,
+        payload: carga
+    }
+}
+
+export function axiosToGetProductosBodega(carga, bodegaId){
+    return function(dispatch){ 
+        dispatch(gettingProductosBodega(carga))
+        axios.get(`/api/inventario/get/bodegas/items/${bodegaId}`)
+        .then((info) => info.data) 
+        .then(inf => {
+             dispatch(getProductosBodega(inf))
+            return console.log(inf)
+        })
+        .catch((e) => {
+            console.log(e)
+            if(e.request){
+                return dispatch(getProductosBodega('notrequest'));
+            }else{
+                return dispatch(getProductosBodega(404))
+            }
+        });
+    }
+}
+
+export async function getFuncionesBodegas(carga, body){
+    return function(dispatch){
+        dispatch(axiosToGetCabeceras(carga, body))
+    }
+}
+
+
+// MOVIMIENTOS
+// ITEMS DENTRO DE UNA BODEGA
+export function getMovimientosBodega(data){
+    return {
+        type: types.GET_MOVIMIENTOS_BODEGA,
+        payload: data
+    }
+}
+export function gettingMovimientosBodega(carga){
+    return {
+        type: types.GETTING_MOVIMIENTOS_BODEGA,
+        payload: carga
+    }
+}
+
+export function axiosToGetMovimientosBodega(carga, bodegaId){
+    return function(dispatch){ 
+        dispatch(gettingMovimientosBodega(carga))
+        console.log('Entra a la consola')  
+        axios.get(`/api/inventario/get/bodegas/movimientos/${bodegaId}`)
+        .then((info) => info.data) 
+        .then(inf => {
+             return dispatch(getMovimientosBodega(inf))
+        })
+        .catch((e) => {
+            console.log(e)
+            if(e.request){
+                return dispatch(getMovimientosBodega('notrequest'));
+            }else{
+                return dispatch(getMovimientosBodega(404))
+            }
+        });
+    }
+}
+
+
+// OBTENER UN ITEM
+
+// MOVIMIENTOS
+// ITEMS DENTRO DE UNA BODEGA
+export function getItem(data){
+    return {
+        type: types.GET_ITEM,
+        payload: data
+    }
+}
+export function gettingItem(carga){
+    return {
+        type: types.GETTING_ITEM,
+        payload: carga
+    }
+}
+
+export function axiosToGetItemMateriaPrima(carga, materiaId){
+    return function(dispatch){  
+        dispatch(gettingItem(carga))
+        console.log('Entra a la consola')  
+        axios.get(`/api/inventario/get/bodega/materia/one/${materiaId}/1`)
+        .then((info) => info.data) 
+        .then(inf => {
+             dispatch(getItem(inf))
+
+            return console.log(inf)
+        })
+        .catch((e) => {
+            console.log(e)
+            if(e.request){
+                return dispatch(getItem('notrequest'));
+            }else{
+                return dispatch(getItem(404))
+            }
+        });
+    }
+}
+
+
+export function getItemBodega(data){
+    return {
+        type: types.GET_ITEM_BODEGA,
+        payload: data
+    }
+}
+export function gettingItemBodega(carga){
+    return {
+        type: types.GETTING_ITEM_BODEGA,
+        payload: carga
+    }
+}
+
+export function axiosToGetItemMateriaPrimaBodega(carga, materiaId, bodega){
+    return function(dispatch){  
+        dispatch(gettingItemBodega(carga))
+        console.log('Entra a la consola')  
+        axios.get(`/api/inventario/get/bodega/materia/data/${materiaId}/${bodega}`)
+        .then((info) => info.data) 
+        .then(inf => {
+             dispatch(getItemBodega(inf))
+            
+            return console.log(inf)
+        })
+        .catch((e) => {
+            console.log(e)
+            if(e.request){
+                return dispatch(getItemBodega('notrequest'));
+            }else{
+                return dispatch(getItemBodega(404))
+            }
+        });
+    }
+}
+
+export function axiosToGetItemMateriaPrimaBodegaProyecto(carga, materiaId, proyecto){
+    return function(dispatch){  
+        dispatch(gettingItemBodega(carga))
+        console.log('Entra a la consola')  
+        axios.get(`/api/inventario/get/bodega/materia/data/cotizacion/${materiaId}/${proyecto}`)
+        .then((info) => info.data) 
+        .then(inf => {
+             dispatch(getItemBodega(inf))
+            
+            return console.log(inf)
+        })
+        .catch((e) => {
+            console.log(e)
+            if(e.request){
+                return dispatch(getItemBodega('notrequest'));
+            }else{
+                return dispatch(getItemBodega(404))
             }
         });
     }

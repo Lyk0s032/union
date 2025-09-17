@@ -29,8 +29,10 @@ export default function KitsPanel(){
         
 
     useEffect(() => {
-        dispatch(actions.axiosToGetKits(true))
-    }, [])
+        if(!kits){
+            dispatch(actions.axiosToGetKits(true))
+        }
+    }, [kits]) 
 
     const handleUpdatePrices = async() => {
         setLoading(true)

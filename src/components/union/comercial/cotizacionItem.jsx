@@ -111,12 +111,16 @@ export default function CotizacionItem({ cotizacionn, openMenuId, toggleMenu }){
                             </div>
                             <nav>
                                 <ul>
-                                    <li onClick={() => handleAprobar()}> 
-                                        <div>
-                                            <MdOutlineFlag className="icon" />
-                                            <span>Aprobar</span>
-                                        </div>
-                                    </li>
+                                    {
+                                        cotizacion.state == 'desarrollo' && (
+                                            <li onClick={() => handleAprobar()}> 
+                                                <div>
+                                                    <MdOutlineFlag className="icon" />
+                                                    <span>Aprobar</span>
+                                                </div>
+                                            </li>
+                                        )
+                                    }
                                     <li> 
                                         <div>
                                             <MdOutlineScreenShare   className="icon" />

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import CotizacionItemGeneral from './itemCotizacion';
 import DocumentCotizacion from './cotizacion/cotizacion';
 import { useSearchParams } from 'react-router-dom';
+import RemisionSection from './remision/remision';
 
 export default function GeneralComercial(){
     const dispatch = useDispatch()
@@ -86,6 +87,8 @@ export default function GeneralComercial(){
                                     {
                                         params.get('watch') == 'cotizacion' ?
                                             <DocumentCotizacion />
+                                        : params.get('watch') == 'remision' ?
+                                            <RemisionSection />
                                         : null
                                     }
                                 </div>

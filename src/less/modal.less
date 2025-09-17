@@ -2871,9 +2871,432 @@
                 }
             }
         }
+
+        // Producto
+        .almacenDashProduct{
+            height:100%;
+            overflow-y: auto;
+            .topProductoData{
+                width:90%;
+                margin:auto;
+                height:300px;
+                box-sizing: border-box;
+                display: flex;
+                justify-content: space-between;
+                .leftInforProduct{
+                    width:50%;
+                    padding-top:50px;
+                    box-sizing: border-box;
+
+                    .dataProducto{
+                        box-sizing: border-box;
+                        .containerProductoData{
+                            .topInfoProductoHere{
+                                .topAvance{
+                                    box-sizing: border-box;
+                                    display: flex;
+                                    align-items: center;
+                                    .letra{
+                                        width:70px;
+                                        height:70px;
+                                        border-radius: 100%;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: space-around;
+                                        background-color: black;
+                                        h3{
+                                            font-weight: 400;
+                                            color: @bgDefault;
+                                        }
+                                    }
+                                    .dataResult{
+                                        margin-left:10px;
+                                        h3{
+                                            font-weight: 500;
+                                            font-size: 32px;
+                                        }
+                                        span{
+                                            font-size: 12px;
+                                            color: @bgAzulDark;
+                                        }
+                                    }
+                                }
+                                .dataDescription{
+                                    margin-top:30px;
+                                    span{
+                                        font-size: 14px;
+                                        color: @bgDark;
+                                    }
+
+                                    button{
+                                        background-color: @bgAzulDark;
+                                        border:1px solid @bgAzulDark;
+                                        padding:5px 30px;
+                                        border-radius: 5px;
+                                        span{
+                                            color: @bgDefault;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .dataProductoInformation{
+                .containerData{
+                    width:90%;
+                    margin:auto;
+                    margin-top:50px;
+
+                    .dataBodegas{
+                        width:100%;
+                        .containerDataBodega{
+                            .divide{
+
+                                .leftData{
+                                    width:65%;
+                                    box-sizing: border-box;
+                                    .resultBodegaHere{
+                                        width:100%;
+                                        .containerHere{
+                                            .hereTitle{
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: space-between;
+                                                cursor: pointer;
+                                                h3{
+                                                    color: @bgAzulDark;
+                                                }
+                                                .tipo{
+                                                    font-size: 14px;
+                                                    color: #666;
+                                                }
+                                                button{
+                                                    background-color: @bgAzulDark;
+                                                    border:1px solid @bgAzulDark;
+                                                    padding:5px 20px;
+                                                    border-radius: 5px;
+                                                    span{
+                                                        font-size: 12px;
+                                                        color: @bgDefault;
+                                                    }
+                                                }
+                                            }
+                                            .howMany{
+                                                width:100%;
+                                                display: flex;
+                                                align-items: center;
+                                                padding:40px 0px;
+                                                justify-content: space-around;
+                                                .howManyItem{
+                                                    text-align: center;
+                                                    transition: .3s;
+                                                    cursor: pointer;
+                                                    h1{
+                                                        font-weight: 400;
+                                                        color: @bgAzulDark;
+                                                    }
+                                                    span{
+                                                        font-size: 12px;
+                                                        color: #666;
+                                                    }
+                                                }
+                                                .howManyItem:hover{
+                                                    transform: scale(1.1);
+                                                }
+                                            }
+                                            
+                                            .resultadosHere{
+                                                margin-top:30px;
+                                                .RegisterTitle{
+                                                    width:100%;
+                                                    .titleThat{
+                                                        font-weight: 400;
+                                                        font-size: 12px;
+                                                        color: #666;
+                                                    }
+                                                    table{
+                                                        margin-top:10px;
+                                                        border-collapse: collapse;
+                                                        width: 100%;
+                                                        thead{
+                                                            tr{
+                                                                th{
+                                                                    font-size: 12px;
+                                                                    text-align: center;
+                                                                    width: auto;
+                                                                    color: @bgAzulDark;
+                                                                    padding:15 px 0px;
+                                                                    box-sizing: border-box;
+                                                                }
+                                                            }
+                                                        }  
+                                                        tbody{
+                                                            width:100%;
+                                                            tr{
+                                                                transition: .3s;
+                                                                cursor: pointer;
+                                                                td{
+                                                                    padding:15px 0px;
+                                                                    padding-right: 5px;
+                                                                    box-sizing: border-box;
+                                                                    width: auto;
+                                                                }
+                                                                .people{
+                                                                    width:50%;
+                                                                    .divPeople{
+                                                                        display: flex;
+                                                                        align-items: center;
+                                                                        .letter{
+                                                                            width:40px;
+                                                                            height:40px;
+                                                                            background-color: #E74B16;
+                                                                            border-radius: 20px;
+                                                                            display: flex;
+                                                                            align-items: center;
+                                                                            justify-content: space-around;
+                                                                            margin-right: 10px;
+                                                                            h3{
+                                                                                font-weight: 400;
+                                                                                color: @bgDefault;
+                                                                                font-size: 12px;
+                                                                            }
+                                                                        }
+                                                                        .dataPerson{
+                                                                            h3{
+                                                                                font-size: 14px;
+                                                                            }
+                                                                            span{
+                                                                                font-size: 12px;
+                                                                                color: #666;
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                                .register{
+                                                                    .divRegistro{
+                                                                        width:100%;
+                                                                        text-align: center;
+                                                                        h3{
+                                                                            font-size: 12px;
+                                                                            font-weight: 400;
+                                                                            color: #666;
+                                                                        }
+                                                                    }
+                                                                }
+                                                                .register.Small{
+                                                                    width:10%;
+                                                                }
+                                                            }
+                                                            tr:hover{
+                                                                background-color: #f8f8f8;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        // Trasnferencia
+                                        .componenteTransferir{
+                                            box-sizing: border-box;
+
+                                            h3{
+                                                font-weight: 400;
+                                                color: @bgAzulDark;
+                                            }
+                                            span{
+                                                font-size: 12px;
+                                                color: #666;
+                                            }
+
+                                            table{
+                                                margin-top:20px;
+                                                width:100%;
+                                                thead{
+                                                    tr{
+                                                        th{
+                                                            text-align: left;
+                                                            padding:10px 0px;
+                                                            box-sizing: border-box;
+                                                            div{
+                                                                font-size: 12px;
+                                                                color: @bgAzulDark;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                tbody{
+                                                    tr{
+                                                        td{
+                                                            .chooseBodega{
+                                                                input{
+                                                                    padding:5px;
+                                                                    box-sizing: border-box;
+                                                                    border-radius: 5px;
+                                                                    border:1px solid #ccc;
+                                                                }
+                                                                select{
+                                                                    padding:5px;
+                                                                    box-sizing: border-box;
+                                                                    border-radius: 5px;
+                                                                    border:1px solid #ccc;
+                                                                    cursor: pointer;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                .bodegasInformacion{
+                                    width:30%;
+                                    .title{
+                                        width:100%;
+                                        padding:10px 0px;
+                                        box-sizing: border-box;
+                                        h3{
+                                            font-weight: 400;
+                                        }
+                                    }
+                                    .resultsBodegas{
+                                        margin-top:30px;
+                                        .resultBodega{
+                                            width:100%;
+                                            margin-bottom: 30px;
+                                            display: flex;
+                                            align-items: center;
+                                            cursor: pointer;
+                                            transition: .3s;
+                                            .letterHere{
+                                                width:40px;
+                                                height: 40px;
+                                                background-color: black;
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: space-around;
+                                                border-radius: 20px;
+                                                margin-right: 10px;
+                                                h3{
+                                                    color: @bgDefault;
+                                                    font-weight: 400;
+                                                    font-size: 16px;
+                                                }
+                                            }
+                                            .NameHere{
+                                                h3{
+                                                    font-weight: 400;
+                                                    color: #666
+                                                }
+                                                span{
+                                                    font-size: 12px;
+                                                }
+                                            }
+                                        }
+                                        .resultBodega:hover{
+                                            transform: translateX(5%);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     } 
     .Large{
         width:70%;
+        .topCotizacionData{
+            .divideTop{
+                display: flex;
+                align-items: start;
+                justify-content: space-between;
+                margin-top:20px;
+                .leftClient{
+                    width:45%;
+                    .item{
+                        width:100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        margin-bottom:10px;
+                        span{
+                            font-size: 12px;
+                            color: #666;
+                            font-weight: 600;
+                        }
+                        h3{
+                            font-weight: 600;
+                            color: black;
+                            font-size: 12px;
+                        }
+                    }
+                }
+            }
+        }
+        .stateCurrentlyRemision{
+            box-sizing: border-box;
+            margin-top:40px;
+            table{
+                width:100%;
+                border-collapse: collapse;
+                text-align: left;
+                thead{
+                    tr{
+                        th{
+                            padding:10px 0px;
+                            box-sizing: border-box;
+                            font-size: 14px;
+                        }
+                    }
+                }
+                tbody{
+                    tr{
+                        td{
+                            padding:10px 0px;
+                            box-sizing: border-box;
+                            font-size: 12px;
+                            color: #666;
+                        }
+                    }
+                }
+            }
+        }
+
+        .registerRemision{
+            width:100%;
+            margin-top:40px;
+
+            .headerDivide{
+                width:100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            table{
+                border-collapse: collapse;
+                width:100%;
+                margin-top:10px;
+                tbody{
+                    tr{
+                        cursor: pointer;
+                        transition: .3s;
+                        td{
+                            font-size: 12px;
+                            color: #666;
+                            padding:10px 0px;
+                        }
+                    }
+                    tr:hover{
+                        background-color: #f8f8f8;
+                    }
+                }
+            }
+        }
     } 
     .Small{
         z-index:100;
@@ -3323,7 +3746,934 @@
             }
         }
     }
-    
+    .UXCOMPLETE{
+        width:100%;
+        height: 100%;
+        .comprar{
+            width:100%;
+            height:100%;
+            display: flex;
+            .leftNavUX{
+                width:10%;
+                .leftNav{
+                    width:100%;
+                    nav{
+                        width:100%;
+                        ul{
+                            li{
+                                text-align: center;
+                                cursor: pointer;
+                                div{
+                                    padding:20px 5px;
+                                    .icon{
+                                        font-size: 24px;
+                                        color: #666;
+                                        margin-bottom: 5px;
+                                        transition: .3s;
+                                    }
+                                    span{
+                                        font-size:12px;
+                                        color: #666;
+                                        transition: .3s;
+                                    }
+                                }
+                            }
+                            li:hover{
+                                div{
+                                    .icon{
+                                        transform: scale(1.5);
+                                    }
+                                    span{
+                                        font-size: 13px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .rightUx{
+                width:90%;
+                height:100%;
+                box-sizing: border-box;
+
+                .factura{
+                    position:fixed;
+                    transition: .3s;
+                    transform: translateY(-100%);
+                    bottom:0;
+                    left:0;
+                    right:0;
+                    top:0;
+                    display: flex;
+                    align-items: center;
+                    .facturaBox{
+                        background-color: @bgDefault;
+                        border:1px solid #ccc;
+                        width:50%;
+                        border-radius: 10px;
+                        height:90%;
+                        margin:auto;
+
+                        .containerFactura{
+                            width:100%;
+                            height:100%;
+                            overflow-y: auto;
+                            box-sizing: border-box;
+                            padding:40px;
+                            .divideTop{
+                                width:100%;
+                                display:flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                .lade{
+                                    width:50%;
+                                    .item{
+                                        width:100%;
+                                        padding:5px 0px;
+                                        box-sizing: border-box;
+                                        span{
+                                            font-size: 12px;
+                                            color: #666;
+                                        }
+                                        h3{
+                                            margin-left:5px;
+                                            margin-top:5px;
+                                            color: black;
+                                            font-size: 14px;
+                                        }
+                                    }
+                                }
+                            }
+
+                            .itemsTable{
+                                margin-top:30px;
+                                width:100%;
+                                table{
+                                    width:100%;
+                                    border-collapse: collapse;
+                                    thead{
+                                        tr{
+                                            th{
+                                                padding:15px 5px;
+                                                text-align: left;
+                                                font-size:12px;
+                                            }
+                                        }
+                                    }
+                                    tbody{
+                                        tr{
+                                            td{
+                                                padding:15px 5px;
+                                                font-size:14px;
+                                            }
+                                            .large{
+                                                width:50%;
+                                            }
+                                            .short{
+                                                width:17%
+                                            }
+                                        }
+                                    }
+                                }
+                                .Topcito{
+                                    border-top: 2px solid black;
+                                    margin-top:40px;
+                                }
+                            }
+                        }
+                    }
+
+                }
+                .facturaActive{
+                    transform: translateY(0%);
+                }
+                .facturaBtn{
+                    position:fixed;
+                    transition: .3s;
+                    bottom:0;
+                    left:0;
+                    transform: translateY(0%);
+                    right:0;
+                    text-align: center;
+                    z-index: 5;
+                    margin-bottom: 30px;
+
+                    .containerBtn{
+                        width:20%;
+                        margin:auto;
+                        transition: .3s;
+                        background-color: @bgAzulDark;
+                        cursor: pointer;
+                        border-radius: 20px;
+                        border:1px solid @bgAzulDark;
+                        padding:10px 0px;
+                        box-sizing: border-box;
+                        transition: .3s;
+                        span{
+                            font-size: 12px;
+                            color: @bgDefault;
+                        }
+                        h3{
+                            color: @bgDefault;
+                            font-size: 16px;
+                            font-weight: 500;
+                        }
+                    }
+                    .containerBtn:hover{
+                        transform: scale(1.1);
+                        background-color: #E74B16;
+                        border:1px solid #E74B16;
+                    }
+                }
+                .facturaBtnHidden{
+                    transform: translateY(200%);
+                }
+                .generalComprar{
+                    padding:30px 0px;
+                    .containerGeneral{
+                        .title{
+                            display: flex;
+                            width:95%;
+                            margin:auto;
+                            align-items: center;
+                            justify-content: space-between;
+                            div{
+                                h1{
+                                    font-weight: 400;
+                                    font-size: 24px;
+                                    color: #666;
+                                }
+                                span{
+                                    font-size: 14px;
+                                    color: #666;
+                                }
+                            }
+
+                            .filterProvidersList{
+                                width:60%;
+                                .containerFilterProvider{
+                                    box-sizing: border-box;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: end;
+                                    .provider{
+                                        padding:8px 5px;
+                                        border-radius: 20px;
+                                        margin-right: 15px;
+                                        width:20%;
+                                        background-color: @bgDefault;
+                                        transition: .3s;
+                                        cursor: pointer;
+                                        text-align: center;
+
+                                        h3{
+                                            font-weight: 400;
+                                            color: @bgAzulDark;
+                                            font-size: 14px;
+                                            transition: .3s;
+                                        }
+                                    }
+                                    .provider:hover{
+                                        transform: scale(1.1);
+                                    }
+                                    .Active{
+                                        background-color: @bgAzulDark;
+                                        transform: scale(1.1);
+                                        h3{
+                                            color: @bgDefault;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        .lista{
+                            margin-top:10px;
+                            .containerLista{
+                                display: flex;
+                                align-items: start;
+                                justify-content: space-between;
+                                .DataHere{
+                                    width:100%;
+                                    padding-left:20px;
+                                    box-sizing: border-box;
+                                    transition: .3s;
+                                    .listaMP{
+                                        width:100%;
+                                        table{
+                                            border-collapse: collapse;
+                                            width:100%;
+                                            thead{
+                                                tr{
+                                                    th{
+                                                        text-align: left;
+                                                        padding:20px 5px;
+                                                        box-sizing: border-box;
+                                                        font-size: 12px;
+                                                    }
+                                                }
+                                            }
+                                            tbody{
+                                                tr{
+                                                    cursor: pointer;
+                                                    transition: .3s;
+                                                    user-select: none;
+                                                    td{
+                                                        padding:15px 5px;
+                                                        box-sizing: border-box;
+                                                        transition: .3s;
+                                                        outline:0px;
+                                                        user-select: none;
+
+                                                        div{
+                                                            span{
+                                                                font-size: 12px;
+                                                                color: #666;
+                                                            }
+                                                        }
+                                                    }
+                                                    .longer{
+                                                        width:60%;
+                                                        .nameLonger{
+                                                            display: flex;
+                                                            align-items: center;
+                                                            .letter{
+                                                                width:40px;
+                                                                height:40px;
+                                                                border-radius: 20px;
+                                                                margin-right: 10px;
+                                                                background-color: black;
+                                                                display: flex;
+                                                                align-items: center;
+                                                                justify-content: space-around;
+                                                                h3{
+                                                                    font-weight: 400;
+                                                                    font-size: 14px;
+                                                                    color: @bgDefault;
+                                                                }
+                                                            }
+                                                            .name{
+                                                                h3{
+                                                                    font-size: 14px;
+                                                                }
+                                                                span{
+                                                                    font-size: 12px;
+                                                                    color: #666;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                tr:hover{
+                                                    background-color: #F8F8F8;
+                                                }
+
+                                                .Active{
+                                                    td{
+                                                        background-color: #60a5fa;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    .cotizador{
+                                        position:fixed;
+                                        right:0;
+                                        bottom:0;
+                                        left:0;
+                                        height:20%;
+                                        background-color: @bgDefault;
+                                        z-index:6;
+
+                                        .cotizadorDash{
+                                            height:100%;
+                                            transition: .3s;
+                                            .containerCotizador{
+                                                transition: .3s;
+                                                box-sizing: border-box;
+                                                display: flex;
+                                                align-items: center;
+                                                width:80%;
+                                                height:100%;
+                                                margin:auto;
+                                                .caja{
+                                                    width:100%;
+                                                    text-align: center;
+
+                                                    .comparar{
+                                                        padding:10px 10px;
+                                                        box-sizing: border-box;
+                                                        background-color: @bgDefault;
+                                                        border:none;
+                                                        span{
+                                                            font-size: 12px;
+                                                            color: #666;
+                                                            transition: .3s;
+                                                        }
+                                                    }
+                                                    .comparar:hover{
+                                                        span{
+                                                            color: @bgAzulDark;
+                                                        }
+                                                    }
+                                                    .boxCotizaciones{
+                                                        width:100%;
+                                                        height:100%;
+                                                        display: flex;
+                                                        align-items: center;
+                                                        overflow-x: auto;
+                                                        justify-content: space-around;
+
+                                                        .itemProveedor{
+                                                            box-sizing: border-box;
+                                                            padding:10px 20px;
+                                                            box-sizing: border-box;
+                                                            cursor: pointer;
+                                                            transition: .3s;
+                                                            .containerItemProvider{
+                                                                .title{
+                                                                    h3{
+                                                                        color: #666;
+                                                                        font-weight: 400;
+                                                                        font-size:14px;
+                                                                    }
+                                                                }
+                                                                .priceItem{
+                                                                    span{
+                                                                        font-size: 12px;
+                                                                        color: #666;
+                                                                    }
+                                                                    h1{
+                                                                        font-weight: 400;
+                                                                        margin-top:5px;
+                                                                        font-size: 24px;
+                                                                        color: @bgAzulDark;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        .itemProveedor:hover{
+                                                            transform: translateY(-20%);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            .cotizadorView{
+                                                box-sizing: border-box;
+                                                position:fixed;
+                                                transition: .3s;
+                                                transform: translateY(100%);
+                                                bottom:0;
+                                                right:0;
+                                                left:0;
+                                                top:0;
+                                                background-color: @bgDefault;
+                                            
+                                                .containerCotizadorView{
+                                                    width:100%;
+                                                    height:100%;
+                                                    .topClose{
+                                                        height: 10%;
+                                                        box-sizing: border-box;
+                                                        text-align: center;
+                                                        display: flex;
+                                                        align-items: center;
+                                                        justify-content: space-around;
+                                                        button{
+                                                            background-color: @bgDefault;
+                                                            border:none;
+                                                            padding:10px 20px;
+                                                            box-sizing: border-box;
+                                                            span{
+                                                                font-size: 14px;
+                                                                color: #666;
+                                                            }
+                                                        }
+                                                    }
+                                                    .cotizaciones{
+                                                        box-sizing: border-box;
+                                                        height:90%;
+                                                        width:100%;
+                                                        .containerCotizaciones{
+                                                            width: 90%;
+                                                            margin: auto;
+                                                            box-sizing: border-box;
+                                                            position: relative;
+                                                            display: flex;
+                                                            flex-wrap: nowrap;      /* evita salto de línea */
+                                                            overflow-x: auto;       /* scroll horizontal automático */
+                                                            overflow-y: hidden;     /* oculta scroll vertical */
+                                                            height: 100%;
+                                                            justify-content: space-around;
+                                                            gap:8;
+                                                            .cotizacion{
+                                                                width:30%;
+                                                                border-radius: 5px;
+                                                                box-sizing: border-box;
+                                                                height:90%;
+                                                                flex-shrink: 0;
+                                                                margin-right: 50px;
+                                                                .containerCotizacionProvider{
+                                                                    height:100%;
+                                                                    width:100%;
+                                                                    .titleThat{
+                                                                        height:10%;
+                                                                        border-bottom:1px solid #ccc;
+                                                                        display: flex;
+                                                                        align-items: center;
+                                                                        justify-content: space-around;
+                                                                        h3{
+                                                                            font-weight: 400;
+                                                                            color: @bgAzulDark;
+                                                                        }
+                                                                    }
+
+                                                                    .dataElementos{
+                                                                        height:70%;
+                                                                        padding:10px 5px;
+                                                                        box-sizing: border-box;
+                                                                        overflow-y: auto;
+                                                                        .containerDataElementos{
+                                                                            width:100%;
+                                                                            box-sizing: border-box;
+                                                                            padding:10px 0px;
+
+                                                                            .itemElemento{
+                                                                                width:100%;
+                                                                                padding:10px 0px;
+                                                                                box-sizing: border-box;
+                                                                                .titleItem{
+                                                                                    h3{
+                                                                                        font-size:14px;
+                                                                                        color: @bgAzulDark;
+                                                                                    }
+                                                                                }
+                                                                                .result{
+                                                                                    margin-top:5px;
+                                                                                    span{
+                                                                                        font-size: 14px;
+                                                                                        strong{
+                                                                                            font-weight: bold;
+                                                                                        }
+                                                                                    }
+                                                                                    h3{
+                                                                                        margin-top:5px;
+                                                                                        font-weight: 400;
+                                                                                        font-size: 18px;
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    .pricesTotal{
+                                                                        height:20%;
+                                                                        border-top:1px solid #ccc;
+                                                                        display:flex;
+                                                                        align-items: center;
+                                                                        justify-content: space-around;
+                                                                        padding:0px 20px;
+                                                                        box-sizing: border-box;
+                                                                        .groupPrice{
+                                                                            span{
+                                                                                font-size: 12px;
+                                                                                color: #666;
+                                                                            }
+                                                                            h3{
+                                                                                color: @bgAzulDark;
+                                                                            }
+                                                                        }
+                                                                        button{
+                                                                            padding:5px 20px;
+                                                                            border-radius: 5px;
+                                                                            background-color: @bgAzulDark;
+                                                                            border:1px solid @bgAzulDark;
+                                                                            transition: .3s;
+                                                                            span{
+                                                                                font-size: 14px;
+                                                                                color: @bgDefault
+                                                                            }
+                                                                        }
+                                                                        button:hover{
+                                                                            background-color: #E74B16;
+                                                                            border:1px solid #E74B16;
+                                                                            transform: scale(1.1);
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            .cotizadorViewActive{
+                                                transform: translateY(0%);
+                                            }
+                                        }
+                                        
+                                    }
+                                }
+                                .DataHereShort{
+                                    width:60%;
+                                    .listaMP{
+                                        table{
+                                            .hidden{
+                                                display: none;
+                                            }
+                                        }
+                                    }
+                                }
+                                .rightHere{
+                                    width:0%;
+                                    box-sizing: border-box;
+                                    transition: .3s;
+                                }
+                                .rightHereActive{
+                                    width:40%;
+                                    background-color: @bgDefault;
+                                    border-left:1px solid #ccc;
+                                    box-sizing: border-box;
+                                    height:100%;
+                                    position:relative;
+                                    transition: .3s;
+                                    z-index:7;
+                                    .containerRelative{
+                                        position:fixed;
+                                        height:100%;
+                                        top:0;
+                                        width:35%;
+                                        background-color: @bgDefault;
+                                        .addMPRight{
+                                            border-left:1px solid #ccc;
+                                            box-sizing: border-box;
+                                            height:100%;
+                                            width:100%;
+                                            .containerAddRight{
+                                                width:100%;
+                                                height:100%;
+                                                .title{
+                                                    height:10%;
+                                                    border-bottom:1px solid #ccc;
+                                                    box-sizing: border-box;
+                                                    padding:10px;
+                                                    display: flex;
+                                                    align-items: center;
+                                                    justify-content: space-between;
+                                                    h3{
+                                                        font-size: 14px;
+                                                    }
+                                                }
+
+                                                .dataAddMP{
+                                                        width:100%;
+                                                        box-sizing: border-box;
+                                                        height:70%;
+                                                        overflow-y: auto;
+                                                        overflow-x: hidden;
+                                                        .containerAddThat{
+                                                        width:100%;
+                                                        .priceSimilar{
+                                                            width:100%;
+                                                            padding:40px 0px;
+                                                            text-align: center;
+
+                                                            span{
+                                                                font-size:12px;
+                                                                color: #666;
+                                                            }
+
+                                                            h3{
+                                                                font-weight: 400;
+                                                                color: @bgAzulDark;
+                                                                margin-top:10px;
+
+                                                                span{
+                                                                    font-size: 12px;
+                                                                    color: @bgAzulDark;
+                                                                }
+                                                            }
+
+                                                            button{
+                                                                padding:6px 20px;
+                                                                border-radius: 5px;
+                                                                border:1px solid @bgAzulDark;
+                                                                background-color: @bgAzulDark;
+                                                                margin-top:20px;
+                                                                span{
+                                                                    color: @bgDefault;
+                                                                    font-size: 12px;
+                                                                }
+                                                            }
+                                                        }
+                                                        .listProvider{
+                                                            width:100%;
+                                                            padding:10px 5px;
+                                                            .containerList{
+                                                                .titleThis{
+                                                                    box-sizing: border-box;
+                                                                    span{
+                                                                        color: #666;
+                                                                    }
+                                                                }
+                                                                .howMany{
+                                                                    box-sizing: border-box;
+                                                                    padding:40px 0px;
+                                                                    box-sizing: border-box;
+                                                                    .inputDiv{
+                                                                        display: flex;
+                                                                        align-items: center;
+                                                                        justify-content:center;
+
+                                                                        input{
+                                                                            width:30%;
+                                                                            padding:10px 5px;
+                                                                            box-sizing: border-box;
+                                                                            color: black;
+                                                                            font-weight: bold;
+                                                                            border:none;
+                                                                            text-align: center;
+                                                                            font-size: 22px;
+                                                                            margin-right: 5px;
+                                                                            outline: 0px;
+                                                                        }
+                                                                        input:focus{
+                                                                            border-bottom: 1px solid @bgAzulDark;
+                                                                        }
+
+                                                                        h3{
+                                                                            margin-right: 20px;
+                                                                            font-size: 24px;
+                                                                            font-weight: bold;
+                                                                            color: @bgAzulDark;
+                                                                        }
+                                                                    }
+                                                                }
+                                                                .resultProviders{
+                                                                    width:100%;
+                                                                    overflow-x: auto;
+                                                                    padding:20px 0px;
+                                                                    box-sizing: border-box;
+
+                                                                    .containerResultsProviders{
+                                                                        display: flex;
+                                                                        align-items: center;
+                                                                        justify-content: space-around;
+
+                                                                        .itemProvider{
+                                                                            width:40%;
+                                                                            padding:10px 30px;
+                                                                            text-align: center;
+                                                                            cursor: pointer;
+                                                                            transition: .3s;
+                                                                            .letter{
+                                                                                margin:10px auto;
+                                                                                width:45px;
+                                                                                height:45px;
+                                                                                border-radius: 100%;
+                                                                                background-color: @bgAzulDark;
+                                                                                display: flex;
+                                                                                align-items: center;
+                                                                                justify-content: space-around;
+                                                                                h3{
+                                                                                    color: @bgDefault;
+                                                                                    font-weight: 400;
+                                                                                }
+                                                                            }
+                                                                            .downData{
+                                                                                span{
+                                                                                    font-size: 12px;
+                                                                                    color: #666;
+                                                                                }
+                                                                                h3{
+                                                                                    font-size: 14px;
+                                                                                }
+                                                                                h1{
+                                                                                    font-weight: 400;
+                                                                                    font-size: 14px;
+                                                                                    color: @bgAzulDark;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                        .itemProvider:hover{
+                                                                            transform: scale(1.1);
+                                                                        }
+                                                                    }
+                                                                    .containerFormProvider{
+                                                                        box-sizing: border-box;
+                                                                        display: flex;
+                                                                        align-items: end;
+                                                                        justify-content: space-between;
+                                                                        .leftThatOption{
+                                                                            width:40%;
+                                                                            text-align: center;
+                                                                            .letter{
+                                                                                width:40px;
+                                                                                height:40px;
+                                                                                border-radius: 100%;
+                                                                                background-color: black;
+                                                                                display: flex;
+                                                                                align-items: center;
+                                                                                justify-content: space-around;
+                                                                                margin:auto;
+                                                                                h3{
+                                                                                    font-weight: 400;
+                                                                                    font-size: 14px;
+                                                                                    color: @bgDefault;
+                                                                                }
+                                                                            }
+                                                                            .dataProvider{
+                                                                                margin-top:10px;
+                                                                                h3{
+                                                                                    font-weight: 400;
+                                                                                    font-size: 14px;
+                                                                                    color: @bgAzulDark;
+                                                                                }
+                                                                                span{
+                                                                                    font-size: 12px;
+                                                                                    color: #666;
+                                                                                }
+                                                                            }
+                                                                        }
+
+                                                                        .rightFormData{
+                                                                            width:50%;
+                                                                            .inputDiv{
+                                                                                width:100%;
+                                                                                label{
+                                                                                    font-size: 12px;
+                                                                                    color: #666;
+                                                                                }
+                                                                                input{
+                                                                                    font-size: 12px;
+                                                                                    color: #666;
+                                                                                    outline: 0px;
+                                                                                    border:none;
+                                                                                    border-bottom: 1px solid #ccc;
+                                                                                    padding:8px 10px;
+                                                                                    margin-top:10px;
+                                                                                }
+                                                                                input:focus{
+                                                                                    border-bottom: 1px solid @bgAzulDark;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        .projects{
+                                                          padding:10px;
+                                                          box-sizing: border-box;
+                                                          width:100%;
+                                                          .div{
+                                                            width:100%;
+                                                                .tr{
+                                                                    display: flex;
+                                                                    align-items: center;
+                                                                    width:100%;
+                                                                    cursor: pointer;
+                                                                    position: relative;
+                                                                    transition: .3s;
+                                                                    .td{
+                                                                        padding:15px 5px;
+                                                                        box-sizing: border-box;
+                                                                        width:30%;
+                                                                        span{
+                                                                            color: #666;
+                                                                        }
+                                                                        
+                                                                    }
+                                                                    
+                                                                    .longer{
+                                                                        width:70%; 
+                                                                        .dataProject{
+                                                                            display: flex;
+                                                                            align-items: center;
+                                                                            .letter{
+                                                                                width:50px;
+                                                                                height: 50px;
+                                                                                border-radius: 30px;
+                                                                                background-color: black;
+                                                                                margin-right: 10px;
+                                                                                display: flex;
+                                                                                align-items: center;
+                                                                                justify-content: space-around;
+                                                                                h3{
+                                                                                    font-weight: 400;
+                                                                                    font-size: 12px;
+                                                                                    color: @bgDefault;
+                                                                                }
+                                                                            }
+                                                                            .dataProjectico{
+                                                                                h3{
+                                                                                    font-size: 14px;
+                                                                                    color: @bgAzulDark;
+                                                                                }
+                                                                                span{
+                                                                                    font-size: 12px;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                                tr:hover{
+                                                                    background-color: #f8f8f8;
+                                                                }
+                                                                .searchOpenBig{
+                                                                    transition: .3s;
+                                                                    width:100%;
+                                                                    left:0;
+                                                                    padding:30px 0px;
+                                                                    box-sizing: border-box;
+                                                                }
+                                                          } 
+                                                        }
+                                                    }
+                                                }
+                                                .bottomPrice{
+                                                    height:20%;
+                                                    box-sizing: border-box;
+                                                    .containerPrice{
+                                                        display: flex;
+                                                        align-items: center;
+                                                        justify-content: space-between;
+                                                        width:90%;
+                                                        margin:auto;
+                                                        height:100%;
+                                                        .titlePrice{
+                                                            span{
+                                                                font-size: 12px;
+                                                                color: #666;
+                                                            }
+                                                            h3{
+                                                                font-weight: 400;
+                                                                font-size: 24px;
+                                                                color: @bgAzulDark;
+                                                            }
+                                                        }
+                                                        button{
+                                                            width:30%;
+                                                            padding:8px; 
+                                                            border:1px solid @bgAzulDark;
+                                                            background-color: @bgAzulDark;
+                                                            border-radius: 5px;
+                                                            span{
+                                                                font-size: 12px;
+                                                                color: @bgDefault;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 .BIGGEST{
     z-index:5;
@@ -3338,7 +4688,7 @@
     right:0;
     bottom:0;
     left:0;
-    width:100%;
+    width:40%;
     background-color: rgba(1,1,1,0.1);
     display: flex;
     align-items: center;
@@ -3440,3 +4790,69 @@
     }
     
 }
+
+.Form{
+    z-index: 7;
+    .headerTitle{
+        box-sizing: border-box;
+        height:10%;
+        display: flex;
+        align-items: center;
+        padding:0px 34px;
+        border-bottom: 1px solid #ccc;
+        h3{
+            font-weight: 400;
+        }
+    }
+    .containerBody{
+        height: 90%;
+        box-sizing: border-box;
+        overflow-y: auto;
+        .formToUpdateInformation{
+            width:90%;
+            margin:auto;
+            margin-top:50px;
+            .inputDiv{
+                padding:10px 0px;
+                label{
+                    font-size: 12px;
+                    color: #666;
+                }
+                input{
+                    width:100%;
+                    padding:8px 5px;
+                    box-sizing: border-box;
+                    border:1px solid #ccc;
+                    font-size:12px;
+                    border-radius: 5px;
+                    margin-top:10px;
+                }
+                textarea{
+                    border:1px solid #ccc;
+                    box-sizing: border-box;
+                    width:100%;
+                    height:100px;
+                    margin-top:10px;
+                    padding:5px;
+                    box-sizing: border-box;
+                    resize:none;
+                    font-weight: 400;
+                    font-family: Roboto;
+                    font-size: 12px;
+                }
+                button{
+                    padding:10px 5px;
+                    width:100%;
+                    background-color: @bgAzulDark;
+                    border:1px solid @bgAzulDark;
+                    border-radius: 5px;
+                    span{
+                        font-size:12px;
+                        color: @bgDefault;
+                    }
+                }
+            }
+        }
+    }
+}
+

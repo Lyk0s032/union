@@ -16,6 +16,7 @@ import dayjs from 'dayjs';
 import localeData from 'dayjs/plugin/localeData';
 import 'dayjs/locale/es'; // Idioma español
 import Condiciones from './condiciones';
+import EditItemModal from './editItem';
 
 
 export default function SelectKits(){
@@ -215,6 +216,7 @@ export default function SelectKits(){
                 </div>
             )}
             <div className="selectItems">
+
                 {
                     notes ?
                         <AddNotes cancelar={changeNote} cotizacion={cotizacion} /> 

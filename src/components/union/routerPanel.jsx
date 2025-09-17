@@ -8,6 +8,7 @@ import Message from "./message";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from '../store/action/action';
 import RoutesFinanciero from "./admin/adminRoutes";
+import RoutesInventario from "./inventario/routesInventario";
  
 export default function RouterPanel(){
     const system = useSelector(store => store.system);
@@ -26,15 +27,14 @@ export default function RouterPanel(){
         <div className="routerPanel">
             <div className="containerRouter">
                 <Nav />
-  
                 <div className="optionsByPanel">
                     <Routes>
                         <Route path="/" element={user.user.rango == 'asesor' ? <Navigate to="/comercial" replace /> : <Navigate to="/compras" replace />} />
                         <Route path="/compras/*" element={<RoutesCompras />} />
                         <Route path="/produccion/*" element={<RoutesProduccion />} />
                         <Route path="/comercial/*" element={<RoutesComercial />} />
+                        <Route path="/inventario/*" element={<RoutesInventario />} />
                         <Route path="/admin/*" element={<RoutesFinanciero />} />
-
                     </Routes>
                 </div>
                 {

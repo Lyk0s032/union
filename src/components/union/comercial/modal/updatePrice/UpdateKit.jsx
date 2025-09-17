@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../../../store/action/action';
 import axios from 'axios';
+import { useSearchParams } from 'react-router-dom';
 
-export default function UpdatePrice({ cotizacion, close, tipo, idKit, valor}){
+export default function UpdatePrice({ kit, cotizacion, close, tipo, idKit, valor}){
+    const [params, setParams] = useSearchParams();
     const [newVal, setNew] = useState(valor)
     const [porcentaje, setPorcentaje] = useState(0);
     const usuario = useSelector(store => store.usuario);
@@ -21,14 +23,14 @@ export default function UpdatePrice({ cotizacion, close, tipo, idKit, valor}){
 
     // Dar descuento
     const givePrice = async () => {
-        if(Number(porcentaje) > 100 ) return dispatch(actions.HandleAlerta('Este porcentaje es muy alto', 'mistake'));
+        if(kit.state != 'simulacion' && Number(porcentaje) > 100 ) return dispatch(actions.HandleAlerta('Este porcentaje es muy alto', 'mistake'));
         if(!porcentaje) return dispatch(actions.HandleAlerta('Debes dar un porcentaje', 'mistake'))
         if(valor == newVal) return dispatch(actions.HandleAlerta('Debes dar un precio diferente', 'mistake'))
         // Caso contrario, avanzamos
         setLoading(true)
         let body = {
             kitCotizacionId: idKit,
-            precio: newVal
+            precio: kit.state == 'simulacion' ? porcentaje : newVal
         } 
         console.log(idKit)
         let url = tipo == 'kit' ? '/api/cotizacion/admin/update/cotizacion/kit' : '/api/cotizacion/admin/update/cotizacion/producto';
@@ -54,7 +56,7 @@ export default function UpdatePrice({ cotizacion, close, tipo, idKit, valor}){
     return (
         <>
             <label htmlFor="" style={{fontSize:12, color: '#666'}}>{!loading ? `Anterior: ${ new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valor).toFixed(0))}` : 'Actualizando...'}</label><br />
-            <label htmlFor=""  style={{fontSize:12, color: '#666'}}>Nuevo: {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(newVal)}</label><br />
+            <label htmlFor=""  style={{fontSize:12, color: '#666'}}>Nuevo: {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(kit.state == 'simulacion' ? porcentaje : newVal)}</label><br />
 
             <input type="text" onChange={(e) => {
                 if(!loading){

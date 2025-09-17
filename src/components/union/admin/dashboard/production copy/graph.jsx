@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { LineChart } from '@mui/x-charts';
 
@@ -26,11 +26,24 @@ const productosDiarios = [
 ];
 const formatMonth = (date) => date.toLocaleString('es-CO', { month: 'short' });
 
-export default function GraphSerial(){
+export default function GraphSerial(datos, carga){
+
+    const datosProcesados = useMemo(() => {
+        // Si no hay datos o no es un arreglo, devuelve un arreglo vacío
+        if (!Array.isArray(datos)) {
+            return [];
+        }
+        // Transforma cada item, asegurando que 'fecha' sea un objeto Date
+        return datos.map(item => ({
+            ...item,
+            fecha: new Date(item.createdAt.split('T')[0]),
+            cantidad: Number(item.cantidad)
+        }));
+    }, [datos]);
     return (
         <div className="graphGraph">
              <LineChart className="a"
-      dataset={productosDiarios}
+      dataset={datosProcesados}
       xAxis={[
         {
           dataKey: 'fecha',
@@ -61,7 +74,7 @@ export default function GraphSerial(){
           fill: 'url(#miGradienteAzul)',
         },
       }}
-    >
+    > 
       {/* 3. Definimos el degradado aquí DENTRO del componente LineChart */}
       <defs>
         <linearGradient id="miGradienteAzul" x1="0" y1="0" x2="0" y2="1">

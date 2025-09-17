@@ -9,6 +9,7 @@ import * as actions from '../../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
 import RouteCompras from './compras/routeCompras';
 import ProductoTerminado from './productoTerminado/productoTerminado';
+import RouteRequisiciones from './requisiciones/routeRequisiciones';
 
 export default function RoutesCompras(){
     const [params, setParams] = useSearchParams();
@@ -20,20 +21,26 @@ export default function RoutesCompras(){
 
     }, [])
     return (
-        <div className="compras">
+        <div className="compras ProductionPanelUX">
             <div className="containerCompras">
                 <div className="divide">
                     <div className="left">
                         <LeftNav />
                     </div>
 
-                    <div className="right">
-                        <Routes> 
-                            <Route index element={<RouteCompras /> } />
-                            <Route path="pv/*" element={<Providers />} />
-                            <Route path="mp/*" element={<MateriaPrima />} />
-                            <Route path="pt/*" element={<ProductoTerminado />} />
-                        </Routes>
+                    <div className="right ProduccionUX">
+                        <div className="dashboard">
+                            <div className="containerDashboard">
+                                <Routes> 
+                                    <Route index element={<RouteCompras /> } />
+                                    <Route path="requisiciones/*" element={<RouteRequisiciones />} />
+                                    <Route path="pv/*" element={<Providers />} />
+                                    <Route path="mp/*" element={<MateriaPrima />} />
+                                    <Route path="pt/*" element={<ProductoTerminado />} />
+                                </Routes>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
                 {

@@ -59,6 +59,13 @@ export default function CotizacionItemGeneral({ item, openMenuId, toggleMenu  })
         params.set('watch', 'cotizacion');
         setParams(params);
     }
+
+    const openRemision = async () => {
+        dispatch(actions.axiosToGetCotizacion(true, r.id))
+        params.set('watch', 'remision');
+        setParams(params);
+    }
+
     return (
     <tr>
         <td className="coding">
@@ -149,6 +156,12 @@ export default function CotizacionItemGeneral({ item, openMenuId, toggleMenu  })
                                                     <div>
                                                         <MdOutlineRemoveRedEye  className="icon" />
                                                         <span>Ver</span>
+                                                    </div>
+                                                </li>
+                                                <li onClick={() => openRemision(r.id)}> 
+                                                    <div>
+                                                        <MdOutlineRemoveRedEye  className="icon" />
+                                                        <span>Remisión</span>
                                                     </div>
                                                 </li>
                                             </ul>
