@@ -175,7 +175,7 @@ export default function ShowRequisicion(){
                                                             <td>
                                                                 <div className='about'>
                                                                     <span>Código Kit: {r.id}</span><br />
-                                                                    <span>CGUNO Kit: {r.cguno}</span><br />
+                                                                    
                                                                     <strong>{r.nombre}</strong>
                                                                 </div>
                                                             </td>
@@ -216,6 +216,7 @@ export default function ShowRequisicion(){
                                                             <td>
                                                                 <div className='about'>
                                                                     <span>Item Codigo: {r.id}</span><br />
+                                                                    <span>CGUNO Kit: {r.cguno}</span><br />
                                                                     <strong>{r.nombre}</strong>
                                                                 </div>
                                                             </td>
