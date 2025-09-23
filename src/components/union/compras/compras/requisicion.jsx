@@ -20,6 +20,7 @@ export default function ShowRequisicion(){
         const kitsData = requisicion.resumenKits.map(r => ({
             'Código Kit': r.id,
             'Nombre': r.nombre,
+            'cguno' : r.cguno,
             'Cantidad': r.cantidad,
         }));
         const kitsWorksheet = XLSX.utils.json_to_sheet(kitsData);
