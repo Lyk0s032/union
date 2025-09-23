@@ -20,7 +20,7 @@ export default function ShowRequisicion(){
         const kitsData = requisicion.resumenKits.map(r => ({
             'Código Kit': r.id,
             'Nombre': r.nombre,
-            'cguno' : r.cguno,
+            
             'Cantidad': r.cantidad,
         }));
         const kitsWorksheet = XLSX.utils.json_to_sheet(kitsData);
@@ -40,6 +40,7 @@ export default function ShowRequisicion(){
             return {
                 'Código Item': r.id,
                 'Nombre': r.nombre,
+                'cguno' : r.cguno,
                 'Medida de Compra': `${r.medidaOriginal} ${r.unidad}`,
                 'Medida de Consumo (Total)': r.cantidad % 1 === 0 ? r.cantidad : r.cantidad.toFixed(3),
                 'Cantidad a Pedir': cantidadAPedir,
