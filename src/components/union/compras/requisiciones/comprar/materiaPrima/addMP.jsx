@@ -21,13 +21,15 @@ export default function AddMP(){
                     <h1>Intentalo más tarde</h1>
                 :
                 <div className="containerAddRight">
-                    <div className="title">{console.log(itemRequisicion)}
+                    
+                    <div className="title">
                         <h3>{itemRequisicion.description}</h3>
 
                         <button onClick={() => {
                             params.delete('MP');
-                            setParams(params);
-                        }}>
+                            params.delete('PV')
+                            setParams(params); 
+                        }} style={{fontSize:16, padding:10}}>
                             <span>X</span>
                         </button>
                     </div>
@@ -52,17 +54,7 @@ export default function AddMP(){
                             </div>
                         </div>
                     </div>
-                    <div className="bottomPrice">
-                        <div className="containerPrice">
-                            <div className="titlePrice">
-                                <span>Precio</span>
-                                <h3>$ 145.000 </h3>
-                            </div>
-                            <button>
-                                <span>Guardar</span>
-                            </button>
-                        </div>
-                    </div>
+                    
                 </div>
             }
 

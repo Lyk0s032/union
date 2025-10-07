@@ -4,18 +4,43 @@ import { useSearchParams } from 'react-router-dom';
 import * as actions from './../../../store/action/action';
 import { useDispatch } from 'react-redux';
 
-export default function ItemRequisicion(props){
-    const requisicion = props.requisicion;
+import dayjs from "dayjs";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+import "dayjs/locale/es"; // para español
+
+dayjs.extend(localizedFormat);
+dayjs.locale("es");
+
+
+export default function ItemRequisicion({ requisicion, requisiciones, clean, add }){
     
     const [params, setParams] = useSearchParams();
-
     const dispatch = useDispatch();
-    
-    return (
-        <tr style={{cursor:'pointer'}} onClick={() => {
-            dispatch(actions.getIDs([requisicion.id]))
-        }}>
+    let creadoFecha = dayjs(requisicion.fecha).format("D [de] MMMM YYYY, h:mm A");
+    let fechaNecesaria = dayjs(requisicion.fechaNecesaria).format("D [de] MMMM YYYY, h:mm A");
 
+
+    const handleClick = (e) => {
+        if (e.ctrlKey) {
+            const existe = requisiciones.includes(requisicion.id);
+            if (existe) {
+                // Si ya existe, lo quitamos
+                const nuevo = requisiciones.filter(m => m !== requisicion.id);
+                clean(nuevo)
+            } else {
+                // Si no existe, lo agregamos (sin mutar el array original)
+                add(requisicion.id);
+            }
+
+        } else {
+            dispatch(actions.getIDs([requisicion.id]))
+            params.set('s', 'materia')
+            setParams(params)
+        }
+    };
+    return (
+        <tr className={requisiciones.find(r => r == requisicion.id) ? 'Active' : null} style={{cursor:'pointer'}} 
+        onClick={handleClick}>
             <td  className="coding">
                 <div className="code">
                     <h3>{requisicion.id}</h3>
@@ -35,10 +60,10 @@ export default function ItemRequisicion(props){
                 </div>
             </td>
             <td className="tdPrice" style={{fontSize:11}}>
-                <span>{requisicion.fecha.split('T')[0]}</span>
+                <span>{creadoFecha}</span>
             </td> 
             <td className="tdPrice" style={{fontSize:11}}>
-                <span>{requisicion.fechaNecesaria.split('T')[0]}</span>
+                <span>{fechaNecesaria}</span>
             </td>            
    
         </tr>

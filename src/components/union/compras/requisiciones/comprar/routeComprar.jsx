@@ -8,6 +8,9 @@ import * as actions from '../../../../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import ProyectosReq from './projectos/proyectos';
+import GeneralBorradoresCotizacion from './borradoresCompras/generalBorradores';
+import UxCotizadorPanel from './uxCotizacion/PanelCotizacions';
+import GeneralProductos from './productos/general';
 
 export default function Comprar(){
     const [params, setParams] = useSearchParams();
@@ -18,10 +21,16 @@ export default function Comprar(){
     const req = useSelector(store => store.requisicion);
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState();
-    const { ids } = req;
-
+    const { ids, itemsCotizacions } = req;
     const closeComprar = () => {
         dispatch(actions.getIDs([]))
+        params.delete('s')
+        params.delete('borradores')
+        params.delete('facture')
+        params.delete('PV')
+        params.delete('MP')
+        setParams(params);
+
     }
 
     const cargaProyectos = async () => {
@@ -37,17 +46,28 @@ export default function Comprar(){
         .then((res) => {
             dispatch(actions.getProyectos(res.proyectos))
             dispatch(actions.getMaterias(res.consolidado))
+            dispatch(actions.cleanItemsForCotizacion())
+        })
+        .then(async (result) => {
+            let body = {
+                proyectos: ids
+            }
+            const getData = await axios.post('/api/requisicion/post/get/cotizaciones/', body)
+            .then((res) => {
+                dispatch(actions.getCotizacionesCompras(res.data))
 
+            })
+
+            return getData;
         })
         .catch(err => {
-            console.log(err)
             dispatch(actions.HandleAlerta('No hemos logrado analizar esto', 'mistake'))
         })
         .finally(e => {
             setLoading(false)
         })
         return getData; 
-    }
+    } 
     useEffect(() => {
         cargaProyectos()
     }, [ids])
@@ -60,25 +80,75 @@ export default function Comprar(){
     }, [params.get('facture')])
 
 
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.code === "Digit1") {
+                const newParams = new URLSearchParams(params.toString());
+                newParams.set("facture", "show"); // 👈 abrir componente
+                setParams(newParams);
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [params, setParams]);
+
+  const itemsRef = useRef(itemsCotizacions);
+
+  // Mantener el ref actualizado
+  useEffect(() => {
+    itemsRef.current = itemsCotizacions;
+  }, [itemsCotizacions]);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      const tag = e.target?.tagName?.toLowerCase();
+      const isTyping =
+        tag === "input" ||
+        tag === "textarea" ||
+        e.target?.isContentEditable === true;
+
+      if (isTyping) return;
+
+      // Capturar tanto el 0 superior como el del numpad
+      if (e.code === "Digit0" || e.code === "Numpad0") {
+        e.preventDefault();
+        if (itemsRef.current && itemsRef.current.length >= 1) {
+          console.log("debe limpiar");
+          dispatch(actions.cleanItemsForCotizacion());
+        } else {
+          console.log("No debe limpiar", itemsRef.current);
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [dispatch]); // dispatch es estable en Redux, pero lo incluimos por ESLint
+
     return (
-        <div className="modal" style={{zIndex:5}}> {console.log(data)}
+        <div className="modal" style={{zIndex:5}}> 
             <div className="hiddenModal"></div>
             <div className="containerModal UXCOMPLETE">
-                <div className="comprar"> {console.log(ids)}
+                <div className="comprar"> 
                     <div className="leftNavUX">
                         <LeftNavComprar />
                     </div>
                     <div className="rightUx">
-                        <button onClick={() => closeComprar()}>x</button>
+                        <button onClick={() => closeComprar()} style={{fontSize:16, padding:10}}>x</button>
                         {
                             params.get('s') == 'materia' ?
                                 <GeneralMateriaPrima />
                             :params.get('s') == 'proyectos' ?
-                                <ProyectosReq />    
+                                <ProyectosReq /> 
+                            : params.get('s') == 'borradores' ?
+                                <GeneralBorradoresCotizacion />   
+                            : params.get('s') == 'productos' ?
+                                <GeneralProductos />   
                             : null
                         }
                         
-                          <Factura ref={factura} />
+                          <UxCotizadorPanel ref={factura} />
                         <BtnFactura  ref={btn}/>
                         
                     </div>

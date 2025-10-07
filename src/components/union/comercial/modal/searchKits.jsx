@@ -39,6 +39,7 @@ export default function SearchKitsComercial({ number }){
              },
         })
         .then((res) => {
+            console.log(res)
             setSearchKit(res.data)
         })
         .catch(err => {

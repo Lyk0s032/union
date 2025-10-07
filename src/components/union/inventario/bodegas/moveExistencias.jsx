@@ -83,6 +83,7 @@ export default function ZoneForMoveItem({productos, loading}){
                         {
                             move?.length ? 
                                 move.map((pt, i) => {
+                                    console.log(pt)
                                     return (
                                         <ItemToSelected pt={pt} eliminar={deleteThat} key={i+1}/>
                                     )

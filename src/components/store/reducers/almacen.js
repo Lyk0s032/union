@@ -18,7 +18,13 @@ const initialState = {
     loadingItem: false,
 
     itemBodega: null,
-    loadingItemBodega: false
+    loadingItemBodega: false,
+    
+    proyectos:null,
+    loadingProyectos: false,
+
+    proyecto:null,
+    loadingProyecto: false
   
 }
 
@@ -80,6 +86,35 @@ export default function (state = initialState, action) {
             }
         } 
         
+        case types.GET_PROJECTS: {
+            return {
+                ...state,
+                proyectos: action.payload,
+                loadingProyectos: false
+            }
+        }
+        case types.GETTING_PROJECTS: {
+            return {
+                ...state,
+                loadingProyectos: action.payload
+            }
+        } 
+
+        case types.GET_PROJECT: {
+            return {
+                ...state,
+                proyecto: action.payload,
+                loadingProyecto: false
+            }
+        }
+        case types.GETTING_PROJECT: {
+            return {
+                ...state,
+                loadingProyecto: action.payload
+            }
+        } 
+        
+
         case types.GET_ITEM_BODEGA: {
             return {
                 ...state,

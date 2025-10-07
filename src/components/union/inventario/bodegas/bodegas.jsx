@@ -12,18 +12,20 @@ export default function Bodegas(){
     const navigate = useNavigate();
  
     const almacen = useSelector(store => store.almacen)
-    const { cabecerasBodega, loadingCabecerasBodega } = almacen;
+    const { cabecerasBodega, loadingCabecerasBodega, productosBodega, loadingProductosBodega } = almacen;
 
     const admin = useSelector(store => store.admin)
     const { cotizaciones, loadingCotizaciones } = admin;
 
+        
     const [show, setShow] = useState(null);
     const dispatch = useDispatch();
     const [params, setParams] = useSearchParams();
 
     const packageFunctions = async () => {
+        let bodega = !params.get('bodega') ? 1 : params.get('bodega')
         if(!params.get('bodega')){
-            dispatch(actions.axiosToGetProductosBodega(true, 1))
+            dispatch(actions.axiosToGetProductosBodega(true, bodega))
             dispatch(actions.axiosToGetMovimientosBodega(true, 1))
              dispatch(actions.axiosToGetCabeceras(true, [1,4,2,5]))
         }else{
@@ -32,23 +34,12 @@ export default function Bodegas(){
         }
     }
     useEffect(() => {
-            dispatch(actions.axiosToGetCotizacionesAdmin(true))
-            packageFunctions()
+            packageFunctions() 
     }, [params.get('bodega')])  
     return ( 
         <div className="panelDashboardType">
             {
-                !cotizaciones || loadingCotizaciones ?
-                    <div className="notFound">
-                        <h3>No hay proyectos por el momento</h3>
-                    </div>
-                :
-                cotizaciones == 404 || cotizaciones == 'notrequest' ?
-                    <div className="notFound">
-                        <h3>No hay proyectos por el momento</h3>
-                    </div> 
-                :
-                <div className="containerTypeDashboard">
+            <div className="containerTypeDashboard">
                 <div className="topHeaderPanel">
                     <div className="divideHeader"> 
                          <div className="dataHeaderPrincipal">
@@ -108,15 +99,29 @@ export default function Bodegas(){
                     </div>
                     <div className="dataRoutesDashboard">
                         {
-                            !show || show == 'items' ?
-                                <ItemsLists />
-                            : show == 'movimientos' ?
-                                <Movimientos />
-                            : show == 'graph' ?
-                                <Graph />
+                            !productosBodega || loadingProductosBodega ?
+                                <div className="notFound">
+                                    <h3>Cargando...</h3>
+                                </div>
+                            :
+                            productosBodega == 404 || productosBodega == 'notrequest' ?
+                                <div className="notFound">
+                                    <h3>No hay proyectos por el momento</h3>
+                                </div> 
+                            :
+                                <>
+                                    {  
+                                        !show || show == 'items' ?
+                                            <ItemsLists />
+                                        : show == 'movimientos' ?
+                                            <Movimientos />
+                                        : show == 'graph' ?
+                                            <Graph />
 
-                            : null
-                        }
+                                        : null
+                                    }
+                                </>
+                            }
 
                         {
                             params.get('item')?

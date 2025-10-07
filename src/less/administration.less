@@ -199,6 +199,9 @@
                                         tbody{
                                             
                                             tr{
+                                                transition: .3s;
+                                                background-color: @bgDefault;
+                                                user-select: none;
                                                 td{
                                                     transition: .3s;
                                                     padding:25px 0px;
@@ -280,7 +283,47 @@
                                                 }
                                                 
                                             }
-                                     
+                                            .Active{
+                                                background-color: @bgAzulDark;
+                                                td{
+                                                    padding-left:5px;
+                                                    color: @bgDefault;
+                                                    border-bottom: 1px solid @bgAzulDark;
+                                                    .titleNameKitAndData{
+                                                        padding-left: 10px;
+                                                        .extensionColor{
+                                                            display: flex;
+                                                            align-items: center;
+                                                            .boxColor{
+                                                                width:14px;
+                                                                height:14px;
+                                                                border-radius: 2px;
+                                                                background-color: @bgDefault;
+                                                                margin-right: 10px;
+                                                                
+                                                            }
+                                                            span{
+                                                                font-size: 10px;
+                                                                color: @bgDefault;
+                                                            }
+                                                            
+                                                        }
+                                                        .nameData{
+                                                            margin-top:5px;
+                                                            width:80%;
+                                                            h3{
+                                                                font-weight: 500;
+                                                                font-size: 13px;
+                                                                color: @bgDefault;
+                                                                margin-bottom: 5px;
+                                                            }
+                                                            span{
+                                                                font-size: 11px;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                 }

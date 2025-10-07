@@ -1,16 +1,52 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import * as actions from './../../../../../store/action/action';
 
 export default function ItemProject({ item }){
     const [open, setOpen] = useState(false);
 
     const [edit, setEdit] = useState(false);
+    const dispatch = useDispatch();
+    const req = useSelector(store => store.requisicion);
 
+    const { itemsCotizacions } = req;
+    const [plus, setPlus] = useState(null);
+    const [cantidad, setCantidad] = useState(0)
 
+    const getHowMany = () => {
 
+        let validacion = itemsCotizacions.find(
+            it => it.materiumId === item.materiumId && it.requisicionId === item.requisicionId
+        );
+        if(validacion){
+            setPlus(validacion)
+        }
+    }
+
+    const handleClick = (e) => {
+        if (e.ctrlKey) {
+            addItemEstado(true)
+
+        } 
+    };
+    const addItemEstado = (complete) => {
+        let objeto = {
+            materiumId: item.materiumId,
+            requisicionId: item.requisicionId,
+            cantidad
+        }
+        if(complete){
+            objeto.cantidad = Number(item.cantidad - item.cantidadEntrega)
+        }
+        
+        dispatch(actions.getItemsForCotizacion(objeto))
+    }
+    useEffect(() => {
+        getHowMany()
+    }, [itemsCotizacions, item])
     return (
-        <div className="div">
+        <div className="div" >
             <div className="tr">
                 <div className="td longer" onDoubleClick={() => setOpen(!open)}>
                     <div className="dataProject">
@@ -23,20 +59,29 @@ export default function ItemProject({ item }){
                         </div>
                     </div>
                 </div> 
-                <div onDoubleClick={() => setEdit(true)} className="td">
+                <div onClick={handleClick} onDoubleClick={() => setEdit(true)} className="td">
                     {
                         !edit ?
                         <span>{item.cantidadEntrega} / {item.cantidad}</span>
                         :
                         <div className="inputDiv">
-                            <input type="number" onBlur={() => setEdit(false)}/>
+                            <input type="number" onBlur={() => setEdit(false)} 
+                            onChange={(e) => {
+                                setCantidad(e.target.value)
+                            }} value={cantidad} onKeyDown={(e) => {
+                                if(e.code == 'Enter'){
+                                    if(cantidad <= Number(item.cantidad - item.cantidadEntrega)){
+                                        addItemEstado()
+                                    }
+                                }
+                            }}/>
                             <span> / </span>
                             <span>{item.cantidad}</span>
                         </div>
                     }
                 </div>
                 <div className="td">
-                    <span>+ 1</span>
+                    <span>+ {plus?plus.cantidad : 0}</span>
                 </div>
             </div>
             {

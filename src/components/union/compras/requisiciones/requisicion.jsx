@@ -11,16 +11,36 @@ export default function Requisiciones(){
 
     const [params, setParams] = useSearchParams();
 
+    const [requisiciones, setRequisiciones] = useState([]);
+
+    // --- Función para analizar ---
+
+    const addRequisicion = (reqs) => {
+        setRequisiciones([...requisiciones, reqs])
+    } 
+    const removeReq = (reqs) => {
+        setRequisiciones(reqs)
+    }
     const dispatch = useDispatch();
     const req = useSelector(store => store.requisicion); 
     const { requisicions, loadingRequisicions } = req;
-
+ 
     const [word, setWord] = useState(null);
     const [reporte, setReporte] = useState(null);
 
-    useEffect(() => {
+    const conteo = (requisicions ?? []).reduce(
+        (acc, r) => {
+            if (r.estado === "pendiente") acc.pendiente++;
+            if (r.estado === "comprando") acc.comprando++;
+            if (r.estado === "comprado") acc.comprado++;
+            return acc;
+        },
+        { pendiente: 0, comprando: 0, comprado: 0 }
+    );
+
+    useEffect(() => {           
         dispatch(actions.axiosToGetRequisicions(true)) 
-    }, [])
+    }, [])          
     return ( 
         <div className="panelDashboardType">
             {
@@ -43,17 +63,28 @@ export default function Requisiciones(){
                                                 <button>Todas</button>
                                             </div>
                                         </div>
-                                        <div className="datosBox"  >
+                                        <div className={!params.get('state') || params.get('state') == 'pendiente' ? 'datosBox Active' : 'datosBox'} onClick={() => {
+                                            params.set('state', 'pendiente')
+                                            setParams(params);
+ 
+                                        }} >
                                             <span>Sin comprar</span>
-                                            <h1>5</h1>
+                                            <h1>{conteo.pendiente}</h1>
                                         </div>
-                                        <div className="datosBox"  >
+                                        <div className={params.get('state') == 'parcial' ? 'datosBox Active' : 'datosBox'} onClick={() => {
+                                            params.set('state', 'parcial')
+                                            setParams(params);
+                                        }} >
                                             <span>Parcialmente</span>
-                                            <h1>3</h1>
+                                            <h1>{conteo.comprando}</h1>
                                         </div>   
-                                        <div className="datosBox"  >
+                                        <div className={!params.get('state') == 'completed' ? 'datosBox Active' : 'datosBox'} onClick={() => {
+                                            params.set('state', 'completed')
+                                            setParams(params);
+
+                                        }} >
                                             <span>Finalizado</span>
-                                            <h1>3</h1>
+                                            <h1>{conteo.comprado}</h1>
                                         </div>   
                                     </div>
                                 </div>
@@ -84,6 +115,16 @@ export default function Requisiciones(){
                                         </li> */}
                                     </ul>
                                 </nav>
+
+                                {
+                                    requisiciones?.length ?
+                                        <button onClick={() => {
+                                            dispatch(actions.getIDs(requisiciones))
+                                        }}> 
+                                            <span>Analizar</span>
+                                        </button>
+                                    : null 
+                                }
                             </div>
                             <div className="dataRoutesDashboard">
                                 <div className="table TableUX">
@@ -102,7 +143,19 @@ export default function Requisiciones(){
                                             requisicions?.length ? 
                                                 requisicions.map((re, i) => {
                                                     return (
-                                                        <ItemRequisicion requisicion={re} key={i+1} />
+                                                        !params.get('state') || params.get('state') == 'pendiente' ?
+                                                            re.estado == 'pendiente' ? 
+                                                                <ItemRequisicion requisiciones={requisiciones} clean={removeReq} add={addRequisicion} requisicion={re} key={i+1} />
+                                                            : null
+                                                        : params.get('state') == 'parcial' ? 
+                                                            re.estado == 'comprando' ?
+                                                                <ItemRequisicion requisiciones={requisiciones} clean={removeReq} add={addRequisicion} requisicion={re} key={i+1} />
+                                                            : null
+                                                        : params.get('state') == 'completed' ?
+                                                            re.estado == 'comprado' ?
+                                                            <ItemRequisicion requisiciones={requisiciones} clean={removeReq} add={addRequisicion} requisicion={re} key={i+1} />
+                                                        : null
+                                                            :   <ItemRequisicion requisiciones={requisiciones} clean={removeReq} add={addRequisicion} requisicion={re} key={i+1} />
                                                     )
                                                 })
 

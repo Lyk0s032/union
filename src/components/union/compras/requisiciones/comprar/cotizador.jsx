@@ -4,41 +4,72 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import ProveedorCotizador from './proveedorCotizador';
 import CotizacionProviderItem from './itemProviderCotizacion';
+import { useSearchParams } from 'react-router-dom';
 
 export default function Cotizador(){
     const [materias, setMaterias] = useState();
+    const [params, setParams] = useSearchParams();
 
     const dispatch = useDispatch();
     const req = useSelector(store => store.requisicion);
-    const { materiaIds, fastCotizacion, loadingFastCotizacion } = req;
+    const { materiaIds, fastCotizacion, loadingFastCotizacion, itemsCotizacions } = req;
 
-    const sendCotizar = async () => {
-        dispatch(actions.gettingCotizacionFast(true))
-        let body = {
-            materiaIds
-        }
-        const send = axios.post('/api/requisicion/get/cotizar/realTime/MP', body)
-        .then((res) => {
-            console.log(res)
-            dispatch(actions.getCotizacionFast(res.data))
-        })
-        .catch(err => {
-            dispatch(actions.HandleAlerta('Negativo', 'mistake'))
-        })
-        .finally(() => {
-            dispatch(actions.gettingCotizacionFast(false))
-        })
-        return send;
+    // const [cotizacionesData, setCotizacionesData] = useState([]); // <-- aquí se guardan todas
+
+    // // Recibe del hijo su objeto y lo guarda/reemplaza en el array
+    // const handleCotizacionChange = (proveedorId, cotizacionObj) => {
+    //     setCotizacionesData(prev => {
+    //         const existe = prev.find(c => c.ProveedorId === proveedorId);
+    //         if(existe){
+    //             return prev.map(c => c.ProveedorId === proveedorId ? cotizacionObj : c);
+    //         }
+    //         return [...prev, cotizacionObj];
+    //     });
+    // };
+
+    const getIdsSolo = () => {
+    if (!materiaIds || !materiaIds.length) return [];
+
+    if (params.get("s") === "materia") {
+        return materiaIds.map(it => it.materiaId).filter(Boolean);
+    } else if (params.get("s") === "productos") {
+        return materiaIds.map(it => it.productoId).filter(Boolean);
     }
+    return [];
+    };
+    
+    const sendCotizarGeneral = async () => {
+        const tipo = params.get("s"); // "materia" o "productos"
+        const idsSolo = getIdsSolo();
+        if (!idsSolo.length) return;
+
+        dispatch(actions.gettingCotizacionFast(true));
+        let endpoint = tipo === "materia"
+            ? "/api/requisicion/get/cotizar/realTime/MP"
+            : "/api/requisicion/get/cotizar/realTime/PT";
+
+        try {
+            const res = await axios.post(endpoint, { materiaIds: idsSolo });
+            dispatch(actions.getCotizacionFast(res.data));
+        } catch (err) {
+            console.log(err);
+            dispatch(actions.HandleAlerta("Negativo", "mistake"));
+        } finally {
+            dispatch(actions.gettingCotizacionFast(false));
+        }
+    };
 
     const cotizador = useRef(null);
 
     const comparar = () => {
         cotizador.current.classList.toggle('cotizadorViewActive')
     }
+
     useEffect(() => {
-        sendCotizar()
-    }, [materiaIds])
+        sendCotizarGeneral();
+    }, [materiaIds, params.get("s")]);
+
+
 
     return (
         <div className="cotizadorDash">
@@ -52,9 +83,9 @@ export default function Cotizador(){
                         <div className="caja">
                             <div className="boxCotizaciones">
                                 {
-                                    materiaIds.map((id, i) => {
+                                    fastCotizacion.proveedoresComunes.map((data, i) => {
                                         return (
-                                            <ProveedorCotizador />
+                                            <ProveedorCotizador provider={data} key={i+1} />
                                         )
                                     })
                                 }
@@ -65,27 +96,39 @@ export default function Cotizador(){
                             </button>
                         </div>
 
-                    : <h1>no hay</h1>
+                    : null
                 }
             </div>
             <div className="cotizadorView" ref={cotizador}>
                 <div className="containerCotizadorView">
-                    <div className="topClose">
+                    <div className="topClose"> 
                         <button onClick={() => comparar()}>
                             <span>
                                 Close
                             </span>
-                        </button>
+                        </button> 
                     </div>
                     <div className="cotizaciones">
                         <div className="containerCotizaciones">
-                            <CotizacionProviderItem />
-                            <CotizacionProviderItem />
-                            <CotizacionProviderItem />
-                            <CotizacionProviderItem />
-                            <CotizacionProviderItem />
-                            
+                            {
+                                materiaIds?.length ?
+                                
+                                    !fastCotizacion || loadingFastCotizacion ?
+                                        <h1>Cargando...</h1>
+                                    :
+                                        fastCotizacion.proveedoresComunes.map((data, i) => {
+                                            return (
+                                                <CotizacionProviderItem 
+                                                provider={data} key={i+1} />
+                                            )
+                                        })
+                                            
+                                : <h1>no hay</h1>
+                            }
+
                         </div>
+
+                        <button>Crear cotizaciones</button>
                     </div>
                 </div>
             </div>

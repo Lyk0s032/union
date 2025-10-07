@@ -19,7 +19,14 @@ const initialState = {
     loadingCotizaciones: false,
 
     cotizacionesProduccion: null,
-    loadingCotizacionesProduccion: false
+    loadingCotizacionesProduccion: false,
+
+    // COMPRAS
+    ordenesCompras: null,
+    loadingOrdenesCompras: null,
+    
+    ordenCompras: null,
+    loadingOrdenCompras: null
 }
 
 export default function (state = initialState, action) {
@@ -110,6 +117,35 @@ export default function (state = initialState, action) {
             }
         } 
 
+        case types.GET_ORDENES_COMPRAS: {
+            return {
+                ...state,
+                ordenesCompras: action.payload,
+                loadingOrdenesCompras: false
+            }
+        }
+
+        case types.GETTING_ORDENES_COMPRAS: {
+            return {
+                ...state,
+                loadingOrdenesCompras: action.payload
+            }
+        }
+
+        case types.GET_ORDEN_COMPRAS: {
+            return {
+                ...state,
+                ordenCompras: action.payload,
+                loadingOrdenCompras: false
+            }
+        }
+
+        case types.GETTING_ORDEN_COMPRAS: {
+            return {
+                ...state,
+                loadingOrdenCompras: action.payload
+            }
+        }
 
         default:
             return {...state}

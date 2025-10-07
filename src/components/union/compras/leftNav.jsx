@@ -39,7 +39,7 @@ export default function LeftNav(){
                                         
                                     </div>
                                 </li>
-                                {/* <li className={location.pathname === '/compras/requisiciones' ||  location.pathname === '/compras//requisiciones/' ? 'Active' : null } onClick={() => {
+                                <li className={location.pathname === '/compras/requisiciones' ||  location.pathname === '/compras//requisiciones/' ? 'Active' : null } onClick={() => {
                                         navigate('/compras/requisiciones')
                                     }}>
                                     <div className='divideLi'>
@@ -49,7 +49,7 @@ export default function LeftNav(){
                                         </div>
                                         
                                     </div>
-                                </li> */}
+                                </li>
                                 <li className={location.pathname === '/compras/pv' ||  location.pathname === '/compras/pv/' ? 'Active' : null } onClick={() => {
                                     navigate('/compras/pv')
                                 }}>

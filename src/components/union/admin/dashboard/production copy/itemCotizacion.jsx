@@ -20,10 +20,21 @@ export default function CotizacionItemGeneral({ item, openMenuId, toggleMenu  })
         setLoading(true)
         const sendAprobation = await axios.put(`/api/cotizacion/admin/accept/${r.id}`)
         .then(res => {
+            return res
+        })
+        .then(async (res) => {
+            const send = await axios.get(`/api/inventario/get/aprobar/generar/${res.data.id}`)
+            return res;
+        })
+        .then(async (res) => {
+            console.log(res.data)
+            const send = await axios.get(`api/requisicion/get/post/generateAll/${res.data.id}`)
+            return res;
+        })
+        
+        .then((res) => {
             dispatch(actions.HandleAlerta('Cotización aprobada', 'positive')) 
             dispatch(actions.axiosToGetCotizacionesAdmin(false))
-
-            return res
         })
         .catch(err => {
             dispatch(actions.HandleAlerta('Ha ocurrido un error', 'mistake'))

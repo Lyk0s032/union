@@ -11,37 +11,59 @@ export default function ItemsLists(){
     
     const { productosBodega, loadingProductosBodega } = almacen;
     
-    const dispatch = useDispatch();
     const [options, setOptions] = useState(null);
     const [productos, setProducto] = useState(null);
     const [loading, setLoading] = useState(false);
     const [params, setParams] = useSearchParams();
 
+    const dispatch = useDispatch();
 
     const searchKitsWithFunction = async (query) => {
         
         if(!query || query == '') return setProducto(null);
-        setLoading(true);
-        setProducto(null);
+            setLoading(true);
+            setProducto(null);
 
-        const search = await axios.get('api/inventario/get/bodegas/items/query/search', {
-            params: { 
-                query: query,
-                bodegaId: params.get('bodega') ? params.get('bodega') : 1
-             },
-        })
-        .then((res) => {
-            console.log(res.data)
-            setProducto(res.data)
-        })
-        .catch(err => {
-            console.log(err);
-            setProducto(null)
-            return null
-        })
-        .finally(() => setLoading(false))
-        return search
-    }
+        if(!params.get('bodega') || params.get('bodega') == '1' || params.get('bodega') == '3'){
+            const search = await axios.get('api/inventario/get/bodegas/items/query/search', {
+                params: { 
+                    query: query,
+                    bodegaId: params.get('bodega') ? params.get('bodega') : 1
+                },
+            })
+            .then((res) => {
+                setProducto(res.data)
+            })
+            .catch(err => {
+                setProducto(null)
+                return null
+            })
+            .finally(() => setLoading(false))
+            
+            return search
+        } else{
+             const search = await axios.get('api/inventario/get/bodegas/items/query/pt/search', {
+                params: { 
+                    query: query,
+                    bodegaId: params.get('bodega') ? params.get('bodega') : 2
+                },
+            })
+            .then((res) => {
+                setProducto(res.data)
+            })
+            .catch(err => {
+                setProducto(null)
+                return null
+            })
+            .finally(() => setLoading(false))
+            return search
+        }
+    } 
+
+    useEffect(() => {
+        setProducto(null)
+    }, [options])
+
     return (
         <div className="listResultsData">
             <div className="containerKits">
@@ -72,18 +94,24 @@ export default function ItemsLists(){
                                             
                                             <tbody>
                                                 {
-                                                    !productosBodega || loadingProductosBodega ? null
+                                                    !productosBodega || loadingProductosBodega ? <h1>Cargando...</h1>
+                                                    : 
+                                                    productosBodega == 404 || productosBodega == 'notrequest' ?
+                                                    <h1>Sin resultados</h1>
                                                     : 
                                                     productosBodega?.length ? 
                                                         productosBodega.map((pt, i) => {
+                                                            {console.log(pt)}
                                                             return (
                                                                     <tr key={i+1} onClick={() => {
-                                                                        params.set('item', pt.id)
+                                                                        params.set('item', pt.materiumId) 
+                                                                        params.set('show', 'Bodega');
+                                                                        params.set('who', 1)
                                                                         setParams(params);
                                                                     }}>
                                                                         <td className="coding">
                                                                             <div className="code">
-                                                                                <h3>{pt.id}</h3>
+                                                                                <h3>{pt.materiumId}</h3>
                                                                             </div>
                                                                         </td>
                                                                         <td className="longer Almacen" > 
@@ -97,7 +125,7 @@ export default function ItemsLists(){
                                                                                         {
                                                                                             pt.materium ?
                                                                                                 `${pt.materium.description}`
-                                                                                            : 'Sin nombre'
+                                                                                            : pt.producto?.item
                                                                                         }
                                                                                     </h3>
                                                                                 </div>

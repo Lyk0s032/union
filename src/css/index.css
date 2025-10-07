@@ -3465,24 +3465,28 @@ body button {
   width: 90%;
   height: 100%;
   box-sizing: border-box;
+  overflow-y: auto;
+  padding-bottom: 200px;
 }
 .modal .UXCOMPLETE .comprar .rightUx .factura {
   position: fixed;
   transition: 0.3s;
-  transform: translateY(-100%);
+  transform: translateY(100%);
   bottom: 0;
   left: 0;
   right: 0;
-  top: 0;
+  height: 50%;
+  border-top: 1px solid #ccc;
+  background-color: #FFF;
   display: flex;
   align-items: center;
+  z-index: 8;
 }
 .modal .UXCOMPLETE .comprar .rightUx .factura .facturaBox {
   background-color: #FFF;
-  border: 1px solid #ccc;
-  width: 50%;
+  width: 90%;
   border-radius: 10px;
-  height: 90%;
+  height: 100%;
   margin: auto;
 }
 .modal .UXCOMPLETE .comprar .rightUx .factura .facturaBox .containerFactura {
@@ -3491,6 +3495,71 @@ body button {
   overflow-y: auto;
   box-sizing: border-box;
   padding: 40px;
+  padding-top: 0px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .factura .facturaBox .containerFactura .horizontalCotizacions {
+  box-sizing: border-box;
+  width: 100%;
+  overflow-x: auto;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  padding: 8px 0px;
+  margin-bottom: 20px;
+  flex-wrap: nowrap;
+  display: inline-flex;
+}
+.modal .UXCOMPLETE .comprar .rightUx .factura .facturaBox .containerFactura .horizontalCotizacions .itemCotizacion {
+  padding: 10px 30px;
+  position: relative;
+  flex: 0 0 auto;
+  border-radius: 5px;
+  margin-right: 10px;
+  cursor: pointer;
+  opacity: 0.3;
+  transition: 0.3s;
+}
+.modal .UXCOMPLETE .comprar .rightUx .factura .facturaBox .containerFactura .horizontalCotizacions .itemCotizacion .containerItemCotizacion {
+  display: flex;
+  align-items: center;
+}
+.modal .UXCOMPLETE .comprar .rightUx .factura .facturaBox .containerFactura .horizontalCotizacions .itemCotizacion .containerItemCotizacion .Number {
+  width: 50px;
+  height: 50px;
+  background-color: #046290;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.modal .UXCOMPLETE .comprar .rightUx .factura .facturaBox .containerFactura .horizontalCotizacions .itemCotizacion .containerItemCotizacion .Number h3 {
+  color: #FFF;
+  font-weight: 400;
+  font-size: 12px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .factura .facturaBox .containerFactura .horizontalCotizacions .itemCotizacion .containerItemCotizacion .dataCotizacionBody {
+  margin-left: 15px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .factura .facturaBox .containerFactura .horizontalCotizacions .itemCotizacion .containerItemCotizacion .dataCotizacionBody h3 {
+  font-size: 16px;
+  color: #046290;
+}
+.modal .UXCOMPLETE .comprar .rightUx .factura .facturaBox .containerFactura .horizontalCotizacions .itemCotizacion .containerItemCotizacion .dataCotizacionBody span {
+  color: #666;
+  font-size: 12px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .factura .facturaBox .containerFactura .horizontalCotizacions .itemCotizacion .containerItemCotizacion .dataCotizacionBody strong {
+  font-size: 12px;
+  color: #666;
+}
+.modal .UXCOMPLETE .comprar .rightUx .factura .facturaBox .containerFactura .horizontalCotizacions .itemCotizacion .providerScroll span {
+  font-size: 12px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .factura .facturaBox .containerFactura .horizontalCotizacions .itemCotizacion .providerScroll h3 {
+  font-size: 14px;
+  color: black;
+}
+.modal .UXCOMPLETE .comprar .rightUx .factura .facturaBox .containerFactura .horizontalCotizacions .itemCotizacion.Active {
+  opacity: 1;
 }
 .modal .UXCOMPLETE .comprar .rightUx .factura .facturaBox .containerFactura .divideTop {
   width: 100%;
@@ -3525,19 +3594,24 @@ body button {
   border-collapse: collapse;
 }
 .modal .UXCOMPLETE .comprar .rightUx .factura .facturaBox .containerFactura .itemsTable table thead tr th {
-  padding: 15px 5px;
+  padding: 15px 10px;
   text-align: left;
   font-size: 12px;
 }
 .modal .UXCOMPLETE .comprar .rightUx .factura .facturaBox .containerFactura .itemsTable table tbody tr td {
-  padding: 15px 5px;
+  padding: 15px 10px;
   font-size: 14px;
 }
 .modal .UXCOMPLETE .comprar .rightUx .factura .facturaBox .containerFactura .itemsTable table tbody tr .large {
-  width: 50%;
+  width: 40%;
+  color: #046290;
+  font-family: Roboto;
 }
 .modal .UXCOMPLETE .comprar .rightUx .factura .facturaBox .containerFactura .itemsTable table tbody tr .short {
-  width: 17%;
+  width: auto;
+  padding: 0px 10px;
+  color: #046290;
+  font-family: Roboto;
 }
 .modal .UXCOMPLETE .comprar .rightUx .factura .facturaBox .containerFactura .itemsTable .Topcito {
   border-top: 2px solid black;
@@ -3554,7 +3628,7 @@ body button {
   transform: translateY(0%);
   right: 0;
   text-align: center;
-  z-index: 5;
+  z-index: 6;
   margin-bottom: 30px;
 }
 .modal .UXCOMPLETE .comprar .rightUx .facturaBtn .containerBtn {
@@ -3711,11 +3785,147 @@ body button {
   font-size: 12px;
   color: #666;
 }
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .listaMP table tbody .fila-cotizacion {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: #fff;
+}
 .modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .listaMP table tbody tr:hover {
   background-color: #F8F8F8;
 }
 .modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .listaMP table tbody .Active td {
   background-color: #60a5fa;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .listaMP table tbody .fila-expandida {
+  position: relative;
+  left: 0;
+  max-width: 100%;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .listaMP table tbody .fila-expandida .detalle-cotizacion {
+  animation: desplegar 0.25s ease forwards;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  height: 100vh;
+  overflow-y: auto;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .listaMP table tbody .fila-expandida .detalle-cotizacion .openProject {
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  top: 0;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .listaMP table tbody .fila-expandida .detalle-cotizacion .openProject .titleProject {
+  border-bottom: 1px solid #ccc;
+  padding: 20px 8px;
+  box-sizing: border-box;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .listaMP table tbody .fila-expandida .detalle-cotizacion .openProject .titleProject h3 {
+  color: #046290;
+  font-weight: 400;
+  font-size: 26px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .listaMP table tbody .fila-expandida .detalle-cotizacion .openProject .titleProject span {
+  font-size: 12px;
+  color: #666;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .listaMP table tbody .fila-expandida .detalle-cotizacion .openProject .bodyProject .containerBodyProject {
+  padding: 20px 8px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .listaMP table tbody .fila-expandida .detalle-cotizacion .openProject .bodyProject .containerBodyProject .divideProjectInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .listaMP table tbody .fila-expandida .detalle-cotizacion .openProject .bodyProject .containerBodyProject .divideProjectInfo .priceProject {
+  padding: 20px 0px;
+  box-sizing: border-box;
+  width: 35%;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .listaMP table tbody .fila-expandida .detalle-cotizacion .openProject .bodyProject .containerBodyProject .divideProjectInfo .priceProject span {
+  font-size: 12px;
+  color: #666;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .listaMP table tbody .fila-expandida .detalle-cotizacion .openProject .bodyProject .containerBodyProject .divideProjectInfo .priceProject h3 {
+  font-weight: 400;
+  color: #046290;
+  font-size: 32px;
+  margin-top: 5px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .listaMP table tbody .fila-expandida .detalle-cotizacion .openProject .bodyProject .containerBodyProject .divideProjectInfo .priceProject button {
+  margin-top: 10px;
+  padding: 6px 10px;
+  border-radius: 20px;
+  width: 40%;
+  transition: 0.3s;
+  margin-left: auto;
+  border: 1px solid #046290;
+  background-color: #FFF;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .listaMP table tbody .fila-expandida .detalle-cotizacion .openProject .bodyProject .containerBodyProject .divideProjectInfo .priceProject button span {
+  font-size: 12px;
+  color: #046290;
+  transition: 0.3s;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .listaMP table tbody .fila-expandida .detalle-cotizacion .openProject .bodyProject .containerBodyProject .divideProjectInfo .priceProject button:hover {
+  transform: scale(1.1);
+  background-color: #046290;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .listaMP table tbody .fila-expandida .detalle-cotizacion .openProject .bodyProject .containerBodyProject .divideProjectInfo .priceProject button:hover span {
+  color: #FFF;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .listaMP table tbody .fila-expandida .detalle-cotizacion .openProject .bodyProject .containerBodyProject .divideProjectInfo .Right {
+  text-align: right;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .listaMP table tbody .fila-expandida .detalle-cotizacion .openProject .bodyProject .containerBodyProject .resultsComprasItems {
+  box-sizing: border-box;
+  margin-top: 10px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .listaMP table tbody .fila-expandida .detalle-cotizacion .openProject .bodyProject .containerBodyProject .resultsComprasItems .titleResults {
+  padding: 10px 0px;
+  box-sizing: border-box;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .listaMP table tbody .fila-expandida .detalle-cotizacion .openProject .bodyProject .containerBodyProject .resultsComprasItems .titleResults h3 {
+  font-weight: 400;
+  color: #666;
+  box-sizing: border-box;
+  font-size: 12px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .listaMP table tbody .fila-expandida .detalle-cotizacion .openProject .bodyProject .containerBodyProject .resultsComprasItems .itemResultsCompra {
+  margin-top: 10px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .listaMP table tbody .fila-expandida .detalle-cotizacion .openProject .bodyProject .containerBodyProject .resultsComprasItems .itemResultsCompra .itemResult {
+  padding: 10px 0px;
+  box-sizing: border-box;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .listaMP table tbody .fila-expandida .detalle-cotizacion .openProject .bodyProject .containerBodyProject .resultsComprasItems .itemResultsCompra .itemResult .divideItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .listaMP table tbody .fila-expandida .detalle-cotizacion .openProject .bodyProject .containerBodyProject .resultsComprasItems .itemResultsCompra .itemResult .divideItem .description {
+  width: 40%;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .listaMP table tbody .fila-expandida .detalle-cotizacion .openProject .bodyProject .containerBodyProject .resultsComprasItems .itemResultsCompra .itemResult .divideItem .description span {
+  font-size: 12px;
+  color: #666;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .listaMP table tbody .fila-expandida .detalle-cotizacion .openProject .bodyProject .containerBodyProject .resultsComprasItems .itemResultsCompra .itemResult .divideItem .description h3 {
+  font-weight: 600;
+  font-size: 16px;
+}
+@keyframes desplegar {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .cotizador {
   position: fixed;
@@ -3724,7 +3934,7 @@ body button {
   left: 0;
   height: 20%;
   background-color: #FFF;
-  z-index: 6;
+  z-index: 7;
 }
 .modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .cotizador .cotizadorDash {
   height: 100%;
@@ -3855,6 +4065,23 @@ body button {
   height: 100%;
   width: 100%;
 }
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .cotizador .cotizadorDash .cotizadorView .containerCotizadorView .cotizaciones .containerCotizaciones .cotizacion .containerCotizacionProvider .title {
+  text-align: center;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .cotizador .cotizadorDash .cotizadorView .containerCotizadorView .cotizaciones .containerCotizaciones .cotizacion .containerCotizacionProvider .title h4 {
+  margin: 10px auto;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .cotizador .cotizadorDash .cotizadorView .containerCotizadorView .cotizaciones .containerCotizaciones .cotizacion .containerCotizacionProvider .title input {
+  width: 100%;
+  padding: 10px 10px;
+  box-sizing: border-box;
+  outline: 0px;
+  border: none;
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  font-family: Roboto;
+}
 .modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .cotizador .cotizadorDash .cotizadorView .containerCotizadorView .cotizaciones .containerCotizaciones .cotizacion .containerCotizacionProvider .titleThat {
   height: 10%;
   border-bottom: 1px solid #ccc;
@@ -3935,11 +4162,288 @@ body button {
 .modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .cotizador .cotizadorDash .cotizadorViewActive {
   transform: translateY(0%);
 }
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras {
+  box-sizing: border-box;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation {
+  margin-top: 50px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .lineProgress {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .lineProgress .itemHere {
+  transition: 0.3s;
+  text-align: center;
+  cursor: pointer;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .lineProgress .itemHere .circle {
+  margin-bottom: 5px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .lineProgress .itemHere .circle .icon {
+  font-size: 42px;
+  color: #666;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .lineProgress .itemHere .circle .Active {
+  color: #046290;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .lineProgress .itemHere .Active {
+  color: #046290;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .lineProgress .itemHere h3 {
+  font-weight: 400;
+  font-size: 14px;
+  color: #666;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .lineProgress .itemHere span {
+  font-size: 12px;
+  color: #666;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .lineProgress .itemHere:hover {
+  transform: scale(1.1);
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .dataCotizacionReal {
+  margin-top: 100px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .dataCotizacionReal .containerDataRealCotizacion {
+  width: 100%;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .dataCotizacionReal .containerDataRealCotizacion .topData {
+  width: 100%;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .dataCotizacionReal .containerDataRealCotizacion .topData .topLadeRight {
+  width: 90%;
+  margin: auto;
+  text-align: right;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .dataCotizacionReal .containerDataRealCotizacion .topData .topLadeRight button {
+  margin-left: 10px;
+  padding: 8px 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #ccc;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .dataCotizacionReal .containerDataRealCotizacion .topData .topLadeRight button span {
+  font-size: 12px;
+  color: #666;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .dataCotizacionReal .containerDataRealCotizacion .topData .topLadeRight .go {
+  background-color: #046290;
+  border: 1px solid #046290;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .dataCotizacionReal .containerDataRealCotizacion .topData .topLadeRight .go span {
+  color: #FFF;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .dataCotizacionReal .containerDataRealCotizacion .topData .divideCotizacion {
+  width: 90%;
+  margin: auto;
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .dataCotizacionReal .containerDataRealCotizacion .topData .divideCotizacion .lade {
+  width: 40%;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .dataCotizacionReal .containerDataRealCotizacion .topData .divideCotizacion .lade span {
+  font-size: 14px;
+  color: #666;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .dataCotizacionReal .containerDataRealCotizacion .topData .divideCotizacion .lade strong {
+  font-size: 14px;
+  font-weight: 400;
+  color: #666;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .dataCotizacionReal .containerDataRealCotizacion .topData .divideCotizacion .lade h3 {
+  font-size: 30px;
+  color: #046290;
+  font-weight: 400;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .dataCotizacionReal .containerDataRealCotizacion .topData .divideCotizacion .Right {
+  text-align: right;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .dataCotizacionReal .containerDataRealCotizacion .topData .divideCotizacion .Right .price span {
+  font-size: 12px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .dataCotizacionReal .containerDataRealCotizacion .topData .divideCotizacion .Right .price h1 {
+  font-weight: 400;
+  margin-top: 5px;
+  color: #046290;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .dataCotizacionReal .containerDataRealCotizacion .tableDataItems {
+  width: 90%;
+  margin: auto;
+  margin-top: 50px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .dataCotizacionReal .moreOptions {
+  width: 100%;
+  margin-top: 150px;
+  text-align: center;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .dataCotizacionReal .moreOptions button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: #046290;
+  border: 1px solid #046290;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .dataCotizacionReal .moreOptions button span {
+  color: #FFF;
+}
 .modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHereShort {
   width: 60%;
 }
 .modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHereShort .listaMP table .hidden {
   display: none;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHere {
+  width: 64%;
+  transition: 0.5s;
+  transform: translateX(-100%);
+  background-color: #FFF;
+  box-sizing: border-box;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  border-right: 1px solid #f8f8f8;
+  transition: 0.3s;
+  z-index: 7;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHere .containerRelative {
+  height: 100%;
+  overflow-y: auto;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHere .containerRelative .providerAnalisis .containerAnalisisProvider .providerItem {
+  width: 90%;
+  margin: auto;
+  padding: 50px 0px;
+  margin-bottom: 200px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHere .containerRelative .providerAnalisis .containerAnalisisProvider .providerItem .uxProvider .topProvider {
+  margin-top: 30px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHere .containerRelative .providerAnalisis .containerAnalisisProvider .providerItem .uxProvider .topProvider .divideProvider {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHere .containerRelative .providerAnalisis .containerAnalisisProvider .providerItem .uxProvider .topProvider .divideProvider .lade {
+  width: 60%;
+  box-sizing: border-box;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHere .containerRelative .providerAnalisis .containerAnalisisProvider .providerItem .uxProvider .topProvider .divideProvider .lade .nameAndLetter {
+  display: flex;
+  align-items: start;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHere .containerRelative .providerAnalisis .containerAnalisisProvider .providerItem .uxProvider .topProvider .divideProvider .lade .nameAndLetter .letter {
+  width: 100px;
+  height: 100px;
+  background-color: #046290;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHere .containerRelative .providerAnalisis .containerAnalisisProvider .providerItem .uxProvider .topProvider .divideProvider .lade .nameAndLetter .letter h1 {
+  font-weight: 400;
+  color: #FFF;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHere .containerRelative .providerAnalisis .containerAnalisisProvider .providerItem .uxProvider .topProvider .divideProvider .lade .nameAndLetter .dataAndOther {
+  margin-left: 20px;
+  width: auto;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHere .containerRelative .providerAnalisis .containerAnalisisProvider .providerItem .uxProvider .topProvider .divideProvider .lade .nameAndLetter .dataAndOther h3 {
+  font-weight: 400;
+  font-size: 24px;
+  color: #046290;
+  margin-bottom: 10px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHere .containerRelative .providerAnalisis .containerAnalisisProvider .providerItem .uxProvider .topProvider .divideProvider .lade .nameAndLetter .dataAndOther span {
+  font-size: 12px;
+  color: #666;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHere .containerRelative .providerAnalisis .containerAnalisisProvider .providerItem .uxProvider .topProvider .divideProvider .lade .nameAndLetter .dataAndOther .price {
+  margin-top: 30px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHere .containerRelative .providerAnalisis .containerAnalisisProvider .providerItem .uxProvider .topProvider .divideProvider .lade .nameAndLetter .dataAndOther .price span {
+  font-size: 12px;
+  color: #666;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHere .containerRelative .providerAnalisis .containerAnalisisProvider .providerItem .uxProvider .topProvider .divideProvider .lade .nameAndLetter .dataAndOther .price h1 {
+  font-weight: 400;
+  color: #046290;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHere .containerRelative .providerAnalisis .containerAnalisisProvider .providerItem .uxProvider .topProvider .divideProvider .lade.Right {
+  text-align: right;
+  width: 30%;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHere .containerRelative .providerAnalisis .containerAnalisisProvider .providerItem .uxProvider .topProvider .divideProvider .lade.Right .update {
+  width: 100%;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHere .containerRelative .providerAnalisis .containerAnalisisProvider .providerItem .uxProvider .topProvider .divideProvider .lade.Right .update span {
+  font-size: 12px;
+  color: #666;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHere .containerRelative .providerAnalisis .containerAnalisisProvider .providerItem .uxProvider .topProvider .divideProvider .lade.Right .update input {
+  margin-top: 5px;
+  padding: 10px 10px;
+  border: none;
+  box-sizing: border-box;
+  font-size: 18px;
+  font-weight: 400;
+  border-bottom: 1px solid #ccc;
+  outline: 0px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHere .containerRelative .providerAnalisis .containerAnalisisProvider .providerItem .uxProvider .analisisProviderNumbers {
+  margin-top: 100px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHere .containerRelative .providerAnalisis .containerAnalisisProvider .providerItem .uxProvider .analisisProviderNumbers .titleSection {
+  padding: 20px 0px;
+  box-sizing: border-box;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHere .containerRelative .providerAnalisis .containerAnalisisProvider .providerItem .uxProvider .analisisProviderNumbers .titleSection span {
+  color: #666;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHere .containerRelative .providerAnalisis .containerAnalisisProvider .providerItem .uxProvider .analisisProviderNumbers .containerNumbers {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHere .containerRelative .providerAnalisis .containerAnalisisProvider .providerItem .uxProvider .analisisProviderNumbers .containerNumbers .itemNumber {
+  text-align: center;
+  transition: 0.3s;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHere .containerRelative .providerAnalisis .containerAnalisisProvider .providerItem .uxProvider .analisisProviderNumbers .containerNumbers .itemNumber .numberIt {
+  width: 70px;
+  height: 70px;
+  border-radius: 100%;
+  background-color: #046290;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: auto;
+  margin-bottom: 10px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHere .containerRelative .providerAnalisis .containerAnalisisProvider .providerItem .uxProvider .analisisProviderNumbers .containerNumbers .itemNumber .numberIt h1 {
+  font-weight: 400;
+  font-size: 22px;
+  color: #FFF;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHere .containerRelative .providerAnalisis .containerAnalisisProvider .providerItem .uxProvider .analisisProviderNumbers .containerNumbers .itemNumber .titleNumber span {
+  color: #666;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHere .containerRelative .providerAnalisis .containerAnalisisProvider .providerItem .uxProvider .analisisProviderNumbers .containerNumbers .itemNumber:hover {
+  transform: scale(1.1);
+  transition: 0.3s;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .leftHereActive {
+  transform: translateX(0);
 }
 .modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHere {
   width: 0%;
@@ -4064,6 +4568,12 @@ body button {
   font-weight: bold;
   color: #046290;
 }
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .howMany .inputDiv h4 {
+  margin-right: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #454f5b;
+}
 .modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .resultProviders {
   width: 100%;
   overflow-x: auto;
@@ -4076,8 +4586,9 @@ body button {
   justify-content: space-around;
 }
 .modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .resultProviders .containerResultsProviders .itemProvider {
-  width: 40%;
-  padding: 10px 30px;
+  width: 30%;
+  flex: 0 0 auto;
+  padding: 10px 0px;
   text-align: center;
   cursor: pointer;
   transition: 0.3s;
@@ -4169,6 +4680,153 @@ body button {
 }
 .modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .resultProviders .containerFormProvider .rightFormData .inputDiv input:focus {
   border-bottom: 1px solid #046290;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .buttonBefores {
+  padding: 10px 10px;
+  box-sizing: border-box;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .buttonBefores button {
+  padding: 10px;
+  background-color: transparent;
+  border: none;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .buttonBefores button span {
+  color: #666;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .pricesItemHowMany {
+  padding: 20px 20px;
+  border-bottom: 1px solid #f8f8f8;
+  text-align: left;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .pricesItemHowMany .containerPrice span {
+  font-size: 14px;
+  color: #666;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .pricesItemHowMany .containerPrice h3 {
+  color: #046290;
+  margin-top: 2px;
+  font-weight: 400;
+  font-size: 20px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .pricesItemHowMany .total {
+  border-top: 1px solid #f8f8f8;
+  padding: 10px 0px;
+  margin-top: 5px;
+  box-sizing: border-box;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .pricesItemHowMany .total h3 {
+  color: #046290;
+  font-size: 26px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .itemListaDeCotizaciones {
+  box-sizing: border-box;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .itemListaDeCotizaciones .itemCoti .oneItem {
+  padding: 20px 10px;
+  box-sizing: border-box;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .itemListaDeCotizaciones .itemCoti .oneItem .divideOne {
+  display: flex;
+  align-items: center;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .itemListaDeCotizaciones .itemCoti .oneItem .divideOne .number {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  background-color: #046290;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .itemListaDeCotizaciones .itemCoti .oneItem .divideOne .number h3 {
+  font-weight: 400;
+  color: #FFF;
+  font-size: 14px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .itemListaDeCotizaciones .itemCoti .oneItem .divideOne .titleOne {
+  margin-left: 10px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .itemListaDeCotizaciones .itemCoti .oneItem .divideOne .titleOne h3 {
+  font-weight: 400;
+  color: #046290;
+  font-size: 14px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .itemListaDeCotizaciones .itemCoti .oneItem .divideOne .titleOne span {
+  font-size: 12px;
+  color: #666;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .itemListaDeCotizaciones .itemCoti .oneItem .optionsButton {
+  margin-top: 15px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .itemListaDeCotizaciones .itemCoti .oneItem .optionsButton button {
+  margin-right: 10px;
+  padding: 6px 10px;
+  border-radius: 5px;
+  transition: 0.3s;
+  background-color: #FFF;
+  border: 1px solid #f8f8f8;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .itemListaDeCotizaciones .itemCoti .oneItem .optionsButton button span {
+  color: #666;
+  font-size: 12px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .itemListaDeCotizaciones .itemCoti .oneItem .optionsButton .give {
+  background-color: #046290;
+  border: 1px solid #046290;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .itemListaDeCotizaciones .itemCoti .oneItem .optionsButton .give span {
+  color: #FFF;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .itemListaDeCotizaciones .itemCoti .oneItem:hover {
+  background-color: #f8f8f8;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .divideZone {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .titleThis {
+  padding: 20px 10px;
+  box-sizing: border-box;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .cotizacionesIt {
+  padding: 30px 10px;
+  box-sizing: border-box;
+  margin-top: 20px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .cotizacionesIt .new label {
+  font-size: 12px;
+  color: #666;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .cotizacionesIt .new input {
+  width: 100%;
+  margin-top: 10px;
+  padding: 8px 10px;
+  box-sizing: border-box;
+  text-align: center;
+  border: none;
+  border-bottom: 1px solid #F8F8F8;
+  font-family: Roboto;
+  font-weight: bold;
+  color: black;
+  font-size: 16px;
+  outline: 0px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .cotizacionesIt .new button {
+  margin: auto;
+  margin-top: 20px;
+  width: 30%;
+  margin-left: 35%;
+  padding: 10px 10px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  background-color: black;
+  border: 1px solid black;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .listProvider .containerList .cotizacionesIt .new button span {
+  color: #FFF;
 }
 .modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .rightHereActive .containerRelative .addMPRight .containerAddRight .dataAddMP .containerAddThat .projects {
   padding: 10px;
@@ -7874,6 +8532,11 @@ body button {
   box-sizing: border-box;
   color: #046290;
 }
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .dataRoutesDashboard .TableUX table tbody tr {
+  transition: 0.3s;
+  background-color: #FFF;
+  user-select: none;
+}
 .dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .dataRoutesDashboard .TableUX table tbody tr td {
   transition: 0.3s;
   padding: 25px 0px;
@@ -7950,6 +8613,45 @@ body button {
 }
 .dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .dataRoutesDashboard .TableUX table tbody tr .tdPrice h3 span {
   font-size: 10px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .dataRoutesDashboard .TableUX table tbody .Active {
+  background-color: #046290;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .dataRoutesDashboard .TableUX table tbody .Active td {
+  padding-left: 5px;
+  color: #FFF;
+  border-bottom: 1px solid #046290;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .dataRoutesDashboard .TableUX table tbody .Active td .titleNameKitAndData {
+  padding-left: 10px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .dataRoutesDashboard .TableUX table tbody .Active td .titleNameKitAndData .extensionColor {
+  display: flex;
+  align-items: center;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .dataRoutesDashboard .TableUX table tbody .Active td .titleNameKitAndData .extensionColor .boxColor {
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  background-color: #FFF;
+  margin-right: 10px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .dataRoutesDashboard .TableUX table tbody .Active td .titleNameKitAndData .extensionColor span {
+  font-size: 10px;
+  color: #FFF;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .dataRoutesDashboard .TableUX table tbody .Active td .titleNameKitAndData .nameData {
+  margin-top: 5px;
+  width: 80%;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .dataRoutesDashboard .TableUX table tbody .Active td .titleNameKitAndData .nameData h3 {
+  font-weight: 500;
+  font-size: 13px;
+  color: #FFF;
+  margin-bottom: 5px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .dataRoutesDashboard .TableUX table tbody .Active td .titleNameKitAndData .nameData span {
+  font-size: 11px;
 }
 .dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .divideMiddleData {
   margin-top: 20px;

@@ -5,7 +5,7 @@ export default function ListaMP({ materia }){
     return (
         <div className="listaMP">
             <table>
-                <thead> {console.log(materia)}
+                <thead> 
                     <tr>
                         <th>Item</th>
                         <th className="hidden">Med. Consumo</th>
@@ -20,7 +20,9 @@ export default function ListaMP({ materia }){
                         materia?.length ? 
                             materia.map((mat, i) => {
                                 return (
-                                    <ItemListMP materia={mat} key={i+1}/>
+                                    mat.tipo == 'materia' ?
+                                        <ItemListMP materia={mat} key={i+1}/>
+                                    : null
                                 )
                             })
                         : null

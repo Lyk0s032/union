@@ -3,6 +3,7 @@ import LeftNav from './leftNavAlmacen';
 import DashboardAlmacen from './dashboard/dashboard';
 import { Route, Routes } from 'react-router-dom';
 import Bodegas from './bodegas/bodegas';
+import Pedidos from './pedidos/pedidos';
 
 export default function RoutesInventario(){
     return (
@@ -19,8 +20,7 @@ export default function RoutesInventario(){
                                 <Routes>
                                     <Route path="/*" element={<DashboardAlmacen />} />
                                     <Route path="/bodegas/*" element={<Bodegas />} />
-
-
+                                    <Route path="/pedidos/*" element={<Pedidos />} />
                                 </Routes>
                             </div>
                         </div>

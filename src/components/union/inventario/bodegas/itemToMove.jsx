@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 export default function ItemToActive({ pt, addtoMove }){
@@ -7,25 +7,45 @@ export default function ItemToActive({ pt, addtoMove }){
     let bodega = params.get('bodega');
     const [active, setActive] = useState(null);
 
-    const [data, setData] = useState({
-        description: pt.description,
-        materiaId: pt.id,
-        tipoProducto: 'Materia Prima',
-        id: pt.id,
-        cantidadActual: pt.inventarios[0].cantidad,
-        fecha: pt.inventarios[0].createdAt,
-        cantidad: 0,
-        tipo: 'ENTRADA',
-        ubicacionOrigenId: !bodega ? 1 : bodega,
-        ubicacionDestinoId: !bodega ? 1 : bodega,
-        refDoc: 'ENC1000'
+    const [data, setData] = useState(
+        !pt.tipoProducto == 'Materia Prima' ?
+            {
+                description: pt.description,
+                materiaId: pt.id,
+                tipoProducto: 'Materia Prima',
+                id: pt.id,
+                cantidadActual: pt.inventarios[0].cantidad,
+                fecha: pt.inventarios[0].createdAt,
+                cantidad: 0,
+                tipo: 'ENTRADA',
+                ubicacionOrigenId: !bodega ? 1 : bodega,
+                ubicacionDestinoId: !bodega ? 1 : bodega,
+                refDoc: 'ENC1000',
+            }
+        :
+            {
+                description: pt.description,
+                productoId: pt.id,
+                tipoProducto: 'Producto',
+                id: pt.id,
+                cantidadActual: pt.inventarios[0].cantidad,
+                fecha: pt.inventarios[0].createdAt,
+                cantidad: 0,
+                tipo: 'ENTRADA',
+                ubicacionOrigenId: !bodega ? 1 : bodega,
+                ubicacionDestinoId: !bodega ? 1 : bodega,
+                refDoc: 'ENC1000'
 
-    });
+            }
+    );
 
+    useEffect(() => {
+        console.log('Entramos')
+    },[])
     return (
         !active ?
             <tr onDoubleClick={() => setActive(pt.id)}>
-                <td className="coding">
+                <td className="coding"> {console.log('Data puntual', data)}
                     <div className="code">
                         <h3>{pt.id}</h3>
                     </div>

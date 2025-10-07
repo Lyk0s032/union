@@ -23,7 +23,10 @@ export default function LeftNavComprar(){
                             <span>Kit's</span>
                         </div>
                     </li>
-                    <li>
+                    <li onClick={() => {
+                        params.set('s', 'productos');
+                        setParams(params);
+                    }}>
                         <div>
                             <MdOutlineEmojiObjects className='icon'/><br />
                             <span>Productos</span>
@@ -38,7 +41,10 @@ export default function LeftNavComprar(){
                             <span>Necesidad</span>
                         </div>
                     </li>
-                    <li>
+                    <li onClick={() => {
+                        params.set('s', 'borradores');
+                        setParams(params);
+                    }}>
                         <div>
                             <MdOutlineFolderDelete className="icon" /><br />
                             <span>Borrador de compras</span>

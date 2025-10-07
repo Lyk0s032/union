@@ -695,6 +695,8 @@ export function getIDs(data){
     }
 }
 
+
+
 export function getProyectos(data){
     return {
         type: types.GET_PROYECTOS_REQUISICION,
@@ -705,6 +707,13 @@ export function getProyectos(data){
 export function getMaterias(data){
     return {
         type: types.GET_MATERIA_PRIMA_REQUISICION,
+        payload: data
+    }
+}
+
+export function getCotizacionesCompras(data){
+    return {
+        type: types.GET_COMPRAS_COTIZACIONES,
         payload: data
     }
 }
@@ -723,9 +732,35 @@ export function gettingItemRequisicion(data){
     }
 }
 
+export function getProveedoresArrays(data){
+    return {
+        type: types.GET_PROVEEDORES_ARRAY,
+        payload: data
+    }
+}
+
 export function getMateriasIds(data){
     return {
         type: types.GET_MATERIAS_IDS,
+        payload: data
+    }
+} 
+
+export function getItemsForCotizacion(data){
+    return {
+        type: types.GET_ITEMS_COTIZACION,
+        payload: data
+    }
+}
+export function cleanItemsForCotizacion(){
+    return {
+        type: types.CLEAN_ITEMS_COTIZACION,
+        payload: null
+    }
+}
+export function limpiarIds(data){
+    return {
+        type: 'GET_LIMPIAR_MATERIAS_IDS',
         payload: data
     }
 }
@@ -989,6 +1024,112 @@ export function axiosToGetCotizacionesProduccion(carga){
         });
     }
 }
+
+// ADMINISTRACIÓN - COMPRAS
+export function getOrdenesCompras(data){
+    return {
+        type: types.GET_ORDENES_COMPRAS,
+        payload: data
+    }
+}
+export function gettingOrdenesCompras(carga){
+    return {
+        type: types.GETTING_ORDENES_COMPRAS,
+        payload: carga
+    }
+}
+
+export function axiosToGetOrdenesComprasAdmin(carga){
+    return function(dispatch){ 
+        dispatch(gettingOrdenesCompras(carga))
+        axios.get(`/api/requisicion/get/get/admin/ordenesDeCompra`)
+        .then((info) => info.data) 
+        .then(inf => {
+            return dispatch(getOrdenesCompras(inf))
+        })
+        .catch((e) => {
+            console.log(e)
+            if(e.request){
+                return dispatch(getOrdenesCompras('notrequest'));
+            }else{
+                return dispatch(getOrdenesCompras(404))
+            }
+        });
+    }
+}
+// Para almacen
+export function axiosToGetOrdenesAlmacen(carga){
+    return function(dispatch){ 
+        dispatch(gettingOrdenesCompras(carga))
+        axios.get(`/api/inventario/get/ordenesCompra/all`)
+        .then((info) => info.data) 
+        .then(inf => {
+            return dispatch(getOrdenesCompras(inf))
+        })
+        .catch((e) => {
+            console.log(e)
+            if(e.request){
+                return dispatch(getOrdenesCompras('notrequest'));
+            }else{
+                return dispatch(getOrdenesCompras(404))
+            }
+        });
+    }
+}
+
+
+export function getOrdenCompras(data){
+    return {
+        type: types.GET_ORDEN_COMPRAS,
+        payload: data
+    }
+}
+export function gettingOrdenCompras(carga){
+    return {
+        type: types.GETTING_ORDEN_COMPRAS,
+        payload: carga
+    }
+}
+
+export function axiosToGetOrdenComprasAdmin(carga, ordenId){
+    return function(dispatch){ 
+        dispatch(gettingOrdenCompras(carga))
+        axios.get(`/api/requisicion/get/get/admin/ordenDeCompra/${ordenId}`)
+        .then((info) => info.data) 
+        .then(inf => {
+            console.log(inf)
+            return dispatch(getOrdenCompras(inf))
+        })
+        .catch((e) => {
+            if(e.request){
+                return dispatch(getOrdenCompras('notrequest'));
+            }else{
+                return dispatch(getOrdenCompras(404))
+            }
+        });
+    }
+}
+
+// Para almacen
+export function axiosToGetOrdenAlmacen(carga, ordenId){
+    return function(dispatch){ 
+        dispatch(gettingOrdenCompras(carga))
+        axios.get(`/api/inventario/get/ordenesCompra/one/${ordenId}`)
+        .then((info) => info.data) 
+        .then(inf => {
+            console.log(inf)
+            return dispatch(getOrdenCompras(inf))
+        })
+        .catch((e) => {
+            if(e.request){
+                return dispatch(getOrdenCompras('notrequest'));
+            }else{
+                return dispatch(getOrdenCompras(404))
+            }
+        });
+    }
+}
+
 
 
 // Peticiones
@@ -1261,7 +1402,7 @@ export function axiosToGetItemMateriaPrimaBodegaProyecto(carga, materiaId, proye
         axios.get(`/api/inventario/get/bodega/materia/data/cotizacion/${materiaId}/${proyecto}`)
         .then((info) => info.data) 
         .then(inf => {
-             dispatch(getItemBodega(inf))
+             dispatch(getItemBodega(inf)) 
             
             return console.log(inf)
         })
@@ -1271,6 +1412,78 @@ export function axiosToGetItemMateriaPrimaBodegaProyecto(carga, materiaId, proye
                 return dispatch(getItemBodega('notrequest'));
             }else{
                 return dispatch(getItemBodega(404))
+            }
+        });
+    }
+}
+
+
+// PROYECTOS ALMACÉN
+export function getProjects(data){
+    return {
+        type: types.GET_PROJECTS,
+        payload: data
+    }
+}
+export function gettingProjects(carga){
+    return {
+        type: types.GETTING_PROJECTS,
+        payload: carga
+    }
+}
+
+export function axiosToGetProjects(carga){
+    return function(dispatch){  
+        dispatch(gettingProjects(carga))
+        console.log('Entra a la consola')  
+        axios.get(`/api/inventario/get/almacen/proyectos/todo`)
+        .then((info) => info.data) 
+        .then(inf => {
+             dispatch(getProjects(inf))
+
+            return console.log(inf)
+        })
+        .catch((e) => {
+            console.log(e)
+            if(e.request){
+                return dispatch(getProjects('notrequest'));
+            }else{
+                return dispatch(getProjects(404))
+            }
+        });
+    }
+}
+
+export function getProject(data){
+    return {
+        type: types.GET_PROJECT,
+        payload: data
+    }
+}
+export function gettingProject(carga){
+    return {
+        type: types.GETTING_PROJECT,
+        payload: carga
+    }
+}
+
+export function axiosToGetProject(carga, cotizacionId){
+    return function(dispatch){  
+        dispatch(gettingProject(carga))
+        console.log('Entra a la consola')  
+        axios.get(`/api/inventario/get/almacen/proyecto/one/${cotizacionId}`)
+        .then((info) => info.data) 
+        .then(inf => {
+             dispatch(getProject(inf))
+
+            return console.log(inf)
+        })
+        .catch((e) => {
+            console.log(e)
+            if(e.request){
+                return dispatch(getProject('notrequest'));
+            }else{
+                return dispatch(getProject(404))
             }
         });
     }

@@ -14,13 +14,16 @@ const initialState = {
     kits: null,
     productos: null,
     materia: null,
-
+    cotizacionesCompras: null,
     itemRequisicion: null,
+    proveedoresArray: null,
     loadingItemRequisicion: false,
     // Para cotizar
     materiaIds: [],
     fastCotizacion: null,
     loadingFastCotizacion: false,
+
+    itemsCotizacions: []
 }
 
 export default function (state = initialState, action) {
@@ -79,6 +82,12 @@ export default function (state = initialState, action) {
             }
         }
 
+        case types.GET_COMPRAS_COTIZACIONES: {
+            return {
+                ...state,
+                cotizacionesCompras: action.payload
+            }
+        }
 
         case types.GET_UNA_MATERIA_PRIMA_REQUISICION: {
             return {
@@ -101,7 +110,14 @@ export default function (state = initialState, action) {
                 ...state,
                 materiaIds: [...state.materiaIds, action.payload],
             }
-        }
+        } 
+
+        case 'GET_LIMPIAR_MATERIAS_IDS': {
+            return {
+                ...state,
+                materiaIds:action.payload,
+            }
+        } 
 
         case types.GET_COTIZACION_FAST: {
             return {
@@ -118,6 +134,70 @@ export default function (state = initialState, action) {
             }
         }
 
+        case types.GET_PROVEEDORES_ARRAY: {
+            return {
+                ...state,
+                proveedoresArray: action.payload
+            }
+        }
+        case types.GET_ITEMS_COTIZACION: {
+            const { materiumId, productoId, requisicionId, cantidad } = action.payload;
+
+            // --- Identificar la clave principal ---
+            // si viene productoId usamos ese, si no usamos materiumId
+            const esProducto = !!productoId;
+            const clave = esProducto ? "productoId" : "materiumId";
+            const id = esProducto ? productoId : materiumId;
+
+            // --- Buscar si ya existe ---
+            const existe = state.itemsCotizacions.find(
+                it =>
+                    Number(it[clave]) === Number(id) &&
+                    Number(it.requisicionId) === Number(requisicionId)
+            );
+
+            if (existe) {
+                if (cantidad === 0) {
+                    // eliminar
+                    return {
+                        ...state,
+                        itemsCotizacions: state.itemsCotizacions.filter(
+                            it =>
+                                !(
+                                    Number(it[clave]) === Number(id) &&
+                                    Number(it.requisicionId) === Number(requisicionId)
+                                )
+                        )
+                    };
+                } else {
+                    // actualizar
+                    return {
+                        ...state,
+                        itemsCotizacions: state.itemsCotizacions.map(it =>
+                            Number(it[clave]) === Number(id) &&
+                            Number(it.requisicionId) === Number(requisicionId)
+                                ? { ...it, cantidad }
+                                : it
+                        )
+                    };
+                }
+            } else {
+                if (cantidad > 0) {
+                    // agregar
+                    return {
+                        ...state,
+                        itemsCotizacions: [...state.itemsCotizacions, action.payload]
+                    };
+                }
+            }
+
+            return state; // 👈 importante: nunca devuelvas undefined
+        }
+        case types.CLEAN_ITEMS_COTIZACION:
+            return {
+                ...state,
+                itemsCotizacions: []
+            }
 
         default:
             return {...state}

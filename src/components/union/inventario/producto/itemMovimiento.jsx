@@ -69,9 +69,6 @@ export default function ItemMovimiento({ movimiento }){
             <td>
                 <button>
                     {
-                        console.log(movimiento)
-                    }
-                    {
                         movimiento.tipoMovimiento == 'ENTRADA' ?
                             <MdKeyboardDoubleArrowUp />
                         : movimiento.tipoMovimiento == 'SALIDA' ?
