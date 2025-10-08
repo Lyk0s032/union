@@ -5,8 +5,8 @@ import * as actions from '../../../../../store/action/action';
 import { MdDeleteOutline, MdOutlineContentCopy } from "react-icons/md";
 import axios from "axios";
 
-export default function CotizacionItemProceso(props){
-    const r = props.item;
+export default function CotizacionItemProceso({ item, requisiciones, clean, add}){
+    const r = item;
 
     const usuario = useSelector(store => store.usuario);
     const { user } = usuario; 
@@ -14,6 +14,9 @@ export default function CotizacionItemProceso(props){
     const dispatch = useDispatch();
     const [params, setParams] = useSearchParams();
     
+
+
+
     // Aprobar 
     const handleAprobar = async() => {
         setLoading(true)
@@ -58,14 +61,33 @@ export default function CotizacionItemProceso(props){
         params.set('watch', 'cotizacion');
         setParams(params);
     }
+
+    const handleClick = (e) => {
+        if (e.ctrlKey) {
+            const existe = r.includes(r.requisiciones?.length ? r.requisiciones[1].id : null);
+            if (existe) {
+                // Si ya existe, lo quitamos
+                const nuevo = r.filter(m => m !== r.id);
+                clean(nuevo)
+            } else { 
+                // Si no existe, lo agregamos (sin mutar el array original)
+                add(r.id);
+            }
+
+        } else {
+            dispatch(actions.getIDs([r.requisiciones?.length ? r.requisiciones[1].id : null]))
+            params.set('s', 'proyectos')
+            setParams(params)
+        } 
+    };
     return (
-    <tr>
+    <tr onClick={handleClick}> 
         <td className="coding">
-            <div className="code" onClick={() => openCoti()}>
+            <div className="code" >
                 <h3>{Number(21719) + r.id}</h3>
             </div>
         </td>
-        <td className="longer" style={{width:'40%'}} onClick={() => openCoti()}> 
+        <td className="longer" style={{width:'40%'}} > 
             <div className="titleNameKitAndData">
                 <div className="extensionColor"> 
                     <span>{r.createdAt.split('T')[0] }</span>
