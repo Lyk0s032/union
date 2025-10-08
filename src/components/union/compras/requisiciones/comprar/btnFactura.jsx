@@ -9,7 +9,7 @@ export default function BtnFactura({ ref }){
                 params.set('facture', 'show')
                 setParams(params);
             }}>
-                <h3>$ 452.000</h3>
+                <h3>Ver cotizaciones</h3>
             </div>
         </div>
     )

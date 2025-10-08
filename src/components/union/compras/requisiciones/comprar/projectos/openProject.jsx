@@ -26,7 +26,7 @@ export default function OpenProject({ data }){
                     <div className="divideProjectInfo">
                         <div className="priceProject">
                             <span>Inversión hasta el momento</span>
-                            <h3>$ {totalComprado} </h3>
+                            <h3>$ {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(totalComprado)} </h3>
                         </div>
 
                         <div className="priceProject Right">
