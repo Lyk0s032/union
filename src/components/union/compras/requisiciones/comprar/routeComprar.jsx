@@ -140,7 +140,7 @@ export default function Comprar(){
                         <button onClick={() => closeComprar()} style={{fontSize:16, padding:10}}>x</button>
                         {
                             params.get('s') == 'materia' ?
-                                <GeneralMateriaPrima />
+                                <GeneralMateriaPrima cargaProyectos={cargaProyectos} />
                             :params.get('s') == 'proyectos' ?
                                 <ProyectosReq /> 
                             : params.get('s') == 'borradores' ?

@@ -4,7 +4,7 @@ import ItemProject from './itemProject';
 import ListProvider from './providerList';
 import { useDispatch, useSelector } from 'react-redux';
 
-export default function AddMP(){
+export default function AddMP({ cargaProyectos }){
     const [params, setParams] = useSearchParams();
 
     const req = useSelector(store => store.requisicion);
@@ -24,9 +24,8 @@ export default function AddMP(){
                     
                     <div className="title">
                         <h3>{itemRequisicion.description}</h3>
-
                         <button onClick={() => {
-                            params.delete('MP');
+                            params.delete('MP'); 
                             params.delete('PV')
                             setParams(params); 
                         }} style={{fontSize:16, padding:10}}>
@@ -47,7 +46,7 @@ export default function AddMP(){
                                 {
                                     itemRequisicion.itemRequisicions?.map((item, i) => {
                                         return (
-                                            <ItemProject item={item} key={i+1}/>
+                                            <ItemProject cargaProyectos={cargaProyectos} data={itemRequisicion} item={item} key={i+1}/>
                                         )
                                     })
                                 } 

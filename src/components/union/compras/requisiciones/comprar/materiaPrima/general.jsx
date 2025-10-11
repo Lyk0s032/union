@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Cotizador from '../cotizador';
 import ProviderAnalisis from './providers/providersAnalisis';
 
-export default function GeneralMateriaPrima(){
+export default function GeneralMateriaPrima({ cargaProyectos }){
     const [params, setParams] = useSearchParams();
     const ref = useRef(null);
     const refLeft = useRef(null);
@@ -84,7 +84,7 @@ export default function GeneralMateriaPrima(){
                         </div> 
                         <div className="rightHere" ref={ref}>
                             <div className="containerRelative">
-                                <AddMP />
+                                <AddMP cargaProyectos={cargaProyectos}/>
                             </div>
                         </div>
                         

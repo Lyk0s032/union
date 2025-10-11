@@ -10,7 +10,7 @@ axios.defaults.baseURL = 'https://unionapi-production.up.railway.app/';
 // axios.defaults.baseURL = 'http://192.168.202.221:3000';   
  
 createRoot(document.getElementById('root')).render(
-  <Provider store={store}>
+  <Provider store={store}> 
     <StrictMode> 
       <App />           
     </StrictMode>     

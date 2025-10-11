@@ -133,7 +133,6 @@ const createNewCotizacion = async () => {
       return res;
     })
     .then((res) => {
-      console.log(res)
       dispatch(actions.HandleAlerta("Cotización creada con éxito", "positive"));
       setNewCotiName("");
       params.set("facture", "show");
@@ -143,7 +142,6 @@ const createNewCotizacion = async () => {
     .finally(() => setCreating(false))
     
   } catch (err) {
-    console.error(err);
     dispatch(actions.HandleAlerta("Error al crear la cotización", "mistake"));
   }
 };
@@ -196,6 +194,19 @@ const addItemsToCotizacion = async () => {
     getHowMany()
   }, [itemsCotizacions, item]);
 
+  const m = item;
+    let productoLados = 1;
+    
+    if (item.unidad == 'mt2') {
+        const [ladoA, ladoB] = m.medida.split('X').map(Number);
+        if (!isNaN(ladoA) && !isNaN(ladoB)) {
+            productoLados = ladoA * ladoB;
+
+        } 
+    }else{
+        productoLados = item.medida
+    } 
+
   return (
     <div className="listProvider">
       {
@@ -205,15 +216,19 @@ const addItemsToCotizacion = async () => {
                 <span>Cantidades </span>
             </div>
             <div className="howMany"> 
-                <div className="inputDiv">
-                    <h4>{howMany}</h4>
-                    <h3> / </h3>
+                {/* <div className="inputDiv"> */}
+                    {/* <h4>{howMany}</h4> */}
+                    {/* <h3> / </h3> */}
 
-                    <h3 onDoubleClick={() => {
-                        // setHowMany(max)
-                        addAll()
-                    }}> {Number(totalCantidad - cantidadEntregada)} </h3>
-                </div>
+                    {/* <h3 onDoubleClick={() => { */}
+                        {/* // setHowMany(max) */}
+                        {/* // addAll() */}
+                    {/* }}>{Number(Math.ceil(Number(totalCantidad / productoLados))).toFixed(0) - cantidadEntregada}  */}
+                    
+                    {/* {Number(totalCantidad - cantidadEntregada)}  */}
+                    
+                    {/* </h3> */}
+                {/* </div>  */}
             </div>
             {/* Lista de proveedores */}
             <div className="resultProviders">
@@ -268,7 +283,6 @@ const addItemsToCotizacion = async () => {
               <div className="itemCoti">
                 { proveedor?.comprasCotizacions?.map((coti, i) => { 
                     let fechaCreacion = dayjs(coti.createdAt).format("D [de] MMMM YYYY, h:mm A");
-                    console.log(coti)
                   return (
                   <div className="oneItem" key={i+1}>
                       <div className="divideOne" onClick={() => {

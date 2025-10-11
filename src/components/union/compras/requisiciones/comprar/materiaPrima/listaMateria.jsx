@@ -9,6 +9,7 @@ export default function ListaMP({ materia }){
                     <tr>
                         <th>Item</th>
                         <th className="hidden">Med. Consumo</th>
+
                         <th>Necesidad</th>
                         <th>Precio / U</th>
                         <th>Total promedio</th>

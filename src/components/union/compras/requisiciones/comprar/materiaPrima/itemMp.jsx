@@ -66,9 +66,18 @@ export default function ItemListMP({ materia }){
     }; 
 
 
+    const m = materia;
+    let productoLados = 1;
+    
+    if (materia.unidad == 'mt2') {
+        const [ladoA, ladoB] = m.medida.split('X').map(Number);
+        if (!isNaN(ladoA) && !isNaN(ladoB)) {
+            productoLados = ladoA * ladoB;
 
-
-            
+        } 
+    }else{
+        productoLados = materia.medida
+    }  
     return (
         <tr className={ materiaIds.find(m => m.materiaId == materia.id)  ? 'Active' : null}
         
@@ -82,17 +91,19 @@ export default function ItemListMP({ materia }){
                         <h3>{materia.id} </h3>
                     </div> 
                     <div className="name">
-                        <h3>{materia.nombre}</h3>
-                        <span>{materia.medida} {materia.unidad}</span><br />
+                        <h3>{materia.nombre} </h3>
+                        <span> {Number(productoLados)} {materia.unidad} </span><br />
 
                         <span>
                             {
+                                Number(materia.entregado) >= Number(materia.totalCantidad / productoLados) ? 
+                                <span style={{color: 'green'}}>Comprado</span>
+                                :
                                 Number(materia.entregado) > 0 && Number(materia.entregado) < Number(materia.totalCantidad) ?
-                                <span>
+                                <span> {console.log(materia)} {console.log(Number(materia.totalCantidad / productoLados))}
                                     Parcialmente comprado
                                 </span>
-                                : Number(materia.entregado) >= Number(materia.totalCantidad) ? 
-                                <span style={{color: 'green'}}>Comprado</span>
+                                
                                 : 
                                 <span>Pendiente</span>
                             }
@@ -100,14 +111,16 @@ export default function ItemListMP({ materia }){
                     </div> 
                 </div>
             </td>
+
             <td className='hidden'>
                 <div className="">
-                    <span>{materia.medida} {materia.unidad}</span>
+                    <span>{Number(materia.totalCantidad).toFixed(2)} {materia.unidad}</span>
                 </div>
             </td>
+            
             <td>
                 <div className="" > 
-                    <span><strong>({numero ? numero : 0})</strong> - {materia.entregado} / {materia.totalCantidad}</span>
+                    <span><strong>({numero ? numero : 0})</strong> - {materia.entregado} /  {Number(Math.ceil(Number( Number(materia.totalCantidad) / Number(productoLados) )).toFixed(0))}</span>
                 </div>
             </td> 
             <td>
