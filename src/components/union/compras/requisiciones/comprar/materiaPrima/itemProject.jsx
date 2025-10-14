@@ -61,15 +61,11 @@ export default function ItemProject({ cargaProyectos, item, data }){
     }
 
     const sendHowMany = async (how) => {
-
         let body = {
             cantidadEntrega: Number(how),
             comprasItemCotizacion: item.id
         }
 
-        console.log('body', body);
-        console.log('dataaaa', item);
-        
         const send = await axios.put(`/api/requisicion/put/updateCantidad/comprasCotizacionItem`, body)
         .then((res) => {
             cargaProyectos()

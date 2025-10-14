@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Cotizador from '../cotizador';
 import ProviderAnalisis from './providers/providersAnalisis';
 
-export default function GeneralProductos(){
+export default function GeneralProductos({ cargaProyectos }){
     const [params, setParams] = useSearchParams();
     const ref = useRef(null);
     const longer = useRef(null);
@@ -57,7 +57,7 @@ export default function GeneralProductos(){
                                             <div style={{paddingLeft:10,paddingRight:10,width:'auto'}} className="provider " key={i+1}>
                                                 <h3 style={{fontSize:12}}>{p.nombre}</h3>
                                             </div>
-                                        )
+                                        ) 
                                     })
                                 : null
                             }
@@ -81,13 +81,11 @@ export default function GeneralProductos(){
                         </div> 
                         <div className="rightHere" ref={ref}>
                             <div className="containerRelative">
-                                <AddMP />
+                                <AddMP cargaProyectos={cargaProyectos} />
                             </div>
                         </div>
                     </div>
                 </div>
-
-                
             </div>
         </div>
     )

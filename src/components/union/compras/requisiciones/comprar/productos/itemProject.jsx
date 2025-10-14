@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import * as actions from '../../../../../store/action/action';
 
-export default function ItemProject({ item }){
+export default function ItemProject({ item, cargaProyectos }){
     const [open, setOpen] = useState(false);
 
     const [edit, setEdit] = useState(false);
     const dispatch = useDispatch();
     const req = useSelector(store => store.requisicion);
 
-    const { itemsCotizacions } = req;
+    const { itemsCotizacions, ids } = req;
     const [plus, setPlus] = useState(null);
     const [cantidad, setCantidad] = useState(0)
 
@@ -42,6 +42,40 @@ export default function ItemProject({ item }){
     }
 
 
+
+    const openThat = () => {
+        dispatch(actions.gettingItemRequisicion(false))
+        let body = {
+            mpId: item.productoId,
+            ids: ids
+        }
+        const send = axios.post('/api/requisicion/get/materiales/producto/', body)
+        .then((res) => {
+            dispatch(actions.getItemRequisicion(res.data));
+        }).catch(err => {
+            console.log(err);
+            dispatch(actions.getItemRequisicion(404));
+        })
+    
+        return send
+    }
+
+    const sendHowMany = async (how) => {
+        let body = {
+            cantidadEntrega: Number(how),
+            comprasItemCotizacion: item.id
+        }
+        console.log('bodyy', body)
+        console.log(item)
+        const send = await axios.put(`/api/requisicion/put/updateCantidad/comprasCotizacionItem`, body)
+        .then((res) => {
+            cargaProyectos()
+            setEdit(false)
+            openThat()
+        })
+    }
+
+
     useEffect(() => {
         getHowMany()
     }, [itemsCotizacions, item])
@@ -70,9 +104,10 @@ export default function ItemProject({ item }){
                                 setCantidad(e.target.value)
                             }} value={cantidad} onKeyDown={(e) => {
                                 if(e.code == 'Enter'){
-                                    addItemEstado()
+                                    // addItemEstado()
+                                    sendHowMany(e.target.value)
                                 }
-                            }}/>
+                            }}/> 
                             <span> / </span>
                             <span>{item.cantidad}</span>
                         </div>

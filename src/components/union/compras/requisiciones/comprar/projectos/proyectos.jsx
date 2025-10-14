@@ -25,10 +25,6 @@ export default function ProyectosReq(){
                     </div>
                 </div>
             </div>
-
-            
-
-            {console.log(proyectos)}
         </div>
     )
 }

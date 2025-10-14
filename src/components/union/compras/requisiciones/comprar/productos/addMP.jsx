@@ -4,7 +4,7 @@ import ItemProject from './itemProject';
 import ListProvider from './providerList';
 import { useDispatch, useSelector } from 'react-redux';
 
-export default function AddMP(){
+export default function AddMP({ cargaProyectos }){
     const [params, setParams] = useSearchParams();
 
     const req = useSelector(store => store.requisicion);
@@ -46,7 +46,7 @@ export default function AddMP(){
                                 {
                                     itemRequisicion.itemRequisicions?.map((item, i) => {
                                         return (
-                                            <ItemProject item={item} key={i+1}/>
+                                            <ItemProject cargaProyectos={cargaProyectos} item={item} key={i+1}/>
                                         )
                                     })
                                 } 

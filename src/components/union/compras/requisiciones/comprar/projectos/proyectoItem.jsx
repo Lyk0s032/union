@@ -19,7 +19,7 @@ export default function ItemProyecto({ pr }){
     {console.log(pr)}
     const getProject = async () => {
         setLoading(true)
-        const getSearchAxios = await axios.get(`/api/requisicion/get/project/get/project/${167}`)
+        const getSearchAxios = await axios.get(`/api/requisicion/get/project/get/project/${pr.id}`)
         .then(res => {
             setData(res.data)
         })
@@ -35,7 +35,6 @@ export default function ItemProyecto({ pr }){
     useEffect(() => {
         getProject()
     }, [pr])
-
     return (
         <>
             <tr className={`fila-cotizacion ${open ? "Open" : ""}`} onClick={() => setOpen(!open)}> 
@@ -48,11 +47,9 @@ export default function ItemProyecto({ pr }){
                             <h3>{pr.cotizacion?.name}</h3>
                             <span>Cotizacion: {Number(21719) + pr.cotizacion?.id}</span><br />
                             <span>{fechaAprobacion}</span><br />
-
-
                             <span>{pr.estado}</span>
                         </div>
-                    </div>
+                    </div> 
                 </td>
                 <td className='hidden'>
                     <div className="">

@@ -146,7 +146,7 @@ export default function Comprar(){
                             : params.get('s') == 'borradores' ?
                                 <GeneralBorradoresCotizacion />   
                             : params.get('s') == 'productos' ?
-                                <GeneralProductos />   
+                                <GeneralProductos cargaProyectos={cargaProyectos} />   
                             : null
                         }
                         
