@@ -142,7 +142,7 @@ export default function UxCotizadorPanel({ ref }) {
       }
   }, [params.get('c')])
 
-  const isOpen = !!params.get("facture");
+  const isOpen = params.get("facture");
 useEffect(() => {
   if (!isOpen) return;
 
