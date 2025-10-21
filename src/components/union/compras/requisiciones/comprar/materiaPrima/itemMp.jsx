@@ -19,7 +19,6 @@ export default function ItemListMP({ materia }){
         return acc + Number(it.valor);
     }, 0); 
 
-    console.log(itemsCotizacions)
     const promedioUnidad = precioPromedio / materia.precios.length;
     const open = () => {
         dispatch(actions.gettingItemRequisicion(true))
@@ -54,7 +53,6 @@ export default function ItemListMP({ materia }){
             
                 dispatch(actions.getMateriasIds({materiaId: materia.id}));
                 console.log(materiaIds)
-                console.log('Anexado')
 
             }
 
@@ -100,7 +98,7 @@ export default function ItemListMP({ materia }){
                                 <span style={{color: 'green'}}>Comprado</span>
                                 :
                                 Number(materia.entregado) > 0 && Number(materia.entregado) < Number(materia.totalCantidad) ?
-                                <span> {console.log(materia)} {console.log(Number(materia.totalCantidad / productoLados))}
+                                <span> 
                                     Parcialmente comprado
                                 </span>
                                 

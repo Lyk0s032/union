@@ -18,6 +18,8 @@ const initialState = {
     itemRequisicion: null,
     proveedoresArray: null,
     loadingItemRequisicion: false,
+    ordenCompra: null,
+    loadingOrdenCompra: false,
     // Para cotizar
     materiaIds: [],
     fastCotizacion: null,
@@ -124,6 +126,21 @@ export default function (state = initialState, action) {
                 ...state,
                 fastCotizacion: action.payload,
                 loadingFastCotizacion: false
+            }
+        }
+
+        case types.GET_ORDEN_COMPRAS: {
+            return {
+                ...state, 
+                ordenCompra: action.payload,
+                loadingOrdenCompra: false
+            }
+        }
+
+        case types.GETTING_ORDENES_COMPRAS: {
+            return {
+                ...state,
+                loadingOrdenCompra: action.payload 
             }
         }
 

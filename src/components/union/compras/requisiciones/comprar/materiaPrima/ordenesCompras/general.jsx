@@ -1,0 +1,27 @@
+import React from 'react';
+import { useSearchParams } from 'react-router-dom';
+import NewOrden from './new';
+
+export default function OrdenesCompras(){
+    const [params, setParams] = useSearchParams();
+
+    return (
+        <div className="ordenesWhiteCompra">
+            <div className="containerOrdenesCompras">
+                <button onClick={() => {
+                    params.delete('orden') 
+                    setParams(params);
+                }} title='Escape para cerrar'> 
+                    x 
+                </button>
+
+
+                <div className="dataOrdenes">
+                    <div className="topNewCreate">
+                        <NewOrden />
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+} 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
@@ -138,15 +138,17 @@ export default function UxCotizadorPanel({ ref }) {
 
   useEffect(() => {
       if(params.get('c')){
-        searchCoti(params.get('c'), true)
+        searchCoti(params.get('c'), true) 
       }
   }, [params.get('c')])
 
-  const isOpen = params.get("facture");
+const isOpen = useMemo(() => params.get("facture"), [params]);
+
 useEffect(() => {
+
   if (!isOpen) return;
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e) => { 
     if (e.key === "Escape") {
       const newParams = new URLSearchParams(params.toString());
       newParams.delete("c");
@@ -175,7 +177,7 @@ useEffect(() => {
             {cotizacionesCompras?.map((coti, i) => (
               <div className={params.get('c') == coti.id ? `itemCotizacion Active` : 'itemCotizacion'} key={i + 1} 
               onClick={() => {
-                params.set('c', coti.id)
+                params.set('orden', coti.id)
                 setParams(params);
               }}>
                 <div className="containerItemCotizacion">

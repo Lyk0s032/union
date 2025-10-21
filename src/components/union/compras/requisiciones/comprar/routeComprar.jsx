@@ -11,6 +11,7 @@ import ProyectosReq from './projectos/proyectos';
 import GeneralBorradoresCotizacion from './borradoresCompras/generalBorradores';
 import UxCotizadorPanel from './uxCotizacion/PanelCotizacions';
 import GeneralProductos from './productos/general';
+import OrdenesCompras from './materiaPrima/ordenesCompras/general';
 
 export default function Comprar(){
     const [params, setParams] = useSearchParams();
@@ -137,8 +138,13 @@ export default function Comprar(){
                         <LeftNavComprar />
                     </div>
                     <div className="rightUx">
+
                         <button onClick={() => closeComprar()} style={{fontSize:16, padding:10}}>x</button>
-                        {
+                        <button onClick={() => {
+                            params.set('orden', 'new')
+                            setParams(params)
+                        }}>Orden de compra</button>
+                        { 
                             params.get('s') == 'materia' ?
                                 <GeneralMateriaPrima cargaProyectos={cargaProyectos} />
                             :params.get('s') == 'proyectos' ?
@@ -153,6 +159,9 @@ export default function Comprar(){
                           <UxCotizadorPanel ref={factura} />
                         <BtnFactura  ref={btn}/>
                         
+                        {
+                            params.get('orden') ? <OrdenesCompras /> : null
+                        }
                     </div>
                 </div>
             </div>

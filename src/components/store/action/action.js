@@ -1088,7 +1088,7 @@ export function gettingOrdenCompras(carga){
     return {
         type: types.GETTING_ORDEN_COMPRAS,
         payload: carga
-    }
+    } 
 }
 
 export function axiosToGetOrdenComprasAdmin(carga, ordenId){

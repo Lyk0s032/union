@@ -3798,6 +3798,812 @@
                 box-sizing: border-box;
                 overflow-y: auto;
                 padding-bottom: 200px;
+
+                .ordenesWhiteCompra{
+                    position:fixed;
+                    width:50%;
+                    background-color: @bgDefault;
+                    right:0;
+                    top:0;
+                    bottom:0;
+                    z-index:7;
+                    overflow-y: auto;
+                    .containerOrdenesCompras{
+                        width:90%;
+                        margin:auto;
+
+                        .dataOrdenes{
+                            .topNewCreate{
+                                .newOrden{
+                                    width:100%;
+                                    box-sizing: border-box;
+
+                                    .containerNewOrden{
+                                        .titleNew{
+                                            width:80%;
+                                            margin:auto;
+                                            padding:20px 0px;
+                                            box-sizing: border-box;
+                                            text-align: center;
+                                            span{
+                                                font-size: 12px;
+                                                color: #666;
+                                            }
+                                            h1{
+                                                font-weight: 100;
+                                                color: @bgAzulDark;
+                                                padding:10px 0px;
+                                                font-size: 38px;
+                                                box-sizing: border-box;
+                                            }
+                                            .NameTitle{
+                                                color: black;
+                                            }
+                                            input{
+                                                width:100%;
+                                                padding:10px 5px;
+                                                box-sizing: border-box;
+                                                font-size: 38px;
+                                                color: black;
+                                                border:none;
+                                                outline: 0px;
+                                                border-bottom: 1px solid #f8f8f8;
+                                            }
+                                            h3{
+                                                font-weight:100; 
+                                                font-size: 16px;
+                                                color: #ccc;
+                                            }
+                                        }
+                                        .Left{
+                                            text-align: left;
+                                        }
+                                        .SearchProvider{
+                                            width:80%;
+                                            margin:auto;
+                                            margin-top:20px;
+
+                                            label{
+                                                font-size: 12px;
+                                                color: #666;
+                                            }
+                                            input{
+                                                width:100%;
+                                                border:none;
+                                                border-bottom:1px solid #ccc;
+                                                padding:10px 8px;
+                                                outline: 0px;
+                                                color: @bgAzulDark;
+                                                margin-top:10px;
+                                            }
+                                        }
+                                        .inputForm{
+                                            width: 50%;
+                                            margin:auto;
+                                            margin-top:10px;
+
+                                            input{
+                                                width:100%;
+                                                border-radius: 10px;
+                                                border:1px solid #ccc;
+                                                padding:10px 10px;
+                                                outline: 0px;
+                                            }
+                                        }
+
+                                        .resultChoose{
+                                            box-sizing: border-box;
+
+                                            .newChoose{
+                                                width:100%;
+                                                .containerNewChoose{
+                                                    .topTitleData{
+                                                        box-sizing: border-box;
+                                                        padding:15px 0px;
+                                                        
+                                                        h1{
+                                                            font-weight: 100;
+                                                            color: black;
+                                                        }
+                                                        span{
+                                                            font-size: 11px;
+                                                            color: #666;
+                                                        }
+                                                        h3{
+                                                            font-size: 16px;
+                                                            color: @bgAzulDark;
+                                                            font-weight: 400;
+                                                        }
+                                                    }
+                                                    .searchInput{
+                                                        margin-top:10px;
+                                                        label{
+                                                            font-size: 12px;
+                                                            color: #666;
+                                                        }
+                                                        input{
+                                                            width:70%;
+                                                            padding:6px 5px;
+                                                            margin-top:5px;
+                                                            border-radius: 5px;
+                                                            border:1px solid #ccc;
+                                                            box-sizing: border-box;
+                                                            outline:0px;
+                                                            color: #666;
+                                                            font-size: 12px;
+                                                            transition: .3s;
+                                                        }
+                                                        input:focus{
+                                                            border:1px solid @bgAzulDark;
+                                                            color: @bgAzulDark;
+                                                        }
+                                                    }
+                                                    .resultsAllItems{
+                                                        margin-top:50px;
+                                                        box-sizing: border-box;
+                                                        .containerResultsAllItems{
+                                                            .itemCompra {  
+                                                                box-sizing: border-box;
+
+                                                                .containerItemCompra {
+                                                                    display: flex;
+                                                                    cursor: pointer;
+                                                                    align-items: start;
+                                                                    justify-content: space-between;
+                                                                    padding: 20px 0px;
+                                                                    box-sizing: border-box;
+                                                                    transition: background 0.3s ease;
+
+                                                                    &:hover {
+                                                                    background: #fafafa;
+                                                                    }
+
+                                                                    .divideItem {
+                                                                    display: flex;
+                                                                    align-items: start;
+
+                                                                    .letter {
+                                                                        width: 40px;
+                                                                        height: 40px;
+                                                                        border-radius: 20px;
+                                                                        background-color: black;
+                                                                        display: flex;
+                                                                        align-items: center;
+                                                                        justify-content: space-around;
+
+                                                                        h3 {
+                                                                        color: @bgDefault;
+                                                                        font-weight: 400;
+                                                                        font-size: 12px;
+                                                                        }
+                                                                    }
+
+                                                                    .dataItemOrden {
+                                                                        margin-left: 10px;
+
+                                                                        h3 {
+                                                                        font-weight: 400;
+                                                                        color: black;
+                                                                        font-size: 14px;
+                                                                        }
+
+                                                                        span {
+                                                                        font-size: 12px;
+                                                                        color: #666;
+                                                                        }
+                                                                    }
+                                                                    }
+
+                                                                    .price {
+                                                                    font-size: 12px;
+                                                                    color: #666;
+                                                                    text-align: right;
+                                                                    }
+                                                                }
+
+                                                                /* 🔽 Aquí empieza la magia del slide-down */
+                                                                .hiddenContainer {
+                                                                    box-sizing: border-box;
+                                                                    width: 92%;
+                                                                    margin-bottom: 30px;
+                                                                    margin-left: auto;
+                                                                    overflow: hidden;
+                                                                    max-height: 0;
+                                                                    opacity: 0;
+                                                                    transform: translateY(-5px);
+                                                                    transition: 
+                                                                    max-height 0.5s ease,
+                                                                    opacity 0.4s ease,
+                                                                    transform 0.4s ease;
+                                                                    
+                                                                    .containerHidden {
+                                                                    padding: 10px 0px;
+
+                                                                    .itemProjectoH {
+                                                                        box-sizing: border-box;
+                                                                        padding: 10px 0px;
+
+                                                                        .divideThat {
+                                                                        display: flex;
+                                                                        align-items: start;
+                                                                        justify-content: space-between;
+
+                                                                        .pr {
+                                                                            span {
+                                                                            font-size: 12px;
+                                                                            color: #666;
+                                                                            }
+
+                                                                            h3 {
+                                                                            font-size: 14px;
+                                                                            color: @bgAzulDark;
+                                                                            }
+                                                                        }
+
+                                                                        .how {
+                                                                            span {
+                                                                            font-size: 12px;
+                                                                            color: #666;
+
+                                                                            strong {
+                                                                                color: black;
+                                                                            }
+                                                                            }
+                                                                        }
+                                                                        }
+                                                                    }
+                                                                    }
+                                                                }
+
+                                                                /* Cuando el contenedor está abierto */
+                                                                &.open {
+                                                                    .hiddenContainer {
+                                                                    max-height: 800px; // ajusta si el contenido es muy grande
+                                                                    opacity: 1;
+                                                                    transform: translateY(0);
+                                                                    } 
+                                                                }
+                                                            }
+
+                                                        }
+                                                        .resultsOptions{
+                                                            box-sizing: border-box;
+                                                            display: flex;
+                                                            align-items: start;
+                                                            justify-content: space-between;
+                                                            margin-top:30px;
+                                                            padding:40px 0px;
+                                                            border-top:1px solid #ccc;
+                                                            box-sizing: border-box;
+
+                                                            .leftAprobar{
+                                                                width:40%;
+                                                                button{
+                                                                    padding:10px;
+                                                                    border-radius: 2px;
+                                                                    background-color: black;
+                                                                    border:1px solid black;
+                                                                    transition: .3s;
+                                                                    text-align: center;
+                                                                    width:100%;
+                                                                    box-sizing: border-box;
+                                                                    margin-bottom: 10px;
+                                                                    span{
+                                                                        color: @bgDefault;
+                                                                    }
+                                                                }
+                                                                button:hover{
+                                                                    transform: scale(1.05);
+                                                                }
+                                                                .simulation{
+                                                                    font-size: 12px;
+                                                                    color: #666;
+                                                                    cursor: pointer;
+                                                                    transition: .3s;
+                                                                }
+                                                                .simulation:hover{
+                                                                    text-decoration: underline;
+                                                                }
+                                                            }
+
+                                                            .rightValors{
+                                                                width:45%;
+                                                                text-align: right;
+                                                                span{
+                                                                    font-size: 12px;
+                                                                    color: #666;
+                                                                }
+                                                                h3{
+                                                                    font-weight: 400;
+                                                                    color: @bgAzulDark;
+                                                                    font-size: 24px;
+                                                                }
+                                                                strong{
+                                                                    color: #666;
+                                                                    font-size: 14px;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        .seleccionadorLeft{
+                                            box-sizing: border-box;
+                                            border-right: 1px solid #f8f8f8;
+                                            position:fixed;
+                                            left:0;
+                                            top:0;
+                                            bottom:0;
+                                            background-color: @bgDefault;
+                                            width:50%;
+                                            overflow-y: auto;
+                                            .containerDatarLeftSeleccionar{
+                                                width:90%;
+                                                margin:auto;
+                                                padding:50px 0px;
+                                                box-sizing: border-box;
+                                                padding-top:80px;
+                                                .topTitleProduct{
+                                                    box-sizing: border-box;
+
+                                                    .divideContainer{
+                                                        display: flex;
+                                                        justify-content: space-between;
+                                                        .dataItem{
+                                                            box-sizing: border-box;
+                                                            width:50%;
+                                                            .divideInformationItem{
+                                                                display: flex;
+                                                                align-items: start;
+                                                                .circle{
+                                                                    width:40px;
+                                                                    height:40px;
+                                                                    border-radius: 100%;
+                                                                    background-color: black;
+                                                                    box-sizing: border-box;
+                                                                    border:1px solid black;
+                                                                    display: flex;
+                                                                    align-items: center;
+                                                                    justify-content: space-around;
+
+                                                                    h3{
+                                                                        font-size:12px;
+                                                                        color: @bgDefault;
+                                                                    }
+                                                                }
+                                                                .dataName{
+                                                                    margin-left:10px;
+                                                                    h3{
+                                                                        font-weight: 400;
+                                                                        font-size: 18px;
+                                                                    }
+                                                                    span{
+                                                                        font-size: 12px;
+                                                                        color: #666;
+                                                                    }
+
+                                                                    h1{
+                                                                        margin:0px;
+                                                                        color: @bgAzulDark;
+                                                                        font-weight: 400;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+
+                                                        .providerItem{
+                                                            width:40%;
+                                                            text-align: right;
+
+                                                            .containerProvider{
+                                                                .DataProvider{
+                                                                    h3{
+                                                                        font-weight: 400;
+                                                                        color: @bgAzulDark;
+                                                                    }
+                                                                    span{
+                                                                        font-size: 12px;
+                                                                        color: #666;
+                                                                    }
+                                                                    strong{
+                                                                        font-size: 12px;
+                                                                        font-weight: 400;
+                                                                        color: @bgDark;
+                                                                    }
+                                                                }
+                                                                .inputDiv{
+                                                                    label{
+                                                                        font-size: 12px;
+                                                                        color: #666;
+                                                                    }
+                                                                    input{
+                                                                        width:70%;
+                                                                        padding:10px 10px;
+                                                                        box-sizing: border-box;
+                                                                        border:1px solid @bgDefault;
+                                                                        border-bottom: 1px solid @bgAzulDark;
+                                                                        transition: .3s;
+                                                                        outline:0px;
+                                                                        color: @bgAzulDark;
+                                                                    }
+                                                                    input:focus{
+                                                                        border:1px solid @bgAzulDark;
+                                                                        border-radius: 20px;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    
+                                                    }
+                                                }
+                                                .divideZoneLine{
+                                                    margin-top:30px;
+                                                    margin-bottom: 30px;
+                                                    border:1px solid #f8f8f8;
+                                                    width:100%;
+                                                }
+
+                                                .zoneMove{
+                                                    box-sizing: border-box;
+                                                    .containerZoneMode{
+                                                        .title{
+                                                            text-align: center;
+                                                            color: #666;
+                                                            font-size: 12px;
+                                                        }
+
+                                                        .howMany{
+                                                            width:40%; 
+                                                            margin:auto;
+                                                            margin-top:30px;
+                                                            display: flex;
+                                                            align-items: center;
+                                                            justify-content: space-between;
+                                                            input{
+                                                                width: 80px;
+                                                                padding: 10px 5px;
+                                                                padding-bottom: 5px;
+                                                                text-align: center;
+                                                                font-size: 26px;
+                                                                font-weight: bold;
+                                                                border:none;
+                                                                border-bottom: 2px solid #666;
+                                                                transition: .3s;
+                                                                outline: 0px;
+                                                            }
+                                                            input:focus{
+                                                                border-bottom: 2px solid @bgAzulDark;
+                                                                color: @bgAzulDark;
+                                                            }
+
+                                                            h3{
+                                                                font-size: 32px;
+                                                            }
+                                                        }
+                                                        
+                                                    }
+                                                    .zonaProjects{
+                                                        box-sizing: border-box;
+                                                        margin-top:50px;
+                                                        .containerZonaProjects{
+                                                            .titleZonaProjects{
+                                                                text-align: center;
+                                                                span{
+                                                                    color: #666;
+                                                                    font-size: 12px;
+                                                                }
+                                                            }
+                                                            .cantidadRepartir{
+                                                                padding:10px 0px;
+                                                                box-sizing: border-box;
+                                                                span{
+                                                                    font-size: 12px;
+                                                                    color: #666;
+                                                                }
+                                                                h3{
+                                                                    font-weight: 400;
+                                                                    color: @great;
+                                                                }
+                                                            }
+                                                            .resultLists{
+                                                                margin-top:20px;
+
+                                                                .itemProjectZone{
+                                                                    box-sizing: border-box;
+                                                                    padding:20px 0px;
+                                                                    box-sizing: border-box;
+                                                                    .divideItemProject{
+                                                                        display: flex;
+                                                                        align-items: start;
+                                                                        justify-content: space-between;
+
+                                                                        .dataPrincipal{
+                                                                            width:40%;
+                                                                            .divide{
+                                                                                display: flex;
+                                                                                justify-content: start;
+                                                                                .number{
+                                                                                    width:40px;
+                                                                                    height:40px;
+                                                                                    border-radius: 20px;
+                                                                                    background-color: black;
+                                                                                    display: flex;
+                                                                                    align-items: center;
+                                                                                    justify-content: space-around;
+                                                                                    h3{
+                                                                                        font-size: 12px;
+                                                                                        color: @bgDefault;
+                                                                                    }
+                                                                                }
+                                                                                .dataProject{
+                                                                                    margin-left:20px;
+                                                                                    h3{
+                                                                                        font-size: 14px;
+                                                                                        color: black;
+                                                                                    }
+                                                                                    span{
+                                                                                        font-size: 12px;
+                                                                                        color: #666;
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                            .costo{
+                                                                                margin-top:10px;
+                                                                                span{
+                                                                                    font-size: 12px;
+                                                                                    color: #666;
+                                                                                }
+                                                                                h3{
+                                                                                    font-weight: 400;
+                                                                                    font-size: 14px;
+                                                                                    color: @bgAzulDark;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                        .howManyProgress{
+                                                                            width:20%;
+                                                                            span{
+                                                                                font-size: 12px;
+                                                                                color: #666;
+                                                                            }
+                                                                            h3{
+                                                                                font-size: 14px;
+                                                                                margin-top:3px;
+                                                                            }
+                                                                            
+                                                                        }
+                                                                        .need{
+                                                                            span{
+                                                                                font-size: 12px;
+                                                                                color: #666;
+                                                                            }
+                                                                            h3{
+                                                                                margin-top:3px;
+                                                                                font-size: 14px;
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+
+                                                            .pricesForm{
+                                                                box-sizing: border-box;
+                                                                margin-top:10px;
+                                                                .title{
+                                                                    padding:10px 0px;
+                                                                    box-sizing: border-box;
+
+                                                                    span{
+                                                                        font-size: 12px;
+                                                                        color: black;
+                                                                        font-weight: bold;
+                                                                    }
+                                                                }
+
+                                                                .dividePrices{
+                                                                    display: flex;
+                                                                    align-items: start;
+                                                                    justify-content: space-between;
+                                                                    margin-top:10px;
+                                                                    .ladePrices{
+                                                                        width:45%;
+                                                                        .inputDiv{
+                                                                           
+                                                                            label{
+                                                                                font-size: 12px;
+                                                                                color: #666;
+
+                                                                                button{
+                                                                                    margin-left:10px;
+                                                                                    width:20px;
+                                                                                    height:20px;
+                                                                                    border-radius: 20px;
+                                                                                    border:1px solid @bgAzulDark;
+                                                                                    background-color: @bgDefault;
+                                                                                    color: @bgAzulDark;
+                                                                                    font-size: 14px;
+                                                                                    font-weight: bold;
+                                                                                }
+                                                                            }
+
+                                                                            input{
+                                                                                width:100%;
+                                                                                margin-top:10px;
+                                                                                padding:10px 5px;
+                                                                                margin:10px 0px;
+                                                                                box-sizing: border-box;
+                                                                                box-sizing: border-box;
+                                                                                font-size: 14px;
+                                                                                color: black;
+                                                                                outline: 0px;
+                                                                                border:none;
+                                                                                border-bottom: 1px solid #ccc;
+                                                                                transition: .3s;
+                                                                            }
+                                                                            input:focus{
+                                                                                border-bottom: 1px solid @bgAzulDark;
+                                                                                font-size: 18px;
+                                                                                color: @bgAzulDark;
+                                                                            }
+
+                                                                            
+                                                                        }
+                                                                    }
+                                                                    
+                                                                }
+                                                                .divideCheck{
+                                                                    display: flex;
+                                                                    align-items: start;
+                                                                    margin-top:20px;
+                                                                    width:100%;
+                                                                    input{
+                                                                        cursor: pointer;
+                                                                        width:20px;
+                                                                        height:20px;
+                                                                        margin:0px;
+                                                                    }
+                                                                    label{
+                                                                        width:100%;
+                                                                        margin-left:10px;
+                                                                        font-size: 12px;
+                                                                        color: #666;
+                                                                        cursor: pointer;
+
+                                                                        button{
+                                                                            margin-left:20px;
+                                                                            width:20px;
+                                                                            height:20px;
+                                                                            border-radius: 20px;
+                                                                            border:1px solid @bgAzulDark;
+                                                                            background-color: @bgDefault;
+                                                                            color: @bgAzulDark;
+                                                                            font-size: 14px;
+                                                                            font-weight: bold;
+                                                                        }
+                                                                    }
+                                                                }
+                                                                .confirm{
+                                                                    margin-top:40px;
+                                                                    button{
+                                                                        width:100%;
+                                                                        text-align: center;
+                                                                        border:1px solid black;
+                                                                        background-color: black;
+                                                                        transition: .3s;
+                                                                        padding:10px 0px;
+                                                                        box-sizing: border-box;
+                                                                        border-radius: 5px;
+                                                                        span{
+                                                                            color: @bgDefault;
+                                                                        }
+                                                                    }
+
+                                                                    button:hover{
+                                                                        transform: scale(1.05);
+                                                                    }
+                                                                }
+                                                                
+                                                            }
+                                                            .historyCompras{
+                                                                margin-top:60px;
+                                                                .containerHistory{
+                                                                    .title{
+                                                                        padding:10px 0px;
+                                                                        box-sizing: border-box;
+                                                                        span{
+                                                                            font-size: 12px;
+                                                                            color: #666;
+                                                                        }
+                                                                    }
+                                                                    .dataComprasHistory{
+                                                                        margin-top:20px;
+                                                                        .itemDataHistory{
+                                                                            padding:10px 0px;
+                                                                            box-sizing: border-box;
+                                                                            .divideZone{
+                                                                                display: flex;
+                                                                                align-items: start;
+                                                                                justify-content: space-between;
+                                                                                .dataItem{
+                                                                                    span{
+                                                                                        font-size: 12px;
+                                                                                        color: #666;
+                                                                                    }
+                                                                                    h3{
+                                                                                        font-size: 14px;
+                                                                                        color: @bgDark;
+                                                                                    }
+                                                                                }
+                                                                                .priceData{
+                                                                                    span{
+                                                                                        font-size: 12px;
+                                                                                        color: #666;
+                                                                                    }
+                                                                                    h3{
+                                                                                        font-weight: 400;
+                                                                                        color: @bgAzulDark;
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                            .allItemsProviders{
+                                                box-sizing: border-box;
+                                                width:90%;
+                                                margin:auto;
+                                                .titleData{
+                                                    padding:30px 0px;
+                                                    width:70%;
+                                                    box-sizing: border-box;
+                                                    h1{
+                                                        font-size: 30px;
+                                                        font-weight: 400;
+                                                        color: @bgAzulDark;
+                                                    }
+                                                    span{
+                                                        font-size: 12px;
+                                                        color: #666;
+                                                    }
+                                                }
+
+                                                .listOptionsMateria{
+                                                    box-sizing: border-box;
+                                                    .item{
+                                                        padding:15px 0px;
+                                                        box-sizing: border-box;
+                                                        cursor: pointer;
+                                                        transition: .3s;
+                                                        h3{
+                                                            font-size: 14px;
+                                                            color: black;
+                                                        }
+                                                        span{
+                                                            font-size: 12px;
+                                                            color: #666;
+                                                        }
+                                                    }
+                                                    .item:hover{
+                                                        transform: translateX(2%);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
                 .factura{
                     position:fixed;
                     transition: .3s;
