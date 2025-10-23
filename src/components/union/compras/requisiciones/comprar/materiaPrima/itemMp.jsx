@@ -19,6 +19,20 @@ export default function ItemListMP({ materia }){
         return acc + Number(it.valor);
     }, 0); 
 
+    const m = materia;
+    let productoLados = 1;
+    if (materia.unidad == 'mt2') {
+        const [ladoA, ladoB] = m.medida.split('X').map(Number);
+        if (!isNaN(ladoA) && !isNaN(ladoB)) {
+            productoLados = ladoA * ladoB;
+
+        } 
+    }else{
+        productoLados = materia.medida
+    }  
+    let cantidadToPrices = Number(Math.ceil(Number( Number(materia?.totalCantidad) / Number(productoLados) )).toFixed(0))
+
+
     const promedioUnidad = precioPromedio / materia.precios.length;
     const open = () => {
         dispatch(actions.gettingItemRequisicion(true))
@@ -50,12 +64,10 @@ export default function ItemListMP({ materia }){
                 dispatch(actions.limpiarIds(nuevo));
             } else {
                 // Si no existe, lo agregamos (sin mutar el array original)
-            
-                dispatch(actions.getMateriasIds({materiaId: materia.id}));
+                dispatch(actions.getMateriasIds({materiaId: materia.id, cantidad: cantidadToPrices}));
                 console.log(materiaIds)
-
             }
-
+ 
         } else {
             params.set('MP', materia.id);
             setParams(params);
@@ -64,18 +76,7 @@ export default function ItemListMP({ materia }){
     }; 
 
 
-    const m = materia;
-    let productoLados = 1;
-    
-    if (materia.unidad == 'mt2') {
-        const [ladoA, ladoB] = m.medida.split('X').map(Number);
-        if (!isNaN(ladoA) && !isNaN(ladoB)) {
-            productoLados = ladoA * ladoB;
-
-        } 
-    }else{
-        productoLados = materia.medida
-    }  
+   
     return (
         <tr className={ materiaIds.find(m => m.materiaId == materia.id)  ? 'Active' : null}
         
@@ -128,7 +129,12 @@ export default function ItemListMP({ materia }){
             </td>
             <td>
                 <div className="">
-                    <span>$ {numero ? new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(promedioUnidad* numero).toFixed(0)) : new Intl.NumberFormat('es-CO', {currency:'COP'}).format(promedioUnidad)}</span>
+                    <span>
+                        $ 
+                        {numero ? 
+                            new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(promedioUnidad * numero).toFixed(0)) 
+                        : 
+                            new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(promedioUnidad * cantidadToPrices).toFixed(0))}</span>
                 </div>
             </td>
         </tr>

@@ -7,10 +7,10 @@ export default function ItemOrden({ item }){
             <div className="containerItemCompra"  onClick={() => setOpen(!open)}>
                 <div className="divideItem">
                     <div className="letter"> 
-                        <h3>{item.materium?.id}</h3>
+                        <h3>{item.materium?.id} {item.producto?.id}</h3>
                     </div>
                     <div className="dataItemOrden">
-                        <h3>{item.materium?.description}</h3>
+                        <h3>{item.materium?.description} {item.producto?.item}</h3>
                         <span>{item.createdAt.split('T')[0]}</span>
                         <br />
                         <span>Precio</span>

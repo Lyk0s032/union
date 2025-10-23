@@ -17,6 +17,7 @@ export default function GetAllItemsProvider({ seleccionador }){
         m.precios?.some((p) => Number(p.proveedorId) === proveedorId)
     ) : null
     
+
     const open = (id) => {
         dispatch(actions.gettingItemRequisicion(true))
         let body = {
@@ -24,6 +25,23 @@ export default function GetAllItemsProvider({ seleccionador }){
             ids: ids
         }
         const send = axios.post('/api/requisicion/get/materiales/materia/', body)
+        .then((res) => {
+            dispatch(actions.getItemRequisicion(res.data));
+        }).catch(err => {
+            console.log(err);
+            dispatch(actions.getItemRequisicion(404));
+        })
+
+        return send
+    }
+
+    const openProduct = (id) => {
+        dispatch(actions.gettingItemRequisicion(true))
+        let body = {
+            mpId: id,
+            ids: ids
+        }
+        const send = axios.post('/api/requisicion/get/materiales/producto/', body)
         .then((res) => {
             dispatch(actions.getItemRequisicion(res.data));
         }).catch(err => {
@@ -49,8 +67,12 @@ export default function GetAllItemsProvider({ seleccionador }){
                 {materiasFiltradas && materiasFiltradas.length > 0 ? (
                     materiasFiltradas.map((m) => (
                     <div key={m.id} className='item' onClick={() => {
-                        open(m.id)
-                    }}>
+                        if(m.tipo == 'producto'){
+                            openProduct(m.id)
+                        } else{
+                            open(m.id)
+                        } 
+                    }}> {console.log('hola', m)}
                         <span>Código: {m.id}</span>
                         <h3>{m.nombre}</h3> 
                         <span>Cantidad total: {Number(m.totalCantidad - m.entregado).toFixed(2)} {m.unidad}</span>

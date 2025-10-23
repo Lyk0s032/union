@@ -5,24 +5,24 @@ import { useSearchParams } from 'react-router-dom';
 export default function ProveedorCotizador({ provider }) {
   const [params] = useSearchParams();
   const req = useSelector(store => store.requisicion);
-  const { itemsCotizacions } = req;
+  const { itemsCotizacions, materiaIds } = req;
   const [todo, setTodo] = useState([]);
-
+  console.log(materiaIds)
   const subtotales = provider.materias?.map((pr) => {
     let cantidades = [];
-
+    {console.log('dataaa', provider)}
     if (provider.tipo === "producto" || params.get("s") === "productos") {
       // Comparar contra productoId
-      cantidades = itemsCotizacions?.filter(it => it.productoId === pr.materiaId);
+      cantidades = materiaIds?.filter(it => it.productoId === pr.materiaId);
     } else {
       // Comparar contra materia prima
-      cantidades = itemsCotizacions?.filter(it => it.materiumId === pr.materiaId);
+      cantidades = materiaIds?.filter(it => it.materiaId === pr.materiaId);
     }
 
     let numero = cantidades?.length
       ? cantidades.reduce((acc, curr) => acc + Number(curr.cantidad), 0)
       : 0;
-
+ 
     return {
       ...pr,
       cantidad: numero,
@@ -31,7 +31,9 @@ export default function ProveedorCotizador({ provider }) {
   }) || [];
 
   // Total general
+  console.log('subbb', subtotales)
   const total = subtotales.reduce((acc, item) => acc + item.subtotal, 0);
+  console.log(total)
 
   useEffect(() => {
     setTodo(subtotales.map(item => item.subtotal));

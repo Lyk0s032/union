@@ -73,6 +73,8 @@ export default function ItemProject({ cargaProyectos, item, data }){
             openThat()
         })
     }
+
+    console.log(item)
     const m = data;
     let productoLados = 1;
     
@@ -145,6 +147,7 @@ export default function ItemProject({ cargaProyectos, item, data }){
                 <div className="td">
                     <span>+ {plus?plus.cantidad : 0}</span>
                 </div>
+
             </div>
             {
                 open ?

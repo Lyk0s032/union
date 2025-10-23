@@ -17,13 +17,13 @@ export default function GetHowMany(){
 
     // Cantidades ingresadas manualmente 
     const aIngresar = itemsCotizacions.filter(i => i.materiumId == itemRequisicion.id).reduce((acc, it) => acc + Number(it.cantidad), 0);
-
+    {console.log(itemRequisicion)}
     // Desde el sistema
     const NecesitaSistema = itemRequisicion.itemRequisicions.reduce((acc, it) => acc + Number(it.cantidad), 0);
     const ingresado = itemRequisicion.itemRequisicions.reduce((acc, it) => acc + Number(it.cantidadEntrega), 0);
 
     const priceCurrently = itemRequisicion ?  itemRequisicion?.prices?.find(p => p.proveedorId == ordenCompra?.proveedorId) : 0;
-
+    const priceCurrentlyProducto = itemRequisicion ?  itemRequisicion?.productPrices?.find(p => p.proveedorId == ordenCompra?.proveedorId) : 0;
     const unidad = itemRequisicion.unidad;
     const medidaSistema = itemRequisicion.medida; // 10.000X45.111
     const medidaLadoA = unidad == 'mt2' ? medidaSistema.split('X')[0] : null
@@ -36,7 +36,11 @@ export default function GetHowMany(){
 
     const [contenedor, setContenedor] = useState(0)
     const [cantidad, setCantidad] = useState(0);
-    const [total, setTotal] = useState(priceCurrently?.valor ? priceCurrently.valor * cantidad : 0)
+
+    let valorA = priceCurrently?.valor 
+    let valorB = priceCurrentlyProducto?.valor ? priceCurrentlyProducto.valor * cantidad : 0
+
+    const [total, setTotal] = useState(priceCurrentlyProducto ? (valorB * cantidad) : (valorA * cantidad))
     const [descuento, setDescuento] = useState(0);
     const [loading, setLoading] = useState(false);
 
@@ -50,7 +54,12 @@ export default function GetHowMany(){
     }
 
     const givePrice = () => {
-        setTotal(priceCurrently?.valor * cantidad)
+        if(priceCurrentlyProducto){
+            setTotal(priceCurrentlyProducto?.valor * cantidad)
+        }else{
+            setTotal(priceCurrently?.valor * cantidad)
+
+        }
     }
   
 
@@ -72,9 +81,9 @@ export default function GetHowMany(){
             precio: totalFunction,
             descuento:descuentoFunction,
             precioTotal: final, 
-            productoId: null,
+            productoId: priceCurrentlyProducto ? itemRequisicion.id : null,
             ordenCompraId: ordenCompra.id,
-            materiaId: itemRequisicion.id,
+            materiaId: priceCurrently ? itemRequisicion.id : null,
             proyectos: toProjects
         }    
         setLoading(true)
@@ -136,6 +145,32 @@ export default function GetHowMany(){
         })
         return sendPetion;
     }
+
+    const updatePriceProducto = async (proveedor) => {
+        if(!valor) return dispatch(actions.HandleAlerta("Debes ingresar un valor", 'mistake'))
+        if(valor == priceCurrentlyProducto) return dispatch(actions.HandleAlerta('Debes ingresar un valor diferente'))
+       // Caso contrario, enviamos consulta
+        let iva = valor * 0.19;
+        let total = Number(Number(valor) + Number(iva)).toFixed(0); 
+        const body = { 
+            productoId: itemRequisicion.id,
+            pvId: proveedor.id,
+            price:total ,
+            iva,
+            descuentos: valor,
+        }
+        const sendPetion = await axios.post('/api/mt/price/pt/give', body)
+        .then((res) => { 
+            dispatch(actions.HandleAlerta("Valor actualizado con éxito", 'positive'))
+            open(1)
+            return res;
+        })
+        .catch(err => {
+            console.log(err);
+            dispatch(actions.HandleAlerta("Debes ingresar un valor", 'mistake'))
+        })
+        return sendPetion;
+    }
     useEffect(() => {
         changeHowMany(cantidad)
         giveToProject()
@@ -166,8 +201,8 @@ export default function GetHowMany(){
                                 <strong>{itemRequisicion.medida} {itemRequisicion.unidad}</strong><br /><br /><br />
 
                                 <span>Precio actual</span>
-                                <h1>$ {priceCurrently?.valor}</h1> 
-                                <span>{priceCurrently?.createdAt.split('T')[0]}</span>
+                                <h1>$ {priceCurrently?.valor}  {priceCurrentlyProducto?.valor}</h1> 
+                                <span>{priceCurrently?.createdAt.split('T')[0]} {priceCurrentlyProducto?.createdAt.split('T')[0]}</span>
                             </div>
                        </div>
                    </div>
@@ -187,7 +222,12 @@ export default function GetHowMany(){
                                     setValor(e.target.value)
                                 }} value={valor} onKeyDown={(e) => {
                                     if(e.code == 'Enter'){
-                                        updatePrice(ordenCompra.proveedor.id)
+                                        if(itemRequisicion.productoId){
+                                            updatePriceProducto(ordenCompra.proveedor.id)
+                                        }else{
+                                            updatePrice(ordenCompra.proveedor.id)
+
+                                        }
                                     }
                                 }}/>
                             </div>

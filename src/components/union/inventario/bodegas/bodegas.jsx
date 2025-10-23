@@ -27,10 +27,11 @@ export default function Bodegas(){
         if(!params.get('bodega')){
             dispatch(actions.axiosToGetProductosBodega(true, bodega))
             dispatch(actions.axiosToGetMovimientosBodega(true, 1))
-             dispatch(actions.axiosToGetCabeceras(true, [1,4,2,5]))
+            dispatch(actions.axiosToGetCabeceras(true, [1,4,2,5]))
         }else{
             dispatch(actions.axiosToGetProductosBodega(true, params.get('bodega')))
             dispatch(actions.axiosToGetMovimientosBodega(true, params.get('bodega')))
+            dispatch(actions.axiosToGetCabeceras(false, [1,4,2,5]))
         }
     }
     useEffect(() => {

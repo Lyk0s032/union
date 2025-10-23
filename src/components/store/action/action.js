@@ -1358,6 +1358,28 @@ export function axiosToGetItemMateriaPrima(carga, materiaId){
         });
     }
 }
+// Para productos en item
+export function axiosToGetItemProducto(carga, materiaId, bodegaId){
+    return function(dispatch){  
+        dispatch(gettingItem(carga))
+        console.log('Entra a la consola')  
+        axios.get(`/api/inventario/get/bodega/producto/one/${materiaId}/${bodegaId}`)
+        .then((info) => info.data) 
+        .then(inf => {
+             dispatch(getItem(inf))
+
+            return console.log(inf)
+        })
+        .catch((e) => {
+            console.log(e)
+            if(e.request){
+                return dispatch(getItem('notrequest'));
+            }else{
+                return dispatch(getItem(404))
+            }
+        });
+    }
+}
 
 
 export function getItemBodega(data){

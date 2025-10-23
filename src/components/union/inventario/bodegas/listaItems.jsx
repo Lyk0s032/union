@@ -101,21 +101,21 @@ export default function ItemsLists(){
                                                     : 
                                                     productosBodega?.length ? 
                                                         productosBodega.map((pt, i) => {
-                                                            {console.log(pt)}
                                                             return (
                                                                     <tr key={i+1} onClick={() => {
-                                                                        params.set('item', pt.materiumId) 
+                                                                        let ruta = pt.materiumId ? pt.materiumId : pt.productoId
+                                                                        params.set('item', ruta) 
                                                                         params.set('show', 'Bodega');
-                                                                        params.set('who', 1)
+                                                                        params.set('who', params.get('bodega'))
                                                                         setParams(params);
                                                                     }}>
                                                                         <td className="coding">
                                                                             <div className="code">
-                                                                                <h3>{pt.materiumId}</h3>
+                                                                                <h3>{pt.materiumId} {pt.productoId}</h3>
                                                                             </div>
                                                                         </td>
                                                                         <td className="longer Almacen" > 
-                                                                            <div className="titleNameKitAndData">
+                                                                            <div className="titleNameKitAndData"> 
                                                                                 <div className="extensionColor">
                                                                                     <div className="boxColor"></div>
                                                                                     <span>{dayjs(pt.createdAt.split('T')[0]).format('DD [de] MMMM [del] YYYY ')}</span>
@@ -163,7 +163,7 @@ export default function ItemsLists(){
                                                                             }}>
                                                                                 <td className="coding">
                                                                                     <div className="code">
-                                                                                        <h3>{pt.id}</h3>
+                                                                                        <h3>{pt.id} Este</h3>
                                                                                     </div>
                                                                                 </td>
                                                                                 <td className="longer Almacen" > 

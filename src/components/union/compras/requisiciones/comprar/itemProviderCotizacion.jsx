@@ -204,11 +204,11 @@ const newCotizacion = async () => {
                         <Total valores={todo} />
                         <h3>$ {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(total).toFixed(0))}</h3>
                     </div>
-                    <button onClick={() => {
+                    {/* <button onClick={() => {
                       !loading ? newCotizacion() : null
                     }}>
                         <span>{loading ? 'Cotizando...' : 'Cotizar'}</span>
-                    </button>
+                    </button> */}
                 </div>
             </div>
         </div>

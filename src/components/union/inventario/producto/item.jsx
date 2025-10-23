@@ -13,7 +13,11 @@ export default function ItemAlmacen(){
     const { item, loadingItem } = almacen;
     
     useEffect(() => {
-        dispatch(actions.axiosToGetItemMateriaPrima(true, params.get('item')));
+        if(!params.get('bodega')  || params.get('bodega') == 1){
+            dispatch(actions.axiosToGetItemMateriaPrima(true, params.get('item')));
+        }else{
+            dispatch(actions.axiosToGetItemProducto(true, params.get('item'), params.get('bodega')));
+        }
     }, [params.get('item')])
 
     console.log(item, loadingItem)

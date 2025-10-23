@@ -13,7 +13,8 @@ export default function ItemProjectOrden({ item, dar }){
     const anexado = itemsCotizacions.find(i => i.materiumId == item.materiumId && i.requisicionId == item.requisicionId)
     const addItemEstado = (complete) => {
         let objeto = {
-            materiumId: item.materiumId,
+            materiumId: item.materiumId ? item.materiumId : null,
+            productoId: item.productoId ? item.productoId : null,
             necesidad: Number(item.cantidad - item.cantidadEntrega), 
             requisicionId: item.requisicionId,
             cantidad: how
