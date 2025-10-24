@@ -20,8 +20,28 @@ export default function LeftNav(){
                     <div className="container">
                         <h1>Compras</h1>
                     </div>
-                
-                </div>
+                   <div className="options">
+                        <nav>
+                            <ul>
+                                <li onClick={() => {
+                                    add('categoria')
+                                }}>
+                                    <span>Categorías</span>
+                                </li>
+                                <li onClick={() => {
+                                    add('linea')
+                                }}>
+                                    <span>Líneas</span>
+                                </li>
+                                <li onClick={() => {
+                                    add('extension')
+                                }}>
+                                    <span>Extensiones</span>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div><br /><br />
+                </div><br /><br />
 
                 <div className="optionsLeftNav">
                     <div className="containerLeftNav">

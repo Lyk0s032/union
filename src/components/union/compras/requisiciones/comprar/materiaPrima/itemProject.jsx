@@ -74,7 +74,6 @@ export default function ItemProject({ cargaProyectos, item, data }){
         })
     }
 
-    console.log(item)
     const m = data;
     let productoLados = 1;
     

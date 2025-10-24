@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import * as actions from '../../../../../store/action/action';
 import axios from 'axios';
 
-export default function ItemListMP({ materia }){
+export default function ItemListMP({ materia, sumar }){
     const [params, setParams] = useSearchParams();
 
     const dispatch = useDispatch();
@@ -62,10 +62,13 @@ export default function ItemListMP({ materia }){
                 const nuevo = materiaIds.filter(m => m.materiaId !== materia.id);
                 console.log('Quitando elemento:', nuevo);
                 dispatch(actions.limpiarIds(nuevo));
+                quitando()
             } else {
                 // Si no existe, lo agregamos (sin mutar el array original)
                 dispatch(actions.getMateriasIds({materiaId: materia.id, cantidad: cantidadToPrices}));
                 console.log(materiaIds)
+                sumandito()
+
             }
  
         } else {
@@ -74,6 +77,35 @@ export default function ItemListMP({ materia }){
             open();
         }
     }; 
+
+    const sumandito = () => {
+        if(Number(materia.entregado) >= Number(materia.totalCantidad / productoLados)){
+            console.log('completo')
+        } else if(Number(materia.entregado) > 0 && Number(materia.entregado) < Number(materia.totalCantidad)){
+            let cantidadPrice = Number(Number(cantidadToPrices) * Number(promedioUnidad)) 
+            console.log('proyecto a sumar-------',materia.nombre, cantidadPrice) 
+            sumar(cantidadPrice)
+        }else{
+            let cantidadPrice = Number(Number(cantidadToPrices) * Number(promedioUnidad)) 
+            console.log('proyecto a sumar-------',materia.nombre, cantidadPrice) 
+            sumar(cantidadPrice)
+        } 
+            
+    }
+    const quitando = () => {
+        if(Number(materia.entregado) >= Number(materia.totalCantidad / productoLados)){
+            console.log('completo')
+        } else if(Number(materia.entregado) > 0 && Number(materia.entregado) < Number(materia.totalCantidad)){
+            let cantidadPrice = Number(Number(cantidadToPrices) * Number(promedioUnidad)) 
+            console.log('proyecto a sumar-------',materia.nombre, cantidadPrice) 
+            sumar(-cantidadPrice)
+        }else{
+            let cantidadPrice = Number(Number(cantidadToPrices) * Number(promedioUnidad)) 
+            console.log('proyecto a sumar-------',materia.nombre, cantidadPrice) 
+            sumar(-cantidadPrice)
+        } 
+    }
+
 
 
    

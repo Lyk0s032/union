@@ -31,6 +31,7 @@ export default function Comprar(){
         params.delete('PV')
         params.delete('MP')
         setParams(params);
+        dispatch(actions.limpiarIds([]))
 
     }
 

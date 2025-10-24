@@ -6,7 +6,7 @@ import ProveedorCotizador from './proveedorCotizador';
 import CotizacionProviderItem from './itemProviderCotizacion';
 import { useSearchParams } from 'react-router-dom';
 
-export default function Cotizador(){
+export default function Cotizador({ total }){
     const [materias, setMaterias] = useState();
     const [params, setParams] = useSearchParams();
 
@@ -98,6 +98,12 @@ export default function Cotizador(){
 
                     : null
                 }
+                    <div className="divPricesNeed">
+                        <div className="containerPricesNeed">
+                            <span>Inversión  faltante apróximada</span>
+                            <h1>$ {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(total).toFixed(0))}</h1>
+                        </div>
+                    </div>
             </div>
             <div className="cotizadorView" ref={cotizador}>
                 <div className="containerCotizadorView">
