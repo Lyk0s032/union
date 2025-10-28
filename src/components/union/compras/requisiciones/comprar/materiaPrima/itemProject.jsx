@@ -106,11 +106,11 @@ export default function ItemProject({ cargaProyectos, item, data }){
                             }</span>
                         </div>
                     </div>
-                </div> 
+                </div>  {console.log('iteee2: ', item)}
                 <div onClick={handleClick} onDoubleClick={() => setEdit(true)} className="td">
                     {
                         !edit ?
-                        <span>{item.cantidadEntrega} / 
+                        <span><strong style={{fontSize:12}}>Actualmente</strong><br />{item.cantidadEntrega} / 
                         {
                             Number(Number(Number(item.cantidad) / Number(productoLados))).toFixed(4) < 1 ?
                              Number(Number(Number(item.cantidad) / Number(productoLados))).toFixed(4) 
@@ -144,7 +144,11 @@ export default function ItemProject({ cargaProyectos, item, data }){
                     }
                 </div>
                 <div className="td">
-                    <span>+ {plus?plus.cantidad : 0}</span>
+                    
+                    <span>
+                        <strong style={{fontSize:12}}>Faltante</strong><br />
+                        {Number(Math.ceil(Number(Number(item.cantidad) - Number(item.cantidadEntrega))))}
+                    </span>
                 </div>
 
             </div>

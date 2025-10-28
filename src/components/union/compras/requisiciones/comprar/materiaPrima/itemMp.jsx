@@ -26,14 +26,16 @@ export default function ItemListMP({ materia, sumar }){
         if (!isNaN(ladoA) && !isNaN(ladoB)) {
             productoLados = ladoA * ladoB;
 
-        } 
+        }
+    }else if(materia.unidad == 'kg'){
+        productoLados = materia.medida / materia.medida
     }else{
         productoLados = materia.medida
     }  
     let cantidadToPrices = Number(Math.ceil(Number( Number(materia?.totalCantidad) / Number(productoLados) )).toFixed(0))
 
 
-    const promedioUnidad = precioPromedio / materia.precios.length;
+    const promedioUnidad = materia.unidad == 'kg' ? Number(Number(precioPromedio / materia.precios.length) / Number(materia.medida)) : Number(precioPromedio / materia.precios.length);
     const open = () => {
         dispatch(actions.gettingItemRequisicion(true))
         let body = {
@@ -78,17 +80,32 @@ export default function ItemListMP({ materia, sumar }){
         }
     }; 
 
+    console.log('materrriaa: ', materia)
     const sumandito = () => {
         if(Number(materia.entregado) >= Number(materia.totalCantidad / productoLados)){
             console.log('completo')
         } else if(Number(materia.entregado) > 0 && Number(materia.entregado) < Number(materia.totalCantidad)){
-            let cantidadPrice = Number(Number(cantidadToPrices) * Number(promedioUnidad)) 
-            console.log('proyecto a sumar-------',materia.nombre, cantidadPrice) 
-            sumar(cantidadPrice)
+            if(materia.unidad == 'kg'){
+                let cantidadPrice = Number(Number(cantidadToPrices) * Number(promedioUnidad)) 
+                console.log('proyecto a sumar-------',materia.nombre, cantidadPrice) 
+                sumar(cantidadPrice)
+            }else{
+                let cantidadPrice = Number(Number(cantidadToPrices) * Number(promedioUnidad)) 
+                console.log('proyecto a sumar-------',materia.nombre, cantidadPrice) 
+                sumar(cantidadPrice)
+            }
+            
         }else{
-            let cantidadPrice = Number(Number(cantidadToPrices) * Number(promedioUnidad)) 
-            console.log('proyecto a sumar-------',materia.nombre, cantidadPrice) 
-            sumar(cantidadPrice)
+            if(materia.unidad == 'kg'){
+                let cantidadPrice = Number(Number(cantidadToPrices) * Number(promedioUnidad)) 
+                console.log('proyecto a sumar-------',materia.nombre, cantidadPrice) 
+                sumar(cantidadPrice)
+            }else{ 
+                let cantidadPrice = Number(Number(cantidadToPrices) * Number(promedioUnidad)) 
+                console.log('proyecto a sumar-------',materia.nombre, cantidadPrice) 
+                sumar(cantidadPrice)
+            }
+            
         } 
             
     }

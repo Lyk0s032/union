@@ -30,7 +30,7 @@ export default function LeftNav(){
                                 </li>
                                 <li onClick={() => {
                                     add('linea')
-                                }}>
+                                }} >
                                     <span>Líneas</span>
                                 </li>
                                 <li onClick={() => {

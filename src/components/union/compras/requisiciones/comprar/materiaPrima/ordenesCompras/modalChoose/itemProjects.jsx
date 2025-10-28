@@ -5,11 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 export default function ItemProjectOrden({ item, dar }){
     console.log(item)
     const req = useSelector(store => store.requisicion);
-    const { itemsCotizacions } = req;
+    const { itemsCotizacions, itemRequisicion } = req;
     const [add, setAdd] = useState(false);
     const [how, setHow] = useState(0)
     const dispatch = useDispatch();
-    console.log('iteeeeeeem', item)
     const anexado = itemsCotizacions.find(i => i.materiumId == item.materiumId && i.requisicionId == item.requisicionId)
     const addItemEstado = (complete) => {
         let objeto = {
@@ -68,7 +67,7 @@ export default function ItemProjectOrden({ item, dar }){
                 }
                 <div className="need">
                     <span>Faltante</span>
-                    <h3>{Number(item.cantidad - item.cantidadEntrega).toFixed(2)} mt2</h3>
+                    <h3>{Number(item.cantidad - item.cantidadEntrega).toFixed(2)} {itemRequisicion.unidad}</h3>
                 </div>
             </div>
         </div>

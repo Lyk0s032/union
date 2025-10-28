@@ -17,13 +17,14 @@ export default function GetHowMany(){
 
     // Cantidades ingresadas manualmente 
     const aIngresar = itemsCotizacions.filter(i => i.materiumId == itemRequisicion.id).reduce((acc, it) => acc + Number(it.cantidad), 0);
-    {console.log(itemRequisicion)}
+    {console.log('iteeem:', itemRequisicion)}
     // Desde el sistema
     const NecesitaSistema = itemRequisicion.itemRequisicions.reduce((acc, it) => acc + Number(it.cantidad), 0);
     const ingresado = itemRequisicion.itemRequisicions.reduce((acc, it) => acc + Number(it.cantidadEntrega), 0);
 
     const priceCurrently = itemRequisicion ?  itemRequisicion?.prices?.find(p => p.proveedorId == ordenCompra?.proveedorId) : 0;
     const priceCurrentlyProducto = itemRequisicion ?  itemRequisicion?.productPrices?.find(p => p.proveedorId == ordenCompra?.proveedorId) : 0;
+    const valorKg = itemRequisicion.unidad == 'kg' && priceCurrently  ? Number(Number(priceCurrently?.valor) / Number(itemRequisicion.medida)) : priceCurrently;
     const unidad = itemRequisicion.unidad;
     const medidaSistema = itemRequisicion.medida; // 10.000X45.111
     const medidaLadoA = unidad == 'mt2' ? medidaSistema.split('X')[0] : null
@@ -40,7 +41,15 @@ export default function GetHowMany(){
     let valorA = priceCurrently?.valor 
     let valorB = priceCurrentlyProducto?.valor ? priceCurrentlyProducto.valor * cantidad : 0
 
-    const [total, setTotal] = useState(priceCurrentlyProducto ? (valorB * cantidad) : (valorA * cantidad))
+    const [total, setTotal] = useState(
+        priceCurrentlyProducto ? 
+            (valorB * cantidad) 
+        : 
+        itemRequisicion.unidad == 'kg' ? 
+            (valorKg * cantidad)
+        : 
+            (valorA * cantidad) 
+    )
     const [descuento, setDescuento] = useState(0);
     const [loading, setLoading] = useState(false);
 
@@ -56,6 +65,8 @@ export default function GetHowMany(){
     const givePrice = () => {
         if(priceCurrentlyProducto){
             setTotal(priceCurrentlyProducto?.valor * cantidad)
+        }else if(itemRequisicion.unidad == 'kg'){
+            setTotal(valorKg * cantidad)
         }else{
             setTotal(priceCurrently?.valor * cantidad)
 
@@ -190,13 +201,13 @@ export default function GetHowMany(){
            <div className="topTitleProduct">
 
                <div className="divideContainer">
-                   <div className="dataItem">
-                       <div className="divideInformationItem">
+                    <div className="dataItem">
+                        <div className="divideInformationItem">
                             <div className="circle">
                                 <h3>{itemRequisicion.id}</h3>
                             </div> 
                             <div className="dataName">
-                                <h3>{itemRequisicion.description}</h3>
+                                <h3>{itemRequisicion.description}- {valorKg}</h3>
                                 <span>Medida original:</span><br />
                                 <strong>{itemRequisicion.medida} {itemRequisicion.unidad}</strong><br /><br /><br />
 
@@ -204,9 +215,9 @@ export default function GetHowMany(){
                                 <h1>$ {priceCurrently?.valor}  {priceCurrentlyProducto?.valor}</h1> 
                                 <span>{priceCurrently?.createdAt.split('T')[0]} {priceCurrentlyProducto?.createdAt.split('T')[0]}</span>
                             </div>
-                       </div>
-                   </div>
-                   <div className="providerItem">
+                        </div>
+                    </div>
+                    <div className="providerItem">
                        <div className="containerProvider">
                             <div className="DataProvider">
                                 <h3>{ordenCompra?.proveedor?.nombre}</h3>
@@ -232,7 +243,7 @@ export default function GetHowMany(){
                                 }}/>
                             </div>
                        </div>
-                   </div>
+                    </div>
                </div>
            </div>
            <div className="divideZoneLine"></div>
