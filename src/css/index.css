@@ -6636,6 +6636,7 @@ body button {
 .compras .containerCompras {
   width: 100%;
   height: 100%;
+  box-sizing: border-box;
 }
 .compras .containerCompras .divide {
   width: 100%;
@@ -7118,8 +7119,24 @@ body button {
   width: 100%;
   height: 100%;
 }
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .loading {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .loading .dataLoading span {
+  font-size: 12px;
+  color: #666;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .loading .dataLoading h1 {
+  color: #046290;
+  font-weight: 400;
+}
 .compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .topProvider {
-  height: 10%;
+  height: 20%;
   width: 100%;
   border-bottom: 1px solid #ccc;
   box-sizing: border-box;
@@ -7139,12 +7156,44 @@ body button {
 .compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .topProvider .divideTop button span {
   color: #454f5b;
 }
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .topProvider .divideTop button .icon {
+  font-size: 20px;
+}
 .compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .topProvider .divideTop .title {
   margin-left: 20px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .topProvider .divideTop .title span {
+  font-size: 12px;
+  color: #666;
 }
 .compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .topProvider .divideTop .title h3 {
   font-weight: 400;
   color: #046290;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .topProvider .divideTop .title .divideThat {
+  display: flex;
+  align-items: center;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .topProvider .divideTop .title .divideThat .letter {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .topProvider .divideTop .title .divideThat .letter h3 {
+  font-weight: 400;
+  font-size: 12px;
+  color: #FFF;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .topProvider .divideTop .title .divideThat .dataThis {
+  width: 90%;
+  margin-left: 10px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .topProvider .divideTop .title .divideThat .dataThis h3 {
+  font-size: 14px;
 }
 .compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider {
   height: 90%;
@@ -7212,17 +7261,18 @@ body button {
   width: 100%;
 }
 .compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .general .dataGeneral .boxGeneral h1 {
-  font-weight: 600;
+  font-weight: 400;
   font-size: 26px;
   color: #046290;
 }
 .compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .general .dataGeneral .boxGeneral h3 {
   font-weight: 400;
-  color: #046290;
+  color: #666;
   font-size: 18px;
 }
 .compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .general .dataGeneral .boxGeneral .optionsItem {
-  margin-top: 10px;
+  width: 50%;
+  margin-top: 5px;
 }
 .compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .general .dataGeneral .boxGeneral .optionsItem span {
   font-size: 13px;
@@ -7230,10 +7280,13 @@ body button {
 }
 .compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .general .dataGeneral .boxGeneral .optionsItem .title {
   font-size: 12px;
-  font-weight: bold;
+  font-weight: 400;
+  color: black;
 }
 .compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .messageForLastUpdate {
+  border-top: 1px solid #ccc;
   padding: 30px 0px;
+  margin-top: 20px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -7249,6 +7302,12 @@ body button {
 }
 .compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .messageForLastUpdate div .dataMateria {
   margin-top: 20px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .messageForLastUpdate div .dataMateria span {
+  font-size: 12px;
+}
+.compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .messageForLastUpdate div .dataMateria span h3 {
+  font-size: 42px;
 }
 .compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .messageForLastUpdate button {
   background-color: #046290;
@@ -7555,6 +7614,7 @@ body button {
 }
 .compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .newPriceOnProvider {
   box-sizing: border-box;
+  height: 400px;
 }
 .compras .containerCompras .divide .right .provider .containerProviders .showProveedor .containerShow .bodyProvider .containerBodyProvider .containerShow .pestana .containerPestana .newPriceOnProvider .containerProvider .searchInput {
   width: 50%;
@@ -9069,9 +9129,6 @@ body button {
   font-weight: 400;
   color: #046290;
 }
-.dashboard {
-  height: 100%;
-}
 .dashboard .containerDashboard {
   height: 100%;
 }
@@ -10069,6 +10126,468 @@ body button {
 }
 .dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .ContainerResultFilter .dataContainer .boxContainer:hover .h3 {
   margin-left: 10px;
+}
+.dashboard .containerDashboard .dashboardCompras {
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .dashboardCompras .ordenView {
+  position: fixed;
+  border-left: 1px solid #f8f8f8;
+  right: 0;
+  height: 90%;
+  box-sizing: border-box;
+  bottom: 0;
+  width: 40%;
+  background-color: #FFF;
+}
+.dashboard .containerDashboard .dashboardCompras .ordenView .containerView {
+  width: 95%;
+  height: 100%;
+  margin: auto;
+}
+.dashboard .containerDashboard .dashboardCompras .ordenView .containerView .headerView {
+  width: 100%;
+  height: 10%;
+  border-bottom: 1px solid #F8F8F8;
+}
+.dashboard .containerDashboard .dashboardCompras .ordenView .containerView .headerView .divideZone {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+.dashboard .containerDashboard .dashboardCompras .ordenView .containerView .headerView .divideZone .dataCoti h3 {
+  font-size: 14px;
+  color: #046290;
+}
+.dashboard .containerDashboard .dashboardCompras .ordenView .containerView .headerView .divideZone .dataCoti span {
+  font-size: 12px;
+  color: #666;
+}
+.dashboard .containerDashboard .dashboardCompras .ordenView .containerView .headerView .divideZone button {
+  background-color: transparent;
+  border: none;
+  font-size: 22px;
+  color: #666;
+}
+.dashboard .containerDashboard .dashboardCompras .ordenView .containerView .containerScrollBody {
+  height: 90%;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .dashboardCompras .ordenView .containerView .containerScrollBody .containerScroll {
+  padding: 10px 0px;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .dashboardCompras .ordenView .containerView .containerScrollBody .containerScroll .titleDiv span {
+  font-size: 12px;
+  color: #666;
+}
+.dashboard .containerDashboard .dashboardCompras .ordenView .containerView .containerScrollBody .containerScroll .titleDiv h3 {
+  margin-top: 3px;
+  font-weight: 400;
+  color: #046290;
+  font-size: 26px;
+}
+.dashboard .containerDashboard .dashboardCompras .ordenView .containerView .containerScrollBody .containerScroll .titleDiv strong {
+  font-size: 12px;
+  color: #666;
+  font-weight: 400;
+}
+.dashboard .containerDashboard .dashboardCompras .ordenView .containerView .containerScrollBody .containerScroll .titleDiv .price {
+  margin-top: 20px;
+}
+.dashboard .containerDashboard .dashboardCompras .ordenView .containerView .containerScrollBody .containerScroll .titleDiv .price h1 {
+  font-weight: 400;
+  color: #046290;
+  font-size: 24px;
+}
+.dashboard .containerDashboard .dashboardCompras .ordenView .containerView .containerScrollBody .containerScroll .itemsOrden {
+  margin-top: 20px;
+}
+.dashboard .containerDashboard .dashboardCompras .ordenView .containerView .containerScrollBody .containerScroll .itemsOrden table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.dashboard .containerDashboard .dashboardCompras .ordenView .containerView .containerScrollBody .containerScroll .itemsOrden table thead tr th {
+  text-align: left;
+  font-size: 12px;
+  color: #666;
+  font-weight: 400;
+  padding: 10px 5px;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .dashboardCompras .ordenView .containerView .containerScrollBody .containerScroll .itemsOrden table tbody tr {
+  cursor: pointer;
+  transition: 0.3s;
+}
+.dashboard .containerDashboard .dashboardCompras .ordenView .containerView .containerScrollBody .containerScroll .itemsOrden table tbody tr td {
+  transition: 0.3s;
+  text-align: left;
+  padding: 10px 5px;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .dashboardCompras .ordenView .containerView .containerScrollBody .containerScroll .itemsOrden table tbody tr td span {
+  font-size: 12px;
+  color: #666;
+}
+.dashboard .containerDashboard .dashboardCompras .ordenView .containerView .containerScrollBody .containerScroll .itemsOrden table tbody tr .largeThis {
+  width: 60%;
+}
+.dashboard .containerDashboard .dashboardCompras .ordenView .containerView .containerScrollBody .containerScroll .itemsOrden table tbody tr .largeThis .divideThis {
+  display: flex;
+  align-items: center;
+}
+.dashboard .containerDashboard .dashboardCompras .ordenView .containerView .containerScrollBody .containerScroll .itemsOrden table tbody tr .largeThis .divideThis .letter {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.dashboard .containerDashboard .dashboardCompras .ordenView .containerView .containerScrollBody .containerScroll .itemsOrden table tbody tr .largeThis .divideThis .letter h3 {
+  font-weight: 400;
+  font-size: 12px;
+  color: #FFF;
+}
+.dashboard .containerDashboard .dashboardCompras .ordenView .containerView .containerScrollBody .containerScroll .itemsOrden table tbody tr .largeThis .divideThis .data {
+  width: 80%;
+  margin-left: 10px;
+}
+.dashboard .containerDashboard .dashboardCompras .ordenView .containerView .containerScrollBody .containerScroll .itemsOrden table tbody tr .largeThis .divideThis .data h3 {
+  font-size: 14px;
+  color: black;
+}
+.dashboard .containerDashboard .dashboardCompras .ordenView .containerView .containerScrollBody .containerScroll .itemsOrden table tbody tr .largeThis .divideThis .data span {
+  font-size: 12px;
+  color: #666;
+}
+.dashboard .containerDashboard .dashboardCompras .ordenView .containerView .containerScrollBody .containerScroll .itemsOrden table tbody tr:hover {
+  background-color: #f8f8f8;
+}
+.dashboard .containerDashboard .containerDashboardCompras {
+  padding: 20px;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .containerDashboardCompras .titleDashboard {
+  width: 100%;
+  padding: 30px 0px;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .containerDashboardCompras .titleDashboard h3 {
+  color: black;
+  font-size: 28px;
+  font-weight: 400;
+  margin-bottom: 5px;
+}
+.dashboard .containerDashboard .containerDashboardCompras .titleDashboard h4 {
+  font-size: 13px;
+  font-weight: 400;
+  color: #666;
+}
+.dashboard .containerDashboard .containerDashboardCompras .searchDiv {
+  padding: 20px 0px;
+  margin: 40px 0px;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .containerDashboardCompras .searchDiv .containerSearchDiv {
+  width: 100%;
+}
+.dashboard .containerDashboard .containerDashboardCompras .searchDiv .containerSearchDiv .optionsSearch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.dashboard .containerDashboard .containerDashboardCompras .searchDiv .containerSearchDiv .optionsSearch button {
+  transition: 0.3s;
+  padding: 6px 20px;
+  background-color: #FFF;
+  border: none;
+}
+.dashboard .containerDashboard .containerDashboardCompras .searchDiv .containerSearchDiv .optionsSearch button span {
+  font-size: 12px;
+  color: #ccc;
+  transition: 0.3s;
+}
+.dashboard .containerDashboard .containerDashboardCompras .searchDiv .containerSearchDiv .optionsSearch .Active {
+  transform: scale(1.1);
+}
+.dashboard .containerDashboard .containerDashboardCompras .searchDiv .containerSearchDiv .optionsSearch .Active span {
+  color: #046290;
+}
+.dashboard .containerDashboard .containerDashboardCompras .searchDiv .containerSearchDiv .divideSearch {
+  width: 100%;
+  margin-top: 20px;
+  position: relative;
+}
+.dashboard .containerDashboard .containerDashboardCompras .searchDiv .containerSearchDiv .divideSearch input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  outline: 0px;
+}
+.dashboard .containerDashboard .containerDashboardCompras .searchDiv .containerSearchDiv .divideSearch .downFilterResults {
+  margin-top: 10px;
+  position: absolute;
+  width: 100%;
+  z-index: 5;
+  background-color: #FFF;
+  min-height: 0px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+.dashboard .containerDashboard .containerDashboardCompras .searchDiv .containerSearchDiv .divideSearch .downFilterResults .dataItems .itemResult {
+  cursor: pointer;
+  transition: 0.3s;
+  padding: 20px 10px;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .containerDashboardCompras .searchDiv .containerSearchDiv .divideSearch .downFilterResults .dataItems .itemResult .divideItemResult {
+  display: flex;
+}
+.dashboard .containerDashboard .containerDashboardCompras .searchDiv .containerSearchDiv .divideSearch .downFilterResults .dataItems .itemResult .divideItemResult .nameData {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.dashboard .containerDashboard .containerDashboardCompras .searchDiv .containerSearchDiv .divideSearch .downFilterResults .dataItems .itemResult .divideItemResult .nameData .letter {
+  width: 50px;
+  height: 50px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: black;
+  margin-right: 10px;
+}
+.dashboard .containerDashboard .containerDashboardCompras .searchDiv .containerSearchDiv .divideSearch .downFilterResults .dataItems .itemResult .divideItemResult .nameData .letter h3 {
+  font-size: 12px;
+  color: #FFF;
+}
+.dashboard .containerDashboard .containerDashboardCompras .searchDiv .containerSearchDiv .divideSearch .downFilterResults .dataItems .itemResult .divideItemResult .nameData .data {
+  width: 90%;
+  margin-left: 10px;
+}
+.dashboard .containerDashboard .containerDashboardCompras .searchDiv .containerSearchDiv .divideSearch .downFilterResults .dataItems .itemResult .divideItemResult .nameData .data h3 {
+  font-weight: 400;
+  color: #046290;
+  font-size: 14px;
+}
+.dashboard .containerDashboard .containerDashboardCompras .searchDiv .containerSearchDiv .divideSearch .downFilterResults .dataItems .itemResult .divideItemResult .nameData .data span {
+  font-size: 12px;
+  color: #666;
+}
+.dashboard .containerDashboard .containerDashboardCompras .searchDiv .containerSearchDiv .divideSearch .downFilterResults .dataItems .itemResult:hover {
+  background-color: #F8F8F8;
+}
+.dashboard .containerDashboard .containerDashboardCompras .filterOptions {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.dashboard .containerDashboard .containerDashboardCompras .filterOptions .containerFilter .itemZone {
+  width: 30%;
+  text-align: right;
+  margin-left: auto;
+}
+.dashboard .containerDashboard .containerDashboardCompras .filterOptions .containerFilter .itemZone span {
+  font-size: 12px;
+  color: #666;
+}
+.dashboard .containerDashboard .containerDashboardCompras .filterOptions .containerFilter .itemZone h3 {
+  font-weight: 400;
+  color: #046290;
+}
+.dashboard .containerDashboard .containerDashboardCompras .filterOptions .containerFilter .itemZone button {
+  margin-top: 10px;
+  text-align: left;
+  background-color: #FFF;
+  border: none;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .containerDashboardCompras .filterOptions .containerFilter .itemZone button span {
+  color: #666;
+  transition: 0.3s;
+}
+.dashboard .containerDashboard .containerDashboardCompras .filterOptions .containerFilter .itemZone button:hover span {
+  color: #888;
+}
+.dashboard .containerDashboard .containerDashboardCompras .divideZone {
+  width: 100%;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .containerDashboardCompras .divideZone .containerDivideZone {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+}
+.dashboard .containerDashboard .containerDashboardCompras .divideZone .containerDivideZone .boxItem {
+  width: 20%;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.dashboard .containerDashboard .containerDashboardCompras .divideZone .containerDivideZone .boxItem .containerBoxItem {
+  display: flex;
+  align-items: center;
+}
+.dashboard .containerDashboard .containerDashboardCompras .divideZone .containerDivideZone .boxItem .containerBoxItem .icono {
+  width: 20%;
+  text-align: center;
+}
+.dashboard .containerDashboard .containerDashboardCompras .divideZone .containerDivideZone .boxItem .containerBoxItem .icono .icon {
+  font-size: 24px;
+  color: #046290;
+}
+.dashboard .containerDashboard .containerDashboardCompras .divideZone .containerDivideZone .boxItem .containerBoxItem .dataBox {
+  margin-left: 10px;
+  padding: 20px 0px;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .containerDashboardCompras .divideZone .containerDivideZone .boxItem .containerBoxItem .dataBox span {
+  font-size: 12px;
+  color: #666;
+}
+.dashboard .containerDashboard .containerDashboardCompras .divideZone .containerDivideZone .boxItem .containerBoxItem .dataBox h3 {
+  font-weight: 400;
+  color: #046290;
+}
+.dashboard .containerDashboard .containerDashboardCompras .divideZone .containerDivideZone .boxItem:hover {
+  transform: scale(1.05);
+}
+.dashboard .containerDashboard .containerDashboardCompras .zoneGraph {
+  margin: 20px 0px;
+  padding: 10px 0px;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .containerDashboardCompras .zoneGraph .divideZoneGraph {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+}
+.dashboard .containerDashboard .containerDashboardCompras .zoneGraph .divideZoneGraph .containerGraph {
+  width: 100%;
+  box-sizing: border-box;
+  height: 350px;
+}
+.dashboard .containerDashboard .containerDashboardCompras .zoneGraph .divideZoneGraph .containerGraph .graphHere {
+  height: 100%;
+}
+.dashboard .containerDashboard .containerDashboardCompras .zoneGraph .divideZoneGraph .dataRight {
+  width: 0%;
+  border: 1px solid black;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .containerDashboardCompras .resultsDataItems {
+  box-sizing: border-box;
+  margin-top: 40px;
+}
+.dashboard .containerDashboard .containerDashboardCompras .resultsDataItems .containerResults .titleContainer {
+  margin-bottom: 40px;
+}
+.dashboard .containerDashboard .containerDashboardCompras .resultsDataItems .containerResults .titleContainer .divideTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.dashboard .containerDashboard .containerDashboardCompras .resultsDataItems .containerResults .titleContainer .divideTitle .searchInput {
+  width: 50%;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .containerDashboardCompras .resultsDataItems .containerResults .titleContainer .divideTitle .searchInput input {
+  padding: 8px 10px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  width: 60%;
+  outline: 0px;
+  transition: 0.3s;
+  font-size: 12px;
+}
+.dashboard .containerDashboard .containerDashboardCompras .resultsDataItems .containerResults .titleContainer .divideTitle .searchInput input:focus {
+  border: 1px solid #046290;
+  width: 100%;
+}
+.dashboard .containerDashboard .containerDashboardCompras .resultsDataItems .containerResults .titleContainer .divideTitle select {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  box-sizing: border-box;
+  color: #046290;
+}
+.dashboard .containerDashboard .containerDashboardCompras .resultsDataItems .containerResults .titleContainer .divideTitle select option {
+  cursor: pointer;
+  margin: 0px;
+  background-color: #FFF;
+  font-size: 12px;
+}
+.dashboard .containerDashboard .containerDashboardCompras .resultsDataItems .containerResults .titleContainer .divideTitle select option:hover {
+  background-color: #FFF;
+}
+.dashboard .containerDashboard .containerDashboardCompras .resultsDataItems .containerResults .itemOrden {
+  box-sizing: border-box;
+  width: 100%;
+  cursor: pointer;
+  transition: 0.3s;
+  padding: 10px 10px;
+}
+.dashboard .containerDashboard .containerDashboardCompras .resultsDataItems .containerResults .itemOrden .divideItemOrden {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0px;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .containerDashboardCompras .resultsDataItems .containerResults .itemOrden .divideItemOrden .nameAndData {
+  display: flex;
+  align-items: center;
+}
+.dashboard .containerDashboard .containerDashboardCompras .resultsDataItems .containerResults .itemOrden .divideItemOrden .nameAndData .tipo {
+  margin-right: 10px;
+}
+.dashboard .containerDashboard .containerDashboardCompras .resultsDataItems .containerResults .itemOrden .divideItemOrden .nameAndData .tipo .letter {
+  width: 40px;
+  height: 40px;
+  box-sizing: border-box;
+  border-radius: 100px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.dashboard .containerDashboard .containerDashboardCompras .resultsDataItems .containerResults .itemOrden .divideItemOrden .nameAndData .tipo .letter .icon {
+  font-size: 22px;
+  color: #046290;
+}
+.dashboard .containerDashboard .containerDashboardCompras .resultsDataItems .containerResults .itemOrden .divideItemOrden .nameAndData .divideHer .divideTopName {
+  display: flex;
+  align-items: center;
+}
+.dashboard .containerDashboard .containerDashboardCompras .resultsDataItems .containerResults .itemOrden .divideItemOrden .nameAndData .divideHer .divideTopName span {
+  margin-right: 5px;
+  font-size: 12px;
+  color: #666;
+}
+.dashboard .containerDashboard .containerDashboardCompras .resultsDataItems .containerResults .itemOrden .divideItemOrden .nameAndData .divideHer .divideTopName strong {
+  font-size: 12px;
+  color: #888;
+}
+.dashboard .containerDashboard .containerDashboardCompras .resultsDataItems .containerResults .itemOrden .divideItemOrden .nameAndData .divideHer h3 {
+  font-size: 12px;
+  margin-top: 2px;
+}
+.dashboard .containerDashboard .containerDashboardCompras .resultsDataItems .containerResults .itemOrden .divideItemOrden .time span {
+  font-size: 12px;
+  color: #666;
+}
+.dashboard .containerDashboard .containerDashboardCompras .resultsDataItems .containerResults .itemOrden .divideItemOrden .price h3 {
+  color: #046290;
+  font-size: 14px;
+}
+.dashboard .containerDashboard .containerDashboardCompras .resultsDataItems .containerResults .itemOrden:hover {
+  background-color: #f8f8f8;
 }
 .loginComponent {
   box-sizing: border-box;

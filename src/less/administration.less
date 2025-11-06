@@ -1,9 +1,6 @@
 .dashboard{
-    height:100%;
-
     .containerDashboard{
         height:100%;
-
         .panelDashboardType{
             height:100%;
 
@@ -1080,6 +1077,507 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        }
+
+        .dashboardCompras{
+            box-sizing: border-box;
+            .ordenView{
+                position:fixed;
+                border-left: 1px solid #f8f8f8;
+                right:0;
+                height:90%;
+                box-sizing: border-box;
+                bottom:0;
+                width:40%;
+                background-color: @bgDefault;
+                .containerView{
+                    width:95%;
+                    height:100%;
+                    margin:auto;
+                    .headerView{
+                        width:100%;
+                        height:10%;
+                        border-bottom: 1px solid #F8F8F8;
+                        .divideZone{
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            height:100%;
+                            .dataCoti{
+                                h3{
+                                    font-size: 14px;
+                                    color: @bgAzulDark;
+                                }
+                                span{
+                                    font-size: 12px;
+                                    color: #666;
+                                }
+                            }
+                            button{
+                                background-color: transparent;
+                                border:none;
+                                font-size: 22px;
+                                color: #666;
+                            }
+                        }
+                    }
+                    .containerScrollBody{
+                        height:90%;
+                        box-sizing: border-box;
+                        .containerScroll{
+                            padding:10px 0px;
+                            box-sizing: border-box;
+                            .titleDiv{
+                                span{
+                                    font-size: 12px;
+                                    color: #666;
+                                }
+                                h3{
+                                    margin-top:3px;
+                                    font-weight: 400;
+                                    color: @bgAzulDark;
+                                    font-size: 26px;
+                                }
+
+                                strong{
+                                    font-size: 12px;
+                                    color: #666;
+                                    font-weight: 400;
+                                }
+
+                                .price{
+                                    margin-top:20px;
+                                    h1{
+                                        font-weight: 400;
+                                        color: @bgAzulDark;
+                                        font-size: 24px;
+                                    }
+                                }
+                            }
+                            .itemsOrden{
+                                margin-top:20px;
+                                table{
+                                    width:100%;
+                                    border-collapse: collapse;
+                                    thead{
+                                        tr{
+                                            th{
+                                                text-align: left;
+                                                font-size: 12px;
+                                                color: #666;
+                                                font-weight: 400;
+                                                padding:10px 5px;
+                                                box-sizing: border-box;
+                                            }
+                                        }
+                                    }
+                                    tbody{
+                                        tr{
+                                            cursor: pointer;
+                                            transition: .3s;
+                                            td{
+                                                transition: .3s;
+                                                text-align: left;
+                                                padding:10px 5px;
+                                                box-sizing: border-box;
+                                                span{
+                                                    font-size: 12px;
+                                                    color: #666;
+                                                }
+                                            }
+                                            .largeThis{
+                                                width:60%;
+                                                .divideThis{
+                                                    display: flex;
+                                                    align-items: center;
+                                                    .letter{
+                                                        width:40px;
+                                                        height:40px;
+                                                        border-radius: 100%;
+                                                        background-color: black;
+                                                        display: flex;
+                                                        align-items: center;
+                                                        justify-content: space-around;
+                                                        h3{
+                                                            font-weight: 400;
+                                                            font-size: 12px;
+                                                            color: @bgDefault;
+                                                        }
+                                                    }
+                                                    .data{
+                                                        width:80%;
+                                                        margin-left:10px;
+                                                        h3{
+                                                            font-size: 14px;
+                                                            color: black;
+                                                        }
+                                                        span{
+                                                            font-size:12px;
+                                                            color: #666;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        tr:hover{
+                                            background-color: #f8f8f8;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .containerDashboardCompras{
+            padding:20px;
+            padding-left:20px;
+            box-sizing: border-box;
+            
+            .titleDashboard{
+                width:100%;
+                padding:30px 0px;
+                box-sizing: border-box;
+
+                h3{
+                    color: black;
+                    font-size: 28px;
+                    font-weight: 400;
+                    margin-bottom: 5px;
+                }
+                h4{
+                    font-size: 13px;
+                    font-weight: 400;
+                    color: #666;
+                }
+            }
+            .searchDiv{
+                padding:20px 0px;
+                margin:40px 0px;
+                box-sizing: border-box;
+                box-sizing: border-box;
+
+                .containerSearchDiv{
+                    width:100%;
+                    .optionsSearch{
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        button{
+                            transition: .3s;
+                            padding:6px 20px;
+                            background-color: @bgDefault;
+                            border:none;
+                            span{
+                                font-size: 12px;
+                                color: #ccc;
+                                transition: .3s;
+                            }
+                        }
+                        .Active{
+                            transform: scale(1.1);
+                            span{
+                                color: @bgAzulDark;
+                            }
+                        }
+                    }
+                    .divideSearch{
+                        width:100%;
+                        margin-top:20px;
+                        position:relative;
+                        input{
+                            width:100%;
+                            box-sizing: border-box;
+                            padding:10px 20px;
+                            border-radius: 20px;
+                            border:1px solid #ccc;
+                            outline: 0px;
+                        }
+
+                        .downFilterResults{
+                            margin-top:10px;
+                            position:absolute;
+                            width:100%;
+                            z-index: 5;
+                            background-color: @bgDefault;
+                            min-height: 0px;
+                            max-height:300px;
+                            overflow-y: auto;
+                            .dataItems{
+                                .itemResult{
+                                    cursor: pointer;
+                                    transition: .3s;
+                                    padding:20px 10px;
+                                    box-sizing: border-box;
+                                    .divideItemResult{
+                                        display: flex;
+                                        .nameData{
+                                            display: flex;
+                                            align-items: center;
+                                            width:100%;
+                                            .letter{
+                                                width:50px;
+                                                height:50px;
+                                                border-radius:30px;
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: space-around;
+                                                background-color: black;
+                                                margin-right: 10px;
+                                                h3{
+                                                    font-size: 12px;
+                                                    color: @bgDefault;
+                                                }
+                                            }
+                                            .data{
+                                                width:90%;
+                                                margin-left:10px;
+                                                h3{
+                                                    font-weight: 400;
+                                                    color: @bgAzulDark;
+                                                    font-size: 14px;
+                                                }
+                                                span{
+                                                    font-size: 12px;
+                                                    color: #666;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                .itemResult:hover{
+                                    background-color: #F8F8F8;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .filterOptions{
+                width:100%;
+                margin-bottom: 20px;
+                .containerFilter{
+                    .itemZone{
+                        width:30%;
+                        text-align: right;
+                        margin-left:auto;
+                        span{
+                            font-size: 12px;
+                            color: #666;
+                        }
+                        h3{
+                            font-weight: 400;
+                            color: @bgAzulDark;
+                        }
+                        button{
+                            margin-top:10px;
+                            text-align: left;
+                            background-color: @bgDefault;
+                            border:none;
+                            box-sizing: border-box;
+                            span{
+                                color: #666;
+                                transition: .3s;
+                            }
+                        }
+                        button:hover{
+                            span{
+                                color: #888;                                
+                            }
+                        }
+                    }
+                }
+            }
+            .divideZone{
+                width:100%;
+                box-sizing: border-box;
+                .containerDivideZone{
+                    display: flex;
+                    align-items: start;
+                    justify-content: space-between;
+
+
+                    .boxItem{
+                        width:20%;
+                        cursor: pointer;
+                        transition: .3s;
+                        .containerBoxItem{
+                            display: flex;
+                            align-items: center;
+
+                            .icono{
+                                width:20%;
+                                text-align: center;
+                                .icon{
+                                    font-size: 24px;
+                                    color: @bgAzulDark;
+                                }
+                            }
+                            .dataBox{
+                                margin-left:10px;
+                                padding:20px 0px;
+                                box-sizing: border-box;
+                                span{
+                                    font-size: 12px;
+                                    color: #666;
+                                }
+                                h3{
+                                    font-weight: 400;
+                                    color: @bgAzulDark;
+                                }
+                            }
+                        }
+                    }
+                    .boxItem:hover{
+                        transform: scale(1.05);
+                    } 
+                }
+            }
+            .zoneGraph{
+                margin:20px 0px;
+                box-sizing: border-box;
+                padding:10px 0px;
+                box-sizing: border-box;
+                .divideZoneGraph{
+                    display: flex;
+                    align-items: start;
+                    justify-content: space-between;
+                    .containerGraph{
+                        width: 100%;
+                        box-sizing: border-box;
+                        height:350px;
+                        .graphHere{
+                            height:100%;
+
+                        }
+                    }
+                    .dataRight{
+                        width:0%;
+                        border:1px solid black;
+                        box-sizing: border-box;
+                    }
+                }
+            }
+            .resultsDataItems{
+                box-sizing: border-box;
+                margin-top:40px;
+                .containerResults{
+                    .titleContainer{
+                        margin-bottom: 40px;
+                        .divideTitle{
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+
+                            .searchInput{
+                                width:50%;
+                                box-sizing: border-box;
+                                input{
+                                    padding:8px 10px;
+                                    border-radius: 20px;
+                                    border:1px solid #ccc;
+                                    box-sizing: border-box;
+                                    width:60%;
+                                    outline: 0px;
+                                    transition: .3s;
+                                    font-size: 12px;
+                                }
+                                input:focus{
+                                    border:1px solid @bgAzulDark;
+                                    width:100%;
+                                }
+                            }
+                            select{
+                                background-color: transparent;
+                                border:none;
+                                cursor: pointer;
+                                padding:5px 10px;
+                                box-sizing: border-box;
+                                color: @bgAzulDark;
+                                option{
+                                    cursor: pointer;
+                                    margin:0px;
+                                    background-color: @bgDefault;
+                                    font-size: 12px;
+                                }
+                                option:hover{
+                                    background-color: @bgDefault;
+                                }
+                            }
+                        }
+                    }
+                    .itemOrden{
+                        box-sizing: border-box;
+                        width:100%;
+                        cursor: pointer;
+                        transition: .3s;
+                        padding:10px 10px;
+                        .divideItemOrden{
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            padding:10px 0px;
+                            box-sizing: border-box;
+                            .nameAndData{
+                                display: flex;
+                                align-items: center;
+                                .tipo{
+                                    margin-right: 10px;
+                                    .letter{
+                                        width:40px;
+                                        height:40px;
+                                        box-sizing: border-box;
+                                        border-radius: 100px;
+                                        display: flex;
+                                        justify-content: space-around;
+                                        align-items: center;
+                                        .icon{
+                                            font-size: 22px;
+                                            color: @bgAzulDark;
+                                        }
+                                    }
+                                }
+                                .divideHer{
+                                    .divideTopName{
+                                        display: flex;
+                                        align-items: center;
+                                        span{
+                                            margin-right: 5px;
+                                            font-size: 12px;
+                                            color: #666;
+                                        }
+                                        strong{
+                                            font-size: 12px;
+                                            color: #888
+                                        }
+                                    }
+                                    h3{
+                                        font-size: 12px;
+                                        margin-top:2px;
+
+                                    }
+                                }
+                            }
+                            .time{
+                                span{
+                                    font-size: 12px;
+                                    color: #666;
+                                }
+                            }
+                            .price{
+                                h3{
+                                    color: @bgAzulDark;
+                                    font-size: 14px;
+                                }
+                            }
+                        }
+                    }
+                    .itemOrden:hover{
+                        background-color: #f8f8f8;
                     }
                 }
             }

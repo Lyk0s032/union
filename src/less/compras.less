@@ -2,9 +2,11 @@
     box-sizing: border-box;
     height:100%;
     width:100%;
+
     .containerCompras{
         width:100%;
         height:100%;
+        box-sizing: border-box;
         .divide{
             width:100%;
             height:100%;
@@ -540,8 +542,26 @@
                             .containerShow{
                                 width:100%;
                                 height:100%;
+                                .loading{
+                                    width:100%;
+                                    height:100%;
+                                    box-sizing: border-box;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: space-around;
+                                    .dataLoading{
+                                        span{
+                                            font-size: 12px;
+                                            color: #666;
+                                        }
+                                        h1{
+                                            color: @bgAzulDark;
+                                            font-weight: 400;
+                                        }
+                                    }
+                                }
                                 .topProvider{
-                                    height:10%;
+                                    height:20%;
                                     width:100%;
                                     border-bottom: 1px solid #ccc;
                                     box-sizing: border-box;
@@ -558,12 +578,46 @@
                                             span{
                                                 color: @bgDark;
                                             }
+                                            .icon{
+                                                font-size: 20px;
+                                            }
                                         }
                                         .title{
                                             margin-left:20px;
+                                            span{
+                                                font-size: 12px;
+                                                color: #666;
+                                            }
                                             h3{
                                                 font-weight: 400;
                                                 color: @bgAzulDark;
+                                            }
+                                            .divideThat{
+                                                display: flex;
+                                                align-items: center;
+                                                .letter{
+                                                    width:40px;
+                                                    height:40px;
+                                                    border-radius: 20px;
+                                                    background-color: black;
+                                                    display: flex;
+                                                    align-items: center;
+                                                    justify-content: space-around;
+                                                    h3{
+                                                        font-weight: 400;
+                                                        font-size: 12px;
+                                                        color: @bgDefault;
+                                                    }
+                                                }
+                                                .dataThis{
+                                                    margin-left:10px;
+                                                    width:90%;
+                                                    margin-left:10px;
+
+                                                    h3{
+                                                        font-size: 14px;
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -611,6 +665,7 @@
                                         }
                                         .containerShow{
                                             padding-top:20px;
+                                            
                                             .pestana{
                                                 box-sizing: border-box;
                                                 .containerPestana{
@@ -637,32 +692,36 @@
                                                             width:100%;
                                                             .boxGeneral{
                                                                 h1{
-                                                                    font-weight: 600;
+                                                                    font-weight: 400;
                                                                     font-size: 26px;
                                                                     color: @bgAzulDark;
                                                                 }
                                                                 h3{
                                                                     font-weight: 400;
-                                                                    color: @bgAzulDark;
+                                                                    color: #666;
                                                                     font-size: 18px;
                                                                 }
                                                                 
                                                                 .optionsItem{
-                                                                    margin-top:10px;
+                                                                    width:50%;
+                                                                    margin-top:5px;
                                                                     span{
                                                                         font-size: 13px;
                                                                         color: @bgDark;
                                                                     }
                                                                     .title{
                                                                         font-size: 12px;
-                                                                        font-weight: bold;
+                                                                        font-weight: 400;
+                                                                        color: black;
                                                                     }
                                                                 }
                                                             }
                                                         }
                                                     }
                                                     .messageForLastUpdate{
+                                                        border-top:1px solid #ccc;
                                                         padding:30px 0px;
+                                                        margin-top:20px;
                                                         box-sizing: border-box;
                                                         display: flex;
                                                         align-items: center;
@@ -680,6 +739,12 @@
 
                                                             .dataMateria{
                                                                 margin-top:20px;
+                                                                span{
+                                                                    font-size: 12px;
+                                                                    h3{
+                                                                        font-size: 42px;
+                                                                    }
+                                                                }
                                                             }
                                                         }
                                                         button{
@@ -689,6 +754,7 @@
                                                             border-radius: 5px;
                                                             span{
                                                                 color: @bgDefault;
+                                                                
                                                             }
                                                         }
                                                     }
@@ -1002,6 +1068,8 @@
                                                     }
                                                     .newPriceOnProvider{
                                                         box-sizing: border-box;
+                                                        height:400px;
+                                                        
                                                         .containerProvider{
                                                             .searchInput{
                                                                 width:50%;

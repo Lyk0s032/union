@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import RouteCompras from './compras/routeCompras';
 import ProductoTerminado from './productoTerminado/productoTerminado';
 import RouteRequisiciones from './requisiciones/routeRequisiciones';
+import DashboardCompras from './dashboard/dashboard';
 
 export default function RoutesCompras(){
     const [params, setParams] = useSearchParams();
@@ -22,25 +23,20 @@ export default function RoutesCompras(){
     }, [])
     return (
         <div className="compras ProductionPanelUX">
-            <div className="containerCompras">
+            <div className="containerCompras OpenUX">
                 <div className="divide">
                     <div className="left">
                         <LeftNav />
                     </div>
 
                     <div className="right ProduccionUX">
-                        <div className="dashboard">
-                            <div className="containerDashboard">
-                                <Routes> 
-                                    <Route index element={<RouteCompras /> } />
-                                    <Route path="requisiciones/*" element={<RouteRequisiciones />} />
-                                    <Route path="pv/*" element={<Providers />} />
-                                    <Route path="mp/*" element={<MateriaPrima />} />
-                                    <Route path="pt/*" element={<ProductoTerminado />} />
-                                </Routes>
-                            </div>
-                        </div>
-                        
+                        <Routes> 
+                            <Route index element={<DashboardCompras /> } />
+                            <Route path="requisiciones/*" element={<RouteRequisiciones />} />
+                            <Route path="pv/*" element={<Providers />} />
+                            <Route path="mp/*" element={<MateriaPrima />} />
+                            <Route path="pt/*" element={<ProductoTerminado />} />
+                        </Routes>
                     </div>
                 </div>
                 {

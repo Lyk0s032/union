@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as actions from './../../store/action/action';
 import ItemMP from "./itemMp";
 import Loading from "../loading";
+import { AiOutlinePlus } from "react-icons/ai";
 
 
 export default function MateriaPrima(){
@@ -65,14 +66,18 @@ export default function MateriaPrima(){
 
 
     useEffect(() => {
-        dispatch(actions.axiosToGetPrimas(true)) 
+        if(primas){
+            dispatch(actions.axiosToGetPrimas(false)) 
+        }else{
+            dispatch(actions.axiosToGetPrimas(true)) 
+        }
     }, [])
     return (
         <div className="provider">
-            <div className="containerProviders">
+            <div className="containerProviders Dashboard-grid">
                 <div className="topSection">
                     <div className="title">
-                        <h1>Materia prima { primas?.length && (`(${primas.length})`)}</h1>
+                        <h1>Materia prima </h1>
                     </div>
                     <div className="optionsFast">
                         <nav>
@@ -82,84 +87,85 @@ export default function MateriaPrima(){
                                         <span>Descargar</span>
                                     </button>
                                 </li>
-                                <li> 
-                                    <button onClick={() => {
-                                        params.set('w', 'newMp');
-                                        setParams(params);
-                                    }}>
-                                        <span>Agregar materia prima</span>
-                                    </button>
-                                </li>
                             </ul>
                         </nav> 
                     </div>
                 </div>
                 <div className="listProviders">
                     <div className="containerListProviders">
-                        <div className="topSearch">
-                            <div className="containerTopSearch">
-                                <input type="text" placeholder="Buscar materia prima" onChange={(e) => {
-                                    setWord(e.target.value)
-                                }}/>
-                            </div>
-                        </div>
-                        <div className="filters">
-                            <div className="containerFilters">
-                                <div className="divideFilter">
-                                    <div className="type">
-                                        <label htmlFor="">Categorías</label><br />
-                                        <select name="" id="" onChange={(e) => {
-                                            return setCat(e.target.value)
-                                        }}>
-                                            <option value=''>Seleccionar</option>
-                                            {
-                                                categorias && categorias.length ?
+                        <div className="topSearchData">
+                            <div className="divideSearching">
+                                <div className="data">
+                                    <h3>Cantidad en el sistema { primas?.length && (`(${primas.length})`)}</h3>
+                                    <button onClick={() => {
+                                        params.set('w', 'newMp');
+                                        setParams(params);
+                                    }}>
+                                        <AiOutlinePlus className="icon" />
+                                    </button>
+                                </div>
+                                <div className="filterOptions">
+                                    <div className="inputDivA">
+                                        <div className="inputUX">
+                                            <input type="text" placeholder="Buscar aquí..." onChange={(e) => {
+                                                setWord(e.target.value)
+                                            }} />
+                                        </div>
+                                        <div className="filtersUX">
+                                            <select name="" id=""  style={{width:150}} onChange={(e) => {
+                                                return setCat(e.target.value)
+                                            }}>
+                                                <option value="">Categoría</option>
+                                                {
+                                                    categorias && categorias.length ?
                                                     categorias.map((c, i) => {
                                                         return (
-                                                            c.type == 'MP' ?
-                                                                <option key={i+1} value={c.id}>{c.name}</option>
-                                                            :null 
+                                                            c.type == 'MP' ? 
+                                                                <option key={i+1} value={c.id}>{c.name.toUpperCase()}</option>
+                                                            : null
                                                         )
                                                     })
-                                                : null
-                                            }
-                                        </select>
-                                    </div>
-                                    <div className="options">
-                                        <label htmlFor="">Lineas </label><br />
-                                        <select name="" id="" onChange={(e) => {
-                                            setLi(e.target.value)
-                                        }}>
-                                            <option value=''>Seleccionar </option>
-                                            {
-                                                lineas && lineas.length ?
-                                                    lineas.map((l, i) => {
-                                                        return (
-                                                            l.type == 'MP' ?
-                                                                <option key={i+1} value={l.id}>{l.name.toUpperCase()}</option>
-                                                            :null 
-                                                        )
-                                                    })
-                                                : null
-                                            }
-                                        </select>
+                                                    :null
+                                                }
 
+                                            </select>
+                                            <select name="" id="" onChange={(e) => {
+                                                return setLi(e.target.value)
+                                            }}>
+                                                <option value="">Líneas</option>
+                                                {
+                                                    lineas && lineas.length ?
+                                                    lineas.map((c, i) => {
+                                                        return (
+                                                            c.type == 'MP' ? 
+                                                                <option key={i+1} value={c.id}>{c.name.toUpperCase()}</option>
+                                                            : null
+                                                        )
+                                                    })
+                                                    :null
+                                                }
+
+                                            </select>
+
+                                            
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="table">
+                        </div><br />
+
+                        <div className="table TableUX">
                             {
                                 !primas || loadingPrimas ?
                                     <Loading />
                                 :
-                                <table>
+                                <table >
                                     <thead> 
                                         <tr>
-                                            <th>Código</th>
-                                            <th>Nombre</th>
-                                            <th>Medida</th>
-                                            <th>Unidad</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
                                             <th>Precio promedio</th>
                                             <th></th>
                                         </tr>

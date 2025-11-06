@@ -25,7 +25,11 @@ const initialState = {
     fastCotizacion: null,
     loadingFastCotizacion: false,
 
-    itemsCotizacions: []
+    itemsCotizacions: [],
+
+    // Analisis
+    compras: null,
+    loadingCompras: false
 }
 
 export default function (state = initialState, action) {
@@ -216,6 +220,17 @@ export default function (state = initialState, action) {
                 itemsCotizacions: []
             }
 
+        case types.GET_COMPRAS:
+            return {
+                ...state,
+                compras: action.payload,
+                loadingCompras: false
+            }
+        case types.GETTING_COMPRAS: 
+            return {
+                ...state,
+                loadingCompras: action.payload
+            }
         default:
             return {...state}
     }

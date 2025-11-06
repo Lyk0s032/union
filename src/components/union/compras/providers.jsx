@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as actions from './../../store/action/action';
 import ItemProvider from "./itemProveedor";
 import Loading from "../loading";
+import { AiOutlinePlus } from "react-icons/ai";
 
 export default function Providers(){
     const [params, setParams] = useSearchParams();
@@ -20,51 +21,69 @@ export default function Providers(){
 
 
     useEffect(() => {
-        dispatch(actions.axiosToGetProviders(true))
+        if(providers){
+            dispatch(actions.axiosToGetProviders(false))
+        }else{
+            dispatch(actions.axiosToGetProviders(true))
+        }
     }, [])
 
     return (
         <div className="provider">
-            <div className="containerProviders">
+            <div className="containerProviders  Dashboard-grid">
                 <div className="topSection">
                     <div className="title">
-                        <h1>Proveedores</h1>
+                        <h1>Proveedores </h1>
                     </div>
                     <div className="optionsFast">
                         <nav>
                             <ul>
-                                <li> 
-                                    <button onClick={() => {
-                                        params.set('w', 'newProvider');
-                                        setParams(params);
-                                    }}>
-                                        <span>Nuevo proveedor</span>
+                                <li style={{marginRight:5}}>
+                                    <button >
+                                        <span>Descargar</span>
                                     </button>
                                 </li>
                             </ul>
-                        </nav>
+                        </nav> 
                     </div>
                 </div>
+
                 <div className="listProviders">
                     {
                         !providers || loadingProviders ?
                             <Loading />
                         :
                         <div className="containerListProviders">
-                        <div className="topSearch">
-                            <div className="containerTopSearch">
-                                <input type="text" placeholder="Buscar proveedor" onChange={(e) => {
-                                    setWord(e.target.value)
-                                }} value={word}/>
+                        <div className="topSearchData">
+                            <div className="divideSearching">
+                                <div className="data">
+                                    <h3>Cantidad en el sistema { providers?.length && (`(${providers.length})`)}</h3>
+                                    <button onClick={() => {
+                                        params.set('w', 'newProvider');
+                                        setParams(params);
+                                    }}>
+                                        <AiOutlinePlus className="icon" />
+                                    </button>
+                                </div>
+                                <div className="filterOptions" style={{borderRadius:20}}>
+                                    <div className="inputDivA">
+                                        <div className="inputUX" style={{width:'100%'}}>
+                                            <input type="text" placeholder="Buscar proveedor aquí..." onChange={(e) => {
+                                                setWord(e.target.value)
+                                            }} />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div className="table">
+                        </div><br />
+                        
+                        <div className="table TableUX">
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>Nombre</th>
-                                        <th>Nit</th>
-                                        <th>Tipo</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>

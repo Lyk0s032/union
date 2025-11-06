@@ -7,6 +7,7 @@ import ItemProductoTerminado from "./itemProductoTerminado";
 import ModalNewProducto from "../modal/producto";
 import ShowMateriaPrima from "../materia/showMateriaPrima";
 import ShowProductoTerminado from "./showProductoTerminado";
+import { AiOutlinePlus } from "react-icons/ai";
 
 
 export default function ProductoTerminado(){
@@ -24,85 +25,95 @@ export default function ProductoTerminado(){
     const [li, setLi] = useState(null);
 
     useEffect(() => {
-        dispatch(actions.axiosToGetProductos(true)) 
+        if(productos){
+            dispatch(actions.axiosToGetProductos(false)) 
+        }else{
+            dispatch(actions.axiosToGetProductos(true)) 
+        }
     }, []) 
     return (
         <div className="provider">
-            <div className="containerProviders">
+            <div className="containerProviders Dashboard-grid">
                 <div className="topSection">
                     <div className="title">
-                        <h1>Productos terminado {productos?.length && (`(${productos.length})`)}</h1>
+                        <h1>Productos terminado </h1>
                     </div>
                     <div className="optionsFast">
                         <nav>
                             <ul>
-                                <li> 
-                                    <button onClick={() => {
-                                        params.set('w', 'newProduct');
-                                        setParams(params);
-                                    }}>
-                                        <span>Agregar producto terminado</span>
+                                <li style={{marginRight:5}}>
+                                    <button>
+                                        <span>Descargar</span>
                                     </button>
                                 </li>
                             </ul>
-                        </nav>
+                        </nav> 
                     </div>
                 </div>
                 <div className="listProviders">
                     <div className="containerListProviders">
-                        <div className="topSearch">
-                            <div className="containerTopSearch">
-                                <input type="text" placeholder="Buscar producto terminado" onChange={(e) => {
-                                    setWord(e.target.value)
-                                }}/>
-                            </div>
-                        </div>
-                        <div className="filters">
-                            <div className="containerFilters">
-                                <div className="divideFilter">
-                                    <div className="type">
-                                        <label htmlFor="">Categorías</label><br />
-                                        <select name="" id="" onChange={(e) => {
-                                            return setCat(e.target.value)
-                                        }}>
-                                            <option value=''>Seleccionar</option>
-                                            {
-                                                categorias && categorias.length ?
+                        <div className="topSearchData">
+                            <div className="divideSearching">
+                                <div className="data">
+                                    <h3>Cantidad en el sistema {productos?.length && (`(${productos.length})`)}</h3>
+                                    <button onClick={() => {
+                                        params.set('w', 'newProduct');
+                                        setParams(params);
+                                    }}>
+                                        <AiOutlinePlus className="icon" />
+                                    </button>
+                                </div>
+                                <div className="filterOptions">
+                                    <div className="inputDivA">
+                                        <div className="inputUX">
+                                            <input type="text" placeholder="Buscar aquí..." onChange={(e) => {
+                                                setWord(e.target.value)
+                                            }} />
+                                        </div>
+                                        <div className="filtersUX">
+                                            <select name="" id=""  style={{width:150}} onChange={(e) => {
+                                                return setCat(e.target.value)
+                                            }}>
+                                                <option value="">Categoría</option>
+                                                {
+                                                    categorias && categorias.length ?
                                                     categorias.map((c, i) => {
                                                         return (
-                                                            c.type == 'comercial' ?
-                                                                <option key={i+1} value={c.id}>{c.name}</option>
-                                                            :null 
+                                                            c.type == 'comercial' ? 
+                                                                <option key={i+1} value={c.id}>{c.name.toUpperCase()}</option>
+                                                            : null
                                                         )
                                                     })
-                                                : null
-                                            }
-                                        </select>
-                                    </div>
-                                    <div className="options">
-                                        <label htmlFor="">Lineas </label><br />
-                                        <select name="" id="" onChange={(e) => {
-                                            setLi(e.target.value)
-                                        }}>
-                                            <option value=''>Seleccionar </option>
-                                            {
-                                                lineas && lineas.length ?
-                                                    lineas.map((l, i) => {
-                                                        return (
-                                                            l.type == 'comercial' ?
-                                                                <option key={i+1} value={l.id}>{l.name.toUpperCase()}</option>
-                                                            :null 
-                                                        )
-                                                    })
-                                                : null
-                                            }
-                                        </select>
+                                                    :null
+                                                }
 
+                                            </select>
+                                            <select name="" id="" onChange={(e) => {
+                                                return setLi(e.target.value)
+                                            }}>
+                                                <option value="">Líneas</option>
+                                                {
+                                                    lineas && lineas.length ?
+                                                    lineas.map((c, i) => {
+                                                        return (
+                                                            c.type == 'comercial' ? 
+                                                                <option key={i+1} value={c.id}>{c.name.toUpperCase()}</option>
+                                                            : null
+                                                        )
+                                                    })
+                                                    :null
+                                                }
+
+                                            </select>
+
+                                            
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="table">
+                        </div><br />
+                        
+                        <div className="table TableUX">
                             {
                                 !productos || loadingProductos ?
                                     <Loading />
@@ -110,10 +121,10 @@ export default function ProductoTerminado(){
                                 <table>
                                     <thead> 
                                         <tr>
-                                            <th>Código</th>
-                                            <th>Nombre</th>
-                                            <th>Categoría</th>
-                                            <th>Línea</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
                                             <th>Precio promedio</th>
                                             <th></th>
                                         </tr>

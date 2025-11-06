@@ -18,9 +18,17 @@ export default function General(props){
                         </button>
                     </div>
                     <div className="dataGeneral">
-                        <div className="boxGeneral">
+                        <div className="boxGeneral"> 
                             <h1>{prima.description}</h1>
                             <h3>{prima.medida} {prima.unidad}</h3>
+                             <div className="optionsItem">
+                                <span className='title'>Linea: </span><br />
+                                <span>{prima.linea?.name ? prima.linea?.name : 'Sin definir'}</span>
+                            </div> 
+                            <div className="optionsItem">
+                                <span className='title'>Categoría: </span><br />
+                                <span>{prima.categorium ? prima.categorium.name : 'Sin definir'}</span>
+                            </div>
                             <div className="optionsItem">
                                 <span className='title'>Volumen: </span><br />
                                 <span>{prima.volumen ? prima.volumen : 'Sin definir'}</span>
@@ -29,14 +37,7 @@ export default function General(props){
                                 <span className='title'>Peso: </span><br />
                                 <span>{prima.peso ? prima.peso : 'Sin definir'}</span>
                             </div>
-                            <div className="optionsItem">
-                                <span className='title'>Linea: </span><br />
-                                <span>{prima.linea.name ? prima.linea.name : 'Sin definir'}</span>
-                            </div> 
-                            <div className="optionsItem">
-                                <span className='title'>Categoría: </span><br />
-                                <span>{prima.categorium ? prima.categorium.name : 'Sin definir'}</span>
-                            </div>
+                           
                         </div>
                     </div>
                 </div>
