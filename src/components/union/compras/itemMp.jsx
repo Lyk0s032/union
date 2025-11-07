@@ -66,11 +66,40 @@ export default function ItemMP(props){
             <td onClick={() => {
                 params.set('prima', MP.id) 
                 setParams(params);
-            }}>{MP.id}</td>
-            <td >{MP.description.toUpperCase()}</td>
-            <td>{MP.medida}</td>
-            <td style={{fontSize:11}}>{MP.unidad.toUpperCase()}</td> 
-            <td>{promedio ? new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(promedio/MP.prices.length).toFixed(0)) : 'No hay precios aun'}</td> 
+            }} className='coding'>
+                <div className="code">
+                    <h3>{MP.id}</h3>
+                </div>
+            </td> 
+            <td className="longer" onClick={() => {
+                params.set('prima', MP.id) 
+                setParams(params);
+            }} >
+                <div className="titleNameKitAndData">
+                    <div className="extensionColor" style={{fontSize:14}}>
+                        <div className="boxColor"></div>
+                        <span>{MP.categorium ? MP.categorium.name.toUpperCase() : null}</span>
+                        <span style={{fontSize:11}} >{MP.item}</span>
+                    </div>
+                    <div className="nameData">
+                        <h3>{MP.description}</h3>
+                        <span>{MP.medida} {MP.unidad}</span>
+                    </div>
+                </div>
+            </td>
+            <td></td>
+            <td style={{fontSize:11}} ></td> 
+            <td className="tdPrice" onClick={() => {
+                params.set('prima', MP.id) 
+                setParams(params);
+            }} >
+                <div className="similarPrice">
+                    <h3>
+                    {promedio ? new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(promedio/MP.prices.length).toFixed(0)) : 'No hay precios aun'}
+
+                    </h3>
+                </div>
+            </td>
             <td className="btnKits">
                 {
                     loading ?

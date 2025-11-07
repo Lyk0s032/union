@@ -4,6 +4,8 @@ import * as actions from '../../../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
 import General from './general';
 import AddPrice from './addPrice';
+import { MdArrowBack } from 'react-icons/md';
+import GraphProviderPrices from './analisis/graphPriceProducto';
 
 export default function ShowProductoTerminado(){
     const [params, setParams] = useSearchParams();
@@ -21,12 +23,26 @@ export default function ShowProductoTerminado(){
         !producto || loadingProducto ?
         <div className="showProveedor">
             <div className="containerShow">
-                <h1>Loading</h1>
-            </div> 
+                <div className="loading">
+                    <div className="dataLoading">
+                        <span>Presiona Esc para cancelar</span>
+                        <h1>Cargando...</h1>
+                    </div>
+                </div>
+            </div>
         </div>
         :
         producto == 404 || producto == 'notrequest' ?
-            <h1>No hemos encontrado esto.</h1>
+            <div className="showProveedor">
+            <div className="containerShow">
+                <div className="loading">
+                    <div className="dataLoading">
+                        <span>Presiona Esc para cancelar</span>
+                        <h1>No hemos logrado encontrar esto,¡.</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
         :
         <div className="showProveedor">
             <div className="containerShow">
@@ -36,10 +52,17 @@ export default function ShowProductoTerminado(){
                             params.delete('producto');
                             setParams(params);
                         }}>
-                            <span>Volver</span>
+                            <MdArrowBack className="icon" />
                         </button>
                         <div className="title">
-                            <h3>{producto.item} - {producto.description}</h3>
+                            <div className="divideThat">
+                                <div className="letter">
+                                    <h3>{producto.id}</h3>
+                                </div>
+                                <div className="dataThis">
+                                    <h3>{producto.description}</h3>
+                                </div>
+                            </div>
                         </div>
                     </div> 
                 </div>
@@ -66,10 +89,19 @@ export default function ShowProductoTerminado(){
                         <div className="containerShow">
                             {
                                 !show || show == 'general' ?
-                                    <General prima={producto} />
+                                    <>
+                                        <General prima={producto} /><br /><br />
+                                        <AddPrice prima={producto} />
+                                    </>
                                 : show == 'price' ?
                                     <AddPrice prima={producto}/>
                                 : null 
+                            }
+
+                            {
+                                params.get('graph') ?
+                                    <GraphProviderPrices  />
+                                : null
                             }
                         </div>
                     </div>

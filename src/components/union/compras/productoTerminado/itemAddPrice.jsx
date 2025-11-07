@@ -4,6 +4,7 @@ import * as actions from '../../../store/action/action';
 import axios from "axios";
 import { MdCheck, MdClose } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
+import { useSearchParams } from "react-router-dom";
  
 export default function ItemAddPrice(props){
     const precio = props.precio;
@@ -14,7 +15,7 @@ export default function ItemAddPrice(props){
     const [update, setUpdate] = useState(null);
     const [porcentaje, setPorcentaje] = useState(0)
     const dispatch = useDispatch();
-
+    const [params, setParams] = useSearchParams();
     const porcentaChange = () => {
         const p = ((Number(valor) - Number(precio.descuentos)) / Number(precio.descuentos)) * 100 
         setPorcentaje(p)
@@ -75,13 +76,16 @@ export default function ItemAddPrice(props){
     return( 
         <>
             <tr>
-                <td className="medium" >
+                <td className="medium" onClick={() => {
+                params.set('graph', precio.proveedor.id)
+                setParams(params)
+            }}> 
                     <div className="proveedorData">
                         <div className="letter">
-                            <h1>{precio.proveedor.nombre[0]}</h1>
+                            <h1>{precio.proveedor.nombre[0]} </h1>
                         </div>
                         <div className="dataProvider">
-                            <h3>{precio.proveedor.nombre}</h3>
+                            <h3>{precio.proveedor.nombre} -{ precio.proveedor.id}</h3>
                         <span style={{color: '#666', fontWeight:400,fontSize:11}}>Ult. {precio.createdAt.split('T')[0]}</span>
                         </div>
                     </div>

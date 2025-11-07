@@ -1057,21 +1057,37 @@ export function axiosToGetOrdenesComprasAdmin(carga){
         });
     }
 }
+
+export function getDataOrdenesCompras(data){
+    return {
+        type: types.GET_COMPRAS,
+        payload: data
+    }
+}
+export function gettingDataOrdenesCompras(carga){
+    return {
+        type: types.GETTING_COMPRAS,
+        payload: carga
+    }
+}
+
+
 // Para almacen
-export function axiosToGetOrdenesAlmacen(carga){
+export function axiosToGetDataOrdenesAlmacen(carga, ruta){
     return function(dispatch){ 
-        dispatch(gettingOrdenesCompras(carga))
-        axios.get(`/api/inventario/get/ordenesCompra/all`)
+        dispatch(gettingDataOrdenesCompras(carga))
+        axios.get(`/api/requisicion/get/filter/compras/getAllOrden${ruta ? ruta : ''}`)
         .then((info) => info.data) 
         .then(inf => {
-            return dispatch(getOrdenesCompras(inf))
+            console.log(`/api/requisicion/get/filter/compras/getAllOrden${ruta ? ruta : ''}`)
+            return dispatch(getDataOrdenesCompras(inf))
         })
         .catch((e) => {
             console.log(e)
             if(e.request){
-                return dispatch(getOrdenesCompras('notrequest'));
+                return dispatch(getDataOrdenesCompras('notrequest'));
             }else{
-                return dispatch(getOrdenesCompras(404))
+                return dispatch(getDataOrdenesCompras(404))
             }
         });
     }

@@ -12,7 +12,7 @@ axios.defaults.baseURL = 'https://unionapi-production.up.railway.app/';
 createRoot(document.getElementById('root')).render(
   <Provider store={store}> 
     <StrictMode> 
-      <App />           
+      <App />            
     </StrictMode>     
   </Provider>,         
 )             

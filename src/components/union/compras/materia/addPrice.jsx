@@ -20,15 +20,16 @@ export default function AddPrice(props){
                         provider ? <div></div>
                         :
                         <div>
-                            <h3>Actualizar <strong>{prima.item}</strong></h3>
                         
                             <div className="dataMateria">
-                                <span>Precio promedio: <strong>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(promedio) / prima.prices.length).toFixed(0))} COP</strong></span><br />
-                                <span>Promedio sin IVA: <strong>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(sinIva) / prima.prices.length).toFixed(0))} COP </strong></span><br />
-                                <span>Valor del IVA: <strong>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(iva) / prima.prices.length).toFixed(0))} COP</strong></span><br />
+                                <span>Precio promedio: <br />
+                                    <h3> 
+                                        $ {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(promedio) / prima.prices.length).toFixed(0))} 
+                                    </h3>
+                                </span><br />
+                                <span>Promedio sin IVA: <br /><strong>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(sinIva) / prima.prices.length).toFixed(0))} COP </strong></span><br />
+                                <span>Valor del IVA: <br /><strong>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(Number(iva) / prima.prices.length).toFixed(0))} COP</strong></span><br />
                                 
-                                <span>Medida: <strong>{prima.medida}</strong></span><br />
-                                <span>Unidad: <strong>{prima.unidad}</strong></span><br /><br />
 
                             </div>
                         </div>

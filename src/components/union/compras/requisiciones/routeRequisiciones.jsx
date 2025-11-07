@@ -12,15 +12,18 @@ export default function RouteRequisiciones(){
 
     const { ids } = req;
     return (
-        <div className="">
-            <Routes>
-                <Route path="/*" element={<Requisiciones />} />
-            </Routes>
-            {
-                ids?.length ? 
-                    <Comprar />
-                : null
-            }
+        <div className="dashboard">
+           <div className="containerDashboard">
+                <Routes>
+                    <Route path="/*" element={<Requisiciones />} />
+                </Routes>
+                {
+                    ids?.length ? 
+                        <Comprar />
+                    : null
+                }
+                
+           </div>
 
         </div>
     )

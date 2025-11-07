@@ -4,6 +4,10 @@ import AddPrice from './addPrice';
 import * as actions from '../../../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
 import General from './general';
+import { MdArrowBack } from 'react-icons/md';
+import ItemAddPrice from './itemAddPrice';
+import Analisis from './analisis/analisis';
+import GraphProviderPrices from './analisis/graphPricesProvider';
 
 export default function ShowMateriaPrima(){
     const [params, setParams] = useSearchParams();
@@ -18,13 +22,29 @@ export default function ShowMateriaPrima(){
     useEffect(() => {
         dispatch(actions.axiosToGetPrima(true, params.get('prima')))
     }, [params.get('prima')])
-    return (
+    return ( 
         !prima || loadingPrima ?
         <div className="showProveedor">
             <div className="containerShow">
-                <h1>Loading</h1>
+                <div className="loading">
+                    <div className="dataLoading">
+                        <span>Presiona Esc para cancelar</span>
+                        <h1>Cargando...</h1>
+                    </div>
+                </div>
             </div>
         </div>
+        : prima == 404 || prima == 'notrequest' ? 
+            <div className="showProveedor">
+                <div className="containerShow">
+                    <div className="loading">
+                        <div className="dataLoading">
+                            <span>Presiona Esc para cancelar</span>
+                            <h1>No hemos encontrado esto</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
         :
         <div className="showProveedor">
             <div className="containerShow">  {console.log(prima)}
@@ -34,10 +54,18 @@ export default function ShowMateriaPrima(){
                             params.delete('prima');
                             setParams(params);
                         }}>
-                            <span>Volver</span>
+                            <MdArrowBack className="icon" />
                         </button>
                         <div className="title">
-                            <h3>{prima.item} - {prima.description}</h3>
+                            <div className="divideThat">
+                                <div className="letter">
+                                    <h3>{prima.id}</h3>
+                                </div>
+                                <div className="dataThis">
+                                    <span>{prima.item}</span>
+                                    <h3>{prima.description}</h3>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -52,9 +80,9 @@ export default function ShowMateriaPrima(){
                                             <span>General</span>
                                         </div>
                                     </li>
-                                    <li className={show == 'price' ? 'Active' : null} onClick={() => setShow('price')}>
+                                    <li className={show == 'analisis' ? 'Active' : null} onClick={() => setShow('analisis')}>
                                         <div>
-                                            <span>Actualizar precio</span>
+                                            <span>Analisis</span>
                                         </div>
                                     </li>
                                     
@@ -64,9 +92,18 @@ export default function ShowMateriaPrima(){
                         <div className="containerShow">
                             {
                                 !show || show == 'general' ?
+                                <>
                                     <General prima={prima} />
-                                : show == 'price' ?
                                     <AddPrice prima={prima}/>
+                                </>
+                                : show == 'analisis' ?
+                                    <Analisis prima={prima}/>
+                                : null
+                            }
+
+                            {
+                                params.get('graph') ?
+                                    <GraphProviderPrices  />
                                 : null
                             }
                         </div>

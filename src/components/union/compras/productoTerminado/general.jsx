@@ -17,10 +17,10 @@ export default function General(props){
                             <span>Actualizar</span>
                         </button>
                     </div>
-                    <div className="dataGeneral">
+                    <div className="dataGeneral" style={{width:'70%'}}>
                         <div className="boxGeneral">
-                            <h3>Producto terminado</h3>
-                            <h1>{prima.description}</h1>
+                            <h1 style={{fontSize:18}}>{prima.item}</h1>
+                            <h3 style={{fontSize:12}}>{prima.description}</h3>
                             <div className="optionsItem">
                                 <span className='title'>Volumen: </span><br />
                                 <span>{prima.volumen ? prima.volumen : 'Sin definir'}</span>

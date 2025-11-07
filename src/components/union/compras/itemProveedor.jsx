@@ -8,19 +8,29 @@ export default function ItemProvider(props){
     return (
         <tr >
             <td onClick={() => {
-                params.set('provider', provider.id)
+                params.set('provider', provider.id) 
                 setParams(params);
-            }}>{provider.nombre}</td>
-            <td>{provider.nit}</td>
-            <td>{provider.type}</td>
-            {/* <td>
-                <button onClick={() => {
-                    params.set('w', 'updateProvider');
-                    setParams(params);
-                }}>
-                    <span>Editar</span>
-                </button>
-            </td> */}
+            }} className='coding'>
+                <div className="code">
+                    <h3>{provider.id}</h3>
+                </div>
+            </td> 
+            <td className="longer" onClick={() => {
+                params.set('provider', provider.id) 
+                setParams(params);
+            }} >
+                <div className="titleNameKitAndData">
+                    <div className="extensionColor">
+                        <div className="boxColor"></div>
+                        <span >{provider.nit}</span>
+                        <span style={{marginLeft:10}}>| {provider.type == 'MP' ? 'Materia prima' : 'Comercial'}</span>
+
+                    </div>
+                    <div className="nameData">
+                        <h3>{provider.nombre}</h3>
+                    </div>
+                </div>
+            </td>
         </tr>
     )
 }
