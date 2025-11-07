@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import General from './general';
 import { MdArrowBack } from 'react-icons/md';
 import ItemAddPrice from './itemAddPrice';
+import Analisis from './analisis/analisis';
+import GraphProviderPrices from './analisis/graphPricesProvider';
 
 export default function ShowMateriaPrima(){
     const [params, setParams] = useSearchParams();
@@ -94,8 +96,14 @@ export default function ShowMateriaPrima(){
                                     <General prima={prima} />
                                     <AddPrice prima={prima}/>
                                 </>
-                                : show == 'price' ?
-                                    <AddPrice prima={prima}/>
+                                : show == 'analisis' ?
+                                    <Analisis prima={prima}/>
+                                : null
+                            }
+
+                            {
+                                params.get('graph') ?
+                                    <GraphProviderPrices  />
                                 : null
                             }
                         </div>

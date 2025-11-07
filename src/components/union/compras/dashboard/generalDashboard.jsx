@@ -9,10 +9,14 @@ import MateriaFiltro from './filtros/materia';
 import RequisicionFiltro from './filtros/requisicion';
 import ProveedorFiltro from './filtros/proveedor';
 import OrdenFiltro from './filtros/orden';
+import RangosFilterTime from './filtros/rangos'; // Importación existente
 
 export default function GeneralDashboard(){
   const req = useSelector(store => store.requisicion);
   const { compras, loadingCompras } = req;
+
+  const usuario = useSelector(store => store.usuario);
+  const { user } = usuario
   const dispatch = useDispatch();
 
   // estado del panel de filtro (qué subcomponente mostrar)
@@ -20,6 +24,9 @@ export default function GeneralDashboard(){
 
   // estado único de filtros seleccionados: array de objetos { tipo, id, nombre, ... }
   const [filters, setFilters] = useState([]);
+  
+  // NUEVO ESTADO: para el rango de tiempo { startDate, endDate }
+  const [dateRange, setDateRange] = useState({ startDate: null, endDate: null });
 
   // ruta construida que se manda al backend (string con query)
   const [rutaQuery, setRutaQuery] = useState(null);
@@ -42,45 +49,60 @@ export default function GeneralDashboard(){
     });
   };
 
-  // Helper: construye query string agrupando ids por tipo
-  const buildQueryString = (filtersArray) => {
-    if (!filtersArray || !filtersArray.length) return null;
+  // NUEVA FUNCIÓN: Manejar el cambio de rango de fechas desde el subcomponente
+  const handleDateRangeChange = (newRange) => {
+      setDateRange(newRange);
+  };
 
-    const groups = filtersArray.reduce((acc, f) => {
-      if (!acc[f.tipo]) acc[f.tipo] = new Set();
-      acc[f.tipo].add(String(f.id));
-      return acc;
-    }, {});
-
-    // mapeo tipo -> parámetro en el backend
-    const tipoToParam = {
-      proveedor: 'proveedorIds',
-      requisicion: 'requisicionIds',
-      materia: 'materiaIds',
-      producto: 'productoIds',
-      orden: 'ordenIds' // ajústalo al nombre real si el backend espera otro nombre
-    };
-
+  // Helper: construye query string agrupando ids por tipo (MODIFICADO)
+  const buildQueryString = (filtersArray, dateRange) => {
     const params = new URLSearchParams();
 
-    Object.entries(groups).forEach(([tipo, idSet]) => {
-      const paramName = tipoToParam[tipo];
-      if (!paramName) return; // si hay un tipo sin mapping, lo ignoramos
-      const ids = Array.from(idSet).join(',');
-      if (ids) params.set(paramName, ids);
-    });
+    // Lógica existente para IDs
+    if (filtersArray && filtersArray.length) {
+      const groups = filtersArray.reduce((acc, f) => {
+        if (!acc[f.tipo]) acc[f.tipo] = new Set();
+        acc[f.tipo].add(String(f.id));
+        return acc;
+      }, {});
 
-    const qs = params.toString(); // ya codificado
+      const tipoToParam = {
+        proveedor: 'proveedorIds',
+        requisicion: 'requisicionIds',
+        materia: 'materiaIds',
+        producto: 'productoIds',
+        orden: 'ordenIds'
+      };
+
+      Object.entries(groups).forEach(([tipo, idSet]) => {
+        const paramName = tipoToParam[tipo];
+        if (paramName) {
+          const ids = Array.from(idSet).join(',');
+          if (ids) params.set(paramName, ids);
+        }
+      });
+    }
+
+    // NUEVA LÓGICA: Añadir fechas
+    if (dateRange && dateRange.startDate) {
+        params.set('startDate', dateRange.startDate);
+    }
+    if (dateRange && dateRange.endDate) {
+        params.set('endDate', dateRange.endDate);
+    }
+
+    const qs = params.toString();
     return qs ? `?${qs}` : null;
   };
 
-  // Cuando cambian filters, reconstruimos ruta con debounce y disparamos fetch
+  // Cuando cambian filters O dateRange, reconstruimos ruta con debounce y disparamos fetch (MODIFICADO)
   useEffect(() => {
     // limpiar debounce anterior
     if (debounceRef.current) clearTimeout(debounceRef.current);
 
     debounceRef.current = setTimeout(() => {
-      const qs = buildQueryString(filters);
+      // Pasamos 'filters' y el NUEVO estado 'dateRange'
+      const qs = buildQueryString(filters, dateRange); 
       setRutaQuery(qs);
 
       // dispatch con la ruta (si quieres mandar true/false o manejar carga)
@@ -90,7 +112,7 @@ export default function GeneralDashboard(){
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
-  }, [filters, dispatch]);
+  }, [filters, dateRange, dispatch]); // DEPENDENCIA dateRange AÑADIDA
 
   // Mostrar badges pequeños de los filtros activos
   const SelectedBadges = () => (
@@ -124,71 +146,98 @@ export default function GeneralDashboard(){
     </div>
   );
 
+  const [time, setTime] = useState(null)
+
+  const close = () => {
+    setTime(false)
+  }
   return (
-    <div className="containerDashboardCompras">
-      <div className="titleDashboard">
-        <h3>Hola, Jessica</h3>
-        <h4>Gestiona toda la información de tus proveedores, productos, órdenes de compra y más.</h4>
-      </div>
-
-      <div className="filterOptions">
-        <div className="containerFilter">
-          <div className="itemZone">
-            <span>Tiempo</span>
-            <h3>Octubre</h3>
-            <button>
-              <span>Haz clic aquí para filtrar o presiona Ctrl + F</span>
-            </button>
+    <div className="dashboard">
+      <div className="containerDashboard">
+        <div className="containerDashboardCompras">
+          <div className="titleDashboard">
+            <h3>Hola, {user.user.name}</h3>
+            <h4>Gestiona toda la información de tus proveedores, productos, órdenes de compra y más.</h4>
           </div>
-        </div>
-      </div>
 
-      <div className="searchDiv">
-         {/* Badges de filtros activos */}
-
-        <div className="containerSearchDiv">
-          <div className="optionsSearch" >
-            <button className={filtro === 'orden' ? 'Active' : ''} onClick={() => setFiltro('orden')}><span>Orden</span> </button>
-            <button className={filtro === 'proveedor' ? 'Active' : ''} onClick={() => setFiltro('proveedor')}><span>Proveedor</span> </button>
-            <button className={filtro === 'requisicion' ? 'Active' : ''} onClick={() => setFiltro('requisicion')}><span>Requisicion</span> </button>
-            <button className={filtro === 'materia' ? 'Active' : ''} onClick={() => setFiltro('materia')}><span>Materia prima</span> </button>
-            <button className={filtro === 'producto' ? 'Active' : ''} onClick={() => setFiltro('producto')}><span>Producto</span> </button>
-          </div>
- 
-         
-          {/* MOSTRAR SUBCOMPONENTE SEGÚN filtro */}
-          <div style={{ marginTop: 8 }}>
-            {filtro === 'producto' && <ProductoFiltro onSelect={toggleFilter} />}
-            {filtro === 'materia' && <MateriaFiltro onSelect={toggleFilter} />}
-            {filtro === 'requisicion' && <RequisicionFiltro onSelect={toggleFilter} />}
-            {filtro === 'proveedor' && <ProveedorFiltro onSelect={toggleFilter} />}
-            {filtro === 'orden' && <OrdenFiltro onSelect={toggleFilter} />}
-          </div>
-        </div>
-
-        <br /><br /><SelectedBadges />
-
-      </div>
-
-      {/* Resultados */}
-      {loadingCompras ? <h1>Cargando...</h1>
-        : !compras || compras === 'notrequest' || compras === 404 ? <h1>Sin resultados</h1>
-        : (
-          <div>
-            <div className="divideZone">
-              <BoxDatas compras={compras.data} />
+          <div className="filterOptions">
+            <div className="containerFilter">
+              {
+                !time ?
+                <div className="itemZone">
+                  <span>Tiempo</span>
+                  {/* Mostrar fechas seleccionadas o valor por defecto */}
+                  <h3>
+                    {dateRange.startDate && dateRange.endDate 
+                        ? `Desde: ${dateRange.startDate} Hasta: ${dateRange.endDate}` 
+                        : 'Actualidad'
+                    }
+                  </h3>
+                  <button onClick={() => setTime(true)}>
+                    <span>Haz clic aquí para filtrar o presiona Ctrl + F</span>
+                  </button>
+                </div>
+                :
+                // Pasamos las props 'close', 'onChange' y 'currentRange'
+                <RangosFilterTime 
+                    close={close} 
+                    onChange={handleDateRangeChange}
+                    currentRange={dateRange}
+                />
+              }
+              
             </div>
-            <div className="zoneGraph">
-              <div className="divideZoneGraph">
-                <div className="containerGraph"><GraphCompras /></div>
+          </div>
+
+          <div className="searchDiv">
+            {/* Badges de filtros activos */}
+
+            <div className="containerSearchDiv">
+              <div className="optionsSearch" >
+                <button className={filtro === 'orden' ? 'Active' : ''} onClick={() => setFiltro('orden')}><span>Orden</span> </button>
+                <button className={filtro === 'proveedor' ? 'Active' : ''} onClick={() => setFiltro('proveedor')}><span>Proveedor</span> </button>
+                <button className={filtro === 'requisicion' ? 'Active' : ''} onClick={() => setFiltro('requisicion')}><span>Requisicion</span> </button>
+                <button className={filtro === 'materia' ? 'Active' : ''} onClick={() => setFiltro('materia')}><span>Materia prima</span> </button>
+                <button className={filtro === 'producto' ? 'Active' : ''} onClick={() => setFiltro('producto')}><span>Producto</span> </button>
+              </div>
+      
+            
+              {/* MOSTRAR SUBCOMPONENTE SEGÚN filtro */}
+              <div style={{ marginTop: 8 }}>
+                {filtro === 'producto' && <ProductoFiltro onSelect={toggleFilter} />}
+                {filtro === 'materia' && <MateriaFiltro onSelect={toggleFilter} />}
+                {filtro === 'requisicion' && <RequisicionFiltro onSelect={toggleFilter} />}
+                {filtro === 'proveedor' && <ProveedorFiltro onSelect={toggleFilter} />}
+                {filtro === 'orden' && <OrdenFiltro onSelect={toggleFilter} />}
               </div>
             </div>
-            <div className="resultsDataItems">
-              <ListaCompras compras={compras.data} />
-            </div>
+
+            <br /><br /><SelectedBadges />
+
           </div>
-        )
-      }
-    </div> 
+
+          {/* Resultados */}
+          {loadingCompras ? <h1>Cargando...</h1>
+            : !compras || compras === 'notrequest' || compras === 404 ? <h1>Sin resultados</h1>
+            : (
+              <div>
+                <div className="divideZone">
+                  <BoxDatas compras={compras.data} resumen={compras.resumen} />
+                </div>
+                <div className="zoneGraph">
+                  <div className="divideZoneGraph">
+                    <div className="containerGraph"><GraphCompras chartData={compras} /></div>
+                  </div>
+                </div>
+                <div className="resultsDataItems">
+                  <ListaCompras compras={compras.data} />
+                </div>
+              </div>
+            )
+          }
+        </div> 
+      </div>
+    </div>
+
   );
 }

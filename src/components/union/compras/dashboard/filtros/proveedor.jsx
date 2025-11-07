@@ -41,6 +41,7 @@ export default function ProveedorFiltro({ onSelect }){
                                     <div className="itemResult" key={i+1} onClick={() => {
                                         let a = { tipo: 'proveedor', nombre: r.nombre, id: r.id}
                                         onSelect(a)
+                                        setData(null)
                                     }}>
                                        <div className="divideItemResult">
                                             <div className="nameData">

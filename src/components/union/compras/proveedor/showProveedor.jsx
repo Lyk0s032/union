@@ -3,6 +3,10 @@ import { useSearchParams } from 'react-router-dom';
 import GeneralPv from './general';
 import * as actions from '../../../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
+import ListaProductosProveedor from './ListaProductosProveedor';
+import { MdArrowBack } from 'react-icons/md';
+import GraphProviderPrices from '../materia/analisis/graphPricesProvider';
+import GraphProviderPricesProducto from '../productoTerminado/analisis/graphPriceProducto';
 
 export default function ShowProveedor(){
     const [params, setParams] = useSearchParams();
@@ -17,14 +21,29 @@ export default function ShowProveedor(){
     }, [params.get('provider')])
     return (
         !provider || loadingProvider ?
-        <div className="showProveedor">
-            <div className="containerShow">
-                <h1>Loading</h1>
+            <div className="showProveedor">
+                <div className="containerShow">
+                    <div className="loading">
+                        <div className="dataLoading">
+                            <span>Presiona Esc para cancelar</span>
+                            <h1>Cargando...</h1>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        : provider == 404 || provider == 'notrequest' ? 
+            <div className="showProveedor">
+                <div className="containerShow">
+                    <div className="loading">
+                        <div className="dataLoading">
+                            <span>Presiona Esc para cancelar</span>
+                            <h1>No hemos encontrado esto</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
         :
         <div className="showProveedor">
-        {console.log(provider)}
             <div className="containerShow">
                 <div className="topProvider">
                     <div className="divideTop">
@@ -32,10 +51,12 @@ export default function ShowProveedor(){
                             params.delete('provider');
                             setParams(params);
                         }}>
-                            <span>Volver</span>
+                            <MdArrowBack className="icon" />
                         </button>
+
                         <div className="title">
                             <h3>{provider.nombre}</h3>
+                            <span>NIT: {provider.nit}</span>    
                         </div>
                     </div>
                 </div>
@@ -49,9 +70,9 @@ export default function ShowProveedor(){
                                             <span>General</span>
                                         </div>
                                     </li>
-                                    <li className={show == 'price' ? 'Active' : null} onClick={() => setShow('price')}>
+                                    <li className={show == 'items' ? 'Active' : null} onClick={() => setShow('items')}>
                                         <div>
-                                            <span>Actualizar precio</span>
+                                            <span>Ver productos</span>
                                         </div>
                                     </li>
 
@@ -62,7 +83,17 @@ export default function ShowProveedor(){
                             {
                                 !show || show == 'general' ?
                                     <GeneralPv provider={provider} />
-                                :  null
+                                :  show == 'items' ?
+                                    <ListaProductosProveedor provider={provider} />
+                                : null
+                            }
+
+                            {
+                                params.get('prima') ?
+                                    <GraphProviderPrices  />
+                                : params.get('producto') ?
+                                    <GraphProviderPricesProducto />    
+                                : null
                             }
                         </div>
                     </div>

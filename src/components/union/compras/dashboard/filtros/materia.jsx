@@ -41,6 +41,8 @@ export default function MateriaFiltro({ onSelect }){
                                     <div className="itemResult" key={i+1} onClick={() => {
                                         let a = { tipo: 'materia', nombre: r.description, id: r.id}
                                         onSelect(a)
+                                        setData(null)
+
                                     }}>
                                        <div className="divideItemResult">
                                             <div className="nameData">

@@ -1,9 +1,11 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 export default function OrdenFiltro(){
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [params, setParams] = useSearchParams();
 
     const searchKitsAxios = async (searchTerm) => {
         if(!searchTerm || searchTerm == '') return setData(null);
@@ -38,7 +40,11 @@ export default function OrdenFiltro(){
                         data?.length?
                             data.map((r, i) => {
                                 return (
-                                    <div className="itemResult" key={i+1}>
+                                    <div className="itemResult" key={i+1} onClick={() => {
+                                        params.set('orden', r.id)
+                                        setParams(params);
+                                        setData(null)
+                                    }}>
                                        <div className="divideItemResult">
                                             <div className="nameData">
                                                 <div className="letter">

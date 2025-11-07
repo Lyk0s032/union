@@ -1079,159 +1079,13 @@
                         }
                     }
                 }
+                
             }
         }
 
         .dashboardCompras{
             box-sizing: border-box;
-            .ordenView{
-                position:fixed;
-                border-left: 1px solid #f8f8f8;
-                right:0;
-                height:90%;
-                box-sizing: border-box;
-                bottom:0;
-                width:40%;
-                background-color: @bgDefault;
-                .containerView{
-                    width:95%;
-                    height:100%;
-                    margin:auto;
-                    .headerView{
-                        width:100%;
-                        height:10%;
-                        border-bottom: 1px solid #F8F8F8;
-                        .divideZone{
-                            display: flex;
-                            align-items: center;
-                            justify-content: space-between;
-                            height:100%;
-                            .dataCoti{
-                                h3{
-                                    font-size: 14px;
-                                    color: @bgAzulDark;
-                                }
-                                span{
-                                    font-size: 12px;
-                                    color: #666;
-                                }
-                            }
-                            button{
-                                background-color: transparent;
-                                border:none;
-                                font-size: 22px;
-                                color: #666;
-                            }
-                        }
-                    }
-                    .containerScrollBody{
-                        height:90%;
-                        box-sizing: border-box;
-                        .containerScroll{
-                            padding:10px 0px;
-                            box-sizing: border-box;
-                            .titleDiv{
-                                span{
-                                    font-size: 12px;
-                                    color: #666;
-                                }
-                                h3{
-                                    margin-top:3px;
-                                    font-weight: 400;
-                                    color: @bgAzulDark;
-                                    font-size: 26px;
-                                }
-
-                                strong{
-                                    font-size: 12px;
-                                    color: #666;
-                                    font-weight: 400;
-                                }
-
-                                .price{
-                                    margin-top:20px;
-                                    h1{
-                                        font-weight: 400;
-                                        color: @bgAzulDark;
-                                        font-size: 24px;
-                                    }
-                                }
-                            }
-                            .itemsOrden{
-                                margin-top:20px;
-                                table{
-                                    width:100%;
-                                    border-collapse: collapse;
-                                    thead{
-                                        tr{
-                                            th{
-                                                text-align: left;
-                                                font-size: 12px;
-                                                color: #666;
-                                                font-weight: 400;
-                                                padding:10px 5px;
-                                                box-sizing: border-box;
-                                            }
-                                        }
-                                    }
-                                    tbody{
-                                        tr{
-                                            cursor: pointer;
-                                            transition: .3s;
-                                            td{
-                                                transition: .3s;
-                                                text-align: left;
-                                                padding:10px 5px;
-                                                box-sizing: border-box;
-                                                span{
-                                                    font-size: 12px;
-                                                    color: #666;
-                                                }
-                                            }
-                                            .largeThis{
-                                                width:60%;
-                                                .divideThis{
-                                                    display: flex;
-                                                    align-items: center;
-                                                    .letter{
-                                                        width:40px;
-                                                        height:40px;
-                                                        border-radius: 100%;
-                                                        background-color: black;
-                                                        display: flex;
-                                                        align-items: center;
-                                                        justify-content: space-around;
-                                                        h3{
-                                                            font-weight: 400;
-                                                            font-size: 12px;
-                                                            color: @bgDefault;
-                                                        }
-                                                    }
-                                                    .data{
-                                                        width:80%;
-                                                        margin-left:10px;
-                                                        h3{
-                                                            font-size: 14px;
-                                                            color: black;
-                                                        }
-                                                        span{
-                                                            font-size:12px;
-                                                            color: #666;
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        tr:hover{
-                                            background-color: #f8f8f8;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            
         }
         .containerDashboardCompras{
             padding:20px;
@@ -1361,6 +1215,44 @@
                 width:100%;
                 margin-bottom: 20px;
                 .containerFilter{
+                    .filterRangosTime{
+                        width:50%;
+                        text-align: right;
+                        margin-left: auto;
+                        h3{
+                            box-sizing: border-box;
+                            color: @bgAzulDark;
+                            font-weight: 400;
+                            font-size: 14px;
+                        }
+                        span{
+                            font-size: 12px;
+                            color: #666;
+                            cursor: pointer;
+                        }
+                        .containerFilterRangos{
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            .inputDiv{
+                                width:45%;
+                                label{
+                                    font-size: 12px;
+                                    color: #666;
+                                }
+                                input{
+                                    width:100%;
+                                    border-radius: 5px;
+                                    border:1px solid #ccc;
+                                    box-sizing: border-box;
+                                    cursor: pointer;
+                                    padding:8px;
+
+                                }
+                            }
+
+                        }
+                    }
                     .itemZone{
                         width:30%;
                         text-align: right;
@@ -1525,6 +1417,7 @@
                             .nameAndData{
                                 display: flex;
                                 align-items: center;
+                                width:50%;
                                 .tipo{
                                     margin-right: 10px;
                                     .letter{
@@ -1563,12 +1456,15 @@
                                 }
                             }
                             .time{
+                                width:20%;
                                 span{
                                     font-size: 12px;
                                     color: #666;
                                 }
                             }
                             .price{
+                                width:20%;
+                                text-align: right;
                                 h3{
                                     color: @bgAzulDark;
                                     font-size: 14px;
@@ -1581,6 +1477,239 @@
                     }
                 }
             }
+            
         }
     }
 }
+    .ordenView{
+                position:fixed;
+                border-left: 1px solid #ccc;
+                right:0;
+                height:90%;
+                box-sizing: border-box;
+                bottom:0;
+                width:40%;
+                background-color: @bgDefault;
+                .containerView{
+                    width:90%;
+                    height:100%;
+                    margin:auto;
+                    .headerView{
+                        width:100%;
+                        height:10%;
+                        border-bottom: 1px solid #F8F8F8;
+                        .divideZone{
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            height:100%;
+                            .dataCoti{
+                                h3{
+                                    font-size: 14px;
+                                    color: @bgAzulDark;
+                                }
+                                span{
+                                    font-size: 12px;
+                                    color: #666;
+                                }
+                            }
+                            button{
+                                background-color: transparent;
+                                border:none;
+                                font-size: 22px;
+                                color: #666;
+                            }
+                        }
+                    }
+                    .containerScrollBody{
+                        height:90%;
+                        box-sizing: border-box;
+                        overflow-y: auto;
+                        .containerScroll{
+                            padding:10px 0px;
+                            box-sizing: border-box;
+
+                            .containerBarraContenido{
+                                span{
+                                    font-size: 12px;
+                                    color: #666;
+                                }
+                                .divideStates{
+                                    box-sizing: border-box;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: space-between;
+                                    padding:40px 0px;
+                                    .boxLadeCircle{
+                                        transition: .3s;
+                                        width:25%;
+                                        text-align: center;
+                                        .circle{
+                                            width:40px;
+                                            height:40px;
+                                            margin:auto;
+                                            border-radius: 30px;
+                                            background-color: #ccc;
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: space-around;
+                                        }
+                                        .dataText{
+                                            margin-top:10px;
+                                            text-align: center;
+                                            h3{
+                                                font-weight: 400;
+                                                color: #666;
+                                                font-size: 14px;
+                                                margin-bottom: 5px;
+                                            }
+                                            span{
+                                                font-size: 12px;
+                                                color: #666;
+                                            }
+                                        }
+                                    }
+                                    .Active:hover{
+                                        transform: scale(1.05);
+                                    }
+                                    .Active{
+                                        .circle{
+                                            background-color:  @bgAzulDark;
+                                            .icon{
+                                                color: @bgDefault;
+                                            }
+                                        }
+                                        .dataText{
+                                            h3{
+                                                color: @bgAzulDark;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            .titleDiv{
+                                span{
+                                    font-size: 12px;
+                                    color: #666;
+                                }
+                                h3{
+                                    margin-top:3px;
+                                    font-weight: 400;
+                                    color: @bgAzulDark;
+                                    font-size: 26px;
+                                }
+
+                                strong{
+                                    font-size: 12px;
+                                    color: #666;
+                                    font-weight: 400;
+                                }
+
+                                .price{
+                                    margin-top:20px;
+                                    h1{
+                                        font-weight: 400;
+                                        color: @bgAzulDark;
+                                        font-size: 24px;
+                                    }
+                                }
+                            }
+                            .Lade{
+                                margin-top:40px;
+                                text-align: right;
+                                padding:10px 30px;
+
+                            }
+                            .itemsOrden{
+                                margin-top:20px;
+                                table{
+                                    width:100%;
+                                    border-collapse: collapse;
+                                    thead{
+                                        tr{
+                                            th{
+                                                text-align: left;
+                                                font-size: 12px;
+                                                color: #666;
+                                                font-weight: 400;
+                                                padding:10px 5px;
+                                                box-sizing: border-box;
+                                            }
+                                        }
+                                    }
+                                    tbody{
+                                        tr{
+                                            cursor: pointer;
+                                            transition: .3s;
+                                            td{
+                                                transition: .3s;
+                                                text-align: left;
+                                                padding:10px 5px;
+                                                box-sizing: border-box;
+                                                span{
+                                                    font-size: 12px;
+                                                    color: #666;
+                                                }
+                                            }
+                                            .largeThis{
+                                                width:60%;
+                                                .divideThis{
+                                                    display: flex;
+                                                    align-items: center;
+                                                    .letter{
+                                                        width:40px;
+                                                        height:40px;
+                                                        border-radius: 100%;
+                                                        background-color: black;
+                                                        display: flex;
+                                                        align-items: center;
+                                                        justify-content: space-around;
+                                                        h3{
+                                                            font-weight: 400;
+                                                            font-size: 12px;
+                                                            color: @bgDefault;
+                                                        }
+                                                    }
+                                                    .data{
+                                                        width:80%;
+                                                        margin-left:10px;
+                                                        h3{
+                                                            font-size: 14px;
+                                                            color: black;
+                                                        }
+                                                        span{
+                                                            font-size:12px;
+                                                            color: #666;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        tr:hover{
+                                            background-color: #f8f8f8;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .dataHereMessage{
+                        display: flex;
+                        justify-content: space-around;
+                        align-items: center;
+                        height:400px;
+                        .messageHere{
+                            span{
+                                font-size: 12px;
+                                color: #666;
+                            }
+                            h3{
+                                color: @bgAzulDark;
+                                font-weight: 400;
+        
+                            }
+                        }
+                    }
+                }
+            }
