@@ -12,6 +12,7 @@ import GeneralBorradoresCotizacion from './borradoresCompras/generalBorradores';
 import UxCotizadorPanel from './uxCotizacion/PanelCotizacions';
 import GeneralProductos from './productos/general';
 import OrdenesCompras from './materiaPrima/ordenesCompras/general';
+import KitsData from './kits/kits';
 
 export default function Comprar(){
     const [params, setParams] = useSearchParams();
@@ -40,7 +41,6 @@ export default function Comprar(){
         const body = {
             ids
         }
-        console.log('body cuerpo', body)
         const getData = await axios.post('/api/requisicion/get/req/multipleReal/', body)
         .then((res) => {
             setData(res.data);
@@ -49,6 +49,7 @@ export default function Comprar(){
         .then((res) => {
             dispatch(actions.getProyectos(res.proyectos))
             dispatch(actions.getMaterias(res.consolidado))
+            dispatch(actions.getKitsRequisicion(res.kitsConsolidados))
             dispatch(actions.cleanItemsForCotizacion())
         })
         .then(async (result) => {
@@ -154,6 +155,8 @@ export default function Comprar(){
                                 <GeneralBorradoresCotizacion />   
                             : params.get('s') == 'productos' ?
                                 <GeneralProductos cargaProyectos={cargaProyectos} />   
+                            : params.get('s') == 'kits' ?
+                                <KitsData />
                             : null
                         }
                         

@@ -88,6 +88,13 @@ export default function (state = initialState, action) {
             }
         }
 
+        case types.GET_KITS_REQUISICION: {
+            return {
+                ...state,
+                kits: action.payload
+            }
+        }
+
         case types.GET_COMPRAS_COTIZACIONES: {
             return {
                 ...state,

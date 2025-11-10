@@ -141,6 +141,82 @@
                 .dataDashboard{
                     margin-top:50px;
                     box-sizing: border-box;
+
+                    .filterSearch{
+                        width:100%;
+                        padding:10px 0px;
+                        box-sizing: border-box;
+
+                        input{
+                            width:100%;
+                            border-radius: 20px;
+                            border:1px solid #ccc;
+                            box-sizing: border-box;
+                            padding:10px;
+                            outline: 0px;
+                            transition: .3s;
+                        }
+                        input:focus{
+                            border:1px solid @bgAzulDark;
+                            color: @bgAzulDark;
+                        }
+                        .downFilterResults{
+                            margin-top:10px;
+                            position:absolute;
+                            width:100%;
+                            z-index: 5;
+                            background-color: @bgDefault;
+                            min-height: 0px;
+                            max-height:300px;
+                            overflow-y: auto;
+                            .dataItems{
+                                .itemResult{
+                                    cursor: pointer;
+                                    transition: .3s;
+                                    padding:20px 10px;
+                                    box-sizing: border-box;
+                                    .divideItemResult{
+                                        display: flex;
+                                        .nameData{
+                                            display: flex;
+                                            align-items: center;
+                                            width:100%;
+                                            .letter{
+                                                width:50px;
+                                                height:50px;
+                                                border-radius:30px;
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: space-around;
+                                                background-color: black;
+                                                margin-right: 10px;
+                                                h3{
+                                                    font-size: 12px;
+                                                    color: @bgDefault;
+                                                }
+                                            }
+                                            .data{
+                                                width:90%;
+                                                margin-left:10px;
+                                                h3{
+                                                    font-weight: 400;
+                                                    color: @bgAzulDark;
+                                                    font-size: 14px;
+                                                }
+                                                span{
+                                                    font-size: 12px;
+                                                    color: #666;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                .itemResult:hover{
+                                    background-color: #F8F8F8;
+                                }
+                            }
+                        }
+                    }
                     .containerDataDashboardNav{
                         nav{
                             ul{
@@ -1488,22 +1564,28 @@
                 height:90%;
                 box-sizing: border-box;
                 bottom:0;
-                width:40%;
+                width:45%;
                 background-color: @bgDefault;
                 .containerView{
-                    width:90%;
+                    width:100%;
+                    box-sizing: border-box;
                     height:100%;
                     margin:auto;
                     .headerView{
                         width:100%;
                         height:10%;
+                        padding:0px 10px;
+
                         border-bottom: 1px solid #F8F8F8;
                         .divideZone{
                             display: flex;
                             align-items: center;
                             justify-content: space-between;
+                            width:100%;
                             height:100%;
+                            box-sizing: border-box;
                             .dataCoti{
+                                width:25%;
                                 h3{
                                     font-size: 14px;
                                     color: @bgAzulDark;
@@ -1518,17 +1600,34 @@
                                 border:none;
                                 font-size: 22px;
                                 color: #666;
+                                padding:0px 10px;
+                                span{
+                                    font-size: 18px;
+                                    color: #666;
+                                }
                             }
                         }
                     }
                     .containerScrollBody{
                         height:90%;
+                        padding:0px 20px;
+
                         box-sizing: border-box;
                         overflow-y: auto;
                         .containerScroll{
                             padding:10px 0px;
                             box-sizing: border-box;
-
+                            .titletThat{
+                                padding:10px 0px;
+                                box-sizing: border-box;
+                                .code{
+                                    font-size: 12px;
+                                }
+                                span{
+                                    font-size: 14px;
+                                    color: @bgAzulDark;
+                                }
+                            }
                             .containerBarraContenido{
                                 span{
                                     font-size: 12px;
@@ -1596,7 +1695,7 @@
                                     margin-top:3px;
                                     font-weight: 400;
                                     color: @bgAzulDark;
-                                    font-size: 26px;
+                                    font-size: 20px;
                                 }
 
                                 strong{

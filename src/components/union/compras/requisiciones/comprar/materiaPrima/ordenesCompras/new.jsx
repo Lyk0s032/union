@@ -26,7 +26,6 @@ export default function NewOrden(){
         setLoading(true)
         let body = {
             name: title,
-            description: 'Descripción de la orden de compra',
             proyectos: ids,
             proveedor: providerId
         }

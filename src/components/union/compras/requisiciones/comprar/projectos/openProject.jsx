@@ -1,12 +1,12 @@
 import React from 'react';
 
-export default function OpenProject({ data }){
+export default function OpenProject({ data, totalValorReal }){
     console.log(data)
 
     function getTotalCompradoPorMateria() {
-        if (!data.comprasCotizacionItems || !data.comprasCotizacionItems.length) return 0;
+        if (!data?.comprasCotizacionItems || !data?.comprasCotizacionItems.length) return 0;
 
-          const totalComprado = data.comprasCotizacionItems?.reduce(
+          const totalComprado = data?.comprasCotizacionItems?.reduce(
             (sum, item) => sum + Number(item.precioTotal || 0),
             0
         ) || 0;
@@ -18,15 +18,15 @@ export default function OpenProject({ data }){
     return (
         <div className="openProject">
             <div className="titleProject">
-                <h3>{data.cotizacion?.name}</h3>
-                <span>Cotización / (Proyecto) Nro: {Number(21719) + data.cotizacion.id}</span>
+                <h3>{data?.cotizacion?.name}</h3>
+                <span>Cotización / (Proyecto) Nro: {Number(21719) + data?.cotizacion.id}</span>
             </div>
             <div className="bodyProject">
                 <div className="containerBodyProject">
                     <div className="divideProjectInfo">
                         <div className="priceProject">
                             <span>Inversión hasta el momento</span>
-                            <h3>$ {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(totalComprado)} </h3>
+                            <h3>$ {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(totalValorReal)} </h3>
                         </div>
 
                         <div className="priceProject Right">
@@ -44,8 +44,8 @@ export default function OpenProject({ data }){
                         </div>
                         <div className="itemResultsCompra">
                         {
-                            data.comprasCotizacionItems?.length ?
-                                data.comprasCotizacionItems.map((it, i) => {
+                            data?.comprasCotizacionItems?.length ?
+                                data?.comprasCotizacionItems.map((it, i) => {
                                 return (
                                         <div className="itemResult">
                                             <div className="divideItem">

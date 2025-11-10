@@ -71,6 +71,12 @@ export default function Orden(){
                     <div className="containerView">
                         <div className="headerView">
                             <div className="divideZone">
+                                <button onClick={() => {
+                                    params.delete('orden');
+                                    setParams(params);
+                                }}>
+                                     <span>x</span>
+                                </button>
                                 <div className="dataCoti">
                                     <PDFDownloadLink 
                                         document={
@@ -96,15 +102,15 @@ export default function Orden(){
                                         )}
                                     </PDFDownloadLink>
                                 </div>
-                                <button onClick={() => {
-                                    params.delete('orden');
-                                    setParams(params);
-                                }}>x</button>
+                                
                             </div>
                         </div>
                         <div className="containerScrollBody">
                             <div className="containerScroll">
-                                
+                                <div className="titletThat">
+                                    <span className='code'>Código: {ordenCompras.id}</span><br />
+                                    <span>{ordenCompras.name}</span><br />
+                                </div><br />
                                 <div className="containerBarraContenido">
                                     <span>Estado</span>
                                     <div className="divideStates">
@@ -175,7 +181,7 @@ export default function Orden(){
                                                                     <td className="largeThis">
                                                                         <div className="divideThis">
                                                                             <div className="letter">
-                                                                                <h3>
+                                                                                <h3> {console.log('iteem chitio', item)}
                                                                                     {item.materiaId ? item.materiaId : null}
                                                                                     {item.productoId ? item.productoId : null}
                                                                                 </h3>
@@ -205,6 +211,11 @@ export default function Orden(){
                                                     
                                                 </tbody>
                                             </table>
+
+                                            <div className="note" style={{marginTop:30}}>
+                                                <span style={{color: 'black', fontSize:12}}>Nota</span><br />
+                                                <span style={{fontSize:14, color: '#666'}}>{ordenCompras.description}</span>
+                                            </div>
                                         </div>
                                     : null
                                 }

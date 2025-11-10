@@ -17,7 +17,10 @@ export default function LeftNavComprar(){
                             <span>Proyectos</span>
                         </div>
                     </li>
-                    <li>
+                    <li onClick={() => {
+                        params.set('s', 'kits');
+                        setParams(params);
+                    }}>
                         <div>
                             <MdOutlineNewspaper className="icon" /><br />
                             <span>Kit's</span>

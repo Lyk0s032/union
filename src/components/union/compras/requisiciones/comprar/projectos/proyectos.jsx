@@ -8,7 +8,7 @@ export default function ProyectosReq(){
     const req = useSelector(store => store.requisicion);
     const { proyectos } = req;
     return (
-        <div className="generalComprar">
+        <div className="generalComprar"> {console.log(proyectos)}
             <div className="containerGeneral">
                 <div className="title">
                     <div className="">

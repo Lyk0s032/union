@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../../store/action/action';
 import ItemRequisicion from './itemRequisicion';
 import Loading from '../../loading';
+import axios from 'axios';
 
 export default function Requisiciones(){
     const [show, setShow] = useState(null)
@@ -38,6 +39,30 @@ export default function Requisiciones(){
         { pendiente: 0, comprando: 0, comprado: 0 }
     );
 
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+    const searchKitsAxios = async (searchTerm) => {
+        if(!searchTerm || searchTerm == '') return setData(null);
+        setLoading(true);
+        setData(null); 
+
+        const response = await axios.get('/api/requisicion/get/filters/requisicion',{
+        params: { // Aquí definimos los parámetros de consulta que irán en la URL (ej: ?query=...)
+            q: searchTerm, // El nombre del parámetro 'query' debe coincidir con req.query.query en tu backend
+        },
+            // Si tu backend requiere autenticación, añade headers aquí:
+            // headers: { 'Authorization': `Bearer TU_TOKEN_DEL_USUARIO` }
+        })  
+        .then((res) => {
+            setData(res.data)
+        }).catch(err => {
+            console.log(err)
+            setData(404)
+        })
+        .finally(() => setLoading(false))
+        return response
+    }
     useEffect(() => {           
         dispatch(actions.axiosToGetRequisicions(true)) 
     }, [])          
@@ -92,6 +117,11 @@ export default function Requisiciones(){
                         </div>
 
                         <div className="dataDashboard">
+                            <div className="filterSearch">
+                                <input type="text" placeholder='Buscar requisiciones' onChange={(e) => {
+                                    searchKitsAxios(e.target.value)
+                                }} />
+                            </div>
                             <div className="containerDataDashboardNav">
                                 <nav>
                                     <ul>
@@ -140,26 +170,34 @@ export default function Requisiciones(){
                                         </thead>
                                         <tbody>
                                             {
-                                            requisicions?.length ? 
-                                                requisicions.map((re, i) => {
-                                                    return (
-                                                        !params.get('state') || params.get('state') == 'pendiente' ?
-                                                            re.estado == 'pendiente' ? 
-                                                                <ItemRequisicion requisiciones={requisiciones} clean={removeReq} add={addRequisicion} requisicion={re} key={i+1} />
-                                                            : null
-                                                        : params.get('state') == 'parcial' ? 
-                                                            re.estado == 'comprando' ?
-                                                                <ItemRequisicion requisiciones={requisiciones} clean={removeReq} add={addRequisicion} requisicion={re} key={i+1} />
-                                                            : null
-                                                        : params.get('state') == 'completed' ?
-                                                            re.estado == 'comprado' ?
-                                                            <ItemRequisicion requisiciones={requisiciones} clean={removeReq} add={addRequisicion} requisicion={re} key={i+1} />
-                                                        : null
-                                                            :   <ItemRequisicion requisiciones={requisiciones} clean={removeReq} add={addRequisicion} requisicion={re} key={i+1} />
-                                                    )
-                                                })
+                                                data && data.length ? 
+                                                    data.map((r, i ) => {
+                                                        return (
+                                                            <ItemRequisicion requisiciones={requisiciones} clean={removeReq} add={addRequisicion} requisicion={r} key={i+1} />
+                                                        )
+                                                    })
+                                                :
 
-                                            : null
+                                                requisicions?.length ? 
+                                                    requisicions.map((re, i) => {
+                                                        return (
+                                                            !params.get('state') || params.get('state') == 'pendiente' ?
+                                                                re.estado == 'pendiente' ? 
+                                                                    <ItemRequisicion requisiciones={requisiciones} clean={removeReq} add={addRequisicion} requisicion={re} key={i+1} />
+                                                                : null
+                                                            : params.get('state') == 'parcial' ? 
+                                                                re.estado == 'comprando' ?
+                                                                    <ItemRequisicion requisiciones={requisiciones} clean={removeReq} add={addRequisicion} requisicion={re} key={i+1} />
+                                                                : null
+                                                            : params.get('state') == 'completed' ?
+                                                                re.estado == 'comprado' ?
+                                                                <ItemRequisicion requisiciones={requisiciones} clean={removeReq} add={addRequisicion} requisicion={re} key={i+1} />
+                                                            : null
+                                                                :   <ItemRequisicion requisiciones={requisiciones} clean={removeReq} add={addRequisicion} requisicion={re} key={i+1} />
+                                                        )
+                                                    })
+
+                                                : null
                                             }
 
                                         </tbody>
@@ -167,7 +205,7 @@ export default function Requisiciones(){
                                 </div>
                                 {
                                     !show || show == 'items' ?
-                                        <h1>Aquí</h1>
+                                        null
                                     : show == 'movimientos' ?
                                         <Movimientos />
                                     : show == 'graph' ?

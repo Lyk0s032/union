@@ -3578,6 +3578,46 @@ body button {
   color: #046290;
   font-weight: 400;
 }
+.modal .UXCOMPLETE .comprar .rightUx .ordenesWhiteCompra .containerOrdenesCompras .dataOrdenes .topNewCreate .newOrden .containerNewOrden .resultChoose .newChoose .containerNewChoose .topTitleData button {
+  margin-top: 10px;
+  background-color: #FFF;
+  border: none;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  transition: 0.3s;
+}
+.modal .UXCOMPLETE .comprar .rightUx .ordenesWhiteCompra .containerOrdenesCompras .dataOrdenes .topNewCreate .newOrden .containerNewOrden .resultChoose .newChoose .containerNewChoose .topTitleData button .icon {
+  vertical-align: middle;
+  margin-right: 5px;
+  font-size: 18px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .ordenesWhiteCompra .containerOrdenesCompras .dataOrdenes .topNewCreate .newOrden .containerNewOrden .resultChoose .newChoose .containerNewChoose .topTitleData button span {
+  font-size: 12px;
+  color: #666;
+  vertical-align: middle;
+}
+.modal .UXCOMPLETE .comprar .rightUx .ordenesWhiteCompra .containerOrdenesCompras .dataOrdenes .topNewCreate .newOrden .containerNewOrden .resultChoose .newChoose .containerNewChoose .topTitleData button:hover {
+  transform: scale(1.1);
+}
+.modal .UXCOMPLETE .comprar .rightUx .ordenesWhiteCompra .containerOrdenesCompras .dataOrdenes .topNewCreate .newOrden .containerNewOrden .resultChoose .newChoose .containerNewChoose .topTitleData .inputDiv {
+  width: 100%;
+  margin-top: 5px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .ordenesWhiteCompra .containerOrdenesCompras .dataOrdenes .topNewCreate .newOrden .containerNewOrden .resultChoose .newChoose .containerNewChoose .topTitleData .inputDiv textarea {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  height: 150px;
+  min-height: 100px;
+  outline: 0px;
+  padding: 10px;
+  font-size: 12px;
+  color: black;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
 .modal .UXCOMPLETE .comprar .rightUx .ordenesWhiteCompra .containerOrdenesCompras .dataOrdenes .topNewCreate .newOrden .containerNewOrden .resultChoose .newChoose .containerNewChoose .searchInput {
   margin-top: 10px;
 }
@@ -3604,6 +3644,18 @@ body button {
 .modal .UXCOMPLETE .comprar .rightUx .ordenesWhiteCompra .containerOrdenesCompras .dataOrdenes .topNewCreate .newOrden .containerNewOrden .resultChoose .newChoose .containerNewChoose .resultsAllItems {
   margin-top: 50px;
   box-sizing: border-box;
+}
+.modal .UXCOMPLETE .comprar .rightUx .ordenesWhiteCompra .containerOrdenesCompras .dataOrdenes .topNewCreate .newOrden .containerNewOrden .resultChoose .newChoose .containerNewChoose .resultsAllItems .containerResultsAllItems .messageNotFound {
+  width: 100%;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.modal .UXCOMPLETE .comprar .rightUx .ordenesWhiteCompra .containerOrdenesCompras .dataOrdenes .topNewCreate .newOrden .containerNewOrden .resultChoose .newChoose .containerNewChoose .resultsAllItems .containerResultsAllItems .messageNotFound h3 {
+  font-weight: 400;
+  color: #666;
+  font-size: 20px;
 }
 .modal .UXCOMPLETE .comprar .rightUx .ordenesWhiteCompra .containerOrdenesCompras .dataOrdenes .topNewCreate .newOrden .containerNewOrden .resultChoose .newChoose .containerNewChoose .resultsAllItems .containerResultsAllItems .itemCompra {
   box-sizing: border-box;
@@ -3699,6 +3751,46 @@ body button {
   max-height: 800px;
   opacity: 1;
   transform: translateY(0);
+}
+.modal .UXCOMPLETE .comprar .rightUx .ordenesWhiteCompra .containerOrdenesCompras .dataOrdenes .topNewCreate .newOrden .containerNewOrden .resultChoose .newChoose .containerNewChoose .resultsAllItems .descriptionNote {
+  padding-bottom: 30px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .ordenesWhiteCompra .containerOrdenesCompras .dataOrdenes .topNewCreate .newOrden .containerNewOrden .resultChoose .newChoose .containerNewChoose .resultsAllItems .descriptionNote .containerDescription {
+  box-sizing: border-box;
+}
+.modal .UXCOMPLETE .comprar .rightUx .ordenesWhiteCompra .containerOrdenesCompras .dataOrdenes .topNewCreate .newOrden .containerNewOrden .resultChoose .newChoose .containerNewChoose .resultsAllItems .descriptionNote .containerDescription .titleNote {
+  padding: 10px 0px;
+  box-sizing: border-box;
+}
+.modal .UXCOMPLETE .comprar .rightUx .ordenesWhiteCompra .containerOrdenesCompras .dataOrdenes .topNewCreate .newOrden .containerNewOrden .resultChoose .newChoose .containerNewChoose .resultsAllItems .descriptionNote .containerDescription .titleNote span {
+  font-size: 14px;
+  color: #666;
+  font-weight: bold;
+}
+.modal .UXCOMPLETE .comprar .rightUx .ordenesWhiteCompra .containerOrdenesCompras .dataOrdenes .topNewCreate .newOrden .containerNewOrden .resultChoose .newChoose .containerNewChoose .resultsAllItems .descriptionNote .containerDescription .titleNote span strong {
+  font-weight: 400;
+  font-size: 12px;
+  margin-left: 10px;
+  color: #666;
+}
+.modal .UXCOMPLETE .comprar .rightUx .ordenesWhiteCompra .containerOrdenesCompras .dataOrdenes .topNewCreate .newOrden .containerNewOrden .resultChoose .newChoose .containerNewChoose .resultsAllItems .descriptionNote .containerDescription .descriptionNoteData {
+  padding: 10px 0px;
+  box-sizing: border-box;
+}
+.modal .UXCOMPLETE .comprar .rightUx .ordenesWhiteCompra .containerOrdenesCompras .dataOrdenes .topNewCreate .newOrden .containerNewOrden .resultChoose .newChoose .containerNewChoose .resultsAllItems .descriptionNote .containerDescription .descriptionNoteData span {
+  font-size: 14px;
+  color: #666;
+}
+.modal .UXCOMPLETE .comprar .rightUx .ordenesWhiteCompra .containerOrdenesCompras .dataOrdenes .topNewCreate .newOrden .containerNewOrden .resultChoose .newChoose .containerNewChoose .resultsAllItems .descriptionNote .containerDescription .descriptionNoteData .inputDiv {
+  width: 100%;
+  height: 300px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .ordenesWhiteCompra .containerOrdenesCompras .dataOrdenes .topNewCreate .newOrden .containerNewOrden .resultChoose .newChoose .containerNewChoose .resultsAllItems .descriptionNote .containerDescription .descriptionNoteData .inputDiv textarea {
+  width: 100%;
+  min-height: 100%;
+  border: none;
+  outline: 0px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 .modal .UXCOMPLETE .comprar .rightUx .ordenesWhiteCompra .containerOrdenesCompras .dataOrdenes .topNewCreate .newOrden .containerNewOrden .resultChoose .newChoose .containerNewChoose .resultsAllItems .resultsOptions {
   display: flex;
@@ -9417,6 +9509,78 @@ body button {
   margin-top: 50px;
   box-sizing: border-box;
 }
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .filterSearch {
+  width: 100%;
+  padding: 10px 0px;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .filterSearch input {
+  width: 100%;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  padding: 10px;
+  outline: 0px;
+  transition: 0.3s;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .filterSearch input:focus {
+  border: 1px solid #046290;
+  color: #046290;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .filterSearch .downFilterResults {
+  margin-top: 10px;
+  position: absolute;
+  width: 100%;
+  z-index: 5;
+  background-color: #FFF;
+  min-height: 0px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .filterSearch .downFilterResults .dataItems .itemResult {
+  cursor: pointer;
+  transition: 0.3s;
+  padding: 20px 10px;
+  box-sizing: border-box;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .filterSearch .downFilterResults .dataItems .itemResult .divideItemResult {
+  display: flex;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .filterSearch .downFilterResults .dataItems .itemResult .divideItemResult .nameData {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .filterSearch .downFilterResults .dataItems .itemResult .divideItemResult .nameData .letter {
+  width: 50px;
+  height: 50px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: black;
+  margin-right: 10px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .filterSearch .downFilterResults .dataItems .itemResult .divideItemResult .nameData .letter h3 {
+  font-size: 12px;
+  color: #FFF;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .filterSearch .downFilterResults .dataItems .itemResult .divideItemResult .nameData .data {
+  width: 90%;
+  margin-left: 10px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .filterSearch .downFilterResults .dataItems .itemResult .divideItemResult .nameData .data h3 {
+  font-weight: 400;
+  color: #046290;
+  font-size: 14px;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .filterSearch .downFilterResults .dataItems .itemResult .divideItemResult .nameData .data span {
+  font-size: 12px;
+  color: #666;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .filterSearch .downFilterResults .dataItems .itemResult:hover {
+  background-color: #F8F8F8;
+}
 .dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .containerDataDashboardNav nav ul li {
   display: inline-block;
   cursor: pointer;
@@ -10653,24 +10817,31 @@ body button {
   height: 90%;
   box-sizing: border-box;
   bottom: 0;
-  width: 40%;
+  width: 45%;
   background-color: #FFF;
 }
 .ordenView .containerView {
-  width: 90%;
+  width: 100%;
+  box-sizing: border-box;
   height: 100%;
   margin: auto;
 }
 .ordenView .containerView .headerView {
   width: 100%;
   height: 10%;
+  padding: 0px 10px;
   border-bottom: 1px solid #F8F8F8;
 }
 .ordenView .containerView .headerView .divideZone {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
   height: 100%;
+  box-sizing: border-box;
+}
+.ordenView .containerView .headerView .divideZone .dataCoti {
+  width: 25%;
 }
 .ordenView .containerView .headerView .divideZone .dataCoti h3 {
   font-size: 14px;
@@ -10685,15 +10856,32 @@ body button {
   border: none;
   font-size: 22px;
   color: #666;
+  padding: 0px 10px;
+}
+.ordenView .containerView .headerView .divideZone button span {
+  font-size: 18px;
+  color: #666;
 }
 .ordenView .containerView .containerScrollBody {
   height: 90%;
+  padding: 0px 20px;
   box-sizing: border-box;
   overflow-y: auto;
 }
 .ordenView .containerView .containerScrollBody .containerScroll {
   padding: 10px 0px;
   box-sizing: border-box;
+}
+.ordenView .containerView .containerScrollBody .containerScroll .titletThat {
+  padding: 10px 0px;
+  box-sizing: border-box;
+}
+.ordenView .containerView .containerScrollBody .containerScroll .titletThat .code {
+  font-size: 12px;
+}
+.ordenView .containerView .containerScrollBody .containerScroll .titletThat span {
+  font-size: 14px;
+  color: #046290;
 }
 .ordenView .containerView .containerScrollBody .containerScroll .containerBarraContenido span {
   font-size: 12px;
@@ -10755,7 +10943,7 @@ body button {
   margin-top: 3px;
   font-weight: 400;
   color: #046290;
-  font-size: 26px;
+  font-size: 20px;
 }
 .ordenView .containerView .containerScrollBody .containerScroll .titleDiv strong {
   font-size: 12px;

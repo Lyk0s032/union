@@ -17,14 +17,20 @@ export default function GetHowMany(){
 
     // Cantidades ingresadas manualmente 
     const aIngresar = itemsCotizacions.filter(i => i.materiumId == itemRequisicion.id).reduce((acc, it) => acc + Number(it.cantidad), 0);
-    {console.log('iteeem:', itemRequisicion)}
+    {console.log('iteeem, a renderizar:', itemRequisicion)}
     // Desde el sistema
     const NecesitaSistema = itemRequisicion.itemRequisicions.reduce((acc, it) => acc + Number(it.cantidad), 0);
     const ingresado = itemRequisicion.itemRequisicions.reduce((acc, it) => acc + Number(it.cantidadEntrega), 0);
 
     const priceCurrently = itemRequisicion ?  itemRequisicion?.prices?.find(p => p.proveedorId == ordenCompra?.proveedorId) : 0;
     const priceCurrentlyProducto = itemRequisicion ?  itemRequisicion?.productPrices?.find(p => p.proveedorId == ordenCompra?.proveedorId) : 0;
-    const valorKg = itemRequisicion.unidad == 'kg' && priceCurrently  ? Number(Number(priceCurrently?.valor) / Number(itemRequisicion.medida)) : priceCurrently;
+    
+    // --- cambio seguro: evitar pasar un objeto a JSX ---
+    const priceVal = priceCurrently ? Number(priceCurrently?.valor || 0) : 0;
+    const valorKg = itemRequisicion.unidad === 'kg' && priceVal
+    ? (priceVal / Number(itemRequisicion.medida || 1))
+    : priceVal || 0;
+        
     const unidad = itemRequisicion.unidad;
     const medidaSistema = itemRequisicion.medida; // 10.000X45.111
     const medidaLadoA = unidad == 'mt2' ? medidaSistema.split('X')[0] : null
@@ -204,12 +210,12 @@ export default function GetHowMany(){
                     <div className="dataItem">
                         <div className="divideInformationItem">
                             <div className="circle">
-                                <h3>{itemRequisicion.id}</h3>
+                                <h3>{itemRequisicion?.id}</h3>
                             </div> 
                             <div className="dataName">
-                                <h3>{itemRequisicion.description}- {valorKg}</h3>
+                                <h3>{itemRequisicion?.description} - {valorKg}</h3>
                                 <span>Medida original:</span><br />
-                                <strong>{itemRequisicion.medida} {itemRequisicion.unidad}</strong><br /><br /><br />
+                                <strong>{itemRequisicion?.medida} {itemRequisicion?.unidad}</strong><br /><br /><br />
 
                                 <span>Precio actual</span>
                                 <h1>$ {priceCurrently?.valor}  {priceCurrentlyProducto?.valor}</h1> 

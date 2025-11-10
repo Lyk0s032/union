@@ -710,6 +710,12 @@ export function getMaterias(data){
         payload: data
     }
 }
+export function getKitsRequisicion(data){
+    return {
+        type: types.GET_KITS_REQUISICION,
+        payload: data
+    }
+}
 
 export function getCotizacionesCompras(data){
     return {

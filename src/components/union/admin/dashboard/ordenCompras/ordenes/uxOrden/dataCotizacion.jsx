@@ -106,7 +106,9 @@ export default function DataCotizacion({ orden }){
                                         <span>Proveedor</span>
                                         <h4>{orden.proveedor?.nombre}</h4>
                                         <span>NIT: {orden.proveedor.nit}</span> 
-
+                                        <br /><br />
+                                        <span>Nota:</span><br />
+                                        <span>{orden.description}</span>
                                     </div>
                                     
                                 </div>

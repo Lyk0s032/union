@@ -232,7 +232,7 @@ const PdfDocument = ({
                             <Text style={styles.headerColDesc}>Descripción</Text>
                             <Text style={styles.headerColQty}>Cantidad</Text>
                             <Text style={styles.headerColPrice}>Precio</Text>
-                        </View>
+                        </View> 
                         
                         {/* Filas de la tabla */}
                         {ordenCompras.comprasCotizacionItems.map((item, i) => {
@@ -245,7 +245,7 @@ const PdfDocument = ({
                                         </View>
                                         <View style={styles.itemData}>
                                             <Text style={styles.itemH3}>
-                                                {item.materium?.description || item.producto?.item}
+                                                {item.materium?.description} {item.producto?.item}
                                             </Text>
                                             <Text style={styles.itemSpan}>
                                                 {item.materium?.item}

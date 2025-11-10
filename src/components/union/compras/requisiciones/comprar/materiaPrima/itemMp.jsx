@@ -80,7 +80,6 @@ export default function ItemListMP({ materia, sumar }){
         }
     }; 
 
-    console.log('materrriaa: ', materia)
     const sumandito = () => {
         if(Number(materia.entregado) >= Number(materia.totalCantidad / productoLados)){
             console.log('completo')

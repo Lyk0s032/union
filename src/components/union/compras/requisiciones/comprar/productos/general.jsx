@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ListaMP from './listaProductos';
 import AddMP from './addMP';
 import { useSearchParams } from 'react-router-dom';
@@ -15,6 +15,16 @@ export default function GeneralProductos({ cargaProyectos }){
     const dispatch = useDispatch();
     const req = useSelector(store => store.requisicion);
     const { materia , proyectos} = req;
+    
+    const [total, setTotal] = useState(0)
+    
+    const addToTotal = (val) => {
+        let a = Number(total) + Number(val);
+        console.log('nuevo valor, ', a)
+        setTotal(a);
+    }
+         
+
     useEffect(() => {
     if (!ref.current || !longer.current) return;
 
@@ -67,10 +77,10 @@ export default function GeneralProductos({ cargaProyectos }){
                 <div className="lista"> 
                     <div className="containerLista">
                         <div className="DataHere" ref={longer} >
-                            <ListaMP materia={materia} />
+                            <ListaMP materia={materia}  sumar={addToTotal}/>
                             <div className="cotizador">
                                 {
-                                    <Cotizador />
+                                    <Cotizador total={total} />
                                 }
                             </div>
                         </div>
