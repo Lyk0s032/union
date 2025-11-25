@@ -149,7 +149,7 @@ export default function SendToCRM(){
                                     <div className="divideTop">
                                         <div className="lade">
                                             <h3>{cotizacion.user.name} {cotizacion.user.lastName}</h3>
-                                            <strong>Nro. {cotizacion.id}</strong><br />
+                                            <strong>Nro. {Number(Number(21719) + Number(cotizacion.id))}</strong><br />
                                             <span>{cotizacion.createdAt.split('T')[0]}</span>
                                         </div>
                                         <div className="lade">
