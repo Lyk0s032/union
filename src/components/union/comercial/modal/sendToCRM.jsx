@@ -8,7 +8,8 @@ export default function SendToCRM(){
     const [params, setParams] = useSearchParams();
     const cotizacionn = useSelector(store => store.cotizacions);
     const { cotizacion, loadingCotizacion } = cotizacionn;
-
+    const [estado, setEstado] = useState('pendiente');
+    const [loading, setLoading] = useState(false);
     const usuario = useSelector(store => store.usuario);
     const { user } = usuario;
 
@@ -17,6 +18,7 @@ export default function SendToCRM(){
     const getValores = (valores) => {
         setValores(valores)
     }
+    console.log(user)
  
     const searchClient = async () => {
         
@@ -95,15 +97,20 @@ export default function SendToCRM(){
 
 
     const arrancarProceso = async () => {
+        setLoading(true)
         await searchClient()
         .then(async res => {
             console.log(res)
             console.log('respuesta desde arrancar', res)
+            setEstado('creado')
             await createCotizacion(res)
             
         })
         .catch(err => {
             console.log(err)
+        })
+        .finally(() => {
+            setLoading(false)
         })
     }
 
@@ -133,13 +140,17 @@ export default function SendToCRM(){
                             <div className="imgGiftrans">
                                 <img src="https://lanzatunegocio.net/images/4H9h.gif" /> 
                             </div>
-                            <button onClick={() => {
-                                arrancarProceso()
-                                console.log('enviado')
-                            }}> 
-                                <span>Enviar cotización</span>
-                            </button>
-                        </div>
+                            {
+                                !estado == 'pendiente' ?
+                                    <button onClick={() => {
+                                        arrancarProceso()
+                                        console.log('enviado')
+                                    }}> 
+                                        <span>{loading ? 'Enviando' : 'Enviar al CRM'}</span>
+                                    </button>
+                                : <span>Enviado</span>
+                            }
+                        </div> 
                         <div className="rightContainerBody">
                             <div className="containerCotizacionBody">
                                 <div className="titleCotizacion">
