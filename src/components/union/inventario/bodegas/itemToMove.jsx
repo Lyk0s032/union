@@ -7,9 +7,11 @@ export default function ItemToActive({ pt, addtoMove }){
     let bodega = params.get('bodega');
     const [active, setActive] = useState(null);
 
+    console.log('tipo de producto a anexar', pt)
+
     const [data, setData] = useState(
-        !pt.tipoProducto == 'Materia Prima' ?
-            {
+        !params.get('bodega') || params.get('bodega') == 1 || params.get('bodega') == 4  ?
+            { 
                 description: pt.description,
                 materiaId: pt.id,
                 tipoProducto: 'Materia Prima',

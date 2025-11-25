@@ -41,7 +41,7 @@ export default function DataBodegas({ item }){
                                             openNecesary('Bodega', inv.ubicacion.id)
                                         }}>
                                             <div className="letterHere">
-                                                <h3>{inv.ubicacion.nombre.split('')[0]}</h3>
+                                                <h3>{inv && inv?.ubicacion && inv.ubicacion.nombre ? inv.ubicacion.nombre.split('')[0] : 'no hay nombre'}</h3>
                                             </div> 
                                             <div className="NameHere">
                                                 <h3>{inv.ubicacion.nombre}  ({inv.cantidad})</h3>

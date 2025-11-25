@@ -1,12 +1,13 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import * as actions from '../store/action/action';
 import { hasPermission } from './acciones';
+import { MdNetworkPing } from 'react-icons/md';
 
 export default function Nav(){
     const navigate = useNavigate();
-
+    const [params, setParams] = useSearchParams();
     const usuario = useSelector(store => store.usuario);
     
     const { user } = usuario;
@@ -78,6 +79,16 @@ export default function Nav(){
                     <div className="containerUser">
                         <nav>
                             <ul> 
+                                <li onClick={() => {
+                                    params.set('connect', 'CRM')
+                                    setParams(params);
+                                }}>
+                                    <div className="toCRM">
+                                        <span>CRM</span>
+                                        <MdNetworkPing className="icon" />
+
+                                    </div>
+                                </li>
                                 <li>
                                     <div>
                                         <h3 className="person">

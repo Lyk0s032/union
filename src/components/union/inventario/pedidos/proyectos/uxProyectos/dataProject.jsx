@@ -8,12 +8,15 @@ import "dayjs/locale/es"; // para español
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import ItemNecesidadProyecto from './itemNecesidas';
+import { useSearchParams } from 'react-router-dom';
+import MoveModalRigth from './moveModalRigth';
 
 dayjs.extend(localizedFormat);
 dayjs.locale("es");
 
 
 export default function DataProject({ proyecto }){
+    const [params, setParams] = useSearchParams();
 
     return (
         <div className="DataCotizacionCompras">
@@ -81,6 +84,9 @@ export default function DataProject({ proyecto }){
                                             <th></th>
                                             <th></th>
                                             <th>Cantidades</th>
+                                            <th>En Stock</th>
+                                            <th>Comprometida</th>
+
                                         </tr>
                                     </thead>
                                     <tbody> {console.log(proyecto.cotizacion_compromisos)}
@@ -98,6 +104,11 @@ export default function DataProject({ proyecto }){
                     </div>
                 </div>
             </div>
+            {
+                params.get('move') ?
+                    <MoveModalRigth />
+                : null
+            }
         </div>
     )
 }

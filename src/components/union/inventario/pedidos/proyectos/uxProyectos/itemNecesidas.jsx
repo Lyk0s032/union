@@ -13,7 +13,10 @@ export default function ItemNecesidadProyecto({ item }){
 
     {console.log(item)} 
     return (
-        <tr>
+        <tr onClick={() => {
+            params.set('move', item.id);
+            setParams(params)
+        }}>
             <td className="longer"> 
                 <div className="nameLonger">
                     <div className="letter">
@@ -39,6 +42,16 @@ export default function ItemNecesidadProyecto({ item }){
             <td>
                 <div>
                     <span>( {item.cantidadEntregada}  / <strong>{item.cantidadComprometida}</strong> )</span>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <span>(4)</span>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <span>(3)</span>
                 </div>
             </td>
             

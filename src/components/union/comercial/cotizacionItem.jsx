@@ -42,6 +42,14 @@ export default function CotizacionItem({ cotizacionn, openMenuId, toggleMenu }){
         params.set('watch', 'cotizacion');
         setParams(params);
     }
+
+    // Abrir para transferir cotización
+    const openCotiToTransfer = async () => {
+        toggleMenu(null)
+        dispatch(actions.axiosToGetCotizacion(true, cotizacion.id))
+        params.set('transferir', 'cotizacion');
+        setParams(params);
+    }
     // Eliminar cotizacion
     const handleRemove = async() => {
         let body = {
@@ -127,6 +135,12 @@ export default function CotizacionItem({ cotizacionn, openMenuId, toggleMenu }){
                                             <span>Compartir</span>
                                         </div>
                                     </li>
+                                    <li onClick={() => openCotiToTransfer(cotizacion.id)}> 
+                                        <div>
+                                            <MdOutlineRemoveRedEye  className="icon" />
+                                            <span>Enviar al CRM</span>
+                                        </div>
+                                    </li>
                                     
                                 </ul>
                             </nav>
@@ -157,6 +171,7 @@ export default function CotizacionItem({ cotizacionn, openMenuId, toggleMenu }){
                                             <span>Ver</span>
                                         </div>
                                     </li>
+                                    
                                     <li onClick={() => handleRemove()}> 
                                         <div>
                                             <MdDeleteOutline className="icon" />

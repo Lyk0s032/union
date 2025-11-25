@@ -16,31 +16,52 @@ export default function ResultBodegaProducto({ item }){
     const { itemBodega, loadingItemBodega } = almacen;
     const [registros, setRegistros] = useState(null);
 
+    const resumenBodega = item.resumenBodega;
     const close = () => {
         setTransferir(false);
     }
     let posible = params.get('who') ? params.get('who') : 1;
 
-    useEffect(() => {
-        if(params.get('show') == 'Bodega' || !params.get('show')){
-            dispatch(actions.axiosToGetItemMateriaPrimaBodega(true, params.get('item'), posible))
-        }else if(params.get('show' == 'Proyecto')){
-            dispatch(actions.axiosToGetItemMateriaPrimaBodegaProyecto(true, params.get('item'), params.get('who')))
-
+    const getDataBodegasAxios = async () => {
+        if(!params.get('bodega') || params.get('bodega') == 1 || params.get('bodega') == 4){
+            if(params.get('show') == 'Bodega' || !params.get('show')){
+                dispatch(actions.axiosToGetItemMateriaPrimaBodega(true, params.get('item'), posible))
+            }else if(params.get('show' == 'Proyecto')){
+                dispatch(actions.axiosToGetItemMateriaPrimaBodegaProyecto(true, params.get('item'), params.get('who')))
+            }
+        }else{
+            if(params.get('show') == 'Bodega' || !params.get('show')){
+                dispatch(actions.axiosToGetItemProductoTerminadoBodega(true, params.get('item'), params.get('who')))
+            }
         }
-    }, [params.get('who'), params.get('show')])
-    console.log('bodega',itemBodega)
+    }
+    // useEffect(() => {
+    //     getDataBodegasAxios()
+    // }, [params.get('who'), params.get('show')])
+
+    {console.log('desde bodega item ', item)}
     return (
-        !itemBodega || loadingItemBodega ?
-        <div className="messageBox">
-            <h1>Cargando...</h1>
-        </div>
-        :
-        itemBodega == 'notrequest' || itemBodega == 404 ?
-        <div className="messageBox">
-            <h3>Not found</h3>
-        </div>
-        :
+        // !itemBodega || loadingItemBodega ?
+        // <div className="messageBox">
+        //     <div className="notFound">
+        //         <div className="boxData">
+        //             <span>Estamos consultando tu bodega</span>
+        //             <h3>Cargando...</h3>
+        //         </div>
+        //     </div>
+        // </div>
+        // :
+        // itemBodega == 'notrequest' || itemBodega == 404 ?
+        // <div className="messageBox">
+        //     <div className="notFound">
+        //         <div className="boxData">
+        //             <span>No hemos encontrado movimientos en esta bodega</span>
+        //             <h3>...</h3>
+        //         </div>
+        //     </div>
+        // </div>
+        // :
+
         <div className="resultBodegaHere">
             {
             transferir ? 
@@ -51,7 +72,7 @@ export default function ResultBodegaProducto({ item }){
                     <div className="" onDoubleClick={() => {
                         setInfo(!info)
                     }}>
-                        <h3>{itemBodega.ubicacion.nombre}</h3>
+                        <h3>Traer nombre de la bodega </h3>
                         <span className="tipo">{!info ? 'Movimientos' : 'Gráficas'}</span>
                     </div>
                     <button onClick={() => {
@@ -62,11 +83,11 @@ export default function ResultBodegaProducto({ item }){
                 </div>
                 <div className="howMany">
                     <div className="howManyItem">
-                        <h1>{itemBodega.cantidad}</h1>
+                        <h1> {resumenBodega.completeCount}</h1>
                         <span>Cantidad</span>
                     </div>
                     <div className="howManyItem">
-                        <h1>{itemBodega.cantidadComprometida}</h1>
+                        <h1>{resumenBodega.totalMeters} <span style={{fontSize:18}}>{item.item.unidad}</span></h1>
                         <span>Cantidad comprometida</span>
                     </div>
                 </div>
@@ -91,7 +112,7 @@ export default function ResultBodegaProducto({ item }){
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {
+                                        {/* {
                                             itemBodega.ubicacion ?
                                             itemBodega.ubicacion?.origen.concat(itemBodega.ubicacion?.destino).map((r,i) => {
                                                     return (
@@ -99,7 +120,7 @@ export default function ResultBodegaProducto({ item }){
                                                     )
                                                 })
                                             :null
-                                        }
+                                        } */}
 
                                     </tbody>
                                 </table>

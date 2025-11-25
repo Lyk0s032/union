@@ -12,12 +12,10 @@ export default function Pedidos(){
     const navigate = useNavigate();
  
     const almacen = useSelector(store => store.almacen)
-    const { cabecerasBodega, loadingCabecerasBodega } = almacen;
+    const { cabecerasBodega, loadingCabecerasBodega, ordenes, loadingOrdenes  } = almacen;
 
-    const admin = useSelector(store => store.admin)
-    const { ordenesCompras, loadingOrdenesCompras } = admin;
 
-    const [show, setShow] = useState(null);
+    const [show, setShow] = useState(null); 
     const dispatch = useDispatch();
     const [params, setParams] = useSearchParams();
 
@@ -25,20 +23,9 @@ export default function Pedidos(){
         dispatch(actions.axiosToGetOrdenesAlmacen(true))
     }, [])
 
-    console.log(ordenesCompras)
+    console.log(ordenes)
     return ( 
         <div className="panelDashboardType">
-            {
-                !ordenesCompras || loadingOrdenesCompras ?
-                    <div className="notFound">
-                        <h3>No hay proyectos por el momento</h3>
-                    </div>
-                :
-                ordenesCompras == 404 || ordenesCompras == 'notrequest' ?
-                    <div className="notFound">
-                        <h3>No hay proyectos por el momento</h3>
-                    </div> 
-                :
                 <div className="containerTypeDashboard">
                     <div className="topHeaderPanel">
                         <div className="divideHeader"> 
@@ -64,12 +51,25 @@ export default function Pedidos(){
                             </div>
                         </div>                   
                     </div>
+                    {console.log('ordeeness', ordenes)}
 
                     <div className="dataDashboard" style={{marginTop:0}}>
                         <div className="dataRoutesDashboard">
                             {
                                 !show || show == 'pedidos' ?
-                                    <ListPedidos ordenes={ordenesCompras} />
+
+                                    loadingOrdenes || !ordenes ?
+                                        <div className="notFound">
+                                            <h3>Cargando...</h3>
+                                        </div>
+                                    :
+                                    ordenes == 404 || ordenes == 'notrequest' ?
+                                        <div className="notFound">
+                                            <h3>No hay proyectos por el momento</h3>
+                                        </div> 
+                                    :
+                                    <ListPedidos ordenes={ordenes} />
+                                    
                                 : show == 'proyectos' ?
                                     <ProyectosAlmacen />
                                 : null
@@ -85,7 +85,6 @@ export default function Pedidos(){
                         : null
                     }
             </div>
-            }
         </div>
     )
 }

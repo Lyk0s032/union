@@ -8,6 +8,7 @@ import ModalNewCotizacion from "./modal/newCotizacion";
 import DocumentCotizacion from "./modal/documentCotizacion";
 import { AiOutlinePlus } from "react-icons/ai";
 import axios from "axios";
+import SendToCRM from "./modal/sendToCRM";
 
 export default function ComercialPanel(){
     const [params, setParams] = useSearchParams();
@@ -259,6 +260,12 @@ export default function ComercialPanel(){
                 //     <ModaUpdateMp />    
                 : params.get('watch') == 'cotizacion' ?
                     <DocumentCotizacion />
+                : null
+            }
+
+            {
+                params.get('transferir') ?
+                    <SendToCRM />
                 : null
             }
         </div>

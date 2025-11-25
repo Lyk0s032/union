@@ -153,7 +153,7 @@ export default function ItemListMP({ materia, sumar }){
             <td className="longer"> 
                 <div className="nameLonger">
                     <div className="letter">
-                        <h3>{materia.id} </h3>
+                        <h3>{materia.id}</h3>
                     </div> 
                     <div className="name">
                         <h3>{materia.nombre}</h3>

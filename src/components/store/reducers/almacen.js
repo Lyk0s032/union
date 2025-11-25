@@ -20,12 +20,17 @@ const initialState = {
     itemBodega: null,
     loadingItemBodega: false,
     
+    ordenes: null, 
+    loadingOrdenes: false,
+
     proyectos:null,
     loadingProyectos: false,
 
     proyecto:null,
-    loadingProyecto: false
+    loadingProyecto: false,
   
+    itemToProject: null,
+    loadingItemToProject: false,
 }
 
 export default function (state = initialState, action) {
@@ -85,7 +90,20 @@ export default function (state = initialState, action) {
                 loadingItem: action.payload
             }
         } 
-        
+        case types.GET_ORDENES: {
+            return {
+                ...state,
+                ordenes: action.payload,
+                loadingOrdenes: false
+            }
+        }
+        case types.GETTING_ORDENES: {
+            return {
+                ...state,
+                loadingOrdenes: action.payload
+            }
+        } 
+
         case types.GET_PROJECTS: {
             return {
                 ...state,
@@ -113,7 +131,20 @@ export default function (state = initialState, action) {
                 loadingProyecto: action.payload
             }
         } 
-        
+
+        case types.GET_ITEM_TO_PROJECT: {
+            return {
+                ...state,
+                itemToProject: action.payload,
+                loadingItemToProject: false
+            }
+        }
+        case types.GETTING_ITEM_TO_PROJECT: {
+            return {
+                ...state,
+                loadingItemToProject: action.payload
+            }
+        }
 
         case types.GET_ITEM_BODEGA: {
             return {

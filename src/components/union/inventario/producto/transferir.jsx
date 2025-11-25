@@ -24,7 +24,7 @@ export default function Transferir({ item, close }){
     const [status, setStatus] = useState(false);
 
     const refreshAll = () => {
-        dispatch(actions.axiosToGetItemMateriaPrima(false, params.get('item')))
+        // dispatch(actions.axiosToGetItemMateriaPrima(false, params.get('item')))
         setAnexados([])
         close()
     }
@@ -33,9 +33,8 @@ export default function Transferir({ item, close }){
         setLoading(true);
         arrayMapa.map(async data => {
             let body = data
-
-            console.log(body)
-            const sendRegister = await axios.post('/api/inventario/post/bodega/addHowMany', body)
+            console.log('transferencia',body)
+            const sendRegister = await axios.post('/api/inventario/post/bodega/moviemitos/add', body)
             .then(res => {
                 console.log(res);
                 dispatch(actions.HandleAlerta('Transacción exitosa', 'positive'))

@@ -1299,6 +1299,36 @@ export function axiosToGetProductosBodega(carga, bodegaId){
     }
 }
 
+// FUNCION PARA OBTENER LOS ITEMS POR BODEGA Y PAGINACIÒN
+export function axiosToGetProductosBodegaPlus(carga, bodegaId, page = 1, limit = 50, tipo = null) {
+  return function(dispatch) {
+    dispatch(gettingProductosBodega(carga));
+
+    // construir query params
+    const params = new URLSearchParams();
+    if (bodegaId !== undefined && bodegaId !== null) params.append('ubicacionId', bodegaId);
+    params.append('page', page);
+    params.append('limit', limit);
+    if (tipo) params.append('tipo', tipo); // opcional: 'MP' o 'PR'
+
+    axios.get(`/api/inventario/get/plus/bodegas?${params.toString()}`)
+      .then(res => res.data)
+      .then(inf => {
+        dispatch(getProductosBodega(inf));
+        console.log('productosBodega:', inf);
+        return inf;
+      })
+      .catch((e) => {
+        console.log('Error axiosToGetProductosBodega:', e);
+        if (e.request) {
+          dispatch(getProductosBodega('notrequest'));
+        } else {
+          dispatch(getProductosBodega(404));
+        }
+      });
+  };
+}
+
 export async function getFuncionesBodegas(carga, body){
     return function(dispatch){
         dispatch(axiosToGetCabeceras(carga, body))
@@ -1380,6 +1410,40 @@ export function axiosToGetItemMateriaPrima(carga, materiaId){
         });
     }
 }
+
+// FUNCION PARA OBTENER UN ITEM EN ESPECIFICO EN UNA BODEGA
+export function axiosToGetItemInventarioPlus(carga, materiaId = null, ubicacionId = 1, productoId = null) {
+  return function(dispatch) {
+    dispatch(gettingItem(carga));
+    console.log('Entra a la consola - get item inventario');
+
+    // Construir query params de forma segura
+    const params = new URLSearchParams();
+    if (materiaId) params.append('materiumId', materiaId);
+    if (productoId) params.append('productoId', productoId);
+    // ubicacionId es obligatorio para esta llamada en tu nuevo endpoint
+    params.append('ubicacionId', ubicacionId);
+
+    const url = `/api/inventario/get/plus/item?${params.toString()}`;
+
+    axios.get(url)
+      .then(res => res.data)
+      .then(inf => {
+        dispatch(getItem(inf));
+        console.log('Item inventario recibido:', inf);
+        return inf;
+      })
+      .catch((e) => {
+        console.log('Error axiosToGetItemInventarioPlus:', e);
+        if (e.request) {
+          return dispatch(getItem('notrequest'));
+        } else {
+          return dispatch(getItem(404));
+        }
+      });
+  };
+}
+
 // Para productos en item
 export function axiosToGetItemProducto(carga, materiaId, bodegaId){
     return function(dispatch){  
@@ -1390,7 +1454,7 @@ export function axiosToGetItemProducto(carga, materiaId, bodegaId){
         .then(inf => {
              dispatch(getItem(inf))
 
-            return console.log(inf)
+            return console.log('busqueda por productoo',inf)
         })
         .catch((e) => {
             console.log(e)
@@ -1426,7 +1490,7 @@ export function axiosToGetItemMateriaPrimaBodega(carga, materiaId, bodega){
         .then(inf => {
              dispatch(getItemBodega(inf))
             
-            return console.log(inf)
+            return console.log('busquedaa ',inf)
         })
         .catch((e) => {
             console.log(e)
@@ -1438,7 +1502,7 @@ export function axiosToGetItemMateriaPrimaBodega(carga, materiaId, bodega){
         });
     }
 }
-
+// OBtener materia prima por proyecto
 export function axiosToGetItemMateriaPrimaBodegaProyecto(carga, materiaId, proyecto){
     return function(dispatch){  
         dispatch(gettingItemBodega(carga))
@@ -1461,6 +1525,66 @@ export function axiosToGetItemMateriaPrimaBodegaProyecto(carga, materiaId, proye
     }
 }
 
+// Obtener producto por proyecto
+export function axiosToGetItemProductoTerminadoBodega(carga, productoId, bodega){
+    return function(dispatch){  
+        dispatch(gettingItemBodega(carga))
+        console.log('Entra a la consola')  
+        console.log('consulta esta funcion')
+        axios.get(`/api/inventario/get/bodega/producto/data/${productoId}/${bodega}`)
+        .then((info) => info.data) 
+        .then(inf => {
+             dispatch(getItemBodega(inf))
+            
+            return console.log('busquedaa ',inf)
+        })
+        .catch((e) => {
+            console.log(e)
+            if(e.request){
+                return dispatch(getItemBodega('notrequest'));
+            }else{
+                return dispatch(getItemBodega(404))
+            }
+        });
+    }
+}
+
+// OBTENEMOS LAS ORDENES PARA INGRESAR AL ALMACEN
+export function getOrdenesAlmacen(data){
+    return {
+        type: types.GET_ORDENES,
+        payload: data
+    }
+}
+export function gettingOrdenesAlmacen(carga){
+    return {
+        type: types.GETTING_ORDENES,
+        payload: carga
+    }
+}
+
+export function axiosToGetOrdenesAlmacen(carga){
+    return function(dispatch){  
+        dispatch(gettingOrdenesAlmacen(carga))
+        console.log('Entra a la consola')  
+        axios.get(`/api/inventario/get/ordenesCompra/all`)
+        .then((info) => info.data) 
+        .then(inf => {
+            console.log('carga de ordenes', inf)
+             dispatch(getOrdenesAlmacen(inf))
+
+            return console.log(inf)
+        })
+        .catch((e) => {
+            console.log(e)
+            if(e.request){
+                return dispatch(getOrdenesAlmacen('notrequest'));
+            }else{
+                return dispatch(getOrdenesAlmacen(404))
+            }
+        });
+    }
+}
 
 // PROYECTOS ALMACÉN
 export function getProjects(data){
@@ -1531,4 +1655,50 @@ export function axiosToGetProject(carga, cotizacionId){
             }
         });
     }
+}
+
+export function getItemToProject(data){
+    return {
+        type: types.GET_ITEM_TO_PROJECT,
+        payload: data
+    }
+}
+
+export function gettingItemToProject(carga){
+    return {
+        type: types.GETTING_ITEM_TO_PROJECT,
+        payload: carga
+    }
+}
+
+export function axiosToGetItemProjectPlus(carga, materiaId = null, ubicacionId = 1, productoId = null) {
+  return function(dispatch) {
+    dispatch(gettingItemToProject(carga));
+    console.log('Entra a la consola - get item inventario');
+
+    // Construir query params de forma segura
+    const params = new URLSearchParams();
+    if (materiaId) params.append('materiumId', materiaId);
+    if (productoId) params.append('productoId', productoId);
+    // ubicacionId es obligatorio para esta llamada en tu nuevo endpoint
+    params.append('ubicacionId', ubicacionId);
+
+    const url = `/api/inventario/get/plus/item?${params.toString()}`;
+    console.log(url)
+    axios.get(url)
+      .then(res => res.data)
+      .then(inf => {
+        dispatch(getItemToProject(inf));
+        console.log('Item inventario recibido:', inf);
+        return inf;
+      })
+      .catch((e) => {
+        console.log('Error axiosToGetItemInventarioPlus:', e);
+        if (e.request) {
+          return dispatch(getItemToProject('notrequest'));
+        } else {
+          return dispatch(getItemToProject(404));
+        }
+      });
+  };
 }

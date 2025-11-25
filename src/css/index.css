@@ -2647,6 +2647,26 @@ body button {
 .modal .Complete .bodyModalBig .page .selectItems .rightSelect .containerRightSelect .resultsToSelect .containerResults .itemResults .superKitItem:hover {
   padding-left: 5px;
 }
+.modal .Complete .messageModalAlmacen {
+  box-sizing: border-box;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.modal .Complete .messageModalAlmacen .boxDatica {
+  margin: auto;
+}
+.modal .Complete .messageModalAlmacen .boxDatica span {
+  font-size: 14px;
+  color: #666;
+}
+.modal .Complete .messageModalAlmacen .boxDatica h3 {
+  margin-top: 5px;
+  font-size: 24px;
+  color: #046290;
+  font-weight: 400;
+}
 .modal .Complete .almacenDashProduct {
   height: 100%;
   overflow-y: auto;
@@ -2660,7 +2680,7 @@ body button {
   justify-content: space-between;
 }
 .modal .Complete .almacenDashProduct .topProductoData .leftInforProduct {
-  width: 50%;
+  width: 80%;
   padding-top: 50px;
   box-sizing: border-box;
 }
@@ -2686,11 +2706,12 @@ body button {
   color: #FFF;
 }
 .modal .Complete .almacenDashProduct .topProductoData .leftInforProduct .dataProducto .containerProductoData .topInfoProductoHere .topAvance .dataResult {
-  margin-left: 10px;
+  width: 95%;
+  margin-left: 20px;
 }
 .modal .Complete .almacenDashProduct .topProductoData .leftInforProduct .dataProducto .containerProductoData .topInfoProductoHere .topAvance .dataResult h3 {
   font-weight: 500;
-  font-size: 32px;
+  font-size: 20px;
 }
 .modal .Complete .almacenDashProduct .topProductoData .leftInforProduct .dataProducto .containerProductoData .topInfoProductoHere .topAvance .dataResult span {
   font-size: 12px;
@@ -2712,6 +2733,22 @@ body button {
 .modal .Complete .almacenDashProduct .topProductoData .leftInforProduct .dataProducto .containerProductoData .topInfoProductoHere .dataDescription button span {
   color: #FFF;
 }
+.modal .Complete .almacenDashProduct .topProductoData .rightBtn {
+  padding: 30px 0;
+  box-sizing: border-box;
+}
+.modal .Complete .almacenDashProduct .topProductoData .rightBtn button {
+  background-color: transparent;
+  border: none;
+  transition: 0.3s;
+}
+.modal .Complete .almacenDashProduct .topProductoData .rightBtn button .icon {
+  color: #666;
+  font-size: 32px;
+}
+.modal .Complete .almacenDashProduct .topProductoData .rightBtn button:hover {
+  transform: scale(1.1);
+}
 .modal .Complete .almacenDashProduct .dataProductoInformation .containerData {
   width: 90%;
   margin: auto;
@@ -2723,6 +2760,15 @@ body button {
 .modal .Complete .almacenDashProduct .dataProductoInformation .containerData .dataBodegas .containerDataBodega .divide .leftData {
   width: 65%;
   box-sizing: border-box;
+}
+.modal .Complete .almacenDashProduct .dataProductoInformation .containerData .dataBodegas .containerDataBodega .divide .leftData .messageBox .notFound .boxData h3 {
+  font-weight: 400;
+  color: #046290;
+  font-size: 22px;
+}
+.modal .Complete .almacenDashProduct .dataProductoInformation .containerData .dataBodegas .containerDataBodega .divide .leftData .messageBox .notFound .boxData span {
+  font-size: 12px;
+  color: #666;
 }
 .modal .Complete .almacenDashProduct .dataProductoInformation .containerData .dataBodegas .containerDataBodega .divide .leftData .resultBodegaHere {
   width: 100%;
@@ -2809,6 +2855,19 @@ body button {
   padding-right: 5px;
   box-sizing: border-box;
   width: auto;
+}
+.modal .Complete .almacenDashProduct .dataProductoInformation .containerData .dataBodegas .containerDataBodega .divide .leftData .resultBodegaHere .containerHere .resultadosHere .RegisterTitle table tbody tr td .icono {
+  background-color: transparent;
+  border: none;
+}
+.modal .Complete .almacenDashProduct .dataProductoInformation .containerData .dataBodegas .containerDataBodega .divide .leftData .resultBodegaHere .containerHere .resultadosHere .RegisterTitle table tbody tr td .icono .icon {
+  font-size: 16px;
+}
+.modal .Complete .almacenDashProduct .dataProductoInformation .containerData .dataBodegas .containerDataBodega .divide .leftData .resultBodegaHere .containerHere .resultadosHere .RegisterTitle table tbody tr td .icono .Great {
+  color: #388E3C;
+}
+.modal .Complete .almacenDashProduct .dataProductoInformation .containerData .dataBodegas .containerDataBodega .divide .leftData .resultBodegaHere .containerHere .resultadosHere .RegisterTitle table tbody tr td .icono .Danger {
+  color: #dc3545;
 }
 .modal .Complete .almacenDashProduct .dataProductoInformation .containerData .dataBodegas .containerDataBodega .divide .leftData .resultBodegaHere .containerHere .resultadosHere .RegisterTitle table tbody tr .people {
   width: 50%;
@@ -5101,6 +5160,200 @@ body button {
 .modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .TopGeneralInformation .dataCotizacionReal .moreOptions button span {
   color: #FFF;
 }
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide {
+  border-left: 1px solid #ccc;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  width: 40%;
+  background-color: #FFF;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal {
+  height: 100%;
+  width: 100%;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .headerThat {
+  width: 100%;
+  height: 10%;
+  box-sizing: border-box;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .headerThat .divideText {
+  display: flex;
+  align-items: center;
+  width: 95%;
+  height: 100%;
+  margin: auto;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .headerThat .divideText .title h3 {
+  font-weight: 400;
+  color: #046290;
+  font-size: 14px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .headerThat .divideText button {
+  background-color: #FFF;
+  border: none;
+  transition: 0.3s;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .headerThat .divideText button .icon {
+  font-size: 18px;
+  color: #666;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .headerThat .divideText button:hover {
+  transform: scale(1.1);
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody {
+  height: 90%;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer {
+  padding: 20px;
+  box-sizing: border-box;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .dataItemHere {
+  box-sizing: border-box;
+  width: 90%;
+  margin: auto;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .dataItemHere .containerDataItem {
+  text-align: center;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .dataItemHere .containerDataItem .letter {
+  width: 70px;
+  height: 70px;
+  margin: auto;
+  margin-bottom: 10px;
+  border-radius: 100%;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .dataItemHere .containerDataItem .letter h3 {
+  font-weight: 400;
+  font-size: 24px;
+  color: #FFF;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .dataItemHere .containerDataItem .dataItemName h3 {
+  font-weight: 400;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .dataItemHere .containerDataItem .dataItemName span {
+  font-size: 12px;
+  color: #666;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .dataItemHere .divideHowMany {
+  margin-top: 40px;
+  box-sizing: border-box;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .dataItemHere .divideHowMany .divideDive {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .dataItemHere .divideHowMany .divideDive .itemNumber {
+  text-align: center;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .dataItemHere .divideHowMany .divideDive .itemNumber h1 {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .dataItemHere .divideHowMany .divideDive .itemNumber span {
+  font-size: 12px;
+  color: #666;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .giveTransferir {
+  margin-top: 60px;
+  box-sizing: border-box;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .giveTransferir .containerGive {
+  width: 60%;
+  margin: auto;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .giveTransferir .containerGive .inputDiv {
+  width: 100%;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .giveTransferir .containerGive .inputDiv label {
+  font-size: 12px;
+  color: #666;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .giveTransferir .containerGive .inputDiv input {
+  width: 100%;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  padding: 15px 10px;
+  padding-bottom: 10px;
+  border-radius: 5px;
+  outline: 0px;
+  transition: 0.3s;
+  font-size: 14px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .giveTransferir .containerGive .inputDiv input:focus {
+  font-size: 18px;
+  border: 1px solid #046290;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .comprasToThisProject {
+  margin-top: 50px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .comprasToThisProject .containerComprasToThis .titleCompras span {
+  font-size: 12px;
+  color: #666;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .comprasToThisProject .containerComprasToThis .resultData {
+  margin-top: 20px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .comprasToThisProject .containerComprasToThis .resultData .itemMoveOrden {
+  width: 100%;
+  padding: 20px 0px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .comprasToThisProject .containerComprasToThis .resultData .itemMoveOrden .ladeData {
+  width: 50%;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .comprasToThisProject .containerComprasToThis .resultData .itemMoveOrden .ladeData .divideLadeData {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .comprasToThisProject .containerComprasToThis .resultData .itemMoveOrden .ladeData .divideLadeData .letter {
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  border-radius: 20px;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .comprasToThisProject .containerComprasToThis .resultData .itemMoveOrden .ladeData .divideLadeData .letter h3 {
+  font-weight: 400;
+  color: #FFF;
+  font-size: 16px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .comprasToThisProject .containerComprasToThis .resultData .itemMoveOrden .ladeData .divideLadeData .dataLade {
+  width: 85%;
+  margin-left: 10px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .comprasToThisProject .containerComprasToThis .resultData .itemMoveOrden .ladeData .divideLadeData .dataLade h3 {
+  font-size: 14px;
+  color: #666;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .comprasToThisProject .containerComprasToThis .resultData .itemMoveOrden .ladeData .divideLadeData .dataLade span {
+  font-size: 12px;
+  color: #666;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .comprasToThisProject .containerComprasToThis .resultData .itemMoveOrden .ladeTime {
+  width: 40%;
+  text-align: right;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .DataCotizacionCompras .rightModalSlide .containerThatModal .containerScrollBody .scrollContainer .comprasToThisProject .containerComprasToThis .resultData .itemMoveOrden .ladeTime span {
+  font-size: 12px;
+  color: #666;
+}
 .modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHereShort {
   width: 60%;
 }
@@ -5900,6 +6153,108 @@ body button {
 .Form .containerBody .formToUpdateInformation .inputDiv button span {
   font-size: 12px;
   color: #FFF;
+}
+.connectModal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #FFF;
+}
+.connectModal .containerConnectModal {
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+.connectModal .containerConnectModal .headerModal {
+  height: 15%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 30px;
+  box-sizing: border-box;
+}
+.connectModal .containerConnectModal .headerModal .title h3 {
+  font-weight: 400;
+  font-size: 18px;
+  color: #046290;
+}
+.connectModal .containerConnectModal .headerModal .title span {
+  font-size: 14px;
+  color: #666;
+}
+.connectModal .containerConnectModal .headerModal button {
+  background-color: transparent;
+  border: none;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.connectModal .containerConnectModal .headerModal button .icon {
+  font-size: 18px;
+  color: #666;
+}
+.connectModal .containerConnectModal .bodyModal {
+  height: 85%;
+  width: 100%;
+  box-sizing: border-box;
+}
+.connectModal .containerConnectModal .bodyModal .containerBodyToConnect {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.connectModal .containerConnectModal .bodyModal .containerBodyToConnect .messageBox h1 {
+  font-weight: 400;
+  color: #046290;
+}
+.connectModal .containerConnectModal .bodyModal .containerBodyToConnect .messageBox span {
+  font-size: 14px;
+  color: #666;
+}
+.connectModal .containerConnectModal .bodyModal .containerBodyToConnect .messageBox .inputDiv {
+  width: 100%;
+}
+.connectModal .containerConnectModal .bodyModal .containerBodyToConnect .messageBox .inputDiv input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border-radius: 5px;
+  outline: 0px;
+  transition: 0.3s;
+}
+.connectModal .containerConnectModal .bodyModal .containerBodyToConnect .messageBox .inputDiv input:focus {
+  font-size: 14px;
+  border: 1px solid #046290;
+  color: #046290;
+}
+.connectModal .containerConnectModal .bodyModal .containerBodyToConnect .messageBox button {
+  padding: 8px 30px;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: 0.3s;
+  background-color: #046290;
+  border: 1px solid #046290;
+  border-radius: 5px;
+}
+.connectModal .containerConnectModal .bodyModal .containerBodyToConnect .messageBox button span {
+  font-size: 12px;
+  color: #FFF;
+}
+.connectModal .containerConnectModal .bodyModal .containerBodyToConnect .messageBox .later {
+  margin-left: 10px;
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+.connectModal .containerConnectModal .bodyModal .containerBodyToConnect .messageBox .later span {
+  color: #046290;
+}
+.connectModal .containerConnectModal .bodyModal .containerBodyToConnect .messageBox button:hover {
+  transform: scale(1.1);
 }
 .panelClients {
   box-sizing: border-box;
@@ -8049,6 +8404,138 @@ body button {
   padding: 25px;
   box-sizing: border-box;
 }
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #FFF;
+  bottom: 0;
+  box-sizing: border-box;
+  right: 0;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM .sendToCRM {
+  width: 100%;
+  height: 100%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM .sendToCRM .titleAreaToCRM {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 20px;
+  box-sizing: border-box;
+  height: 10%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM .sendToCRM .titleAreaToCRM .titleDivi h3 {
+  font-weight: 400;
+  font-size: 14px;
+  color: #666;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM .sendToCRM .titleAreaToCRM button {
+  background-color: transparent;
+  border: none;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM .sendToCRM .titleAreaToCRM button .icon {
+  font-size: 18px;
+  color: #666;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM .sendToCRM .bodyThat {
+  width: 100%;
+  height: 90%;
+  padding: 10px 40px;
+  box-sizing: border-box;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM .sendToCRM .bodyThat .containerThat {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM .sendToCRM .bodyThat .containerThat .leftAnimation {
+  width: 40%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM .sendToCRM .bodyThat .containerThat .leftAnimation .imgGiftrans {
+  width: 100%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM .sendToCRM .bodyThat .containerThat .leftAnimation .imgGiftrans img {
+  width: 100%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM .sendToCRM .bodyThat .containerThat .leftAnimation button {
+  width: 40%;
+  margin-left: 30%;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  background-color: #046290;
+  border: 1px solid #046290;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM .sendToCRM .bodyThat .containerThat .leftAnimation button span {
+  color: #FFF;
+  font-size: 12px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM .sendToCRM .bodyThat .containerThat .leftAnimation button:hover {
+  transform: scale(1.1);
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM .sendToCRM .bodyThat .containerThat .rightContainerBody {
+  box-sizing: border-box;
+  width: 50%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM .sendToCRM .bodyThat .containerThat .rightContainerBody .containerCotizacionBody .titleCotizacion {
+  width: 100%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM .sendToCRM .bodyThat .containerThat .rightContainerBody .containerCotizacionBody .titleCotizacion img {
+  width: 15%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM .sendToCRM .bodyThat .containerThat .rightContainerBody .containerCotizacionBody .topCotizacion {
+  margin-top: 10px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM .sendToCRM .bodyThat .containerThat .rightContainerBody .containerCotizacionBody .topCotizacion .divideTop {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM .sendToCRM .bodyThat .containerThat .rightContainerBody .containerCotizacionBody .topCotizacion .divideTop h3 {
+  font-weight: 400;
+  color: #046290;
+  font-size: 16px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM .sendToCRM .bodyThat .containerThat .rightContainerBody .containerCotizacionBody .topCotizacion .divideTop strong {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM .sendToCRM .bodyThat .containerThat .rightContainerBody .containerCotizacionBody .topCotizacion .divideTop span {
+  font-size: 14px;
+  color: #666;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM .sendToCRM .bodyThat .containerThat .rightContainerBody .containerCotizacionBody .bodyTable {
+  margin-top: 40px;
+  width: 100%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM .sendToCRM .bodyThat .containerThat .rightContainerBody .containerCotizacionBody .bodyTable table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM .sendToCRM .bodyThat .containerThat .rightContainerBody .containerCotizacionBody .bodyTable table tbody tr td {
+  width: 50%;
+  padding: 10px 0px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM .sendToCRM .bodyThat .containerThat .rightContainerBody .containerCotizacionBody .bodyTable table tbody tr td span {
+  font-size: 14px;
+  color: #666;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM .sendToCRM .bodyThat .containerThat .rightContainerBody .containerCotizacionBody .bodyTable table tbody tr td h2 {
+  color: #046290;
+  font-size: 14px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM .sendToCRM .bodyThat .containerThat .rightContainerBody .containerCotizacionBody .bodyTable table tbody tr td h3 {
+  font-size: 14px;
+  font-weight: 400;
+  color: #388E3C;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .modalSendToCRM .sendToCRM .bodyThat .containerThat .rightContainerBody .containerCotizacionBody .bodyTable table tbody tr .result {
+  text-align: right;
+}
 .ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .topSection .optionsFast nav ul li {
   margin-right: 10px;
   transition: 0.3s;
@@ -9492,12 +9979,19 @@ body button {
 .dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .topHeaderPanel .divideHeader .dataHeaderPrincipal .containerDataHeader .datosBox span {
   font-size: 12px;
   color: #046290;
+  transition: 0.3s;
 }
 .dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .topHeaderPanel .divideHeader .dataHeaderPrincipal .containerDataHeader .datosBox h1 {
   font-weight: 400;
   font-size: 24px;
   color: #d9e2ec;
   transition: 0.3s;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .topHeaderPanel .divideHeader .dataHeaderPrincipal .containerDataHeader .datosBox.Active {
+  transform: scale(1.05);
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .topHeaderPanel .divideHeader .dataHeaderPrincipal .containerDataHeader .datosBox.Active h1 {
+  color: #046290;
 }
 .dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .topHeaderPanel .divideHeader .dataHeaderPrincipal .containerDataHeader .datosBox:hover {
   transform: scale(1.05);
@@ -9607,6 +10101,26 @@ body button {
 }
 .dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .dataRoutesDashboard {
   box-sizing: border-box;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .dataRoutesDashboard .notFound {
+  box-sizing: border-box;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .dataRoutesDashboard .notFound .messageData {
+  width: 40%;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .dataRoutesDashboard .notFound .messageData span {
+  font-size: 14px;
+  color: #666;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .dataRoutesDashboard .notFound .messageData h3 {
+  color: #046290;
+  margin-top: 5px;
+  font-weight: 400;
+  font-size: 24px;
 }
 .dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .dataDashboard .dataRoutesDashboard .TableUX table {
   border-collapse: collapse;
@@ -10318,6 +10832,13 @@ body button {
 .dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .tableData table tbody tr .middle.Almacen {
   width: 15%;
   text-align: center;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .tableData table tbody tr .middle.Almacen .icon {
+  font-size: 18px;
+  color: #388E3C;
+}
+.dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .tableData table tbody tr .middle.Almacen .Exclamation {
+  color: #dc3545;
 }
 .dashboard .containerDashboard .panelDashboardType .containerTypeDashboard .listResultsData .containerKits .dataFilters .containerDataFilters .divide .tableData table tbody tr .tdPrice {
   width: 15%;
@@ -11169,7 +11690,7 @@ body button {
   width: 100%;
 }
 .navigation .containerNav .optionsGeneral {
-  width: 50%;
+  width: 60%;
   height: 100%;
 }
 .navigation .containerNav .optionsGeneral nav {
@@ -11223,6 +11744,21 @@ body button {
 .navigation .containerNav .user .containerUser nav ul li {
   display: inline-block;
   box-sizing: border-box;
+}
+.navigation .containerNav .user .containerUser nav ul li .toCRM {
+  cursor: pointer;
+  padding: 10px 40px;
+}
+.navigation .containerNav .user .containerUser nav ul li .toCRM span {
+  font-size: 12px;
+  color: #046290;
+  vertical-align: middle;
+}
+.navigation .containerNav .user .containerUser nav ul li .toCRM .icon {
+  font-size: 18px;
+  vertical-align: middle;
+  color: #046290;
+  margin-left: 10px;
 }
 .navigation .containerNav .user .containerUser nav ul li div {
   text-align: right;

@@ -2873,6 +2873,27 @@
         }
 
         // Producto
+        .messageModalAlmacen{
+            box-sizing: border-box;
+            height:100%;
+            display: flex;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            .boxDatica{
+                margin:auto;
+                span{
+                    font-size: 14px;
+                    color: #666;
+                }
+                h3{
+                    margin-top:5px;
+                    font-size: 24px;
+                    color: @bgAzulDark;
+                    font-weight: 400;
+                }
+            }
+        }
         .almacenDashProduct{
             height:100%;
             overflow-y: auto;
@@ -2884,7 +2905,7 @@
                 display: flex;
                 justify-content: space-between;
                 .leftInforProduct{
-                    width:50%;
+                    width:80%;
                     padding-top:50px;
                     box-sizing: border-box;
 
@@ -2900,6 +2921,7 @@
                                         width:70px;
                                         height:70px;
                                         border-radius: 100%;
+                                        
                                         display: flex;
                                         align-items: center;
                                         justify-content: space-around;
@@ -2910,10 +2932,11 @@
                                         }
                                     }
                                     .dataResult{
-                                        margin-left:10px;
+                                        width:95%;
+                                        margin-left:20px;
                                         h3{
                                             font-weight: 500;
-                                            font-size: 32px;
+                                            font-size: 20px;
                                         }
                                         span{
                                             font-size: 12px;
@@ -2942,6 +2965,23 @@
                         }
                     }
                 }
+                .rightBtn{
+                    padding:30px 0;
+                    box-sizing: border-box;
+                    button{
+                        background-color: transparent;
+                        border:none;
+                        transition: .3s;
+
+                        .icon{
+                            color: #666;
+                            font-size: 32px;
+                        }
+                    }
+                    button:hover{
+                        transform: scale(1.1);
+                    }
+                }
             }
             .dataProductoInformation{
                 .containerData{
@@ -2957,6 +2997,21 @@
                                 .leftData{
                                     width:65%;
                                     box-sizing: border-box;
+                                    .messageBox{
+                                        .notFound{
+                                            .boxData{
+                                                h3{
+                                                    font-weight: 400;
+                                                    color: @bgAzulDark;
+                                                    font-size: 22px;
+                                                }
+                                                span{
+                                                    font-size: 12px;
+                                                    color: #666;
+                                                }
+                                            }
+                                        }
+                                    }
                                     .resultBodegaHere{
                                         width:100%;
                                         .containerHere{
@@ -3042,6 +3097,20 @@
                                                                     padding-right: 5px;
                                                                     box-sizing: border-box;
                                                                     width: auto;
+                                                                    
+                                                                    .icono{
+                                                                        background-color: transparent;
+                                                                        border:none;
+                                                                        .icon{
+                                                                            font-size: 16px;
+                                                                        }
+                                                                        .Great{
+                                                                            color: @great;
+                                                                        }
+                                                                        .Danger{
+                                                                            color: @danger;
+                                                                        }
+                                                                    }
                                                                 }
                                                                 .people{
                                                                     width:50%;
@@ -3083,6 +3152,8 @@
                                                                             font-weight: 400;
                                                                             color: #666;
                                                                         }
+
+                                                                        
                                                                     }
                                                                 }
                                                                 .register.Small{
@@ -5605,6 +5676,209 @@
                                                 }
                                             }
                                         }
+                                        .rightModalSlide{
+                                            border-left:1px solid #ccc;
+                                            position:fixed;
+                                            right:0;
+                                            bottom:0;
+                                            top:0;
+                                            width:40%;
+                                            background-color: @bgDefault;
+                                            .containerThatModal{
+                                                height:100%;
+                                                width:100%;
+                                                .headerThat{
+                                                    width:100%;
+                                                    height:10%;
+                                                    box-sizing: border-box;
+                                                    .divideText{
+                                                        display: flex;
+                                                        align-items: center;
+                                                        width:95%;
+                                                        height:100%;
+                                                        margin:auto;
+                                                        .title{
+                                                            h3{
+                                                                font-weight: 400;
+                                                                color: @bgAzulDark;
+                                                                font-size: 14px;
+                                                            }
+                                                        }
+                                                        button{
+                                                            background-color: @bgDefault;
+                                                            border:none;
+                                                            transition: .3s;
+                                                            .icon{
+                                                                font-size: 18px;
+                                                                color: #666;
+                                                            }
+                                                        }
+                                                        button:hover{
+                                                            transform: scale(1.1);
+                                                        }
+                                                    }
+                                                }
+                                                .containerScrollBody{
+                                                    height:90%;
+                                                    box-sizing: border-box;
+                                                    overflow-y: auto;
+                                                    .scrollContainer{
+                                                        padding:20px;
+                                                        box-sizing: border-box;
+
+                                                        .dataItemHere{
+                                                            box-sizing: border-box;
+                                                            width:90%;
+                                                            margin:auto;
+                                                            .containerDataItem{
+                                                                text-align: center;
+                                                                .letter{
+                                                                    width:70px;
+                                                                    height:70px;
+                                                                    margin:auto;
+                                                                    margin-bottom: 10px;
+                                                                    border-radius: 100%;
+                                                                    background-color: black;
+                                                                    display: flex;
+                                                                    align-items: center;
+                                                                    justify-content: space-around;
+                                                                    h3{
+                                                                        font-weight: 400;
+                                                                        font-size: 24px;
+                                                                        color: @bgDefault;
+                                                                    }
+                                                                }
+                                                                .dataItemName{
+                                                                    h3{
+                                                                        font-weight: 400;
+                                                                    }
+                                                                    span{
+                                                                        font-size: 12px;
+                                                                        color: #666;
+                                                                    }
+                                                                }
+                                                            }
+                                                            .divideHowMany{
+                                                                margin-top:40px;
+                                                                box-sizing: border-box;
+                                                                .divideDive{
+                                                                    display: flex;
+                                                                    align-items: center;
+                                                                    justify-content: space-between;
+                                                                    .itemNumber{
+                                                                        text-align: center;
+                                                                        h1{
+                                                                            font-size: 20px;
+                                                                            margin-bottom: 5px;
+                                                                        }
+                                                                        span{
+                                                                            font-size: 12px;
+                                                                            color: #666;
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        .giveTransferir{
+                                                            margin-top:60px;
+                                                            box-sizing: border-box;
+                                                            .containerGive{
+                                                                width:60%;
+                                                                margin:auto;
+                                                                .inputDiv{
+                                                                    width:100%;
+                                                                    label{
+                                                                        font-size: 12px;
+                                                                        color: #666;
+                                                                    }
+                                                                    input{
+                                                                        width:100%;
+                                                                        margin-top:10px;
+                                                                        border:1px solid #ccc;
+                                                                        box-sizing: border-box;
+                                                                        padding:15px 10px;
+                                                                        padding-bottom: 10px;
+                                                                        border-radius: 5px;
+                                                                        outline: 0px;
+                                                                        transition: .3s;
+                                                                        font-size: 14px;
+                                                                    }
+                                                                    input:focus{
+                                                                        font-size: 18px;
+                                                                        border:1px solid @bgAzulDark;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        .comprasToThisProject{
+                                                            margin-top:50px;
+                                                            .containerComprasToThis{
+                                                                .titleCompras{
+                                                                    span{
+                                                                        font-size: 12px;
+                                                                        color: #666;
+                                                                    }
+                                                                }
+                                                                .resultData{
+                                                                    margin-top:20px;
+                                                                    .itemMoveOrden{
+                                                                        width:100%;
+                                                                        padding:20px 0px;
+                                                                        box-sizing: border-box;
+                                                                        display: flex;
+                                                                        align-items: center;
+                                                                        justify-content: space-between;
+                                                                        .ladeData{
+                                                                            width:50%;
+                                                                            .divideLadeData{
+                                                                                display: flex;
+                                                                                width:100%;
+                                                                                align-items: center;
+                                                                                .letter{
+                                                                                    width:40px;
+                                                                                    height:40px;
+                                                                                    border-radius: 40px;
+                                                                                    border-radius: 20px;
+                                                                                    background-color: black;
+                                                                                    display: flex;
+                                                                                    align-items: center;
+                                                                                    justify-content: space-around;
+                                                                                    h3{
+                                                                                        font-weight: 400;
+                                                                                        color: @bgDefault;
+                                                                                        font-size: 16px;
+                                                                                    }
+                                                                                }
+                                                                                .dataLade{
+                                                                                    width:85%;
+                                                                                    margin-left:10px;
+                                                                                    h3{
+                                                                                        font-size: 14px;
+                                                                                        color: #666;
+                                                                                    }
+                                                                                    span{
+                                                                                        font-size: 12px;
+                                                                                        color: #666;
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                        .ladeTime{
+                                                                            width:40%;
+                                                                            text-align: right;
+                                                                            span{
+                                                                                font-size: 12px;
+                                                                                color: #666;
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                                 .DataHereShort{
@@ -6485,3 +6759,111 @@
     }
 }
 
+
+.connectModal{
+    position:absolute;
+    top:0;
+    left: 0;
+    right:0;
+    bottom:0;
+    background-color: @bgDefault;
+    .containerConnectModal{
+        height:100%;
+        width:100%;
+        box-sizing: border-box;
+        .headerModal{
+            height:15%;
+            width:100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding:0px 30px;
+            box-sizing: border-box;
+            .title{
+                h3{
+                    font-weight: 400;
+                    font-size: 18px;
+                    color: @bgAzulDark;
+                }
+                span{
+                    font-size: 14px;
+                    color: #666;
+                }
+            }
+            button{
+                background-color: transparent;
+                border:none;
+                padding:10px;
+                box-sizing: border-box;
+                .icon{
+                    font-size: 18px;
+                    color: #666;
+                }
+            }
+        }
+        .bodyModal{
+            height:85%;
+            width:100%;
+            box-sizing: border-box;
+            .containerBodyToConnect{
+                width:100%;
+                height:100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                .messageBox{
+                    h1{
+                        font-weight: 400;
+                        color: @bgAzulDark;
+                    }
+                    span{
+                        font-size: 14px;
+                        color: #666;
+                    }
+                    .inputDiv{
+                        width:100%;
+                        input{
+                            width:100%;
+                            padding:8px 10px;
+                            border:1px solid #ccc;
+                            box-sizing: border-box;
+                            border-radius: 5px;
+                            outline: 0px;
+                            transition: .3s;
+                        }
+                        input:focus{
+                            font-size: 14px;
+                            border:1px solid @bgAzulDark;
+                            color: @bgAzulDark;
+                        }
+                    }
+                    button{
+                        padding:8px 30px;
+                        box-sizing: border-box;
+                        cursor: pointer;
+                        transition: .3s;
+                        background-color: @bgAzulDark;
+                        border:1px solid @bgAzulDark;
+                        border-radius: 5px;
+                        span{
+                            font-size: 12px;
+                            color: @bgDefault;
+                        }
+                    }
+
+                    .later{
+                        margin-left:10px;
+                        background-color: transparent;
+                        border:1px solid transparent;
+                        span{
+                            color: @bgAzulDark;
+                        }
+                    }
+                    button:hover{
+                        transform: scale(1.1);
+                    }
+                }
+            }
+        }
+    }
+}

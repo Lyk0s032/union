@@ -23,13 +23,16 @@ export default function Bodegas(){
     const [params, setParams] = useSearchParams();
 
     const packageFunctions = async () => {
+        const tipo = !params.get('bodega') || params.get('bodega') == 1 || params.get('bodega') == 4 ? 'MP' : 'PT'
         let bodega = !params.get('bodega') ? 1 : params.get('bodega')
         if(!params.get('bodega')){
-            dispatch(actions.axiosToGetProductosBodega(true, bodega))
+            dispatch(actions.axiosToGetProductosBodegaPlus(true, bodega, 1, 30, tipo))
+            // dispatch(actions.axiosToGetProductosBodega(true, bodega))
             dispatch(actions.axiosToGetMovimientosBodega(true, 1))
             dispatch(actions.axiosToGetCabeceras(true, [1,4,2,5]))
         }else{
-            dispatch(actions.axiosToGetProductosBodega(true, params.get('bodega')))
+            dispatch(actions.axiosToGetProductosBodegaPlus(true, params.get('bodega'), 1, 30, tipo))
+            // dispatch(actions.axiosToGetProductosBodega(true, params.get('bodega')))
             dispatch(actions.axiosToGetMovimientosBodega(true, params.get('bodega')))
             dispatch(actions.axiosToGetCabeceras(false, [1,4,2,5]))
         }
@@ -57,7 +60,7 @@ export default function Bodegas(){
                                     : cabecerasBodega?.length ?
                                         cabecerasBodega.map((c, i) => {
                                             return (
-                                              <div className="datosBox" key={i+1} onClick={() => {
+                                              <div className={params.get('bodega') == c.idBodega ? "datosBox Active" : "datosBox"} key={i+1} onClick={() => {
                                                 params.set('bodega', c.idBodega)
                                                 setParams(params);
                                               }}>
@@ -67,7 +70,7 @@ export default function Bodegas(){
                                             )
                                         })
                                     : null
-                                }
+                                } 
                             </div>
                         </div>
                     </div>                   
@@ -99,15 +102,22 @@ export default function Bodegas(){
                         </nav>
                     </div>
                     <div className="dataRoutesDashboard">
+                        {console.log('consolaaa', productosBodega)}
                         {
                             !productosBodega || loadingProductosBodega ?
                                 <div className="notFound">
-                                    <h3>Cargando...</h3>
+                                    <div className="messageData">
+                                        <span>Estamos trayendo tu información</span>
+                                        <h3>Cargando...</h3>
+                                    </div>
                                 </div>
                             :
                             productosBodega == 404 || productosBodega == 'notrequest' ?
                                 <div className="notFound">
-                                    <h3>No hay proyectos por el momento</h3>
+                                    <div className="messageData">
+                                        <span>No hemos logrado encontrar esto</span>
+                                        <h3>Intentalo más tarde</h3>
+                                    </div>
                                 </div> 
                             :
                                 <>

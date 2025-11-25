@@ -22,10 +22,10 @@ export default function CotizacionItemGeneral({ item, openMenuId, toggleMenu  })
         .then(res => {
             return res
         })
-        .then(async (res) => {
-            const send = await axios.get(`/api/inventario/get/aprobar/generar/${res.data.id}`)
-            return res;
-        })
+        // .then(async (res) => {
+        //     const send = await axios.get(`/api/inventario/get/aprobar/generar/${res.data.id}`)
+        //     return res;
+        // })
         .then(async (res) => {
             console.log(res.data)
             const send = await axios.get(`api/requisicion/get/post/generateAll/${res.data.id}`)
@@ -37,6 +37,7 @@ export default function CotizacionItemGeneral({ item, openMenuId, toggleMenu  })
             dispatch(actions.axiosToGetCotizacionesAdmin(false))
         })
         .catch(err => {
+            console.log(err);
             dispatch(actions.HandleAlerta('Ha ocurrido un error', 'mistake'))
             return err;
         })

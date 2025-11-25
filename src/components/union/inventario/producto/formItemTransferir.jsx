@@ -1,27 +1,34 @@
 import React, { useState } from "react";
 import * as actions from '../../../store/action/action';
 import { useDispatch } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 
 export default function FormItemTransferir({ item,  anexar }){
 
     const dispatch = useDispatch();
+    const [params, setParams] = useSearchParams();
 
+    const tipoItem = !params.get('bodega') || params.get('bodega') == 1 || params.get('bodega') == 4 ? 'Materia Prima' : 'Producto'
+    console.log('desde transferir', item)
     const [form, setForm] = useState({
-        tipoProducto: 'Materia Prima',
-        materiaId: item.id,
-        cotizacionId: null,
-        tipo: 'TRANSFERENCIA',
-        ubicacionOrigenId: 1,
-        ubicacionDestinoId: 4,
-        refDoc: 'TRANS1000',
-        de: 1,
-        para: 4,
-        proyecto: null,
+        materiaId: item.itemType == 'materia' ? item.item.id : null,
+        productoId: item.itemType != 'materia' ? item.item.id : null,
         cantidad: 0,
-        nota: ''
-
+        tipoProducto: tipoItem,
+        tipo: 'TRANSFERENCIA',
+        ubicacionOrigenId: tipoItem == 'Materia Prima' ? 1 : 2,
+        ubicacionDestinoId: tipoItem == 'Materia Prima' ? 4 : 5,
+        refDoc: 'TRANS1000', 
+        cotizacionId: null, 
+        itemFisicoId: null,
+        numPiezas: null, // Cantidad de items
+        modoSeleccion: "PIEZAS_COMPLETAS",
+        de: tipoItem == 'Materia Prima' ? 1 : 2,
+        para: tipoItem == 'Materia Prima' ? 4 : 5,
+        proyecto: null,
+        nota: '' 
     })
-
+ 
 
     const clean = () => {
         setForm({
@@ -34,6 +41,7 @@ export default function FormItemTransferir({ item,  anexar }){
     }
     const sendThatRegister = () => {
         if(!form.cantidad) return dispatch(actions.HandleAlerta('Debes ingresar una cantidad', 'mistake'));
+        console.log(form)
         anexar(form);
         clean()
 
@@ -44,30 +52,60 @@ export default function FormItemTransferir({ item,  anexar }){
         <tr>
             <td>
                 <div className="chooseBodega">
-                    <select name="" id="" onChange={(e) => {
-                        setForm({
-                            ...form,
-                            de: e.target.value,
-                            ubicacionOrigenId: e.target.value
-                        })
-                    }}>
-                        <option value={1}>Principal</option>
-                        <option value={4}>En proceso</option>
-                    </select>
+                    {
+                        tipoItem == 'Materia Prima' ?
+                            <select name="" id="" onChange={(e) => {
+                                setForm({
+                                    ...form,
+                                    de: e.target.value,
+                                    ubicacionOrigenId: e.target.value
+                                })
+                            }}>
+                                <option value={1}>Principal</option>
+                                <option value={4}>En proceso</option>
+                            </select>
+                        :
+                            <select name="" id="" onChange={(e) => {
+                                setForm({
+                                    ...form,
+                                    de: e.target.value,
+                                    ubicacionOrigenId: e.target.value
+                                })
+                            }}>
+                                <option value={2}>Principal terminado</option>
+                                <option value={5}>Producto Listo</option>
+                            </select>
+                    }
                 </div>
             </td>
             <td>
                 <div className="chooseBodega" >
-                    <select name="" id="" onChange={(e) => {
-                        setForm({
-                            ...form,
-                            para: e.target.value,
-                            ubicacionDestinoId: e.target.value
-                        })
-                    }}>
-                        <option value={4}>Proceso</option>
-                        <option value={1}>Principal</option>
-                    </select>
+                    {
+                        tipoItem == 'Materia Prima' ?
+                            <select name="" id="" onChange={(e) => {
+                                setForm({
+                                    ...form,
+                                    para: e.target.value,
+                                    ubicacionDestinoId: e.target.value
+                                })
+                            }}>
+                                <option value={4}>Proceso</option>
+                                <option value={1}>Principal</option>
+                            </select>
+                        :
+                            <select name="" id="" onChange={(e) => {
+                                setForm({
+                                    ...form,
+                                    para: e.target.value,
+                                    ubicacionDestinoId: e.target.value
+                                })
+                            }}>
+                                <option value={5}>Producto Listo</option>
+                                <option value={2}>Principal terminado</option>
+                            </select>
+
+                    }
+                    
                 </div>
             </td>
             <td>
@@ -81,9 +119,9 @@ export default function FormItemTransferir({ item,  anexar }){
                     }}>
                         <option value={null}>Seleccionar</option>
                         {
-                            item.cotizacion_compromisos?.map((compromiso, i) => {
+                            item.compromisos?.map((compromiso, i) => {
                                 return (
-                                    <option value={compromiso.cotizacion?.id} key={i+1}>{compromiso.cotizacion?.id} - {compromiso.cotizacion?.name}</option>
+                                    <option value={compromiso?.cotizacionId} key={i+1}>{compromiso?.cotizacionId} - {compromiso.cotizacion?.name}</option>
                                 )
                             })
                         }
@@ -107,6 +145,7 @@ export default function FormItemTransferir({ item,  anexar }){
             </td>
             <td>
                 <button onClick={() => {
+                    console.log(form)
                     sendThatRegister()
                 }}>Avanzar</button>
             </td>

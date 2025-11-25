@@ -67,14 +67,14 @@ export default function ItemMovimiento({ movimiento }){
                 </div>
             </td> */}
             <td>
-                <button>
+                <button className="icono">
                     {
                         movimiento.tipoMovimiento == 'ENTRADA' ?
-                            <MdKeyboardDoubleArrowUp />
+                            <MdKeyboardDoubleArrowUp className="icon Great" />
                         : movimiento.tipoMovimiento == 'SALIDA' ?
-                            <MdKeyboardDoubleArrowDown />
+                            <MdKeyboardDoubleArrowDown className="icon Danger" />
                         : movimiento.tipoMovimiento == 'TRANSFERENCIA' ?
-                            <MdCompareArrows />
+                            <MdCompareArrows className="icon "  />
                         : null
                     }
                 </button>
