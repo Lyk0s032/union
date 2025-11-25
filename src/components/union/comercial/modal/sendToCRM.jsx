@@ -9,7 +9,8 @@ export default function SendToCRM(){
     const cotizacionn = useSelector(store => store.cotizacions);
     const { cotizacion, loadingCotizacion } = cotizacionn;
 
-    console.log('cotizaciooon, ', cotizacion)
+    const usuario = useSelector(store => store.usuario);
+    const { user } = usuario;
 
     const [valores, setValores] = useState(null);
 
@@ -63,12 +64,9 @@ export default function SendToCRM(){
 
         return createClientFunction
     }
-    console.log('cotti', cotizacion)
 
 
     const createCotizacion = async (cliente) => {
-
-        console.log('cliente desde la funcion', cliente)
         let body = {
             name: cotizacion.name,
             nit: cotizacion.client.nit,
@@ -79,7 +77,7 @@ export default function SendToCRM(){
             iva: 19,
             neto: valores.total,
             clientId: cliente.id,
-            userId: cotizacion.user.crm,
+            userId: user.user.crm,
             state: 'pendiente'
         }
 
@@ -108,7 +106,6 @@ export default function SendToCRM(){
             console.log(err)
         })
     }
-    console.log('valorees, ', valores)
 
     return(
         <div className="modalSendToCRM">
