@@ -141,7 +141,7 @@ export default function SendToCRM(){
                                 <img src="https://lanzatunegocio.net/images/4H9h.gif" /> 
                             </div>
                             {
-                                !estado == 'pendiente' ?
+                                estado == 'pendiente' ?
                                     <button onClick={() => {
                                         arrancarProceso()
                                         console.log('enviado')
