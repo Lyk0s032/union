@@ -113,8 +113,8 @@ export default function FormItemTransferir({ item,  anexar }){
                     <select name="" style={{width:'100%'}} id="" onChange={(e) => {
                         setForm({
                             ...form,
-                            proyecto: e.target.value,
-                            cotizacionId: e.target.value
+                            proyecto: Number(e.target.value),
+                            cotizacionId: Number(e.target.value)
                         })
                     }}>
                         <option value={null}>Seleccionar</option>

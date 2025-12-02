@@ -45,6 +45,15 @@ export default function LeftNavComprar(){
                         </div>
                     </li>
                     <li onClick={() => {
+                        params.set('s', 'total');
+                        setParams(params);
+                    }}> 
+                        <div>
+                            <MdOutlineEdgesensorHigh className="icon" /><br />
+                            <span>Total</span>
+                        </div>
+                    </li>
+                    <li onClick={() => {
                         params.set('s', 'borradores');
                         setParams(params);
                     }}>

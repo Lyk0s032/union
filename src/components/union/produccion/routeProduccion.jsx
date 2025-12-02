@@ -4,6 +4,7 @@ import LeftNav from './leftNav';
 import KitsPanel from './kits';
 import Lineas from './extension';
 import Solicitudes from './solicitudes/solicitudes';
+import RouteProyects from './proyectos/routeProyects';
 
 export default function RoutesProduccion(){
     const [params, setParams] = useSearchParams();
@@ -20,7 +21,7 @@ export default function RoutesProduccion(){
                             <Route path="/*" element={<KitsPanel />} />
                             <Route path="/lineas/*" element={<Lineas />} />
                             <Route path="/solicitudes/*" element={<Solicitudes />} />
-
+                            <Route path="/projects/*" element={<RouteProyects />} />
                         </Routes>
                     </div> 
                 </div>

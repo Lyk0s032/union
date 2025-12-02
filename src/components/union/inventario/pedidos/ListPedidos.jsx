@@ -47,9 +47,9 @@ export default function ListPedidos({ ordenes }){
             <div className="containerKits">
                 <div className="dataFilters">
                     <div className="searchDataInput">
-                        <input type="text" placeholder='Buscar materia prima' onChange={(e) => {
+                        {/* <input type="text" placeholder='Buscar materia prima' onChange={(e) => {
                             searchKitsWithFunction(e.target.value);
-                        }}/>
+                        }}/> */}
                     </div>
                     <div className="containerDataFilters">
                         <div className="divide">

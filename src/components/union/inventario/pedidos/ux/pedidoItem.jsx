@@ -12,37 +12,75 @@ export default function PedidoItemAlmacen({ item }){
     const [loadingToAlmacen, setLoadingToAlmacen] = useState(false);
     const [loadingToAlmacenProject, setLoadingToAlmacenProject] = useState(false);
 
-    const ingresarAlmacen = async () => {
-        setLoadingToAlmacen(true)
-        let body = {
-            cantidad: item.cantidad,
-            materiaId: item.materiaId,
-            productoId: item.productoId,
-            tipoProducto: item.materiaId ? 'Materia Prima' : 'Producto',
-            tipo: 'ENTRADA',
-            ubicacionOrigenId: item.materiaId ? 1 : 2,
-            ubicacionDestinoId: item.materiaId ? 1 : 2,
-            refDoc: item.id,
-            cotizacionId: item.requisicionId
+    const [form, setForm] = useState({
+        cantidad: Math.abs(Number(item.cantidad)),
+        bodegaId: item.materium ? 1 : 2,  
+        materiaId: item.materium ? item.materiaId : null,
+        productoId: item.materium ? null : item.productoId,
+        tipo: 'ENTRADA',
+        ubicacionOrigenId: item.materium ? 1 : 2,
+        ubicacionDestinoId: item.materium ? 1 : 2,
+        tipoProducto: item.materium ? 'Materia Prima' : 'Producto',
+        refDoc: `ORDEN-${item.comprasCotizacionId}`,
+        cotizacionId: null,
+        numPiezas: Math.abs(Number(item.cantidad)),
+        comprasCotizacionId: item.comprasCotizacionId
+        
+    })
+    const [loading, setLoading] = useState(false);
+    // const ingresarAlmacen = async () => {
+    //     setLoadingToAlmacen(true)
+    //     let body = {
+    //         cantidad: item.cantidad,
+    //         materiaId: item.materiaId,
+    //         productoId: item.productoId,
+    //         tipoProducto: item.materiaId ? 'Materia Prima' : 'Producto',
+    //         tipo: 'ENTRADA',
+    //         ubicacionOrigenId: item.materiaId ? 1 : 2,
+    //         ubicacionDestinoId: item.materiaId ? 1 : 2,
+    //         refDoc: item.id,
+    //         cotizacionId: item.requisicionId
 
-        }
-        const send = await axios.post('api/inventario/post/bodega/addHowMany', body)
-        .then(async res => {
+    //     }
+    //     const send = await axios.post('api/inventario/post/bodega/addHowMany', body)
+    //     .then(async res => {
+    //         const sendToChange = await axios.get(`/api/requisicion/get/get/almacen/itemCotizacion/${item.id}`)
+    //         return sendToChange
+    //     }) 
+    //     .then((res) => {
+    //         dispatch(actions.axiosToGetOrdenAlmacen(false, params.get('pedido')))
+    //         return res;
+    //     })
+    //     .catch(err => {
+    //         console.log(err)
+    //     })
+    //     .finally(() => {
+    //         setLoadingToAlmacen(false)
+    //     })
+
+    //     return send;
+    // }
+
+    const definitivaSend = async () => {
+        let body = form
+        console.log('body',body)
+            
+        // const sendRegister = await axios.post('/api/inventario/post/bodega/addHowMany', body)
+        const sendRegisterThat = await axios.post('/api/inventario/post/bodega/moviemitos/add', body)
+        .then(async (res) => {
             const sendToChange = await axios.get(`/api/requisicion/get/get/almacen/itemCotizacion/${item.id}`)
             return sendToChange
-        }) 
-        .then((res) => {
+        })   
+        .then(async (res) => {
             dispatch(actions.axiosToGetOrdenAlmacen(false, params.get('pedido')))
-            return res;
-        })
-        .catch(err => {
-            console.log(err)
-        })
-        .finally(() => {
-            setLoadingToAlmacen(false)
+            return res.data
         })
 
-        return send;
+        .catch(err => {
+            console.log(err);
+        })
+        .finally(() => setLoading(false))
+        return sendRegisterThat
     }
 
     const sendToProject = async () => {
@@ -99,7 +137,7 @@ export default function PedidoItemAlmacen({ item }){
                     { 
                         item.estado == 'aprobado' ?
                         <button onClick={() => {
-                            !loadingToAlmacen ? ingresarAlmacen() : null
+                            !loadingToAlmacen ? definitivaSend() : null
                         }}>
                             <span>{loadingToAlmacen ? 'Ingresando...' : 'Ingresar en almacén'}</span>
                         </button>
@@ -108,7 +146,7 @@ export default function PedidoItemAlmacen({ item }){
                     }               
                 </div>
             </td> 
-            <td>
+            {/* <td>
                 <div className="">
                     {
                         item.estado == 'aprobado' ?
@@ -122,7 +160,7 @@ export default function PedidoItemAlmacen({ item }){
                     }
 
                 </div>
-            </td>
+            </td> */}
             <td>
                 <div>
                     <span>{item.requisicion?.id} - {item.requisicion?.nombre}</span>

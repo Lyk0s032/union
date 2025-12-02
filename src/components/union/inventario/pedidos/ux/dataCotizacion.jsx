@@ -69,18 +69,18 @@ export default function DataCotizacion({ orden }){
 
                     <div className="itemHere">
                         <div className="circle" >
-                            <FaCircleExclamation className={orden.estadoPago == 'comprado' ? "icon Active" : 'icon'} />
+                            <FaCircleExclamation className={orden.daysFinish ? "icon Active" : 'icon'} />
                         </div>
-                        <h3 className={orden.estadoPago == 'comprado' ? "Active" : null}>Aprobación</h3>
+                        <h3 className={orden.daysFinish ? "Active" : null}>Aprobación</h3>
                         <span >{aprobadaCompra ? aprobadaCompra : `Pendiente`}</span>
                     </div>
 
                     <div className="itemHere">
-                        <div className="circle">
-                            <FaCircleExclamation className="icon" />
+                        <div className="circle" >
+                            <FaCircleExclamation className={orden.estadoPago == 'entregado' ? "icon Active" : 'icon'} />
                         </div>
-                        <h3>Entregado</h3>
-                        <span>Pendiente</span>
+                        <h3 className={orden.estadoPago == 'entregado' ? "Active" : null}>Entregado</h3>
+                        {orden.estadoPago == 'entregado' ? null : <span>Pendiente</span>}
                     </div>
                 </div>
                 <div className="dataCotizacionReal">
@@ -102,7 +102,7 @@ export default function DataCotizacion({ orden }){
                                 <div className="lade Right">
                                     <div className="price">
                                         <span>Estado</span>
-                                        <h1>{orden.estadoPago == 'comprado' ? 'Pendiente' : orden.estadoPago == 'Entregado' ? 'Entregado' : null}</h1>
+                                        <h1>{orden.estadoPago == 'comprado' ? 'Pendiente' : orden.estadoPago == 'entregado' ? 'Entregado' : null}</h1>
                                         <span>{orden?.comprasCotizacionItems?.length} Proyectos</span>
                                     </div>
                                 </div>
@@ -130,11 +130,11 @@ export default function DataCotizacion({ orden }){
                         </div>
                     </div>
 
-                    <div className="moreOptions">
+                    {/* <div className="moreOptions">
                         <button>
                             <span>Cotizaciones que se considerarón</span>
                         </button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

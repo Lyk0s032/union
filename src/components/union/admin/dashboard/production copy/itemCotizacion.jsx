@@ -12,6 +12,7 @@ export default function CotizacionItemGeneral({ item, openMenuId, toggleMenu  })
     const usuario = useSelector(store => store.usuario);
     const { user } = usuario; 
     const [loading, setLoading] = useState(false);
+    const [otherLoading, setOtherLoading] = useState(false)
     const dispatch = useDispatch();
     const [params, setParams] = useSearchParams();
     
@@ -22,13 +23,13 @@ export default function CotizacionItemGeneral({ item, openMenuId, toggleMenu  })
         .then(res => {
             return res
         })
-        // .then(async (res) => {
-        //     const send = await axios.get(`/api/inventario/get/aprobar/generar/${res.data.id}`)
-        //     return res;
-        // })
-        .then(async (res) => {
+        .then(async (res) => { 
             console.log(res.data)
-            const send = await axios.get(`api/requisicion/get/post/generateAll/${res.data.id}`)
+            const send = await axios.get(`/api/requisicion/get/post/generateAll/${res.data.id}`)
+            return res; 
+        })
+        .then(async (res) => {
+            const addProduction = await axios.get(`/api/requisicion/add/register/necesidad/${res.data.id}`)
             return res;
         })
         
@@ -145,13 +146,13 @@ export default function CotizacionItemGeneral({ item, openMenuId, toggleMenu  })
                                                     </div>
                                                 </li>
                                                 <li onClick={() => {
-                                                    if(!loading){
+                                                    if(!otherLoading){
                                                         handleComeBackCotizacion()
                                                     }
                                                 }}> 
                                                     <div>
                                                         <MdOutlineScreenShare   className="icon" />
-                                                        <span>{loading ? 'Regresando...' : 'Regresar a comerciales'}</span>
+                                                        <span>{otherLoading ? 'Regresando...' : 'Regresar a comerciales'}</span>
                                                     </div>
                                                 </li>
                                                 

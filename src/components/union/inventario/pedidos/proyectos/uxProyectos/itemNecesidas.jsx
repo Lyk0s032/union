@@ -11,11 +11,14 @@ export default function ItemNecesidadProyecto({ item }){
     const [loadingToAlmacen, setLoadingToAlmacen] = useState(false);
     const [loadingToAlmacenProject, setLoadingToAlmacenProject] = useState(false);
 
-    {console.log(item)} 
     return (
         <tr onClick={() => {
-            params.set('move', item.id);
+            const tipo = item.materium ? 1 : 2
+            const identificador = item.materium ? item.materiaId : item.productoId
+            params.set('move', identificador);
+            params.set('bodega', tipo)
             setParams(params)
+            dispatch(actions.getItemToProject(item))
         }}>
             <td className="longer"> 
                 <div className="nameLonger">

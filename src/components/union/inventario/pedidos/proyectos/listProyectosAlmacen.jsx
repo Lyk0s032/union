@@ -21,7 +21,7 @@ export default function ListProyectos({ proyectos }){
             <div className="containerKits">
                 <div className="dataFilters">
                     <div className="searchDataInput">
-                        <input type="text" placeholder='Buscar proyecto' />
+                        {/* <input type="text" placeholder='Buscar proyecto' /> */}
                     </div>
                     <div className="containerDataFilters">
                         <div className="divide">

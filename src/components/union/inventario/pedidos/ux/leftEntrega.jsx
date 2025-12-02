@@ -17,7 +17,15 @@ export default function LeftNavEntrega(){
                             <span>Detalles</span>
                         </div>
                     </li>
-
+                    <li onClick={() => {
+                        params.set('s', 'kits');
+                        setParams(params);
+                    }}>
+                        <div>
+                            <MdOutlineSpaceDashboard className="icon" /><br />
+                            <span>Productos</span>
+                        </div>
+                    </li>
 
                 </ul>
             </nav>

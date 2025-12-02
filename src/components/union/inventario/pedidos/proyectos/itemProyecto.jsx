@@ -11,16 +11,16 @@ dayjs.locale("es");
 
 export default function ItemProyecto({ proyecto }){
     const [params, setParams] = useSearchParams();
-    
+     
      
     return (
         <tr onClick={() => { 
             params.set('proyecto', proyecto.id)
-            setParams(params);
+            setParams(params); 
         }}>
             <td className="coding">
                 <div className="code">
-                    <h3>{proyecto.id}</h3>
+                    <h3>{Number(proyecto.id + 21719)}</h3>
                 </div>
             </td>
             <td className="longer Almacen" > 
@@ -29,10 +29,10 @@ export default function ItemProyecto({ proyecto }){
                         <span><strong>{proyecto.client?.nombre}</strong></span>
                     </div>
                     <div className="nameData">
-                        <h3>
+                        <h3> 
                            {proyecto.name}
                         </h3>
-                    </div>
+                    </div> 
                     <div className="extensionColor">
                         <span>{proyecto.fechaAprobada}</span>
                     </div>
@@ -42,10 +42,7 @@ export default function ItemProyecto({ proyecto }){
                 <span></span>
             </td>
             <td className=" Almacen" style={{fontSize:12, textAlign:'left'}}>
-                
             </td>
-
-            
         </tr>
     )
 }

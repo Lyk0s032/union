@@ -18,12 +18,12 @@ export default function LeftNavProject(){
                         </div>
                     </li>
                     <li onClick={() => {
-                        params.set('s', 'kits');
+                        params.set('s', 'prima');
                         setParams(params);
                     }}>
                         <div>
                             <MdOutlineSpaceDashboard className="icon" /><br />
-                            <span>Productos</span>
+                            <span>Materia prima</span>
                         </div>
                     </li>
 

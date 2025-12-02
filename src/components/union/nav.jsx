@@ -55,11 +55,11 @@ export default function Nav(){
                                 </div>
                             </li>
 
-                            {/* <li onClick={() => navigate('/inventario')}>
+                            <li onClick={() => navigate('/inventario')}>
                                     <div>
                                     <span>Almacen</span>
                                 </div>
-                            </li> */}
+                            </li>
 
                             {
                                 hasPermission(user.user, 'administracion') && (

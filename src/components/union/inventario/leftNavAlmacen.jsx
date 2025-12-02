@@ -64,8 +64,20 @@ export default function LeftNav(){
                                     </div>
                                 </li>
 
-                                <li className={location.pathname == '/inventario/pedidos' || location.pathname == '/inventario/pedidos/' ? 'Active' : null} onClick={() => {
+                                <li className={location.pathname == '/inventario/pedidos' && !params.get('zone') ? 'Active' : null} onClick={() => {
                                     navigate('/inventario/pedidos')
+                                }}>
+                                    <div className="divideLi">
+                                        <div className="leftOption">
+                                            <MdDesignServices className="icon" />
+                                            <span>Ordenes compras </span>
+                                        </div>
+                                        <FaChevronDown className="icon" />
+                                        
+                                    </div>
+                                </li>
+                                <li className={location.pathname == '/inventario/pedidos'  && params.get('zone') == 'pedidos' ? 'Active' : null} onClick={() => {
+                                    navigate('/inventario/pedidos?zone=pedidos')
                                 }}>
                                     <div className="divideLi">
                                         <div className="leftOption">
@@ -73,10 +85,9 @@ export default function LeftNav(){
                                             <span>Pedidos</span>
                                         </div>
                                         <FaChevronDown className="icon" />
-                                        
                                     </div>
                                 </li>
-                                <li className={location.pathname == '/inventario/bodegas' || location.pathname == '/inventario/bodegas' ? 'Active' : null} onClick={() => {
+                                {/* <li className={location.pathname == '/inventario/bodegas' || location.pathname == '/inventario/bodegas' ? 'Active' : null} onClick={() => {
                                     navigate('/inventario/bodegas')
                                 }}>
                                     <div className="divideLi">
@@ -87,8 +98,8 @@ export default function LeftNav(){
                                         <FaChevronDown className="icon" />
                                         
                                     </div>
-                                </li>
-                                <li className={location.pathname == '/produccion/lineas' || location.pathname == '/produccion/lineas/' ? 'Active' : null} onClick={() => {
+                                </li> */}
+                                {/* <li className={location.pathname == '/produccion/lineas' || location.pathname == '/produccion/lineas/' ? 'Active' : null} onClick={() => {
                                     navigate('lineas/')
                                 }}>
                                     <div className='divideLi'>
@@ -99,7 +110,7 @@ export default function LeftNav(){
                                         <FaChevronDown className="icon" />
 
                                     </div>
-                                </li>
+                                </li> */}
                                 {/* <li className={location.pathname == '/produccion/lineas' || location.pathname == '/produccion/lineas/' ? 'Active' : null} onClick={() => {
                                     navigate('lineas/')
                                 }}>

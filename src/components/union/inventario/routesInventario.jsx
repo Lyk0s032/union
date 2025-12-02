@@ -18,8 +18,8 @@ export default function RoutesInventario(){
                         <div className="dashboard">
                             <div className="containerDashboard">
                                 <Routes>
-                                    <Route path="/*" element={<DashboardAlmacen />} />
-                                    <Route path="/bodegas/*" element={<Bodegas />} />
+                                    {/* <Route path="/*" element={<DashboardAlmacen />} /> */}
+                                    <Route path="/*" element={<Bodegas />} />
                                     <Route path="/pedidos/*" element={<Pedidos />} />
                                 </Routes>
                             </div>

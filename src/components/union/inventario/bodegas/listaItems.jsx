@@ -19,6 +19,7 @@ export default function ItemsLists(){
 
     const dispatch = useDispatch();
 
+    console.log(productosBodega)
     const searchKitsWithFunction = async (query) => {
         
         if(!query || query == '') return setProducto(null);
@@ -88,10 +89,10 @@ export default function ItemsLists(){
                                         <table>
                                             <thead>
                                                 <tr>
+                                                    <th>Item</th>
                                                     <th></th>
                                                     <th></th>
-                                                    <th>Cantidad</th>
-                                                    <th>Comprometida</th>
+                                                    <th></th>
                                                     <th></th>
 
                                                 </tr>
@@ -113,7 +114,12 @@ export default function ItemsLists(){
                                                                         let ruta = pt.itemId
                                                                         params.set('item', ruta) 
                                                                         params.set('show', 'Bodega');
-                                                                        params.set('who', params.get('bodega'))
+                                                                        if(!params.get('bodega')){
+                                                                            params.set('bodega', 1)
+                                                                        }
+                                                                        !params.get('bodega') ?
+                                                                            params.set('who', 1)
+                                                                        : params.set('who', params.get('bodega'))
                                                                         setParams(params);
                                                                     }}>
                                                                         <td className="coding">
@@ -139,20 +145,20 @@ export default function ItemsLists(){
                                                                             </div>
                                                                         </td>
                                                                         <td className="middle Almacen" style={{fontSize:12}}>
-                                                                            <span>{pt.fullPiecesCount}</span>
+                                                                            {/* <span>{pt.fullPiecesCount}</span> */}
                                                                         </td>
                                                                         <td className="middle Almacen" style={{fontSize:12}}>
-                                                                            <span>{pt.totalMeters} {pt.itemData.unidad}</span>
+                                                                            {/* <span>{pt.totalMeters} {pt.itemData.unidad}</span> */}
                                                                         </td>
                                                                         <td className='middle Almacen'>
-                                                                            {
+                                                                            {/* {
                                                                                 Number(pt.cantidad) < Number(pt.cantidadComprometida)   ?
                                                                                     <AiOutlineExclamationCircle className="icon Exclamation" />
                                                                                 : Number(pt.cantidad) == Number(pt.cantidadComprometida) ?
                                                                                     <AiOutlinePlus className="icon" />
                                                                                 : 
                                                                                     <AiOutlineCheckCircle className="icon" />
-                                                                            }
+                                                                            } */}
                                                                         </td>
                                                                     </tr>
                                                             )
@@ -241,11 +247,11 @@ export default function ItemsLists(){
                                                 <div className="dataContainer">
                                                     <div className="boxContainer">
                                                         <div className="headerBox">
-                                                            <h3>Productos</h3>
+                                                            <h3>Registros</h3>
                                                         </div>
-                                                        <h3 className='h3'>550</h3>
+                                                        <h3 className='h3'>{productosBodega?.groupsCount}</h3>
                                                     </div>
-                                                    <div className="boxContainer">
+                                                    {/* <div className="boxContainer">
                                                         <div className="headerBox">
                                                             <h3>Opciones rápidas</h3>
                                                         </div>
@@ -255,7 +261,7 @@ export default function ItemsLists(){
                                                         <button>
                                                             <span>¡Sacar existencias!</span>
                                                         </button>
-                                                    </div>
+                                                    </div> */}
                                                     <div className="boxContainer">
                                                         <div className="headerBox">
                                                             <h3>Preguntas que te podrían interesar</h3>

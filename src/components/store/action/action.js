@@ -1702,3 +1702,95 @@ export function axiosToGetItemProjectPlus(carga, materiaId = null, ubicacionId =
       });
   };
 }
+
+
+
+
+
+// PRODUCCIÓN
+export function getItemProduction(data){
+    return {
+        type: types.GET_PRODUCTION_ITEM,
+        payload: data
+    }
+}
+
+export function gettingItemProduction(carga){
+    return {
+        type: types.GETTING_PRODUCTION_ITEM,
+        payload: carga
+    }
+}
+
+export function axiosToGetItemProduction(carga, requisicion) {
+  return function(dispatch) {
+    dispatch(gettingItemProduction(carga));
+
+    const url = `/api/requisicion/get/produccion/project/${requisicion}`;
+    axios.get(url)
+      .then(res => res.data)
+      .then(inf => {
+        dispatch(getItemProduction(inf));
+        return inf;
+      })
+      .catch((e) => {
+        console.log('Error axiosToGetItemInventarioPlus:', e);
+        if (e.request) {
+          return dispatch(getItemProduction('notrequest'));
+        } else {
+          return dispatch(getItemProduction(404));
+        }
+      });
+  };
+}
+
+
+
+
+export function getItemElemento(data){
+    return {
+        type: types.GET_ITEM_ELEMENTO,
+        payload: data
+    }
+}
+
+export function gettingItemElemento(carga){
+    return {
+        type: types.GETTING_ITEM_ELEMENTO,
+        payload: carga
+    }
+}
+
+export function axiosToGetItemElemento(carga, requisicionId,  kitId = null, productId = null) {
+  return function(dispatch) {
+    dispatch(gettingItemElemento(carga));
+    console.log('Entra a la consola - get item inventario');
+
+    // Construir query params de forma segura
+    const params = new URLSearchParams();
+    if (kitId) params.append('kitId', kitId);
+    if (productId) params.append('productId', productId);
+    // ubicacionId es obligatorio para esta llamada en tu nuevo endpoint
+    params.append('requisicionId', requisicionId);
+
+    const url = `/api/requisicion//get/produccion/project/items/watch/?${params.toString()}`;
+
+    console.log(url)
+    axios.get(url)
+      .then(res => res.data)
+      .then(inf => {
+        console.log()
+        dispatch(getItemElemento(inf));
+        console.log('Item produccion recibido:', inf);
+        return inf;
+      })
+      .catch((e) => {
+        console.log('Error fallo la consulta:', e);
+        if (e.request) {
+          return dispatch(getItemElemento('notrequest'));
+        } else {
+          return dispatch(getItemElemento(404));
+        }
+      });
+  };
+}

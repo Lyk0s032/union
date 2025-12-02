@@ -29,7 +29,18 @@ const initialState = {
 
     // Analisis
     compras: null,
-    loadingCompras: false
+    loadingCompras: false,
+
+
+    // Produccion
+    productionItems: null,
+    loadingProductionItems: false,
+    productionItem: null,
+    loadingProductionItem: false,
+
+    itemElemento: null,
+    loadingItemElemento: false
+
 }
 
 export default function (state = initialState, action) {
@@ -238,6 +249,47 @@ export default function (state = initialState, action) {
                 ...state,
                 loadingCompras: action.payload
             }
+
+
+        // PRODUCTION
+        case types.GET_PRODUCTION_ITEMS: 
+            return {
+                ...state, 
+                productionItems: action.payload,
+                loadingProductionItems: false
+            }
+        case types.GETTING_PRODUCTION_ITEMS: 
+            return {
+                ...state, 
+                loadingProductionItems: action.payload
+            }
+
+
+        case types.GET_PRODUCTION_ITEM: 
+            return {
+                ...state, 
+                productionItem: action.payload,
+                loadingProductionItem: false
+            }
+        case types.GETTING_PRODUCTION_ITEM: 
+            return {
+                ...state, 
+                loadingProductionItems: action.payload
+            }
+
+        case types.GET_ITEM_ELEMENTO: 
+            return {
+                ...state, 
+                itemElemento: action.payload,
+                loadingItemElemento: false
+            }
+        case types.GETTING_ITEM_ELEMENTO: 
+            return {
+                ...state, 
+                loadingItemElemento: action.payload
+            }
+
+itemElemento
         default:
             return {...state}
     }

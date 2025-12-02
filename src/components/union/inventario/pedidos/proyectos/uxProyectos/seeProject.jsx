@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import LeftNavProject from './leftNav';
 import DetallesProject from './detalles';
+import ProductosProyecto from './productosProyecto';
 
 
 
@@ -37,7 +38,7 @@ export default function ProjectsUX(){
                     <div className="leftNavUX">
                         <LeftNavProject />
                     </div>
-                    
+                     {console.log(proyecto)}
                     <div className="rightUx">
                         <button onClick={() => closeComprar()}>x</button>
                                 {
@@ -46,7 +47,12 @@ export default function ProjectsUX(){
                                         <h1>Not found</h1>
                                     :
                                     <>
-                                        <DetallesProject proyecto={proyecto} />
+                                        {
+                                            params.get('s') == 'detalles' || !params.get('s') ?
+                                                <DetallesProject proyecto={proyecto} />
+                                            : 
+                                                <ProductosProyecto proyecto={proyecto} />
+                                        }
                                     </>
                                 }      
                     </div>

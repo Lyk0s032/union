@@ -13,6 +13,7 @@ import UxCotizadorPanel from './uxCotizacion/PanelCotizacions';
 import GeneralProductos from './productos/general';
 import OrdenesCompras from './materiaPrima/ordenesCompras/general';
 import KitsData from './kits/kits';
+import GeneralTotal from './total/total';
 
 export default function Comprar(){
     const [params, setParams] = useSearchParams();
@@ -79,9 +80,8 @@ export default function Comprar(){
 
     useEffect(() => {
         if(!factura.current || !factura.current) return;
-       factura.current.classList.toggle('facturaActive')
-       btn.current.classList.toggle('facturaBtnHidden') 
-
+        factura.current.classList.toggle('facturaActive')
+        btn.current.classList.toggle('facturaBtnHidden') 
     }, [params.get('facture')])
 
 
@@ -157,6 +157,8 @@ export default function Comprar(){
                                 <GeneralProductos cargaProyectos={cargaProyectos} />   
                             : params.get('s') == 'kits' ?
                                 <KitsData />
+                            : params.get('s') == 'total' ?
+                                <GeneralTotal cargaProyectos={cargaProyectos} />
                             : null
                         }
                         

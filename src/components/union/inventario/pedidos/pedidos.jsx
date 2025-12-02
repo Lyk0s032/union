@@ -32,21 +32,36 @@ export default function Pedidos(){
                             <div className="dataHeaderPrincipal">
                                 <div className="containerDataHeader">
                                     <div className="area">
-                                        <h2 >Zona de pedidos </h2> 
+                                        <h2>
+                                            {
+                                                !params.get('zone') ?
+                                                    'Zona por orden de compra'
+                                                : 
+                                                    'Zona de proyectos' 
+                                            }
+                                        </h2> 
                                     </div>
-                                    <div className="datosBox" onClick={() => {
-                                        setShow('pedidos')
-                                    }}>
-                                        <span>Ordenes de compras</span>
-                                        <h1>{1}</h1>
-                                    </div>
+                                    {
+                                        !params.get('zone') ?
+                                        <div className="datosBox" onClick={() => {
+                                            setShow('pedidos')
+                                        }}>
+                                            <span>Ordenes de compras</span>
+                                            <h1>Para proyectos</h1>
+                                        </div>
+                                        : null
+                                    }
 
-                                    <div className="datosBox" onClick={() => {
-                                        setShow('proyectos')
-                                    }}>
-                                        <span>Proyectos en curso</span>
-                                        <h1>{1}</h1>
-                                    </div>
+                                    {
+                                        params.get('zone') == 'pedidos' ?
+                                            <div className="datosBox" onClick={() => {
+                                            setShow('proyectos')
+                                        }}>
+                                            <span>Proyectos en curso</span>
+                                            <h1>En almacén</h1>
+                                        </div>
+                                        :null
+                                    }
                                 </div>
                             </div>
                         </div>                   
@@ -56,7 +71,7 @@ export default function Pedidos(){
                     <div className="dataDashboard" style={{marginTop:0}}>
                         <div className="dataRoutesDashboard">
                             {
-                                !show || show == 'pedidos' ?
+                                !params.get('zone') ?
 
                                     loadingOrdenes || !ordenes ?
                                         <div className="notFound">
@@ -70,7 +85,7 @@ export default function Pedidos(){
                                     :
                                     <ListPedidos ordenes={ordenes} />
                                     
-                                : show == 'proyectos' ?
+                                : params.get('zone') == 'pedidos' ?
                                     <ProyectosAlmacen />
                                 : null
                             }

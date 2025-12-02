@@ -1,5 +1,32 @@
 import React from 'react';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
+
+function calcTotal(project) {
+  if (!project || !Array.isArray(project.necesidadProyectos)) return 0;
+
+  return project.necesidadProyectos.reduce((total, req) => {
+    // convertir cantidad a número (sin toFixed)
+    const cantidad = Number(req.cantidadComprometida || 0);
+
+    // precio del kit (campo valor)
+    let precio = 0;
+    if (req.kit?.priceKits?.length > 0) {
+      precio = Number(req.kit.priceKits[0].valor || 0);
+    }
+
+    // precio del producto (campo valor)
+    if (req.producto?.productPrices?.length > 0) {
+      precio = Number(req.producto.productPrices[0].valor || 0);
+    }
+
+    // **IMPORTANTE**: retornar el acumulador
+    return total + (cantidad * precio);
+  }, 0);
+}
+
+ 
 export default function OpenProject({ data, totalValorReal }){
     console.log(data)
 
@@ -14,7 +41,14 @@ export default function OpenProject({ data, totalValorReal }){
         return totalComprado;
     }
 
+    const [valor, setValor] = useState(0);
+
     const totalComprado = getTotalCompradoPorMateria();
+
+    // recalcula cuando cambie `project`
+    useEffect(() => { 
+        setValor(calcTotal(data));
+    }, [data]);
     return (
         <div className="openProject">
             <div className="titleProject">
@@ -31,7 +65,7 @@ export default function OpenProject({ data, totalValorReal }){
 
                         <div className="priceProject Right">
                             <span>Precio Aproximado del proyecto</span>
-                            <h3>$ 15.210.000 </h3>
+                            <h3>$ {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(valor ? valor : 0)}</h3>
                             <button>
                                 <span>Ver cotización</span>
                             </button>

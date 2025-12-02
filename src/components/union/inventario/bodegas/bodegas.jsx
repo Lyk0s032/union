@@ -86,7 +86,7 @@ export default function Bodegas(){
                                         <span>Items</span>
                                     </div>
                                 </li>
-                                <li  onClick={() => setShow('movimientos')}
+                                {/* <li  onClick={() => setShow('movimientos')}
                                     className={show == 'movimientos' ? 'Active' : null }>
                                     <div>
                                         <span>Movimientos</span>
@@ -97,12 +97,11 @@ export default function Bodegas(){
                                     <div>
                                         <span>Gráfica</span>
                                     </div>
-                                </li>
+                                </li> */}
                             </ul>
                         </nav>
                     </div>
                     <div className="dataRoutesDashboard">
-                        {console.log('consolaaa', productosBodega)}
                         {
                             !productosBodega || loadingProductosBodega ?
                                 <div className="notFound">
