@@ -5,7 +5,7 @@ import * as actions from '../../../../../../store/action/action';
 import axios from 'axios';
 import { useSearchParams } from 'react-router-dom';
 
-export default function NewOrden(){
+export default function NewOrden({ productosTotal }){
     const [moment, setMoment] = useState(null);
     const [title, setTitle] = useState('Cotización con Apex');
     const [provider, setProvider] = useState(null)
@@ -170,7 +170,7 @@ export default function NewOrden(){
                 :
                 <div className="containerNewOrden">
                     <div className="resultChoose">
-                        <NewChooseMp provider={provider} title={title} />
+                        <NewChooseMp productosTotal={productosTotal} provider={provider} title={title} />
                     </div>
                 </div>
             }

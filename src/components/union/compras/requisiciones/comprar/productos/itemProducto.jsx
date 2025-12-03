@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { data, useSearchParams } from 'react-router-dom';
 import * as actions from '../../../../../store/action/action';
 import axios from 'axios';
 
-export default function ItemListMP({ materia, sumar }){
+export default function ItemListMP({ materia, sumar, productosTotal}){
     const [params, setParams] = useSearchParams();
 
     const dispatch = useDispatch();
@@ -19,6 +19,9 @@ export default function ItemListMP({ materia, sumar }){
         return acc + Number(it.valor);
     }, 0); 
 
+
+
+    console.log('productoo,', materia)
     const promedioUnidad = precioPromedio / materia.precios.length;
     const open = () => {
         dispatch(actions.gettingItemRequisicion(true))
@@ -47,13 +50,43 @@ export default function ItemListMP({ materia, sumar }){
                 // Si ya existe, lo quitamos
                 const nuevo = materiaIds.filter(m => m.productoId !== materia.id);
                 console.log('Quitando elemento:', nuevo);
+
                 dispatch(actions.limpiarIds(nuevo)); 
-                quitando()
+
+                if(materia.unidad == 'estatico'){
+                    return quitando()
+                }else{
+                    const findMt2Producto = productosTotal.find(i => i.id == materia.id)
+                    const dataProducto = findMt2Producto ? findMt2Producto.productoCotizacion[0] : null
+                    const medidaA = Number(dataProducto.medida.split('X')[0])
+                    const medidaB = Number(dataProducto.medida.split('X')[1])
+                    const medidaTotal = Number(medidaA * medidaB)
+                    return quitando(medidaTotal)
+                }
             } else {
-                // Si no existe, lo agregamos (sin mutar el array original)
-                dispatch(actions.getMateriasIds({productoId: materia.id, cantidad: cantidadToPrices}));
-                console.log(materiaIds) 
-                return sumandito()
+                // SI es un producto terminado normal, ejecutamos normal
+                if(materia.unidad == 'estatico'){
+                    dispatch(actions.getMateriasIds({productoId: materia.id, cantidad: cantidadToPrices}));
+                    console.log(materiaIds)
+                    
+                    return sumandito()
+                }else{
+                    const findMt2Producto = productosTotal.find(i => i.id == materia.id)
+                    const dataProducto = findMt2Producto ? findMt2Producto.productoCotizacion[0] : null
+                    const medidaA = Number(dataProducto.medida.split('X')[0])
+                    const medidaB = Number(dataProducto.medida.split('X')[1])
+                    const medidaTotal = Number(medidaA * medidaB)
+
+                    dispatch(actions.getMateriasIds({productoId: materia.id, cantidad: medidaTotal}));
+                    return sumandito(medidaTotal)
+
+                }
+                // // Si no existe, lo agregamos (sin mutar el array original)
+                // dispatch(actions.getMateriasIds({productoId: materia.id, cantidad: cantidadToPrices}));
+                // console.log(materiaIds)
+                
+                // console.log('ver datos de supercifie', materiaIds)
+                // return sumandito()
             
             }
 
@@ -103,7 +136,6 @@ export default function ItemListMP({ materia, sumar }){
 
     let cantidadToPrices = Number(Math.ceil(Number( Number(materia?.totalCantidad) / Number(materia.medida) )).toFixed(0))
 
-    console.log('materiaa', materia)
     const sumanditoParaProducto = () => {
         if(Number(materia.entrado >= Number(materia.totalCantidad))){
             console.log('ya esta comprado')
@@ -114,7 +146,7 @@ export default function ItemListMP({ materia, sumar }){
             sumar(cantidadPrice)
         }
     } 
-    const sumandito = () => {
+    const sumandito = (cantidad) => {
         if(Number(materia.entregado) >= Number(materia.totalCantidad)){
             console.log('completo')
         } else if(Number(materia.entregado) > 0 && Number(materia.entregado) < Number(materia.totalCantidad)){
@@ -125,22 +157,21 @@ export default function ItemListMP({ materia, sumar }){
             
         }else{
 
-                let cantidadPrice = Number(Number(cantidadToPrices) * Number(promedioUnidad)) 
+                let cantidadPrice = Number(Number(cantidad ? cantidad : cantidadToPrices) * Number(promedioUnidad)) 
                 console.log('proyecto a sumar-------',materia.nombre, cantidadPrice) 
                 sumar(cantidadPrice)
         }
             
     }
-    const quitando = () => {
+    const quitando = (cantidad) => {
         if(Number(materia.entregado) >= Number(materia.totalCantidad)){
             console.log('completo') 
         } else if(Number(materia.entregado) > 0 && Number(materia.entregado) < Number(materia.totalCantidad)){
-            let cantidadPrice = Number(Number(cantidadToPrices) * Number(promedioUnidad)) 
+            let cantidadPrice = Number(cantidad ? Number(cantidad) * Number(promedioUnidad) : (Number(cantidadToPrices)) * Number(promedioUnidad)) 
             console.log('proyecto a sumar-------',materia.nombre, cantidadPrice) 
-            sumar(-cantidadPrice)
+            sumar(cantidad ? cantidad : -cantidadPrice)
         }else{
-            let cantidadPrice = Number(Number(cantidadToPrices) * Number(promedioUnidad)) 
-            console.log('proyecto a sumar-------',materia.nombre, cantidadPrice) 
+            let cantidadPrice = Number(cantidad ? Number(cantidad) * Number(promedioUnidad) : (Number(cantidadToPrices)) * Number(promedioUnidad)) 
             sumar(-cantidadPrice)
         } 
     }

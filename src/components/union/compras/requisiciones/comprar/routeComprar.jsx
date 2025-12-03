@@ -44,6 +44,7 @@ export default function Comprar(){
         }
         const getData = await axios.post('/api/requisicion/get/req/multipleReal/', body)
         .then((res) => {
+            console.log('dataaa', res.data)
             setData(res.data);
             return res.data
         })
@@ -154,7 +155,7 @@ export default function Comprar(){
                             : params.get('s') == 'borradores' ?
                                 <GeneralBorradoresCotizacion />   
                             : params.get('s') == 'productos' ?
-                                <GeneralProductos cargaProyectos={cargaProyectos} />   
+                                <GeneralProductos productosTotal={data && data.productoTerminadoConsolidado} cargaProyectos={cargaProyectos} />   
                             : params.get('s') == 'kits' ?
                                 <KitsData />
                             : params.get('s') == 'total' ?
@@ -166,7 +167,7 @@ export default function Comprar(){
                         <BtnFactura  ref={btn}/>
                         
                         {
-                            params.get('orden') ? <OrdenesCompras /> : null
+                            params.get('orden') ? <OrdenesCompras productosTotal={data && data.productoTerminadoConsolidado}  /> : null
                         }
                     </div>
                 </div>

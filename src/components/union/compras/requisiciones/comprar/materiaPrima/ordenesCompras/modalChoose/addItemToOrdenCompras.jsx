@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useSearchParams } from 'react-router-dom';
 import GetHowMany from './getHowMany';
 
-export default function SeleccionadorItems (){
+export default function SeleccionadorItems ({ productosTotal }){
     const [choose, setChoose] = useState(false);
 
     const dispatch = useDispatch();
@@ -25,7 +25,7 @@ export default function SeleccionadorItems (){
                 !itemRequisicion ?
                     <GetAllItemsProvider seleccionador={getChose} />
                 :
-                    <GetHowMany />
+                    <GetHowMany productosTotal={productosTotal} />
             }
         </div>
     )

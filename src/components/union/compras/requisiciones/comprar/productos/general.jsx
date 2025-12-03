@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Cotizador from '../cotizador';
 import ProviderAnalisis from './providers/providersAnalisis';
 
-export default function GeneralProductos({ cargaProyectos }){
+export default function GeneralProductos({ cargaProyectos, productosTotal }){
+
     const [params, setParams] = useSearchParams();
     const ref = useRef(null);
     const longer = useRef(null);
@@ -77,7 +78,7 @@ export default function GeneralProductos({ cargaProyectos }){
                 <div className="lista"> 
                     <div className="containerLista">
                         <div className="DataHere" ref={longer} >
-                            <ListaMP materia={materia}  sumar={addToTotal}/>
+                            <ListaMP productosTotal={productosTotal} materia={materia}  sumar={addToTotal}/>
                             <div className="cotizador">
                                 {
                                     <Cotizador total={total} />

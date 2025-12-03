@@ -3,7 +3,7 @@ import * as actions from '../../../../../../../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function ItemProjectOrden({ item, dar }){
-    console.log(item)
+    console.log('item en comprar',item)
     const req = useSelector(store => store.requisicion);
     const { itemsCotizacions, itemRequisicion } = req;
     const [add, setAdd] = useState(false);

@@ -6,9 +6,11 @@ import * as actions from '../../../../../../store/action/action';
 import axios from 'axios';
 import { MdEditNote, MdOutlineClose, MdOutlineSave } from 'react-icons/md';
 
-export default function NewChooseMp({ provider, title }){
+export default function NewChooseMp({ productosTotal, provider, title }){
     const req = useSelector(store => store.requisicion);
     const { ordenCompra, loadingOrdenCompra } = req;
+
+    console.log('proyectoos, ', productosTotal)
 
     const total =  ordenCompra?.comprasCotizacionItems?.reduce((acc, it) => acc + Number(it.precioTotal), 0);
     
@@ -152,7 +154,7 @@ export default function NewChooseMp({ provider, title }){
                     </div>
                 </div>
             }
-            <SeleccionadorItems />
+            <SeleccionadorItems productosTotal={productosTotal}/>
         </div>
     )
 }

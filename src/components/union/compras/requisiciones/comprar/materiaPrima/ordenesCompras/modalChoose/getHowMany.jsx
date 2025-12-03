@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import ItemProjectOrden from './itemProjects';
 
-export default function GetHowMany(){
+export default function GetHowMany({ productosTotal }){
     const [choose, setChoose] = useState(false);
     const dispatch = useDispatch();
     const req = useSelector(store => store.requisicion);
@@ -17,7 +17,6 @@ export default function GetHowMany(){
 
     // Cantidades ingresadas manualmente 
     const aIngresar = itemsCotizacions.filter(i => i.materiumId == itemRequisicion.id).reduce((acc, it) => acc + Number(it.cantidad), 0);
-    {console.log('iteeem, a renderizar:', itemRequisicion)}
     // Desde el sistema
     const NecesitaSistema = itemRequisicion.itemRequisicions.reduce((acc, it) => acc + Number(it.cantidad), 0);
     const ingresado = itemRequisicion.itemRequisicions.reduce((acc, it) => acc + Number(it.cantidadEntrega), 0);
@@ -45,7 +44,7 @@ export default function GetHowMany(){
     const [cantidad, setCantidad] = useState(0);
 
     let valorA = priceCurrently?.valor 
-    let valorB = priceCurrentlyProducto?.valor ? priceCurrentlyProducto.valor * cantidad : 0
+    let valorB = Number(priceCurrentlyProducto?.valor ? priceCurrentlyProducto.valor * cantidad : 0)
 
     const [total, setTotal] = useState(
         priceCurrentlyProducto ? 
@@ -79,7 +78,12 @@ export default function GetHowMany(){
         }
     }
   
-
+    
+    // FILTRAR MEDIDA
+    console.log('item a renderenziar', itemRequisicion)
+    console.log('productoso', productosTotal)
+    const productoFilter = productosTotal.find(i => i.id == itemRequisicion.id)
+    console.log('producto ya filtrado', productoFilter)
     const toProjects = itemsCotizacions.filter(i => i.materiumId == itemRequisicion.id);
 
     // AddItemToOrden
@@ -214,8 +218,8 @@ export default function GetHowMany(){
                             </div> 
                             <div className="dataName">
                                 <h3>{itemRequisicion?.description} - {valorKg}</h3>
-                                <span>Medida original:</span><br />
-                                <strong>{itemRequisicion?.medida} {itemRequisicion?.unidad}</strong><br /><br /><br />
+                                <span>Medida original:</span><br /> 
+                                <strong>{itemRequisicion?.medida} {itemRequisicion?.unidad} -- Cotizacion: {productoFilter?.productoCotizacion[0]?.medida}</strong><br /><br /><br />
 
                                 <span>Precio actual</span>
                                 <h1>$ {priceCurrently?.valor}  {priceCurrentlyProducto?.valor}</h1> 

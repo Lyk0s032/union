@@ -2,7 +2,7 @@ import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 import NewOrden from './new';
 
-export default function OrdenesCompras(){
+export default function OrdenesCompras({ productosTotal }){
     const [params, setParams] = useSearchParams();
 
     return (
@@ -18,7 +18,7 @@ export default function OrdenesCompras(){
 
                 <div className="dataOrdenes">
                     <div className="topNewCreate">
-                        <NewOrden />
+                        <NewOrden productosTotal={productosTotal} />
                     </div>
                 </div>
             </div>

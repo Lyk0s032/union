@@ -1,8 +1,9 @@
 import React from 'react';
 import ItemListMP from './itemProducto';
 
-export default function ListaMP({ materia, sumar }){
-    return (
+export default function ListaMP({ materia, sumar, productosTotal }){
+    console.log('productos totales', productosTotal)
+    return ( 
         <div className="listaMP">
             <table>
                 <thead> 
@@ -21,7 +22,7 @@ export default function ListaMP({ materia, sumar }){
                             materia.map((mat, i) => {
                                 return (
                                     mat.tipo == 'producto' ?
-                                        <ItemListMP materia={mat} sumar={sumar}  key={i+1}/>
+                                        <ItemListMP materia={mat} sumar={sumar} productosTotal={productosTotal} key={i+1}/>
                                     : null
                                 )
                             })
