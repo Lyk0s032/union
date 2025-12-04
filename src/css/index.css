@@ -4784,6 +4784,21 @@ body button {
     transform: translateY(0);
   }
 }
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .resultItem {
+  width: 94%;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .resultItem tbody td {
+  border-top: 1px solid #666;
+  padding: 20px 0px;
+  box-sizing: border-box;
+  width: 100%;
+  text-align: right;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .resultItem tbody td span {
+  font-size: 18px;
+  font-weight: 400;
+  color: #046290;
+}
 .modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista .containerLista .DataHere .cotizador {
   position: fixed;
   right: 0;

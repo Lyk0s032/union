@@ -88,7 +88,7 @@ export default function ResultBodegaProducto({ item }){
                     </div>
                     <div className="howManyItem">
                         <h1>{resumenBodega.totalMeters} <span style={{fontSize:18}}>{item.item.unidad}</span></h1>
-                        <span>Cantidad comprometida</span>
+                        <span>Cantidad en unidades</span>
                     </div>
                 </div>
                 <div className="resultadosHere">

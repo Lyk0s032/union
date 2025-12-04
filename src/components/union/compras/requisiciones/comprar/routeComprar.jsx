@@ -32,9 +32,9 @@ export default function Comprar(){
         params.delete('facture')
         params.delete('PV')
         params.delete('MP')
+        dispatch(actions.CleanFaltanteProject())
         setParams(params);
         dispatch(actions.limpiarIds([]))
-
     }
 
     const cargaProyectos = async () => {

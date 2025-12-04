@@ -4,12 +4,14 @@ import { useSearchParams } from 'react-router-dom';
 import * as actions from '../../../../../store/action/action';
 import axios from 'axios';
 
+const sentItemIds = new Set();
+
 export default function ItemListMP({ materia, sumar }){
     const [params, setParams] = useSearchParams();
 
     const dispatch = useDispatch();
     const req = useSelector(store => store.requisicion);
-    const { ids, materiaIds, itemsCotizacions } = req;
+    const { ids, materiaIds, itemsCotizacions, totalFaltante } = req;
     const [selected, setSelected] = useState(false)
 
     let cantidades = itemsCotizacions?.length ?  itemsCotizacions.filter(it => it.materiumId === materia.id && ids.includes(it.requisicionId)) : null;
@@ -53,6 +55,72 @@ export default function ItemListMP({ materia, sumar }){
         return send
     }
 
+    const sumandito = () => {
+            if(Number(materia.entregado) >= Number(materia.totalCantidad)){
+                console.log('completo')
+            } else if(Number(materia.entregado) > 0 && Number(materia.entregado) < Number(materia.totalCantidad)){
+                    let cantidadPrice = Number(Number(cantidadToPrices) * Number(promedioUnidad)) 
+                    console.log('proyecto a sumar-------',materia.nombre, cantidadPrice) 
+                    console.log(cantidadPrice)
+                    sumar(cantidadPrice)
+                    let currently = cantidadPrice
+                    dispatch(actions.GetConsolidatoProyect(cantidadPrice))
+                
+            }else{
+    
+                    let cantidadPrice = Number(Number(cantidadToPrices) * Number(promedioUnidad)) 
+                    console.log('proyecto a sumar-------',materia.nombre, cantidadPrice) 
+                    sumar(cantidadPrice)
+                    let toTotal = Number(totalFaltante) + Number(cantidadPrice)
+
+                    console.log('price to cantidad', cantidadPrice )
+                    console.log('item to total', toTotal)
+                    console.log('item faltante', totalFaltante)
+                    dispatch(actions.GetConsolidatoProyect(Number(cantidadPrice)))
+            }
+                
+        }
+
+    const yaEnviado = useRef(false);
+    
+    const [enviado, setEnviado] = useState(false)
+    function enviarPrecioItem() {
+        setEnviado(true)
+
+        const entregado = Number(materia.entregado);
+        const total = Number(materia.totalCantidad);
+        console.log('total', total)
+        // Si está completo, no suma nada
+        if (entregado >= total) return;
+
+        if(entregado > 0 &&  entregado < total){
+            
+            console.log('hola')
+        }else{
+            const cantidadPrice = Number(cantidadToPrices) * Number(promedioUnidad);
+            console.log('cantidad price', cantidadPrice)
+            // Envía el valor para SUMAR en el reducer
+            dispatch(actions.GetConsolidatoProyect(Number(cantidadPrice)));
+            return yaEnviado.current = true; // marca como enviado
+        }
+
+
+    }
+
+        useEffect(() => { 
+            if (sentItemIds.has(`${materia.id}-m`)) return;
+
+
+            if(enviado){
+                return null
+            } else{
+                sentItemIds.add(`${materia.id}-m`);
+
+                enviarPrecioItem()
+            }
+        }, [])
+
+        console.log('valor falnte', totalFaltante) 
     return (
         <tr className={ materiaIds.find(m => m.materiaId == materia.id)  ? 'Active' : null}
          onContextMenu={(e) => {              // 👈 click derecho

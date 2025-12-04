@@ -785,6 +785,25 @@ export function gettingCotizacionFast(data){
     }
 }
 
+export function GetConsolidatoProyect(valor){
+    return {
+        type: types.GET_VALOR_REAL_COTIZACIONES,
+        payload: valor
+    }
+}
+
+export function GetConsolidatoProyectProducto(valor){
+    return {
+        type: types.GET_VALOR_REAL_PRODUCTO,
+        payload: valor
+    }
+}
+export function CleanFaltanteProject(){
+    return {
+        type: 'CLEAN_FALTANTE',
+        payload: 0
+    }
+}
 
 // PROVEEDORES
 // ----------------------

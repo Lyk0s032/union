@@ -306,6 +306,12 @@ export default function DocumentCotizacion(){
                                         </div>
                                         <div className="item">
                                             <h3>
+                                                NIT:
+                                            </h3>
+                                            <h4>{cotizacion.client.nit}</h4>
+                                        </div>
+                                        <div className="item">
+                                            <h3>
                                                 DIRECCIÓN:
                                             </h3>
                                             <h4>{cotizacion.client.direccion.toUpperCase()}</h4>
@@ -380,7 +386,7 @@ export default function DocumentCotizacion(){
                             </div>
 
                             <div className="referencias">
-
+                                {console.log('cotizacion, ', cotizacion)}
                                 <div className="tableData">
                                     {
                                         cotizacion.areaCotizacions?.length ?
@@ -439,7 +445,7 @@ export default function DocumentCotizacion(){
                                                                                     
                                                                             return (
                                                                                 <tr key={i+1}>
-                                                                                    
+                                                                                    {console.log('itt',it)}
                                                                                     
                                                                                     { // ID
                                                                                         it.kitCotizacion ?
@@ -464,11 +470,11 @@ export default function DocumentCotizacion(){
                                                                                         it.armadoCotizacion ?
                                                                                             <td className="left Longer">{it.name.toUpperCase()}</td>
                                                                                         :
-                                                                                            <td className='left Longer'> {it.name.toUpperCase()} - {it.extension.name.toUpperCase()} </td>
+                                                                                            <td className='left Longer'> {it.name.toUpperCase()} {it.state == 'simulacion' ? null : `- ${it.extension.name.toUpperCase()}`} </td>
                                                                                     }
                                                                                     { // CANTIDAD
                                                                                         it.kitCotizacion ?
-                                                                                        <td className="Cantidad">{it.kitCotizacion.cantidad}</td>
+                                                                                        <td className="Cantidad">{it.kitCotizacion.cantidad} </td>
                                                                                         :
                                                                                         it.cantidad && it.producto ?
                                                                                         <td className="Cantidad" >{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.cantidad).toFixed(0))}</td>

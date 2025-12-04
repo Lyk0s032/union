@@ -65,10 +65,10 @@ export default function DataBodegas({ item }){
                                 return (
                                     <div className="resultsBodegas" key={i+1}> {console.log(inv)}
                                         <div className="resultBodega" onClick={() => {
-                                            openNecesary('Proyecto', 1) 
+                                            // openNecesary('Proyecto', 1) 
                                         }}>
                                             <div className="letterHere">
-                                                <h3 style={{fontSize:12}}>{inv.cotizacionId}</h3>
+                                                <h3 style={{fontSize:10}}>{Number(inv.cotizacionId + 21719)}</h3>
                                             </div>  
                                             <div className="NameHere">
                                                 <h3>({Number(inv.cantidad_entregada)} / {inv.cantidad_pendiente})</h3>

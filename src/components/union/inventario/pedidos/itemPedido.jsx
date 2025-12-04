@@ -40,7 +40,7 @@ export default function ItemPedido({ orden }){
                 </div>
             </td>
             <td className='middle Almacen'>
-                <span>5</span>
+                <span></span>
             </td>
             <td className=" Almacen" style={{fontSize:12, textAlign:'left'}}>
                 {

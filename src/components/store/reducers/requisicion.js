@@ -24,6 +24,8 @@ const initialState = {
     materiaIds: [],
     fastCotizacion: null,
     loadingFastCotizacion: false,
+    totalFaltante: 0,
+    totalFaltanteProducto: 0,
 
     itemsCotizacions: [],
 
@@ -151,6 +153,26 @@ export default function (state = initialState, action) {
             }
         }
 
+        case types.GET_VALOR_REAL_COTIZACIONES: {
+            return {
+                ...state,
+                totalFaltante: state.totalFaltante + action.payload
+            }
+        }
+
+        case types.GET_VALOR_REAL_PRODUCTO: {
+            return {
+                ...state,
+                totalFaltanteProducto: state.totalFaltanteProducto + action.payload
+            }
+        }
+        case 'CLEAN_FALTANTE': {
+            return {
+                ...state,
+                totalFaltante: 0,
+                totalFaltanteProducto: 0
+            }
+        }
         case types.GET_ORDEN_COMPRAS: {
             return {
                 ...state, 
@@ -289,7 +311,6 @@ export default function (state = initialState, action) {
                 loadingItemElemento: action.payload
             }
 
-itemElemento
         default:
             return {...state}
     }

@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import * as actions from '../../../../../store/action/action';
 import axios from 'axios';
+
+const sentItemIdss = new Set();
+
 
 export default function ItemListPT({ materia, sumar }){
     const [params, setParams] = useSearchParams();
 
     const dispatch = useDispatch();
     const req = useSelector(store => store.requisicion);
-    const { ids, materiaIds, itemsCotizacions } = req;
+    const { ids, materiaIds, itemsCotizacions, totalFaltanteProducto} = req;
     const [selected, setSelected] = useState(false)
 
     let cantidades = itemsCotizacions?.length ?  itemsCotizacions.filter(it => it.productoId === materia.id && ids.includes(it.requisicionId)) : null;
@@ -122,12 +125,16 @@ export default function ItemListPT({ materia, sumar }){
                 console.log('proyecto a sumar-------',materia.nombre, cantidadPrice) 
                 console.log(cantidadPrice)
                 sumar(cantidadPrice)
+                let currently = cantidadPrice
+                dispatch(actions.GetConsolidatoProyect(cantidadPrice))
             
         }else{
 
                 let cantidadPrice = Number(Number(cantidadToPrices) * Number(promedioUnidad)) 
                 console.log('proyecto a sumar-------',materia.nombre, cantidadPrice) 
                 sumar(cantidadPrice)
+                dispatch(actions.GetConsolidatoProyect(cantidadPrice))
+
         }
             
     }
@@ -144,6 +151,44 @@ export default function ItemListPT({ materia, sumar }){
             sumar(-cantidadPrice)
         } 
     }
+    const yaEnviado = useRef(false);
+
+    const [enviado, setEnviado] = useState(false)
+    function enviarPrecioItem() {
+        setEnviado(true)
+
+        const entregado = Number(materia.entregado);
+        const total = Number(materia.totalCantidad);
+        console.log('total', total)
+        // Si está completo, no suma nada
+        if (entregado >= total) return;
+
+        if(entregado > 0 &&  entregado < total){
+            
+            console.log('hola')
+        }else{
+            const cantidadPrice = Number(cantidadToPrices) * Number(promedioUnidad);
+            console.log('cantidad price productoooo', cantidadPrice)
+            // Envía el valor para SUMAR en el reducer
+            dispatch(actions.GetConsolidatoProyectProducto(Number(cantidadPrice)));
+            return yaEnviado.current = true; // marca como enviado
+        }
+
+
+    }
+
+    useEffect(() => { 
+        if (sentItemIdss.has(`${materia.id}-p`)) return;
+
+
+         if(enviado){
+            return null
+        } else{
+            sentItemIdss.add(`${materia.id}-p`);
+
+            enviarPrecioItem()
+        }
+    }, [])
     return (
         <tr onClick={handleClick} onContextMenu={(e) => {              // 👈 click derecho
             e.preventDefault();              // evita que salga el menú del navegador
