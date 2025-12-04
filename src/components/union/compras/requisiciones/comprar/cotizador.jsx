@@ -177,7 +177,7 @@ const exportSelectedToPDF = () => {
 
   const afterY = doc.lastAutoTable ? doc.lastAutoTable.finalY + 8 : 18;
   doc.setFontSize(11);
-  doc.text(`Total seleccionado: ${new Intl.NumberFormat('es-CO').format(Number(totalSeleccion).toFixed(0))} COP`, 14, afterY);
+//   doc.text(`Total seleccionado: ${new Intl.NumberFormat('es-CO').format(Number(totalSeleccion).toFixed(0))} COP`, 14, afterY);
 
   doc.save('seleccionados_consolidado.pdf');
 };
