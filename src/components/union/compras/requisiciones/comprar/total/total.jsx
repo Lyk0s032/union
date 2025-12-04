@@ -27,35 +27,40 @@ export default function GeneralTotal({ cargaProyectos }){
 
 // dentro del componente GeneralTotal, por ejemplo debajo de addToTotal:
 const exportToPDF = () => {
-  // encabezados (ajusté el título de Entregado para mayor claridad)
+  // helper: detectar si un item es un kit
+  const isKit = (m) => {
+    if (!m) return false;
+    // propiedades explícitas
+    if (m.kit === true || m.isKit === true) return true;
+    if (String(m.tipo || '').toLowerCase() === 'kit') return true;
+    // si existe una bandera específica en tu modelo, agrégala arriba
+
+    // por nombre: "Kit 11", "Kit50", "KIT - 12", etc.
+    const nombre = String(m.nombre || '').trim().toLowerCase();
+    // detecta "kit" como palabra (al inicio o en cualquier parte)
+    if (/\bkit\b/i.test(nombre)) return true;
+
+    return false;
+  };
+
+  // Filtramos las materias para eliminar kits
+  const materiasFiltradas = (materia || []).filter(m => !isKit(m));
+
+  // encabezados
   const head = [["ID", "Nombre", "Entregado", "Total Cantidad"]];
 
-  // filas desde materia — ahora Entregado y Total Cantidad incluyen la unidad
-  const body = (materia || []).map(m => {
+  // filas desde materias filtradas — Entregado y Total Cantidad incluyen la unidad
+  const body = materiasFiltradas.map(m => {
     const entregado = Number(m.entregado || 0);
     const totalCantidad = Number(m.totalCantidad || 0);
-
-    // unidad (cae a string vacío si no existe)
     const unidad = m.unidad ? String(m.unidad).trim() : "";
-
-    // si quieres formatear números: por ejemplo sin decimales
     const fmt = (v) => new Intl.NumberFormat('es-CO', { maximumFractionDigits: 0 }).format(Number(v || 0));
-
-    const cantidadToPrices = Number(m.cantidadToPrices || 0);
-    const promedioUnidad = Number(m.promedioUnidad || 0);
-    const cantidadPrice = Number((cantidadToPrices * promedioUnidad) || 0);
 
     return [
       m.id ?? "",
       m.nombre ?? "",
-      // entregado + unidad (ej: "10 mt2" o "5 kg")
       `${fmt(entregado)} ${unidad}`.trim(),
-      // total cantidad + unidad
-      `${fmt(totalCantidad)} ${unidad}`.trim(),
-      // puedes mantener columnas extra si quieres (opcional)
-      cantidadToPrices,
-      promedioUnidad,
-      cantidadPrice
+      `${fmt(totalCantidad)} ${unidad}`.trim()
     ];
   });
 
@@ -87,7 +92,7 @@ const exportToPDF = () => {
   doc.text(`Total Consolidado: ${new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(totalFaltante || 0).toFixed(0))} COP`, 14, finalY + 8);
   doc.text(`Total Productos: ${new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(totalFaltanteProducto || 0).toFixed(0))} COP`, 14, finalY + 14);
 
-  // ---- Lista de proyectos (nombres) ----
+  // Lista de proyectos (nombres)
   const proyectosLista = (proyectos || []);
   if (proyectosLista.length > 0) {
     let cursorY = finalY + 28;
@@ -108,6 +113,7 @@ const exportToPDF = () => {
   // descarga
   doc.save("consolidado.pdf");
 };
+
 
 
     return (
