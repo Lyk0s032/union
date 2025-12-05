@@ -47,7 +47,7 @@ export default function Requisiciones(){
         setLoading(true);
         setData(null); 
 
-        const response = await axios.get('/api/requisicion/get/filters/requisicion',{
+        const response = await axios.get('/api/requisicion/get/filters/requisicion/complete',{
         params: { // Aquí definimos los parámetros de consulta que irán en la URL (ej: ?query=...)
             q: searchTerm, // El nombre del parámetro 'query' debe coincidir con req.query.query en tu backend
         },

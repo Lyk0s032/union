@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { AiOutlineDownload, AiOutlineExclamation } from 'react-icons/ai';
 import { MdOutlineCheck } from 'react-icons/md';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import * as actions from '../../../../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -26,6 +26,9 @@ export default function Orden(){
     const admin = useSelector(store => store.admin);
     const { ordenCompras, loadingOrdenCompras, ordenesCompras } = admin;
 
+    const requisicion = useSelector(store => store.requisicion)
+    const { ids } = requisicion;
+
     const closeComprar = () => {
         params.delete('orden')
         setParams(params);
@@ -46,6 +49,7 @@ export default function Orden(){
         dispatch(actions.axiosToGetOrdenComprasAdmin(true, params.get('orden')))
     }, [params.get('orden')])
 
+    
     return (
         <div className="ordenView">
             {
@@ -104,11 +108,11 @@ export default function Orden(){
                                 </div>
                                 
                             </div>
-                        </div>
+                        </div> {console.log('orden de compra, ',ordenCompras)}
                         <div className="containerScrollBody">
                             <div className="containerScroll">
                                 <div className="titletThat">
-                                    <span className='code'>Código: {ordenCompras.id}</span><br />
+                                    <span className='code'>aa Código: {ordenCompras.id}</span><br />
                                     <span>{ordenCompras.name}</span><br />
                                 </div><br />
                                 <div className="containerBarraContenido">
@@ -224,7 +228,10 @@ export default function Orden(){
                                     <div className="price">
                                         <span>Precio</span>
                                         <h1>$ {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(OrdenesTotal)}</h1>
+                                        <br />
+                                        <OpenOrden orden={ordenCompras} />
                                     </div>
+
                                 </div>
                                 
                             </div>
@@ -232,5 +239,34 @@ export default function Orden(){
                     </div>
             }
         </div> 
+    )
+}
+
+
+function OpenOrden({ orden }){
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const ids = (orden.requisiciones || []).map(r => r.id);
+    console.log(ids)
+    console.log('idss', ids)
+    const sendOpen = () => { 
+
+        dispatch(actions.getIDs(ids))
+        const params = new URLSearchParams({
+            s: 'materia',
+            facture: 'show',
+            orden: orden.id
+        });
+        navigate(`/compras/requisiciones/?${params.toString()}`);
+    }
+ 
+
+    return (
+        <div className="div">
+            <button onClick={() => sendOpen()}>
+                <span>Enviar</span>
+            </button>
+        </div>
     )
 }
