@@ -10,7 +10,7 @@ export default function ItemCompromisoCotizacion({ item }){
     const dispatch = useDispatch();
 
     return (
-        <tr>
+        <tr> {console.log('item en producción, ', item)}
             <td className="longer"> 
                 <div className="nameLonger">
                     <div className="letter">
@@ -25,7 +25,7 @@ export default function ItemCompromisoCotizacion({ item }){
             <td></td>
             <td>
                 <div className=""> 
-                    <span style={{color: 'green'}}>{Number(item.cantidadEntregada).toFixed(0)} / {Number(item.cantidadComprometida).toFixed(0)}</span>
+                    <span style={{color: 'green'}}>{Number(item.cantidadEntregada).toFixed(0)} / {Number(item.cantidadComprometida).toFixed(0)} {item.materium?.unidad} {item.producto?.unidad == 'mt2' ? 'mt2' : null}</span>
                 </div>
             </td> 
         </tr>

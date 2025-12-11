@@ -108,7 +108,7 @@ export default function FormItemTransferir({ item,  anexar }){
                     
                 </div>
             </td>
-            <td>
+            <td> {console.log('item...', item)}
                 <div className="chooseBodega">
                     <select name="" style={{width:'100%'}} id="" onChange={(e) => {
                         setForm({
@@ -121,7 +121,7 @@ export default function FormItemTransferir({ item,  anexar }){
                         {
                             item.compromisos?.map((compromiso, i) => {
                                 return (
-                                    <option value={compromiso?.cotizacionId} key={i+1}>{compromiso?.cotizacionId} - {compromiso.cotizacion?.name}</option>
+                                    <option value={compromiso?.cotizacionId} key={i+1}>{Number(compromiso?.cotizacionId + 21719)} - {compromiso.cotizacion?.name}</option>
                                 )
                             })
                         }

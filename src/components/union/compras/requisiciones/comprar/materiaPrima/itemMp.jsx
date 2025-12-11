@@ -34,7 +34,6 @@ export default function ItemListMP({ materia, sumar }){
     }  
     let cantidadToPrices = Number(Math.ceil(Number( Number(materia?.totalCantidad) / Number(productoLados) )).toFixed(0))
 
-
     const promedioUnidad = materia.unidad == 'kg' ? Number(Number(precioPromedio / materia.precios.length) / Number(materia.medida)) : Number(precioPromedio / materia.precios.length);
     const open = () => {
         dispatch(actions.gettingItemRequisicion(true))
@@ -82,14 +81,15 @@ export default function ItemListMP({ materia, sumar }){
 
     const sumandito = () => {
         if(Number(materia.entregado) >= Number(materia.totalCantidad / productoLados)){
-            console.log('completo')
         } else if(Number(materia.entregado) > 0 && Number(materia.entregado) < Number(materia.totalCantidad)){
             if(materia.unidad == 'kg'){
-                let cantidadPrice = Number(Number(cantidadToPrices) * Number(promedioUnidad)) 
+                // let cantidadPrice = Number(Number(cantidadToPrices) * Number(promedioUnidad)) 
+                let cantidadPrice = Number(Number(Number(materia.totalCantidad - materia.entregado)) * Number(promedioUnidad)) 
                 console.log('proyecto a sumar-------',materia.nombre, cantidadPrice) 
                 sumar(cantidadPrice)
             }else{
-                let cantidadPrice = Number(Number(cantidadToPrices) * Number(promedioUnidad)) 
+                // let cantidadPrice = Number(Number(cantidadToPrices) * Number(promedioUnidad)) 
+                let cantidadPrice = Number(Number(Number(materia.totalCantidad - materia.entregado)) * Number(promedioUnidad)) 
                 console.log('proyecto a sumar-------',materia.nombre, cantidadPrice) 
                 sumar(cantidadPrice)
             }
@@ -112,7 +112,7 @@ export default function ItemListMP({ materia, sumar }){
         if(Number(materia.entregado) >= Number(materia.totalCantidad / productoLados)){
             console.log('completo')
         } else if(Number(materia.entregado) > 0 && Number(materia.entregado) < Number(materia.totalCantidad)){
-            let cantidadPrice = Number(Number(cantidadToPrices) * Number(promedioUnidad)) 
+            let cantidadPrice = Number(Number(Number(materia.totalCantidad - materia.entregado)) * Number(promedioUnidad)) 
             console.log('proyecto a sumar-------',materia.nombre, cantidadPrice) 
             sumar(-cantidadPrice)
         }else{
@@ -128,15 +128,15 @@ export default function ItemListMP({ materia, sumar }){
     return (
         <tr className={ materiaIds.find(m => m.materiaId == materia.id)  ? 'Active' : null}
         
-        onClick={handleClick} onContextMenu={(e) => {              // 👈 click derecho
-      e.preventDefault();              // evita que salga el menú del navegador
-  }}
+                onClick={handleClick} onContextMenu={(e) => {              // 👈 click derecho
+            e.preventDefault();              // evita que salga el menú del navegador
+        }}
        >
             <td className="longer"> 
                 <div className="nameLonger">
                     <div className="letter">
                         <h3>{materia.id} </h3>
-                    </div> 
+                    </div>  {console.log('aaa', materia)}
                     <div className="name">
                         <h3>{materia.nombre} </h3>
                         <span> {Number(productoLados)} {materia.unidad} </span><br />
@@ -178,11 +178,15 @@ export default function ItemListMP({ materia, sumar }){
             <td>
                 <div className="">
                     <span>
-                        $ 
+                        $  
                         {numero ? 
-                            new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(promedioUnidad * numero).toFixed(0)) 
+                            `${new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(promedioUnidad * numero).toFixed(0))} --` 
                         : 
-                            new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(promedioUnidad * cantidadToPrices).toFixed(0))}</span>
+                            materia.entregado > 0 && materia.entregado < materia.totalCantidad ?
+                                new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(promedioUnidad * Number(materia.totalCantidad - materia.entregado)).toFixed(0))
+                            :
+                            new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(promedioUnidad * cantidadToPrices).toFixed(0))}
+                        </span>
                 </div>
             </td>
         </tr>

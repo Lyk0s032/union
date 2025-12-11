@@ -35,7 +35,7 @@ export default function Pedidos(){
                                         <h2>
                                             {
                                                 !params.get('zone') ?
-                                                    'Zona por orden de compra'
+                                                    'Entradas de almacén'
                                                 : 
                                                     'Zona de proyectos' 
                                             }

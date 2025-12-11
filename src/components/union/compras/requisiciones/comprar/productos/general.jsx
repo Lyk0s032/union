@@ -18,6 +18,8 @@ export default function GeneralProductos({ cargaProyectos, productosTotal }){
     const { materia , proyectos} = req;
     
     const [total, setTotal] = useState(0)
+
+    const [word, setWord] = useState(null);
     
     const addToTotal = (val) => {
         let a = Number(total) + Number(val);
@@ -75,10 +77,18 @@ export default function GeneralProductos({ cargaProyectos, productosTotal }){
                         </div>
                     </div>
                 </div>
+                <div className="searchFilterByMateria">
+                    <input type="text" placeholder='Buscar aquì' onChange={(e) => {
+                        setWord(e.target.value);
+                    }} value={word} />
+                    <div className="filters">
+                        
+                    </div>
+                </div>
                 <div className="lista"> 
                     <div className="containerLista">
                         <div className="DataHere" ref={longer} >
-                            <ListaMP productosTotal={productosTotal} materia={materia}  sumar={addToTotal}/>
+                            <ListaMP word={word} productosTotal={productosTotal} materia={materia}  sumar={addToTotal}/>
                             <div className="cotizador">
                                 {
                                     <Cotizador total={total} />

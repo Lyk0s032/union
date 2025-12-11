@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { AiOutlineDownload, AiOutlineExclamation } from 'react-icons/ai';
-import { MdOutlineCheck } from 'react-icons/md';
+import { MdOutlineCheck, MdOutlineDelete } from 'react-icons/md';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import * as actions from '../../../../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
@@ -82,6 +82,14 @@ export default function Orden(){
                                      <span>x</span>
                                 </button>
                                 <div className="dataCoti">
+                                    <button style={{ 
+                                        marginLeft: '10px', 
+                                        padding: '5px 10px',
+                                        fontSize: '14px',
+                                    }}>
+                                        <MdOutlineDelete className="icon" />
+                                        <span>Eliminar</span>
+                                    </button>
                                     <PDFDownloadLink 
                                         document={
                                             <PdfDocument 
@@ -108,11 +116,11 @@ export default function Orden(){
                                 </div>
                                 
                             </div>
-                        </div> {console.log('orden de compra, ',ordenCompras)}
+                        </div>
                         <div className="containerScrollBody">
                             <div className="containerScroll">
                                 <div className="titletThat">
-                                    <span className='code'>aa Código: {ordenCompras.id}</span><br />
+                                    <span className='code'>Código: {ordenCompras.id}</span><br />
                                     <span>{ordenCompras.name}</span><br />
                                 </div><br />
                                 <div className="containerBarraContenido">
@@ -265,7 +273,7 @@ function OpenOrden({ orden }){
     return (
         <div className="div">
             <button onClick={() => sendOpen()}>
-                <span>Enviar</span>
+                <span>Abrir en el editor</span>
             </button>
         </div>
     )

@@ -42,11 +42,11 @@ export default function ItemPedido({ orden }){
             <td className='middle Almacen'>
                 <span></span>
             </td>
-            <td className=" Almacen" style={{fontSize:12, textAlign:'left'}}>
+            <td className=" Almacen" style={{fontSize:12, textAlign:'left'}}> {console.log(orden)}
                 {
                     orden.requisiciones?.map((req, i) => {
                         return (
-                            <span key={i+1} style={{color: '#666'}}>{req.id} - {req.nombre}<br /></span>
+                            <span key={i+1} style={{color: '#666'}}>{Number(21719 + req.cotizacionId)} - {req.nombre}<br /></span>
 
                         ) 
                     })

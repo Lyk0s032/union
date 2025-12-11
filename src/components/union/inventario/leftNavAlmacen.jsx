@@ -70,10 +70,9 @@ export default function LeftNav(){
                                     <div className="divideLi">
                                         <div className="leftOption">
                                             <MdDesignServices className="icon" />
-                                            <span>Ordenes compras </span>
+                                            <span>Entradas de almacén </span>
                                         </div>
                                         <FaChevronDown className="icon" />
-                                        
                                     </div>
                                 </li>
                                 <li className={location.pathname == '/inventario/pedidos'  && params.get('zone') == 'pedidos' ? 'Active' : null} onClick={() => {

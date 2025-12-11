@@ -18,7 +18,7 @@ export default function ItemProjectNecesidad({ item }){
             setParams(params)
             
             dispatch(actions.axiosToGetItemElemento(true, item.requisicionId, item.kit ? item.kit.id : null, item.kit ? null: item.producto.id))
-        }}>
+        }}> {console.log('item en producción, ', item)}
             <td className="longer"> 
                 <div className="nameLonger">
                     <div className="letter">

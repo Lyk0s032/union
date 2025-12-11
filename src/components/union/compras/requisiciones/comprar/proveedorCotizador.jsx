@@ -40,7 +40,7 @@ export default function ProveedorCotizador({ provider }) {
   }, [itemsCotizacions, provider]);
 
   return (
-    <div className="itemProveedor">
+    <div className="itemProveedor"> {console.log('proveedor items', provider)}
       <div className="containerItemProvider">
         <div className="title">
           <h3 style={{ fontSize: 12 }}>{provider.proveedor.nombre}</h3>

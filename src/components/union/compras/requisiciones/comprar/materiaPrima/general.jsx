@@ -17,11 +17,16 @@ export default function GeneralMateriaPrima({ cargaProyectos }){
     const req = useSelector(store => store.requisicion);
     const { materia, proyectos, materiaIds} = req;
 
-    const [total, setTotal] = useState(0)
+    const system = useSelector(store => store.system); 
+    const { categorias, lineas } = system;
 
+
+    const [total, setTotal] = useState(0)
+    const [word, setWord] = useState(null);
+    const [estado, setEstado] = useState();
+    
     const addToTotal = (val) => {
         let a = Number(total) + Number(val);
-        console.log('nuevo valor, ', a)
         setTotal(a);
     }
      
@@ -74,10 +79,33 @@ export default function GeneralMateriaPrima({ cargaProyectos }){
                         </div>
                     </div>
                 </div>
-                <div className="lista">
+                <div className="searchFilterByMateria">
+                    <input type="text" placeholder='Buscar aquì' onChange={(e) => {
+                        setWord(e.target.value);
+                    }} value={word} />
+                    <div className="filters">
+                        <select name="" id="" onChange={(e) => {
+                            setEstado(e.target.value)
+                        }} value={estado}>
+                            <option value="">Selecciona una categoría</option>
+                            {
+                                lineas && lineas.length ?
+                                    lineas.map((r) => {
+                                        return (
+                                            r.type == 'MP' ?
+                                                <option value={r.id}>{r.name}</option>
+                                            : null
+                                        )
+                                    })
+                                : null
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div className="lista"> 
                     <div className="containerLista">
                         <div className="DataHere" ref={longer} >
-                            <ListaMP materia={materia} sumar={addToTotal} />
+                            <ListaMP estado={estado} word={word} materia={materia} sumar={addToTotal} />
                             <div className="cotizador">
                                 {
                                     <Cotizador total={total}/>

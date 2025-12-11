@@ -57,27 +57,34 @@ export default function DataBodegas({ item }){
 
 
                         <br /><br />
-                        <div className="title">
-                            <h3>Proyectos pendientes +</h3>
-                        </div>
                         {
-                            item?.compromisos?.map((inv, i) => {
-                                return (
-                                    <div className="resultsBodegas" key={i+1}> {console.log(inv)}
-                                        <div className="resultBodega" onClick={() => {
-                                            // openNecesary('Proyecto', 1) 
-                                        }}>
-                                            <div className="letterHere">
-                                                <h3 style={{fontSize:10}}>{Number(inv.cotizacionId + 21719)}</h3>
-                                            </div>  
-                                            <div className="NameHere">
-                                                <h3>({Number(inv.cantidad_entregada)} / {inv.cantidad_pendiente})</h3>
-                                                <span>poner nombre de cotizacion</span>
+                            params.get('bodega') == 1 || params.get('bodega') == 2 ?
+                                <div className="title">
+                                    <h3>Proyectos pendientes +</h3>
+                                </div>
+                            : 
+                                null
+                        }
+                        {
+                            params.get('bodega') == 1 || params.get('bodega') == 2 ?
+                                item?.compromisos?.map((inv, i) => {
+                                    return (
+                                        <div className="resultsBodegas" key={i+1}> {console.log(inv)}
+                                            <div className="resultBodega" onClick={() => {
+                                                // openNecesary('Proyecto', 1) 
+                                            }}>
+                                                <div className="letterHere">
+                                                    <h3 style={{fontSize:10}}>{Number(inv.cotizacionId + 21719)}</h3>
+                                                </div>  
+                                                <div className="NameHere">
+                                                    <h3>({Number(inv.cantidad_entregada)} / {inv.cantidad_pendiente})</h3>
+                                                    <span>poner nombre de cotizacion</span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div> 
-                                )
-                            })
+                                        </div> 
+                                    )
+                                })
+                            : null
                         }
                         
                     </div>

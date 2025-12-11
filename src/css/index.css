@@ -4570,6 +4570,31 @@ body button {
 .modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .title .filterProvidersList .containerFilterProvider .Active h3 {
   color: #FFF;
 }
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .searchFilterByMateria {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 95%;
+  margin: auto;
+  margin-top: 20px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .searchFilterByMateria input {
+  width: 50%;
+  padding: 6px 10px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  color: #666;
+  outline: 0px;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .searchFilterByMateria .filters {
+  width: 20%;
+}
+.modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .searchFilterByMateria .filters select {
+  width: 100%;
+  padding: 5px 10px;
+}
 .modal .UXCOMPLETE .comprar .rightUx .generalComprar .containerGeneral .lista {
   margin-top: 10px;
 }
@@ -11411,7 +11436,13 @@ body button {
   box-sizing: border-box;
 }
 .ordenView .containerView .headerView .divideZone .dataCoti {
-  width: 25%;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  border: 1px solid red;
+  text-align: right;
+  padding-right: 10px;
 }
 .ordenView .containerView .headerView .divideZone .dataCoti h3 {
   font-size: 14px;
@@ -11420,6 +11451,17 @@ body button {
 .ordenView .containerView .headerView .divideZone .dataCoti span {
   font-size: 12px;
   color: #666;
+  align-items: center;
+}
+.ordenView .containerView .headerView .divideZone .dataCoti .icon {
+  align-items: center;
+}
+.ordenView .containerView .headerView .divideZone .dataCoti button {
+  display: flex;
+  align-items: center;
+}
+.ordenView .containerView .headerView .divideZone .dataCoti button span {
+  text-decoration: none;
 }
 .ordenView .containerView .headerView .divideZone button {
   background-color: transparent;
