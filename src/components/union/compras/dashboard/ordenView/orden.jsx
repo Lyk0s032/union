@@ -49,7 +49,23 @@ export default function Orden(){
         dispatch(actions.axiosToGetOrdenComprasAdmin(true, params.get('orden')))
     }, [params.get('orden')])
 
-    
+    const eliminarCompraCotizacion = async (ordenId) => {
+        if (!ordenId) return dispatch(actions.HandleAlerta('No hemos encontrado orden', 'mistake'))
+
+        try {
+            const { data } = await axios.get('/api/requisicion/remove/ordenCompras/',
+            {
+                params: { ordenId },
+            });
+            dispatch(actions.HandleAlerta('Eliminado correctamente', 'positive'))
+            params.delete('orden');
+            setParams(params);
+            // refrescar estado / volver a consultar datos
+        } catch (error) {
+            console.error(error);
+            dispatch(actions.HandleAlerta('No hemos logrado eliminar esto', 'mistate'))
+        }
+    };
     return (
         <div className="ordenView">
             {
@@ -74,47 +90,53 @@ export default function Orden(){
                 :
                     <div className="containerView">
                         <div className="headerView">
+                            
                             <div className="divideZone">
                                 <button onClick={() => {
                                     params.delete('orden');
                                     setParams(params);
                                 }}>
-                                     <span>x</span>
-                                </button>
-                                <div className="dataCoti">
-                                    <button style={{ 
-                                        marginLeft: '10px', 
-                                        padding: '5px 10px',
-                                        fontSize: '14px',
-                                    }}>
-                                        <MdOutlineDelete className="icon" />
-                                        <span>Eliminar</span>
-                                    </button>
-                                    <PDFDownloadLink 
-                                        document={
-                                            <PdfDocument 
-                                                ordenCompras={ordenCompras} 
-                                                creadoSFecha={creadoFecha} 
-                                                ordenDeCompraTime={ordenDeCompraTime} 
-                                                aprobadaCompra={aprobadaCompra} 
-                                                OrdenesTotal={OrdenesTotal}
-                                            />
-                                        } 
-                                        fileName={`orden-compra-${ordenCompras.proveedor.nombre}.pdf`}
-                                    >
-                                        {({ loading }) => (
+                                    <span>x</span>
+                                </button> 
+                                {
+                                    ordenCompras.estadoPago == 'remove' ? 
+                                        null 
+                                    :
+                                        <div className="dataCoti">
                                             <button style={{ 
                                                 marginLeft: '10px', 
                                                 padding: '5px 10px',
                                                 fontSize: '14px',
-                                            }}>
-                                                <AiOutlineDownload className='icon' style={{fontSize:18, verticalAlign:'bottom'}} />
-                                                <span style={{marginLeft:5}}>{loading ? 'Generando...' : 'Descargar PDF'}</span>
-                                            </button>
-                                        )}
-                                    </PDFDownloadLink>
-                                </div>
-                                
+                                            }} onClick={() => eliminarCompraCotizacion(ordenCompras.id)}>
+                                                <MdOutlineDelete className="icon" />
+                                                <span>Eliminar</span>
+                                            </button> 
+                                            <PDFDownloadLink 
+                                                document={
+                                                    <PdfDocument 
+                                                        ordenCompras={ordenCompras} 
+                                                        creadoSFecha={creadoFecha} 
+                                                        ordenDeCompraTime={ordenDeCompraTime} 
+                                                        aprobadaCompra={aprobadaCompra} 
+                                                        OrdenesTotal={OrdenesTotal}
+                                                    />
+                                                } 
+                                                fileName={`orden-compra-${ordenCompras.proveedor.nombre}.pdf`}
+                                            >
+                                                {({ loading }) => (
+                                                    <button style={{ 
+                                                        marginLeft: '10px', 
+                                                        padding: '5px 10px',
+                                                        fontSize: '14px',
+                                                    }}>
+                                                        <AiOutlineDownload className='icon' style={{fontSize:18, verticalAlign:'bottom'}} />
+                                                        <span style={{marginLeft:5}}>{loading ? 'Generando...' : 'Descargar PDF'}</span>
+                                                    </button>
+                                                )}
+                                            </PDFDownloadLink>
+                                        </div>
+                                }
+                                        
                             </div>
                         </div>
                         <div className="containerScrollBody">
@@ -237,7 +259,13 @@ export default function Orden(){
                                         <span>Precio</span>
                                         <h1>$ {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(OrdenesTotal)}</h1>
                                         <br />
-                                        <OpenOrden orden={ordenCompras} />
+                                        {
+                                            ordenCompras.estadoPago == 'remove' ? 
+                                                null
+                                            :
+                                                <OpenOrden orden={ordenCompras} />
+                                        }
+
                                     </div>
 
                                 </div>

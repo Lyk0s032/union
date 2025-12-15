@@ -27,12 +27,40 @@ export default function KitsPanel(){
     const [metodo, setMetodo] = useState(null); // METODO DE BUSQUEDA LINEA O CATEGORIA
     const [filter, setFilter] = useState(kits);
         
+    const [loadingFilter, setLoadingFilter] = useState(false);
+    const [kitsFiltrados, setKitsFiltrados] = useState(null);
 
-    useEffect(() => {
-        if(!kits){
-            dispatch(actions.axiosToGetKits(true))
+    const hayFiltros =
+        word ||
+        cat ||
+        li ||
+        ex;
+
+
+
+
+    const getKitsFiltrados = async () => {
+        try {
+            setLoadingFilter(true);
+
+            const { data } = await axios.get('/api/kit/get/filter/querys/kits', {
+            params: {
+                name: word || undefined,
+                categoriaId: cat || undefined, 
+                lineaId: li || undefined,
+                extensionId: ex || undefined,
+                state: state || undefined
+            }
+            });
+
+            setKitsFiltrados(data);
+        } catch (err) {
+            console.error(err);
+            setKitsFiltrados([]);
+        } finally {
+            setLoadingFilter(false);
         }
-    }, [kits]) 
+    };
 
     const handleUpdatePrices = async() => {
         setLoading(true)
@@ -51,10 +79,30 @@ export default function KitsPanel(){
         })
         return sendAprobation;
     } 
+
+    useEffect(() => {
+        if (hayFiltros) {
+            getKitsFiltrados();
+        } else {
+            setKitsFiltrados(null); // volvemos al store
+        }
+    }, [word, cat, li, ex, state]);
+
+
+
+    useEffect(() => {
+        if(!kits){
+            dispatch(actions.axiosToGetKits(true))
+        }
+    }, [kits]) 
+
+    const dataToRender = kitsFiltrados ?? kits;
+
     return (
-        !kits || loadingKits ?
+        loadingKits || !kits ? (
             <h1>Cargando</h1>
-        :
+        )
+        : (
         <div className="provider"> 
             <div className="containerProviders Dashboard-grid">
                 <div className="topSection">
@@ -180,34 +228,11 @@ export default function KitsPanel(){
                                 {
                                     state == 'completa' ?
                                     <tbody>
-                                    {
-                                            !kits || loadingKits ?
+                                    { 
+                                            !kits || loadingKits || loadingFilter ?
                                                 <Loading />
-                                            : kits && kits.length ?
-                                                    kits.filter(m => {
-                                                        const porLinea = li ? m.lineaId == li : true
-                                                        const porCategoria = cat ? m.categoriumId == cat : true
-                                                        const porExtension = ex ? m.extensionId == ex : true
-                                                    
-                                                        let coincidePalabra = true; // Por defecto, la condición es verdadera
-
-                                                        // Solo aplicamos el filtro si hay algo escrito en el buscador
-                                                        if (word && word.trim() !== '') {
-                                                            const searchTerm = word.toLowerCase();
-
-                                                            // Revisa si el término de búsqueda es un número
-                                                            if (!isNaN(searchTerm)) {
-                                                                // SI ES NÚMERO: busca solo en el ID del producto.
-                                                                coincidePalabra = String(m.id).includes(searchTerm);
-                                                            } else {
-                                                                // SI ES TEXTO: busca solo en el nombre del ítem.
-                                                                coincidePalabra = m.name.toLowerCase().includes(searchTerm);
-                                                            }
-                                                        }
-                                                        return porLinea && porCategoria && porExtension && coincidePalabra
-                                                    
-                                                    }
-                                                        ).map((pv, i) => { 
+                                            : dataToRender  && dataToRender .length ?
+                                                    dataToRender.map((pv, i) => { 
                                                             return (
                                                                 pv.state == 'completa' ? 
                                                                         <KitItem key={i+1} kit={pv} /> 
@@ -270,5 +295,6 @@ export default function KitsPanel(){
                 : null
             }
         </div>
+        )
     )
 }

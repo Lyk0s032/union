@@ -49,6 +49,8 @@ const precio = item.comprasCotizacionItems && item.comprasCotizacionItems.length
                                         'Preorden'
                                     : item.estadoPago == 'compras' ? 
                                         'En compras'
+                                    : item.estadoPago == 'remove' ?
+                                        'Eliminado' 
                                     : item.dayCompras ?
                                         'Aprobada'
                                     :null

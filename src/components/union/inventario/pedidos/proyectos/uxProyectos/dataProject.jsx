@@ -84,8 +84,6 @@ export default function DataProject({ proyecto }){
                                             <th></th>
                                             <th></th>
                                             <th>Cantidades</th>
-                                            <th>En Stock</th>
-                                            <th>Comprometida</th>
 
                                         </tr>
                                     </thead>

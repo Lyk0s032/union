@@ -136,7 +136,7 @@ export default function ItemListMP({ materia, sumar }){
                 <div className="nameLonger">
                     <div className="letter">
                         <h3>{materia.id} </h3>
-                    </div>  {console.log('aaa', materia)}
+                    </div>  
                     <div className="name">
                         <h3>{materia.nombre} </h3>
                         <span> {Number(productoLados)} {materia.unidad} </span><br />

@@ -72,7 +72,7 @@ export default function GetAllItemsProvider({ seleccionador }){
                         } else{
                             open(m.id)
                         } 
-                    }}> {console.log('hola', m)}
+                    }}> 
                         <span>Código: {m.id}</span>
                         <h3>{m.nombre}</h3> 
                         <span>Cantidad total: {Number(m.totalCantidad - m.entregado).toFixed(2)} {m.unidad}</span>

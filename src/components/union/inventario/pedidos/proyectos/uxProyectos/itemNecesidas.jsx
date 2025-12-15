@@ -47,16 +47,7 @@ export default function ItemNecesidadProyecto({ item }){
                     <span>( {item.cantidadEntregada}  / <strong>{item.cantidadComprometida}</strong> )</span>
                 </div>
             </td>
-            <td>
-                <div>
-                    <span>(4)</span>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <span>(3)</span>
-                </div>
-            </td>
+
             
             
         </tr>
