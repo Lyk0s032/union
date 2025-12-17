@@ -15,13 +15,15 @@ export default function ListProyectos({ proyectos }){
     const [loading, setLoading] = useState(false);
     const [params, setParams] = useSearchParams();
 
-
+    const [word, setWord] = useState(null);
     return (
         <div className="listResultsData">
             <div className="containerKits">
                 <div className="dataFilters">
                     <div className="searchDataInput">
-                        {/* <input type="text" placeholder='Buscar proyecto' /> */}
+                        <input type="text" placeholder='Buscar proyecto' onChange={(e) => {
+                            setWord(e.target.value)
+                        }} value={word}/>
                     </div>
                     <div className="containerDataFilters">
                         <div className="divide">
@@ -37,7 +39,21 @@ export default function ListProyectos({ proyectos }){
                                             </thead> 
                                             <tbody> 
                                                 {
-                                                    proyectos?.map((proyect, i) => {
+                                                    proyectos?.filter((p) => {
+                                                        // Si no hay búsqueda, mostrar todo
+                                                        if (!word || word.trim() === "") return true;
+
+                                                        // Detectar si el input es numérico
+                                                        const isNumber = !isNaN(word);
+
+                                                        if (isNumber) {
+                                                            // Buscar por ID
+                                                            return String(Number(21719) + p.id).includes(word);
+                                                        }
+
+                                                        // Buscar por nombre (case insensitive)
+                                                        return p.name.toLowerCase().includes(word.toLowerCase());
+                                                    }).map((proyect, i) => {
                                                         return (
                                                             <ItemProyecto proyecto={proyect} key={i+1} />    
                                                         )

@@ -175,6 +175,10 @@ export default function ItemListMP({ materia, sumar, productosTotal}){
             sumar(-cantidadPrice)
         } 
     }
+
+    const productoFilter = productosTotal?.find(i => i.id == materia.id)
+    console.log('filtradoo', productoFilter)
+
     return (
         <tr onClick={handleClick} onContextMenu={(e) => {              // 👈 click derecho
             e.preventDefault();              // evita que salga el menú del navegador
@@ -187,7 +191,15 @@ export default function ItemListMP({ materia, sumar, productosTotal}){
                         <h3>{materia.id}</h3>
                     </div> 
                     <div className="name">
-                        <h3>{materia.nombre}</h3>
+                        <h3>
+                            {materia.nombre}  <br />
+                            {
+                                materia.unidad == 'mt2' ?
+                                 `Medida ${productoFilter.productoCotizacion[0].medida}`
+                            :
+                                null
+                            }
+                        </h3>
                         <span>Producto terminado</span><br />
 
                         <span>

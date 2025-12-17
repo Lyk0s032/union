@@ -55,7 +55,7 @@ export default function DataProject({ proyecto }){
                             <div className="divideCotizacion">
                                 <div className="lade">
                                     <div className="itemBig">
-                                        <span>Cotización número: {proyecto.id}</span><br /><br />
+                                        <span>Cotización número: {Number(21719 + proyecto.id) }</span><br /><br />
                                         <h3>{proyecto.name}</h3>
                                         <br />
                                         <span>Cliente</span>

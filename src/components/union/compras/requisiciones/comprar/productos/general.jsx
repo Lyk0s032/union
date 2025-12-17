@@ -53,6 +53,8 @@ export default function GeneralProductos({ cargaProyectos, productosTotal }){
         refLeftProduct.current.classList.remove("leftHereActive");
     }
     }, [params.get("PV")]);
+
+
     return (
         <div className="generalComprar">
             <div className="containerGeneral">
@@ -79,10 +81,10 @@ export default function GeneralProductos({ cargaProyectos, productosTotal }){
                 </div>
                 <div className="searchFilterByMateria">
                     <input type="text" placeholder='Buscar aquì' onChange={(e) => {
-                        setWord(e.target.value);
+                        setWord(e.target.value); 
                     }} value={word} />
                     <div className="filters">
-                        
+                        {console.log('ver productos', productosTotal)}
                     </div>
                 </div>
                 <div className="lista"> 
@@ -91,7 +93,7 @@ export default function GeneralProductos({ cargaProyectos, productosTotal }){
                             <ListaMP word={word} productosTotal={productosTotal} materia={materia}  sumar={addToTotal}/>
                             <div className="cotizador">
                                 {
-                                    <Cotizador total={total} />
+                                    <Cotizador productosTotal={productosTotal} total={total} />
                                 }
                             </div>
                         </div>

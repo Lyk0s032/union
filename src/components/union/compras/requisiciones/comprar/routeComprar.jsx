@@ -149,7 +149,7 @@ export default function Comprar(){
                         }}>Orden de compra</button>
                         { 
                             params.get('s') == 'materia' ?
-                                <GeneralMateriaPrima cargaProyectos={cargaProyectos} />
+                                <GeneralMateriaPrima productosTotal={data && data.productoTerminadoConsolidado} cargaProyectos={cargaProyectos} />
                             :params.get('s') == 'proyectos' ?
                                 <ProyectosReq /> 
                             : params.get('s') == 'borradores' ?

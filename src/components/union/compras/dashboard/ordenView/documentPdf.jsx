@@ -163,7 +163,6 @@ const styles = StyleSheet.create({
     totalSection: {
         marginTop: 30, // Reducido
         textAlign: 'right',
-        paddingHorizontal: 30, 
         flexDirection: 'row',
         justifyContent: 'flex-end',
     },
@@ -178,7 +177,7 @@ const styles = StyleSheet.create({
         marginBottom: 3,
     },
     priceTotal: {
-        fontSize: 20, // Reducido de 24 (Sigue siendo el elemento principal)
+        fontSize: 14, // Reducido de 24 (Sigue siendo el elemento principal)
         color: BG_AZUL_DARK,
     }
 });
@@ -196,7 +195,8 @@ const PdfDocument = ({
     creadoFecha, 
     ordenDeCompraTime, 
     aprobadaCompra, 
-    OrdenesTotal 
+    OrdenesTotal,
+    iva
 }) => {
     
     const isPreordenActive = true; 
@@ -263,12 +263,27 @@ const PdfDocument = ({
                 )}
 
                 {/* 5. Precio Total */}
-                <View style={styles.totalSection}>
-                    <View style={styles.priceContainer}>
-                        <Text style={styles.priceLabel}>Precio</Text>
-                        <Text style={styles.priceTotal}>
-                            $ {new Intl.NumberFormat('es-CO').format(OrdenesTotal)}
-                        </Text>
+                <View style={{ width: '100%',
+                    marginTop: 25,
+                    flexDirection: 'row',
+                    justifyContent: 'flex-end'}}>
+                    
+                    <View style={{marginRight:70}}>
+                        <View style={{textAlign:'right'}}>
+                            <Text style={styles.priceLabel} >Iva</Text>
+                            <Text style={{fontSize:14}}>
+                                $ {new Intl.NumberFormat('es-CO').format(Number(iva).toFixed(0))}
+                            </Text>
+                        </View>
+                    </View>
+
+                    <View>
+                        <View style={{textAlign:'right'}}>
+                            <Text style={styles.priceLabel}>Precio</Text>
+                            <Text style={styles.priceTotal}>
+                                $ {new Intl.NumberFormat('es-CO').format(OrdenesTotal)}
+                            </Text>
+                        </View>
                     </View>
                 </View>
 

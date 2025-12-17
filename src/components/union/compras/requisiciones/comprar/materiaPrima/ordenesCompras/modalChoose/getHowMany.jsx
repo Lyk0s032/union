@@ -82,7 +82,7 @@ export default function GetHowMany({ productosTotal }){
     // FILTRAR MEDIDA
     console.log('item a renderenziar', itemRequisicion)
     console.log('productoso', productosTotal)
-    const productoFilter = productosTotal.find(i => i.id == itemRequisicion.id)
+    const productoFilter = productosTotal?.find(i => i.id == itemRequisicion.id)
     console.log('producto ya filtrado', productoFilter)
     const toProjects = itemsCotizacions.filter(i => i.materiumId == itemRequisicion.id);
 
@@ -215,7 +215,7 @@ export default function GetHowMany({ productosTotal }){
                         <div className="divideInformationItem">
                             <div className="circle">
                                 <h3>{itemRequisicion?.id}</h3>
-                            </div> 
+                            </div>  
                             <div className="dataName">
                                 <h3>{itemRequisicion?.description} - {valorKg}</h3>
                                 <span>Medida original:</span><br /> 

@@ -9,7 +9,7 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
 
-export default function Cotizador({ total }){
+export default function Cotizador({ productosTotal, total }){
     const [materias, setMaterias] = useState();
     const [params, setParams] = useSearchParams();
 
@@ -228,6 +228,7 @@ const exportSelectedToPDFGeneral = () => {
       : Number((precioPromedio / ((m.precios || []).length || 1)));
 
     const cantidadPrice = Number(cantidadToPrices * promedioUnidad) || 0;
+    const productoFilter = m.tipo == 'producto' ? productosTotal?.find(i => i.id == m.id) : []
 
     const estado = Number(m.entregado) >= Number(m.totalCantidad / productoLados)
       ? 'Comprado'
@@ -237,9 +238,9 @@ const exportSelectedToPDFGeneral = () => {
 
     return [
       m.id ?? '',
-      m.nombre ?? '',
+      m.nombre ? m.unidad == 'mt2' && m.tipo == 'producto' ? `${m.nombre} - ${productoFilter?.productoCotizacion[0]?.medida}` : `${m.nombre}` : '',
       m.unidad ?? '',
-      productoLados,
+      productoLados ? m.unidad == 'mt2' && m.tipo == 'producto' ? `${productoFilter?.productoCotizacion[0]?.medida}` : `${productoLados}` : productoLados,
       m.entregado > 0 && m.entregado < m.totalCantidad ? Number(m.totalCantidad - m.entregado) : cantidadToPrices,
       new Intl.NumberFormat('es-CO').format(Number(promedioUnidad).toFixed(0)),
       m.entregado > 0 && m.entregado < m.totalCantidad ? new Intl.NumberFormat('es-CO').format(Number(Number(m.totalCantidad - m.entregado) * Number(promedioUnidad)).toFixed(0))  : new Intl.NumberFormat('es-CO').format(Number(cantidadPrice).toFixed(0)),

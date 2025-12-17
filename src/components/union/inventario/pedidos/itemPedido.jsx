@@ -35,18 +35,18 @@ export default function ItemPedido({ orden }){
                         </h3>
                     </div>
                     <div className="extensionColor">
-                        <span>{aprobadaCompra}</span>
+                        <span style={{fontSize:12}}>{aprobadaCompra}</span>
                     </div>
                 </div>
             </td>
             <td className='middle Almacen'>
                 <span></span>
             </td>
-            <td className=" Almacen" style={{fontSize:12, textAlign:'left'}}> {console.log(orden)}
+            <td className=" Almacen" style={{fontSize:12, textAlign:'left'}}> 
                 {
                     orden.requisiciones?.map((req, i) => {
                         return (
-                            <span key={i+1} style={{color: '#666'}}>{Number(21719 + req.cotizacionId)} - {req.nombre}<br /></span>
+                            <span key={i+1} style={{color: '#666', fontSize:11}}>{Number(21719 + req.cotizacionId)} - {req.cotizacion?.client?.nombre}<br /></span>
                         ) 
                     })
                 }

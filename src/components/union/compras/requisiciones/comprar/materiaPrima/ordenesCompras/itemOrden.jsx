@@ -63,11 +63,13 @@ export default function ItemOrden({ item }){
         }
     }
     console.log('itemm', item)
+
+    const [remove, setRemove] = useState(false);
     return (
-        !update ?
+        !update && !remove ?
             <div className={`itemCompra ${open ? "open" : ""}`} onContextMenu={(e) => {
                 e.preventDefault();
-                eliminarItemComprasCotizacion();
+                setRemove(true)
             }}>
                 <div className="containerItemCompra"  onClick={() => setOpen(!open)}>
                     <div className="divideItem">
@@ -94,7 +96,7 @@ export default function ItemOrden({ item }){
                         <span>Precio total</span>
                         <h3>{item.precioTotal}</h3>
                     </div>
-                </div>
+                </div> 
                 <div className="hiddenContainer">
                     <div className="containerHidden">
                         {
@@ -120,9 +122,41 @@ export default function ItemOrden({ item }){
                 </div>
             </div>
         :
+        remove ? 
+             <div className={`itemCompra ${open ? "open" : ""}`} >
+                <div className="containerItemCompra"  onClick={() => setOpen(!open)}>
+                    <div className="divideItem">
+                        <div className="letter"> 
+                            <h3>{item.materium?.id} {item.producto?.id}</h3>
+                        </div>
+                        <div className="dataItemOrden">
+                            <h3>{item.materium?.description} {item.producto?.item}</h3>
+                        </div>
+                    </div>
+                    <div className="price">
+                        <span>Pregunta</span><br />
+                        <h3>¿Desea eliminar?</h3>
+                    </div>
+                    <div className="price">
+                        <span></span>
+                        <button onClick={() => eliminarItemComprasCotizacion()}
+                            style={{width:100, padding:5,backgroundColor: 'green', border:'1px solid green', borderRadius:5}}>
+                            <span style={{color: 'white'}}>Eliminar</span>
+                        </button>
+                    </div>
+                    <div className="price" onDoubleClick={() => setUpdate(true)}>
+                        <span></span>
+                        <button onClick={() => setRemove(false)}
+                             style={{width:100, padding:5,backgroundColor: 'red', border:'1px solid red', borderRadius:5}}>
+                            <span style={{color: 'white'}}>Cancelar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>           
+        :        
             <div className={`itemCompra ${open ? "open" : ""}`} onContextMenu={(e) => {
                 e.preventDefault();
-                eliminarItemComprasCotizacion();
+                setRemove(true)
             }}>
                 <div className="containerItemCompra"  onClick={() => setOpen(!open)}>
                     <div className="divideItem">

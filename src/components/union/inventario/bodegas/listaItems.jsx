@@ -34,6 +34,7 @@ export default function ItemsLists(){
                 },
             })
             .then((res) => {
+                console.log('resultado busqueda', res.data)
                 setProducto(res.data)
             })
             .catch(err => {
@@ -181,11 +182,11 @@ export default function ItemsLists(){
                                                                             <tr key={i+1} onClick={() => {
                                                                                 params.set('item', pt.id)
                                                                                 params.set('show', 'Bodega');
-                                                                                params.set('who', params.get('bodega'))
+                                                                                params.set('who', params.get('bodega')) 
                                                                                 
                                                                                 setParams(params);
                                                                             }}>
-                                                                                <td className="coding">
+                                                                                <td className="coding"> 
                                                                                     <div className="code">
                                                                                         <h3>{pt.id} </h3>
                                                                                     </div>
@@ -194,7 +195,7 @@ export default function ItemsLists(){
                                                                                     <div className="titleNameKitAndData">
                                                                                         <div className="extensionColor">
                                                                                             <div className="boxColor"></div>
-                                                                                            <span>{dayjs(pt.inventarios[0].createdAt.split('T')[0]).format('DD [de] MMMM [del] YYYY ')}</span>
+                                                                                            <span>{pt?.inventarios.length && ( dayjs(pt.inventarios[0].createdAt.split('T')[0]).format('DD [de] MMMM [del] YYYY ') )}</span>
                                                                                         </div>
                                                                                         <div className="nameData">
                                                                                             <h3>
@@ -208,17 +209,17 @@ export default function ItemsLists(){
                                                                                     </div>
                                                                                 </td>
                                                                                 <td className="middle Almacen" style={{fontSize:12}}>
-                                                                                    <span>{pt.inventarios[0].cantidad}</span>
+                                                                                    {/* <span>{pt?.inventarios.length && (pt.inventarios[0].cantidad)}</span> */}
                                                                                 </td>
                                                                                 <td className="middle Almacen" style={{fontSize:12}}>
-                                                                                    <span>{pt.inventarios[0].cantidadComprometida}</span>
+                                                                                    {/* <span>{pt?.inventarios.length && (pt.inventarios[0].cantidadComprometida)}</span> */}
                                                                                 </td>
                                                                                 <td className='middle Almacen'>
                                                                                     {console.log('ptt', pt)}
                                                                                     {
-                                                                                        Number(pt.inventarios[0].cantidad) < Number(pt.inventarios[0].cantidadComprometida)   ?
+                                                                                        Number(pt?.inventarios[0]?.cantidad) < Number(pt?.inventarios[0]?.cantidadComprometida)   ?
                                                                                             <AiOutlineExclamationCircle className="icon Exclamation" />
-                                                                                        : Number(pt.inventarios[0].cantidad) == Number(pt.inventarios[0].cantidadComprometida) ?
+                                                                                        : Number(pt?.inventarios[0]?.cantidad) == Number(pt?.inventarios[0]?.cantidadComprometida) ?
                                                                                             <AiOutlinePlus className="icon" />
                                                                                         : 
                                                                                             <AiOutlineCheckCircle className="icon" />

@@ -40,6 +40,7 @@ export default function Orden(){
         // 3. Si no coincide, simplemente retornamos el acumulador sin cambios.
     }, 0);
 
+    const ivaValor = Number(OrdenesTotal) - Number(Number(OrdenesTotal) / 1.19);
     let creadoFecha = dayjs(ordenCompras?.createdAt).format("dddd, D [de] MMMM YYYY, h:mm A");
     let ordenDeCompraTime = ordenCompras?.dayCompras ? dayjs(ordenCompras.dayCompras).format("dddd, D [de] MMMM YYYY, h:mm A") : null;
     let aprobadaCompra  = ordenCompras?.daysFinish ? dayjs(ordenCompras.daysFinish).format("dddd, D [de] MMMM YYYY, h:mm A") : null;
@@ -119,10 +120,11 @@ export default function Orden(){
                                                         ordenDeCompraTime={ordenDeCompraTime} 
                                                         aprobadaCompra={aprobadaCompra} 
                                                         OrdenesTotal={OrdenesTotal}
+                                                        iva={ivaValor} 
                                                     />
                                                 } 
                                                 fileName={`orden-compra-${ordenCompras.proveedor.nombre}.pdf`}
-                                            >
+                                            > {console.log('orden', ordenCompras)}
                                                 {({ loading }) => (
                                                     <button style={{ 
                                                         marginLeft: '10px', 
@@ -224,7 +226,7 @@ export default function Orden(){
                                                                                 <h3>
                                                                                     {item.materium?.description}
                                                                                     {item.producto?.item}
-
+                                                                                
                                                                                 </h3>
                                                                                 <span>
                                                                                     {item.materium?.item}
@@ -254,10 +256,15 @@ export default function Orden(){
                                     : null
                                 }
 
-                                <div className="titleDiv Lade">
+                                <div className="titleDiv Lade" style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+                                    <div className="price">
+                                        <span>IVA</span>
+                                        <h1>$ {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(ivaValor).toFixed(0))}</h1>
+                                        <br /><br />
+                                    </div>
                                     <div className="price">
                                         <span>Precio</span>
-                                        <h1>$ {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(OrdenesTotal)}</h1>
+                                        <h1>$ {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(OrdenesTotal).toFixed(0))}</h1>
                                         <br />
                                         {
                                             ordenCompras.estadoPago == 'remove' ? 
@@ -265,11 +272,8 @@ export default function Orden(){
                                             :
                                                 <OpenOrden orden={ordenCompras} />
                                         }
-
                                     </div>
-
                                 </div>
-                                
                             </div>
                         </div>
                     </div>
