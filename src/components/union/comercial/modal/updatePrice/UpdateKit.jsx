@@ -56,7 +56,7 @@ export default function UpdatePrice({ kit, cotizacion, close, tipo, idKit, valor
     return (
         <>
             <label htmlFor="" style={{fontSize:12, color: '#666'}}>{!loading ? `Anterior: ${ new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valor).toFixed(0))}` : 'Actualizando...'}</label><br />
-            <label htmlFor=""  style={{fontSize:12, color: '#666'}}>Nuevo: {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(kit.state == 'simulacion' ? porcentaje : newVal)}</label><br />
+            <label htmlFor=""  style={{fontSize:12, color: '#666'}}>Nuevo: {new Intl.NumberFormat('es-CO', {currency:'COP'}).format(kit?.state == 'simulacion' ? porcentaje : newVal)}</label><br />
 
             <input type="text" onChange={(e) => {
                 if(!loading){
