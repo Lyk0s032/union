@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import * as actions from '../../../../../store/action/action';
 import axios from 'axios';
 
-const sentItemIds = new Set();
+export const sentItemIds = new Set();
 
 export default function ItemListMP({ materia, sumar }){
     const [params, setParams] = useSearchParams();
@@ -22,7 +22,7 @@ export default function ItemListMP({ materia, sumar }){
     }, 0); 
 
     const m = materia;
-    let productoLados = 1;
+    let productoLados = 1; 
     if (materia.unidad == 'mt2') {
         const [ladoA, ladoB] = m.medida.split('X').map(Number);
         if (!isNaN(ladoA) && !isNaN(ladoB)) {
@@ -107,18 +107,18 @@ export default function ItemListMP({ materia, sumar }){
 
     }
 
-        useEffect(() => { 
-            if (sentItemIds.has(`${materia.id}-m`)) return;
+    useEffect(() => { 
+        if (sentItemIds.has(`${materia.id}-m`)) return;
 
 
-            if(enviado){
-                return null
-            } else{
-                sentItemIds.add(`${materia.id}-m`);
+        if(enviado){
+            return null
+        } else{
+            sentItemIds.add(`${materia.id}-m`);
 
-                enviarPrecioItem()
-            }
-        }, [])
+            enviarPrecioItem()
+        }
+    }, [materia])
 
         console.log('valor falnte', totalFaltante) 
     return (

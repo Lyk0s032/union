@@ -32,10 +32,11 @@ export default function CotizacionItemGeneral({ item, openMenuId, toggleMenu  })
             const addProduction = await axios.get(`/api/requisicion/add/register/necesidad/${res.data.id}`)
             return res;
         })
-        
         .then((res) => {
             dispatch(actions.HandleAlerta('Cotización aprobada', 'positive')) 
             dispatch(actions.axiosToGetCotizacionesAdmin(false))
+
+            return res;
         })
         .catch(err => {
             console.log(err);

@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import ItemListPT from './itemPT';
 
-export default function LISTAPT({ materia, sumar }){
+export default function LISTAPT({ productosTotal, materia, sumar }){
     return (
         <div className="listaMP">
             <table>
@@ -23,7 +23,7 @@ export default function LISTAPT({ materia, sumar }){
                             materia.map((mat, i) => {
                                 return (
                                     mat.tipo == 'producto' ?
-                                        <ItemListPT materia={mat} sumar={sumar}  key={i+1}/>
+                                        <ItemListPT productosTotal={productosTotal} materia={mat} sumar={sumar}  key={i+1}/>
                                     : null
                                 )
                             })

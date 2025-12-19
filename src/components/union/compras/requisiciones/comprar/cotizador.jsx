@@ -112,6 +112,8 @@ const exportSelectedToPDF = () => {
       productoLados = Number(m.medida || 1);
     }
 
+    const productoFilter = m.tipo == 'producto' ? productosTotal?.find(i => i.id == m.id) : []
+
     const cantidadToPrices = Number(Math.ceil(Number(Number(m.totalCantidad || 0) / Number(productoLados || 1))));
     const promedioUnidad = m.unidad === 'kg'
       ? Number((precioPromedio / ((m.precios || []).length || 1)) / (Number(m.medida) || 1))
@@ -129,7 +131,7 @@ const exportSelectedToPDF = () => {
       m.id ?? '',
       m.nombre ?? '',
       m.unidad ?? '',
-      productoLados,
+      productoLados ? m.unidad == 'mt2' && m.tipo == 'producto' ? `${productoFilter?.productoCotizacion[0]?.medida}` : `${productoLados}` : productoLados,
       cantidadToPrices,
       new Intl.NumberFormat('es-CO').format(Number(promedioUnidad).toFixed(0)),
       new Intl.NumberFormat('es-CO').format(Number(cantidadPrice).toFixed(0)),

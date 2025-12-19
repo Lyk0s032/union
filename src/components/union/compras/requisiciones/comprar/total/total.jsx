@@ -6,7 +6,7 @@ import LISTAPT from "./listaPT";
 import jsPDF from "jspdf";
 import autoTable from 'jspdf-autotable';
 
-export default function GeneralTotal({ cargaProyectos }){
+export default function GeneralTotal({ productosTotal, cargaProyectos }){
     const [params, setParams] = useSearchParams();
     const ref = useRef(null);
     const refLeft = useRef(null);
@@ -47,20 +47,45 @@ const exportToPDF = () => {
   const materiasFiltradas = (materia || []).filter(m => !isKit(m));
 
   // encabezados
-  const head = [["ID", "Nombre", "Entregado", "Total Cantidad"]];
+  const head = [["ID", "Nombre", "Medida", "Entregado", "Total Cantidad", "Unidad", "Valor Unitario", "Valor Total"]];
 
   // filas desde materias filtradas — Entregado y Total Cantidad incluyen la unidad
   const body = materiasFiltradas.map(m => {
+    console.log('Materia para pdf:', m)
     const entregado = Number(m.entregado || 0);
     const totalCantidad = Number(m.totalCantidad || 0);
     const unidad = m.unidad ? String(m.unidad).trim() : "";
     const fmt = (v) => new Intl.NumberFormat('es-CO', { maximumFractionDigits: 0 }).format(Number(v || 0));
+   
+    let findMt2  = m.unidad == 'mt2' ? productosTotal.filter(pt => pt.id == m.id) : null;
+
+    const precioPromedio = m.precios.reduce((acc, it) => {
+        return acc + Number(it.valor);
+    }, 0); 
+
+
+    const promedioUnidad = precioPromedio / m.precios.length;
+    const medidaNombre = findMt2?.[0]?.productoCotizacion?.[0]?.medida?.trim() || 0;
+    
+    console.log('medida nombre para pdf:', medidaNombre)
+    let ladoA =  findMt2 && findMt2.length ? findMt2[0]?.productoCotizacion[0]?.medida.split('X')[0] : null
+    let ladoB = findMt2 && findMt2.length ? findMt2[0]?.productoCotizacion[0]?.medida.split('X')[1] : null
+    let area = findMt2 && findMt2.length ? Number(ladoA) * Number(ladoB) : null;
+    let cantidadToPricesMt2 = findMt2 && findMt2.length ? Number(Math.ceil(Number( Number(materia?.totalCantidad) / Number(area) )).toFixed(0)) : 0
+    const cantidadPriceMt2 = Number(area) * Number(promedioUnidad);
+
+    console.log('Productos total para pdf:', productosTotal)
 
     return [
       m.id ?? "",
-      m.nombre ?? "",
-      `${fmt(entregado)} ${unidad}`.trim(),
-      `${fmt(totalCantidad)} ${unidad}`.trim()
+      `${m.nombre}` ?? "",
+      medidaNombre ?? "",
+      `${fmt(entregado)}`.trim(),
+      `${fmt(totalCantidad)}`.trim(),
+      m.unidad ?? "",
+      m.unidad == 'mt2' && m.tipo == 'producto' ? `${fmt(cantidadPriceMt2)}` : `${fmt(Number(promedioUnidad).toFixed(0))}`.trim(),
+      m.unidad == 'mt2' && m.tipo == 'producto' ? `${fmt(cantidadPriceMt2 * Number(m.totalCantidad - m.entregado))}` : `${fmt(Number(promedioUnidad * Number(m.totalCantidad - m.entregado)).toFixed(0))}`.trim(),
+    
     ];
   });
 
@@ -144,7 +169,7 @@ const exportToPDF = () => {
                                 </table>
                             </div>
                             <br /><br />
-                            <LISTAPT materia={materia} sumar={addToTotal} />
+                            <LISTAPT productosTotal={productosTotal} materia={materia} sumar={addToTotal} />
 
                             <div className="DataHere">
                                 <table className="resultItem">

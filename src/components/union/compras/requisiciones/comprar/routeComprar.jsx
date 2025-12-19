@@ -14,6 +14,8 @@ import GeneralProductos from './productos/general';
 import OrdenesCompras from './materiaPrima/ordenesCompras/general';
 import KitsData from './kits/kits';
 import GeneralTotal from './total/total';
+import { sentItemIdss } from './total/itemPT';
+import { sentItemIds } from './total/itemMP';
 
 export default function Comprar(){
     const [params, setParams] = useSearchParams();
@@ -83,6 +85,13 @@ export default function Comprar(){
         if(!factura.current || !factura.current) return;
         factura.current.classList.toggle('facturaActive')
         btn.current.classList.toggle('facturaBtnHidden') 
+
+
+        return ()=>{
+            sentItemIdss.clear();
+            sentItemIds.clear();
+
+        }
     }, [params.get('facture')])
 
 
@@ -159,7 +168,7 @@ export default function Comprar(){
                             : params.get('s') == 'kits' ?
                                 <KitsData />
                             : params.get('s') == 'total' ?
-                                <GeneralTotal cargaProyectos={cargaProyectos} />
+                                <GeneralTotal productosTotal={data && data.productoTerminadoConsolidado} cargaProyectos={cargaProyectos} />
                             : null
                         }
                         
