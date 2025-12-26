@@ -124,7 +124,7 @@ export default function Orden(){
                                                     />
                                                 } 
                                                 fileName={`orden-compra-${ordenCompras.proveedor.nombre}.pdf`}
-                                            > {console.log('orden', ordenCompras)}
+                                            > 
                                                 {({ loading }) => (
                                                     <button style={{ 
                                                         marginLeft: '10px', 
