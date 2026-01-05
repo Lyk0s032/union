@@ -11,6 +11,7 @@ import { useSearchParams } from 'react-router-dom';
 import UpdateKit from './updated';
 import { BsShieldCheck } from 'react-icons/bs';
 import ConfigKit from './configKit';
+import ModalChangeCalibre from './changeCalibre';
 
 export default function SelectMP(){
 
@@ -125,7 +126,7 @@ export default function SelectMP(){
                 <div className="leftKit">
                     <div className="topData">
                         <div className="DataKit">
-                            <h3>{kit.name} - <strong>({kit.extension.name})</strong></h3> 
+                            <h3>{kit.name} - <strong>( {kit.extension.name})</strong></h3> 
                             {/* {
                                 !params.get('update') ?
                                     <button onClick={() => {
@@ -156,7 +157,6 @@ export default function SelectMP(){
                                         </li>
                                         <li onClick={() => {
                                             setAdd(true)
-
                                         }}>
                                             <div>
                                                 <MdOutlineAdd className="icon" />
@@ -235,6 +235,11 @@ export default function SelectMP(){
                 <div className="rightSelect">
                     <SearchKits number={number}/>
                 </div>
+                {
+                    params.get('almacen') ?
+                        <ModalChangeCalibre />
+                    : null
+                }
             </div>
         </div>
     )

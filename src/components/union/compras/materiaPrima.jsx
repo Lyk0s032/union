@@ -175,7 +175,7 @@ export default function MateriaPrima(){
                                         
                                             primas == 404 ? 0 :
                                             primas && primas.length ?
-                                                  word || cat || li?
+                                                  word || cat || li ?
                                                           primas.filter(m => {
                                                             const porLetra = word ?  m.description.toLowerCase().includes(word.toLowerCase()) ||
                                                             m.item.toLowerCase().includes(word.toLowerCase()): true;

@@ -30,7 +30,7 @@ export default function ItemTransferirMovimiento({ item , movimiento, clean }){
                 <div className="divRegistro">
                     <h3>
                         {
-                            movimiento.proyecto
+                            Number(movimiento.proyecto) + Number(21719)
                         }
                     </h3>
                 </div>

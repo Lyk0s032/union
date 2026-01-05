@@ -5,6 +5,7 @@ import * as actions from '../../../store/action/action';
 import { useDispatch, useSelector } from "react-redux";
 import { BsPencil, BsThreeDots } from "react-icons/bs";
 import { MdDeleteOutline, MdOutlineDeleteOutline } from "react-icons/md";
+import { useSearchParams } from "react-router-dom";
 
 // [CORRECCIÓN]: El componente ahora itera sobre `kit.itemKits`
 export default function Selected({ kit, openMenuId, toggleMenu, number, selectArea }) {
@@ -15,6 +16,7 @@ export default function Selected({ kit, openMenuId, toggleMenu, number, selectAr
     const { user } = usuario;
     const [codeSeg, setCodeSeg] = useState(null);
     const segmentoNameRef = useRef(null);
+    const [params, setParams] = useSearchParams();
     const deleteItem = async (item) => { // [CORRECCIÓN]: Recibe el ID del itemKit
         const body = {
             itemKitId: item.id, // [CORRECCIÓN]: Enviamos el ID del itemKit al backend
@@ -155,6 +157,7 @@ export default function Selected({ kit, openMenuId, toggleMenu, number, selectAr
                                                                             <h3><span>{item.materium.id}</span> -  {item.materium.description}</h3>
                                                                         </div> 
                                                                     </td>
+
                                                                     <td onClick={() => {
                                                                         toggleMenu(item.id)
                                                                         setFast(item.id);
@@ -239,8 +242,10 @@ export default function Selected({ kit, openMenuId, toggleMenu, number, selectAr
                                                 <div className="codeAndName">
                                                     
                                                     <h3><span>{item.materium.id}</span> -  {item.materium.description}</h3>
-                                                </div>
+                                                    <span>Calibre: {item.calibre}</span>
+                                                </div> 
                                             </td>
+                                            
                                             <td onClick={() => {
                                                 toggleMenu(item.id)
                                                 setFast(item.id);
@@ -263,6 +268,22 @@ export default function Selected({ kit, openMenuId, toggleMenu, number, selectAr
                                                                 <strong>Opciones rápidas</strong><br /><br />
                                                                 <nav>
                                                                     <ul>
+                                                                        
+                                                                            {
+                                                                                item.materium.unidad == 'mt2' ?
+                                                                                    <li onClick={() => {
+                                                                                        params.set('almacen', item.id);
+                                                                                        setParams(params);
+                                                                                    }}>
+                                                                                        <div>
+                                                                                            <BsPencil className="icon" />
+                                                                                            <span>Cambiar calibre</span>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                :
+                                                                                null
+                                                                            }
+                                                                            
                                                                         <li onClick={() => setFast(item.id)}>
                                                                             <div>
                                                                                 <BsPencil className="icon" />
