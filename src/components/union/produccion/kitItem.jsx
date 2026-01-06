@@ -67,9 +67,11 @@ export default function KitItem(props){
             <td className="longer" >
                 <div className="titleNameKitAndData">
                     <div className="extensionColor">
+                        <span style={{color: '#dc3545',marginRight:20}}>{kit.state == 'simulacion' ? 'Simulación' : null}</span>
                         <div className="boxColor"></div>
                         <span>{kit.extension ? kit.extension.name.toUpperCase() : null}</span>
                         <span style={{marginLeft:10}}> | {kit.categorium ? kit.categorium.name.toUpperCase() : 'SIN CATEGORíA'}</span>
+                        
                     </div>
                     <div className="nameData">
                         <h3>{kit.name}</h3>

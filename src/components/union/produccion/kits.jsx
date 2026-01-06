@@ -133,6 +133,13 @@ export default function KitsPanel(){
                                         <span>Desarrollo</span>
                                     </button>
                                 </li>
+                                <li> 
+                                    <button className={state == 'simulation' ? 'Active' : null} onClick={() => {
+                                        setState('simulation')
+                                    }}>
+                                        <span>Simulación</span>
+                                    </button>
+                                </li>
                             </ul>
                         </nav>
                     </div>
@@ -269,6 +276,36 @@ export default function KitsPanel(){
                                                 kits.map((kt, i) => {
                                                     return (
                                                         kt.state == 'desarrollo' || !kt.state ? <KitItem kit={kt} key={i+1} /> : null
+                                                    ) 
+                                                })
+                                            : <h1>No hay resultados</h1>
+                                        }
+                                    </tbody>
+                                    : state == 'simulation' ?
+                                    <tbody>
+                                        {
+                                            !kits || loadingKits ?
+                                                <span>Cargando</span>
+                                            : kits && kits.length ?
+                                                word || ex || lineas || categorias ?
+                                                    kits.filter(m => {
+                                                            const porLetra = word ? m.name.toLowerCase().includes(word.toLowerCase()) : true
+                                                            const porLinea = li ? m.lineaId == li : true
+                                                            const porCategoria = cat ? m.categoriumId == cat : true
+                                                            const porExtension = ex ? m.extensionId == ex : true
+                                                            return porLetra && porLinea && porCategoria && porExtension
+                                                        }
+                                                        ).map((pv, i) => {
+                                                            return (
+                                                                pv.state == 'simulacion' ? 
+                                                                        <KitItem key={i+1} kit={pv} /> 
+                                                                : null
+                                                            )
+                                                        })
+                                                :
+                                                kits.map((kt, i) => {
+                                                    return (
+                                                        kt.state == 'simulacion'  ? <KitItem kit={kt} key={i+1} /> : null
                                                     ) 
                                                 })
                                             : <h1>No hay resultados</h1>
