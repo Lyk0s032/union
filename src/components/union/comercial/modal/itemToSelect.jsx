@@ -66,16 +66,16 @@ function DisplayRow({ kit, onActivate, setValorProduccion, distribuidor, final, 
     return (
         <tr className="uxTable">
             <td className="titleKit">
-                {
-                    console.log(kit)
-
-                }
                 <div className="divTitleKits">
-                   <div className="leftTitle">
+                   <div className="leftTitle" style={kit.state == 'simulacion' ? {
+                        backgroundColor: '#dc3545',
+                        borderColor: '#dc3545'
+                    } :null}>
                          <strong>{kit.id}</strong>
                    </div>
                    <div className="right">
                         <div className="color">
+                            <div className="" style={{color: '#dc3545',marginRight:10}}>{kit.state == 'simulacion' ? 'Simulación' : null}</div>
                             <div className="colorDiv" style={{color: `${kit.extension.code}`}}></div>
                             <h5>{kit.extension.name}</h5>
                         </div>
@@ -128,15 +128,20 @@ function ActiveRow({ kit, onCancel, precio, onAdd, setValorProduccion, distribui
         <tr className="uxTable">
             <td className="titleKit">
                 <div className="divTitleKits">
-                   <div className="leftTitle">
+                   <div className="leftTitle" style={kit.state == 'simulacion' ? {
+                        backgroundColor: '#dc3545',
+                        borderColor: '#dc3545'
+                    } :null}>
                          <strong>{kit.id}</strong>
                    </div>
                    <div className="right">
                         <div className="color">
+                            <div className="" style={{color: '#dc3545',marginRight:10}}>{kit.state == 'simulacion' ? 'Simulación' : null}</div>
                             <div className="colorDiv" style={{color: `${kit.extension.code}`}}></div>
                             <h5>{kit.extension.name}</h5>
                         </div>
                         <h3>{kit.name}</h3>
+                        
                         
                         <h4>{kit.description}</h4>
                    </div>
