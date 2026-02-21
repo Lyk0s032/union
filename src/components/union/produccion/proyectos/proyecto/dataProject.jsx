@@ -143,6 +143,8 @@ export default function DataProject({ project }){
                                             <th>Item</th>
                                             <th>Necesidad</th>
                                             <th>Progreso</th>
+                                            <th>Corte</th>
+                                            <th>Tuberia</th>
                                         </tr>
                                     </thead>
                                     <tbody>

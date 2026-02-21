@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdOutlineClose } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import * as actions from '../../../../store/action/action';
 import Transferir from './transferir';
+import MateriaPrimaStock from './MateriaPrimaStock';
+import ProductoTerminadoStock from './ProductoTerminadoStock';
 
 export default function MoveModalRigth(){
     const [params, setParams] = useSearchParams();
@@ -13,7 +15,9 @@ export default function MoveModalRigth(){
 
     const requisicion = useSelector(store => store.requisicion);
     const { itemElemento, loadingItemElemento } = requisicion
-
+    
+    // Estado para la cantidad que se quiere transferir (se actualiza desde Transferir)
+    const [cantidadTransferir, setCantidadTransferir] = useState(1);
 
     console.log('comportamiento, ', itemElemento, loadingItemElemento)
     return (
@@ -83,8 +87,33 @@ export default function MoveModalRigth(){
                                 
                             </div>
                             <div className="giveTransferir">
-                               <Transferir item={itemElemento} />
+                               <Transferir 
+                                   item={itemElemento} 
+                                   onCantidadChange={setCantidadTransferir}
+                               />
                             </div>
+
+                            {/* Mostrar información de materia prima solo si es un kit */}
+                            {itemElemento?.kit?.id && (
+                                <div className="materiaPrimaStockContainer">
+                                    <MateriaPrimaStock 
+                                        kitId={itemElemento.kit.id} 
+                                        cantidad={cantidadTransferir || 1}
+                                        ubicacionId={4}
+                                    />
+                                </div>
+                            )}
+
+                            {/* Mostrar información de producto terminado si no es kit */}
+                            {!itemElemento?.kit?.id && itemElemento?.productoId && (
+                                <div className="productoTerminadoStockContainer">
+                                    <ProductoTerminadoStock 
+                                        productoId={itemElemento.productoId} 
+                                        cantidad={cantidadTransferir || 1}
+                                        ubicacionId={5}
+                                    />
+                                </div>
+                            )}
 
                             <div className="comprasToThisProject">
                                 <div className="containerComprasToThis">

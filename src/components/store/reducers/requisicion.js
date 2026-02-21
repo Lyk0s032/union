@@ -41,7 +41,18 @@ const initialState = {
     loadingProductionItem: false,
 
     itemElemento: null,
-    loadingItemElemento: false
+    loadingItemElemento: false,
+
+    // Datos de visualización de requisiciones
+    realProyectosRequisicion: null,
+    loadingRealProyectosRequisicion: false,
+    requisicionesSeleccionadas: [], // IDs de requisiciones seleccionadas
+    
+    // Detalles de materia prima y producto terminado
+    materiaPrimaRequisicion: null,
+    loadingMateriaPrimaRequisicion: false,
+    productoTerminadoRequisicion: null,
+    loadingProductoTerminadoRequisicion: false
 
 }
 
@@ -307,8 +318,78 @@ export default function (state = initialState, action) {
             }
         case types.GETTING_ITEM_ELEMENTO: 
             return {
-                ...state, 
+                ...state,
                 loadingItemElemento: action.payload
+            }
+
+        case types.GET_REAL_PROYECTOS_REQUISICION:
+            return {
+                ...state,
+                realProyectosRequisicion: action.payload,
+                loadingRealProyectosRequisicion: false
+            }
+
+        case types.GETTING_REAL_PROYECTOS_REQUISICION:
+            return {
+                ...state,
+                loadingRealProyectosRequisicion: action.payload
+            }
+
+        case types.GET_UNA_MATERIA_PRIMA_REQUISICION:
+            return {
+                ...state,
+                materiaPrimaRequisicion: action.payload,
+                loadingMateriaPrimaRequisicion: false
+            }
+
+        case types.GETTING_MATERIA_PRIMA_REQUISICION:
+            return {
+                ...state,
+                loadingMateriaPrimaRequisicion: action.payload
+            }
+
+        case types.GET_PRODUCTO_TERMINADO_REQUISICION:
+            return {
+                ...state,
+                productoTerminadoRequisicion: action.payload,
+                loadingProductoTerminadoRequisicion: false
+            }
+
+        case types.GETTING_PRODUCTO_TERMINADO_REQUISICION:
+            return {
+                ...state,
+                loadingProductoTerminadoRequisicion: action.payload
+            }
+
+        case 'TOGGLE_REQUISICION_SELECTION':
+            const reqId = action.payload;
+            const isSelected = state.requisicionesSeleccionadas.includes(reqId);
+            return {
+                ...state,
+                requisicionesSeleccionadas: isSelected
+                    ? state.requisicionesSeleccionadas.filter(id => id !== reqId)
+                    : [...state.requisicionesSeleccionadas, reqId]
+            }
+
+        case 'CLEAR_REQUISICIONES_SELECTION':
+            return {
+                ...state,
+                requisicionesSeleccionadas: []
+            }
+
+        case 'SET_REQUISICIONES_SELECCIONADAS':
+            return {
+                ...state,
+                requisicionesSeleccionadas: action.payload
+            }
+
+        case 'SELECT_RANGE_REQUISICIONES':
+            // Seleccionar un rango de requisiciones (para Shift+Click)
+            const idsRango = action.payload;
+            const nuevasSeleccionadas = [...new Set([...state.requisicionesSeleccionadas, ...idsRango])];
+            return {
+                ...state,
+                requisicionesSeleccionadas: nuevasSeleccionadas
             }
 
         default:

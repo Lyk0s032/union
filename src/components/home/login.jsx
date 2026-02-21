@@ -171,3 +171,69 @@ export default function Login(){
         </div>
     )
 }
+
+
+
+/* 
+    return (
+        <tr>
+            <td className="longer"> 
+                <div className="nameLonger">
+                    <div className="letter">
+                        <h3>{item.materiaId} {item.productoId} </h3>
+                    </div> 
+                    <div className="name">
+                        <h3>{item.materium?.description} {item.producto?.item}</h3>
+                        <span>{item.materium?.item} {item.producto?.medida  && (`Medida: ${item.medida} ${item.producto?.unidad}`)}</span><br />
+                    </div> 
+                </div>
+            </td>
+            <td>
+                <div>
+                    <span>{item.cantidad}</span>
+                </div>
+            </td>
+            <td>
+                <div className=""> 
+                    { 
+                        item.estado == 'aprobado' ?
+                        <button onClick={() => {
+                            !loadingToAlmacen ? definitivaSend() : null
+                        }}>
+                            <span>{loadingToAlmacen ? 'Ingresando...' : 'Ingresar en almacén'}</span>
+                        </button>
+                        : 
+                        <span style={{color: 'green'}}>Entregado</span>
+                    }               
+                </div>
+            </td> 
+            {/* <td>
+                <div className="">
+                    {
+                        item.estado == 'aprobado' ?
+                        <button onClick={() => {
+                            sendToProject()
+                        }}>
+                            <span>Ingresar al proyecto</span>
+                        </button>
+                        : 
+                        null
+                    }
+
+                </div>
+            </td> 
+            <td>
+                <div className="">
+                    <button>
+                        <span>Enviar a producción</span>
+                    </button>
+                </div>
+                 <div>
+                    <span>{item.requisicion?.id} - {item.requisicion?.nombre}</span>
+                </div> 
+            </td>
+            
+            
+        </tr> 
+    )
+*/

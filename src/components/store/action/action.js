@@ -717,10 +717,117 @@ export function getKitsRequisicion(data){
     }
 }
 
+// Acción para obtener proyectos reales de requisiciones
+export function axiosToGetRealProyectosRequisicion(ids){
+    return function(dispatch){
+        dispatch(gettingRealProyectosRequisicion(true));
+        axios.post('/api/requisicion/get/req/multipleReal/', { ids })
+        .then((res) => {
+            dispatch(getRealProyectosRequisicion(res.data));
+            dispatch(gettingRealProyectosRequisicion(false));
+            console.log('res.data', res.data);
+        })
+        .catch((err) => {
+            console.error('Error al obtener proyectos de requisiciones:', err);
+            dispatch(gettingRealProyectosRequisicion(false));
+        });
+    }
+}
+
+export function getRealProyectosRequisicion(data){
+    return {
+        type: types.GET_REAL_PROYECTOS_REQUISICION,
+        payload: data
+    }
+}
+
+export function gettingRealProyectosRequisicion(carga){
+    return {
+        type: types.GETTING_REAL_PROYECTOS_REQUISICION,
+        payload: carga
+    }
+}
+
+// Acción para obtener detalles de materia prima
+export function getMateriaPrimaRequisicion(data){
+    return {
+        type: types.GET_UNA_MATERIA_PRIMA_REQUISICION,
+        payload: data
+    }
+}
+
+export function gettingMateriaPrimaRequisicion(carga){
+    return {
+        type: types.GETTING_MATERIA_PRIMA_REQUISICION,
+        payload: carga
+    }
+}
+
+export function axiosToGetMateriaPrimaRequisicion(itemId){
+    return function(dispatch){
+        dispatch(gettingMateriaPrimaRequisicion(true));
+        axios.post('/api/requisicion/get/materiales/materia/', { id: itemId })
+        .then((res) => {
+            dispatch(getMateriaPrimaRequisicion(res.data));
+            dispatch(gettingMateriaPrimaRequisicion(false));
+        })
+        .catch((err) => {
+            console.error('Error al obtener materia prima:', err);
+            dispatch(gettingMateriaPrimaRequisicion(false));
+        });
+    }
+}
+
+// Acción para obtener detalles de producto terminado
+export function getProductoTerminadoRequisicion(data){
+    return {
+        type: types.GET_PRODUCTO_TERMINADO_REQUISICION,
+        payload: data
+    }
+}
+
+export function gettingProductoTerminadoRequisicion(carga){
+    return {
+        type: types.GETTING_PRODUCTO_TERMINADO_REQUISICION,
+        payload: carga
+    }
+}
+
+export function axiosToGetProductoTerminadoRequisicion(itemId){
+    return function(dispatch){
+        dispatch(gettingProductoTerminadoRequisicion(true));
+        axios.post('/api/requisicion/get/materiales/producto/', { id: itemId })
+        .then((res) => {
+            dispatch(getProductoTerminadoRequisicion(res.data));
+            dispatch(gettingProductoTerminadoRequisicion(false));
+        })
+        .catch((err) => {
+            console.error('Error al obtener producto terminado:', err);
+            dispatch(gettingProductoTerminadoRequisicion(false));
+        });
+    }
+}
+
 export function getCotizacionesCompras(data){
     return {
         type: types.GET_COMPRAS_COTIZACIONES,
         payload: data
+    }
+}
+
+export function axiosToGetCotizacionesCompras(ids){
+    return function(dispatch){
+        const body = {
+            proyectos: ids
+        };
+        axios.post('/api/requisicion/post/get/cotizaciones/', body)
+        .then((res) => {
+            dispatch(getCotizacionesCompras(res.data));
+        })
+        .catch((err) => {
+            console.error('Error al obtener cotizaciones de compras:', err);
+            dispatch(getCotizacionesCompras(null));
+        });
     }
 }
 
@@ -1348,6 +1455,31 @@ export function axiosToGetProductosBodegaPlus(carga, bodegaId, page = 1, limit =
   };
 }
 
+// Obtener stock por bodega (usa endpoint /api/stock/bodega/:ubicacionId)
+export function axiosToGetStockBodega(carga, ubicacionId, page = 1, limit = 50, tipo = null) {
+  return function(dispatch) {
+    dispatch(gettingProductosBodega(carga));
+    const params = {};
+    if (page) params.page = page;
+    if (limit) params.limit = limit;
+    if (tipo) params.tipo = tipo;
+
+    axios.get(`/api/stock/bodega/${ubicacionId}`, { params })
+      .then(res => res.data)
+      .then(inf => {
+        // la API retorna { ok: true, page, limit, total, pages, data }
+        dispatch(getProductosBodega(inf));
+        console.log('stockBodega:', inf);
+        return inf;
+      })
+      .catch(e => {
+        console.log('Error axiosToGetStockBodega:', e);
+        if (e.request) dispatch(getProductosBodega('notrequest'));
+        else dispatch(getProductosBodega(404));
+      });
+  };
+}
+
 export async function getFuncionesBodegas(carga, body){
     return function(dispatch){
         dispatch(axiosToGetCabeceras(carga, body))
@@ -1431,7 +1563,7 @@ export function axiosToGetItemMateriaPrima(carga, materiaId){
 }
 
 // FUNCION PARA OBTENER UN ITEM EN ESPECIFICO EN UNA BODEGA
-export function axiosToGetItemInventarioPlus(carga, materiaId = null, ubicacionId = 1, productoId = null) {
+export function axiosToGetItemInventarioPlus(carga, materiaId = null, ubicacionId = 1, productoId = null, pageMov = 1, limitMov = 20) {
   return function(dispatch) {
     dispatch(gettingItem(carga));
     console.log('Entra a la consola - get item inventario');
@@ -1442,6 +1574,9 @@ export function axiosToGetItemInventarioPlus(carga, materiaId = null, ubicacionI
     if (productoId) params.append('productoId', productoId);
     // ubicacionId es obligatorio para esta llamada en tu nuevo endpoint
     params.append('ubicacionId', ubicacionId);
+    // Parámetros de paginación para movimientos
+    params.append('pageMov', pageMov);
+    params.append('limitMov', limitMov);
 
     const url = `/api/inventario/get/plus/item?${params.toString()}`;
 
@@ -1809,6 +1944,82 @@ export function axiosToGetItemElemento(carga, requisicionId,  kitId = null, prod
           return dispatch(getItemElemento('notrequest'));
         } else {
           return dispatch(getItemElemento(404));
+        }
+      });
+  };
+}
+
+// ============================================
+// REMISIONES ACTIONS
+// ============================================
+
+export function getRemisiones(carga) {
+  return {
+    type: types.GET_REMISIONES,
+    payload: carga
+  }
+}
+
+export function gettingRemisiones(carga) {
+  return {
+    type: types.GETTING_REMISIONES,
+    payload: carga
+  }
+}
+
+export function axiosToGetRemisiones(carga, page = 1) {
+  return function(dispatch) {
+    dispatch(gettingRemisiones(carga));
+
+    const url = `/api/remision/get/all?page=${page}`;
+    axios.get(url)
+      .then(res => res.data)
+      .then(inf => {
+        dispatch(getRemisiones(inf));
+        return inf;
+      })
+      .catch((e) => {
+        console.log('[REMISIONES] Error al cargar:', e);
+        if (e.request) {
+          return dispatch(getRemisiones('notrequest'));
+        } else {
+          return dispatch(getRemisiones(404));
+        }
+      });
+  };
+}
+
+export function getRemision(carga) {
+  return {
+    type: types.GET_REMISION,
+    payload: carga
+  }
+}
+
+export function gettingRemision(carga) {
+  return {
+    type: types.GETTING_REMISION,
+    payload: carga
+  }
+}
+
+export function axiosToGetRemision(carga, numeroRemision) {
+  return function(dispatch) {
+    dispatch(gettingRemision(carga));
+
+    const url = `/api/remision/get/${numeroRemision}`;
+    axios.get(url)
+      .then(res => res.data)
+      .then(inf => {
+        dispatch(getRemision(inf));
+        return inf;
+      })
+      .catch((e) => {
+        console.log('[REMISION] Error al cargar:', e);
+        if (e.request) {
+          return dispatch(getRemision('notrequest'));
+        } else {
+          return dispatch(getRemision(404));
         }
       });
   };

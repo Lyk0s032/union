@@ -1,5 +1,5 @@
 import React from 'react';
-import { MdDesignServices, MdNetworkCheck, MdOutlineAssignment, MdPeople, MdWindow } from 'react-icons/md';
+import { MdDesignServices, MdNetworkCheck, MdOutlineAssignment, MdOutlineAssignmentTurnedIn, MdPeople, MdWindow } from 'react-icons/md';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { FaChevronDown } from "react-icons/fa6";
 
@@ -71,6 +71,18 @@ export default function LeftNav(){
                                         <div className="leftOption">
                                             <MdOutlineAssignment className="icon" />
                                             <span>Ordenes de compras</span>
+                                        </div>
+                                        <FaChevronDown className="icon" />
+
+                                    </div>
+                                </li>
+                                <li className={location.pathname == '/admin/remisiones' || location.pathname == '/admin/remisiones/' ? 'Active' : null} onClick={() => {
+                                    navigate('/admin/remisiones/')
+                                }}>
+                                    <div className='divideLi'>
+                                        <div className="leftOption">
+                                            <MdOutlineAssignmentTurnedIn className="icon" />
+                                            <span>Remisiones</span>
                                         </div>
                                         <FaChevronDown className="icon" />
 

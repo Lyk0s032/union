@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import { AiOutlineDownload, AiOutlineExclamation } from 'react-icons/ai';
 import { MdOutlineCheck, MdOutlineDelete } from 'react-icons/md';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -35,17 +35,46 @@ export default function Orden(){
     } 
 
 
-    const OrdenesTotal = ordenCompras?.comprasCotizacionItems?.reduce((acc, curr) => {
-            return acc + Number(curr.precioTotal);
-        // 3. Si no coincide, simplemente retornamos el acumulador sin cambios.
-    }, 0);
+    // Calcular resumen de la orden (mismo formato que rightDataOrden.tsx)
+    const resumenOrden = useMemo(() => {
+        if (!ordenCompras || ordenCompras === 404 || ordenCompras === 'notrequest') {
+            return { valorBruto: 0, descuentoTotal: 0, iva: 0, totalNeto: 0 };
+        }
+        const items = ordenCompras.comprasCotizacionItems || ordenCompras.items || [];
+        if (!Array.isArray(items)) {
+            return { valorBruto: 0, descuentoTotal: 0, iva: 0, totalNeto: 0 };
+        }
 
-    const ivaValor = Number(OrdenesTotal) - Number(Number(OrdenesTotal) / 1.19);
+        const valorBruto = items.reduce((sum, item) => {
+            const precio = Number(item.precio || 0);
+            return sum + (isNaN(precio) ? 0 : precio);
+        }, 0);
+        const descuentoTotal = items.reduce((sum, item) => {
+            const descuento = Number(item.descuento || 0);
+            return sum + (isNaN(descuento) ? 0 : descuento);
+        }, 0);
+        const subtotal = Math.max(0, valorBruto - descuentoTotal);
+        const iva = Math.max(0, subtotal * 0.19); // IVA del 19%
+        const totalNeto = Math.max(0, subtotal + iva);
+
+        return { 
+            valorBruto: isNaN(valorBruto) ? 0 : valorBruto, 
+            descuentoTotal: isNaN(descuentoTotal) ? 0 : descuentoTotal, 
+            iva: isNaN(iva) ? 0 : iva, 
+            totalNeto: isNaN(totalNeto) ? 0 : totalNeto 
+        };
+    }, [ordenCompras]);
+
+    // Mantener compatibilidad con código existente
+    const OrdenesTotal = resumenOrden.totalNeto;
+    const ivaValor = resumenOrden.iva;
+    const tieneIva = true; // Por defecto siempre incluir IVA en este componente
+
     let creadoFecha = dayjs(ordenCompras?.createdAt).format("dddd, D [de] MMMM YYYY, h:mm A");
     let ordenDeCompraTime = ordenCompras?.dayCompras ? dayjs(ordenCompras.dayCompras).format("dddd, D [de] MMMM YYYY, h:mm A") : null;
     let aprobadaCompra  = ordenCompras?.daysFinish ? dayjs(ordenCompras.daysFinish).format("dddd, D [de] MMMM YYYY, h:mm A") : null;
     
- {console.log('ordeen', ordenCompras)}
+{console.log('ordeen', ordenCompras)}
     useEffect(() => {
         dispatch(actions.axiosToGetOrdenComprasAdmin(true, params.get('orden')))
     }, [params.get('orden')])
@@ -116,11 +145,8 @@ export default function Orden(){
                                                 document={
                                                     <PdfDocument 
                                                         ordenCompras={ordenCompras} 
-                                                        creadoSFecha={creadoFecha} 
-                                                        ordenDeCompraTime={ordenDeCompraTime} 
-                                                        aprobadaCompra={aprobadaCompra} 
-                                                        OrdenesTotal={OrdenesTotal}
-                                                        iva={ivaValor} 
+                                                        resumenOrden={resumenOrden}
+                                                        tieneIva={tieneIva}
                                                     />
                                                 } 
                                                 fileName={`orden-compra-${ordenCompras.proveedor.nombre}.pdf`}
@@ -294,12 +320,12 @@ function OpenOrden({ orden }){
 
         dispatch(actions.getIDs(ids))
         const params = new URLSearchParams({
-            s: 'materia',
-            facture: 'show',
-            orden: orden.id
+            open: 'projects',
+            view: 'ordenes',
+            openOrden: orden.id
         });
-        navigate(`/compras/requisiciones/?${params.toString()}`);
-    }
+        navigate(`/compras/req/?${params.toString()}`);
+    } 
  
 
     return (

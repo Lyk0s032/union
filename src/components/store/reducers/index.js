@@ -11,6 +11,7 @@ import clients from "./clients";
 import admin from "./administration";
 import noti from "./notificaciones";
 import almacen from './almacen';
+import remisiones from './remisiones';
 
 
 
@@ -25,7 +26,8 @@ const appReducer = combineReducers({
     requisicion,
     clients,
     admin,
-    almacen
+    almacen,
+    remisiones
 });
 
 export default appReducer 

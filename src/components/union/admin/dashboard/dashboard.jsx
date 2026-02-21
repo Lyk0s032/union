@@ -3,6 +3,7 @@ import ProductionDashboard from './production/production';
 import { Route, Routes } from 'react-router-dom';
 import ComercialDashboard from './production copy/comercial';
 import ComprasDashboard from './ordenCompras/dashboardCompras';
+import GeneralRemisiones from './remisiones/generalRemisiones';
 
 export default function Dashboard(){
     return (
@@ -13,7 +14,7 @@ export default function Dashboard(){
                     <Route path="/production/*" element={<ProductionDashboard />} />
                     <Route path="/comercial/*"  element={<ComercialDashboard />}/>
                     <Route path="/ordenCompras/*"  element={<ComprasDashboard />}/>
-
+                    <Route path="/remisiones/*"  element={<GeneralRemisiones />}/>
                 </Routes>
             </div>
         </div>

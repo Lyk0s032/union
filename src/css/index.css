@@ -27,6 +27,3021 @@ body button {
   font-size: 14px;
   color: #525456;
 }
+.noteCompras {
+  border-radius: 10px;
+  padding: 10px 0px;
+  box-sizing: border-box;
+}
+.noteCompras .topData {
+  width: 100%;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+}
+.noteCompras .topData .leftTitle {
+  width: 80%;
+  align-items: center;
+  justify-content: space-between;
+}
+.noteCompras .topData .leftTitle .dataTitle h1 {
+  font-weight: 400;
+  font-size: 50px;
+}
+.noteCompras .topData .leftTitle .progressFilter {
+  box-sizing: border-box;
+  padding: 0px 0px;
+  margin-top: 15px;
+}
+.noteCompras .topData .leftTitle .progressFilter .lineFilter {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.noteCompras .topData .leftTitle .progressFilter .lineFilter .title {
+  display: flex;
+  align-items: center;
+}
+.noteCompras .topData .leftTitle .progressFilter .lineFilter .title .icon {
+  font-size: 20px;
+  color: #666;
+}
+.noteCompras .topData .leftTitle .progressFilter .lineFilter .title span {
+  margin-left: 5px;
+  font-size: 12px;
+  color: #666;
+}
+.noteCompras .topData .leftTitle .progressFilter .lineFilter .buttonsFilter {
+  display: flex;
+  width: 80%;
+  align-items: center;
+  justify-content: space-between;
+}
+.noteCompras .topData .leftTitle .progressFilter .lineFilter .buttonsFilter button {
+  background-color: #FFF;
+  border: 1px solid #e6e3e3;
+  padding: 5px 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.noteCompras .topData .leftTitle .progressFilter .lineFilter .buttonsFilter button .icon {
+  font-size: 16px;
+  color: #666;
+  margin-right: 5px;
+}
+.noteCompras .topData .leftTitle .progressFilter .lineFilter .buttonsFilter button span {
+  color: #666;
+  font-size: 12px;
+}
+.noteCompras .topData .leftTitle .progressFilter .lineFilter .buttonsFilter button.active {
+  background-color: #046290;
+  border-color: #046290;
+}
+.noteCompras .topData .leftTitle .progressFilter .lineFilter .buttonsFilter button.active .icon {
+  color: #FFF;
+}
+.noteCompras .topData .leftTitle .progressFilter .lineFilter .buttonsFilter button.active span {
+  color: #FFF;
+  font-weight: 500;
+}
+.noteCompras .topData .leftTitle .progressFilter .lineFilter .buttonsFilter button:hover {
+  background-color: #f0f0f0;
+}
+.noteCompras .topData .leftTitle .progressFilter .lineFilter .buttonsFilter button:hover.active {
+  background-color: #046290;
+}
+.noteCompras .topData .rightTitle {
+  width: 40%;
+  text-align: right;
+}
+.noteCompras .topData .rightTitle input {
+  width: 80%;
+  font-size: 12px;
+  padding: 10px 15px;
+  box-sizing: border-box;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  transition: 0.3s;
+  outline: 0px;
+}
+.noteCompras .topData .rightTitle input:focus {
+  width: 100%;
+  border: 1px solid #046290;
+}
+.noteCompras .tableReq {
+  width: 100%;
+  margin-top: 80px;
+}
+.noteCompras .tableReq table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.noteCompras .tableReq table thead tr th {
+  padding: 10px 0px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #454f5b;
+  text-align: left;
+}
+.noteCompras .tableReq table thead tr .check {
+  width: 5%;
+}
+.noteCompras .tableReq table thead tr .short {
+  width: 5%;
+}
+.noteCompras .tableReq table thead tr .largeThat {
+  width: 50%;
+}
+.noteCompras .tableReq table thead tr .date {
+  width: 10%;
+}
+.noteCompras .tableReq table tbody tr {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.noteCompras .tableReq table tbody tr td {
+  transition: 0.3s;
+  padding: 35px 0px;
+  user-select: none;
+}
+.noteCompras .tableReq table tbody tr.dragging {
+  opacity: 0.5;
+  background-color: #f8f8f8;
+}
+.noteCompras .tableReq table tbody tr.selected {
+  background-color: #e3f2fd !important;
+}
+.noteCompras .tableReq table tbody tr.selected td {
+  background-color: transparent;
+}
+.noteCompras .tableReq table tbody tr .check {
+  width: 5%;
+  text-align: center;
+  position: relative;
+}
+.noteCompras .tableReq table tbody tr .check button {
+  width: 90%;
+  background-color: transparent;
+  padding: 5px 0px;
+  border-radius: 5px;
+  height: 100%;
+  transition: 0.3s;
+  background-color: #FFF;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.noteCompras .tableReq table tbody tr .check button .icon {
+  font-size: 20px;
+  color: white;
+  transition: 0.3s;
+}
+.noteCompras .tableReq table tbody tr .check .dragHandle {
+  cursor: grab;
+}
+.noteCompras .tableReq table tbody tr .check .dragHandle:active {
+  cursor: grabbing;
+}
+.noteCompras .tableReq table tbody tr .check .dragHandle:hover {
+  background-color: #f0f0f0;
+}
+.noteCompras .tableReq table tbody tr .check .dragHandle:hover .icon {
+  color: #454f5b;
+}
+.noteCompras .tableReq table tbody tr .check .menu-containerReq {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.noteCompras .tableReq table tbody tr .check .menu-containerReq .btnOptions {
+  width: 90%;
+  padding: 5px 0px;
+  border-radius: 5px;
+  height: 100%;
+  transition: 0.3s;
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.noteCompras .tableReq table tbody tr .check .menu-containerReq .btnOptions .icon {
+  font-size: 20px;
+  color: #666;
+}
+.noteCompras .tableReq table tbody tr .check .menu-containerReq .btnOptions:hover {
+  background-color: #f0f0f0;
+}
+.noteCompras .tableReq table tbody tr .check .menu-containerReq .btnOptions:hover .icon {
+  color: #454f5b;
+}
+.noteCompras .tableReq table tbody tr .check .menu-containerReq .menu-dropdown {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 5px;
+  padding: 10px 0px;
+  padding-top: 0px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  width: 250px;
+  z-index: 1000;
+  cursor: default;
+  background-color: #FFF;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.noteCompras .tableReq table tbody tr .check .menu-containerReq .menu-dropdown .panel {
+  padding: 0px 0px;
+  box-sizing: border-box;
+}
+.noteCompras .tableReq table tbody tr .check .menu-containerReq .menu-dropdown .panel .title {
+  margin-bottom: 10px;
+  text-align: left;
+  padding: 15px 20px;
+  border-bottom: 1px solid #ccc;
+}
+.noteCompras .tableReq table tbody tr .check .menu-containerReq .menu-dropdown .panel .title strong {
+  padding: 0px 0px;
+  font-weight: 600;
+  font-size: 12px;
+  color: #454f5b;
+}
+.noteCompras .tableReq table tbody tr .check .menu-containerReq .menu-dropdown .panel nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.noteCompras .tableReq table tbody tr .check .menu-containerReq .menu-dropdown .panel nav ul li {
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  transition: 0.3s;
+}
+.noteCompras .tableReq table tbody tr .check .menu-containerReq .menu-dropdown .panel nav ul li div {
+  display: flex;
+  padding: 10px 20px;
+  align-items: center;
+  transition: 0.3s;
+  width: 100%;
+}
+.noteCompras .tableReq table tbody tr .check .menu-containerReq .menu-dropdown .panel nav ul li div span {
+  font-size: 12px;
+  color: #666;
+}
+.noteCompras .tableReq table tbody tr .check .menu-containerReq .menu-dropdown .panel nav ul li div strong {
+  color: #ccc;
+  font-size: 12px;
+  font-weight: 400;
+}
+.noteCompras .tableReq table tbody tr .check .menu-containerReq .menu-dropdown .panel nav ul li:hover {
+  background-color: #f8f8f8;
+}
+.noteCompras .tableReq table tbody tr .check .menu-containerReq .menu-dropdown .panel nav ul li:hover div span {
+  color: #454f5b;
+}
+.noteCompras .tableReq table tbody tr .short {
+  width: 5%;
+  text-align: center;
+}
+.noteCompras .tableReq table tbody tr .short .number {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  background-color: black;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.noteCompras .tableReq table tbody tr .short .number h3 {
+  font-size: 12px;
+  color: #FFF;
+  font-weight: 400;
+}
+.noteCompras .tableReq table tbody tr .largeThat {
+  width: 40%;
+  text-align: left;
+}
+.noteCompras .tableReq table tbody tr .largeThat .largeThatContent .divideTop {
+  display: flex;
+  align-items: center;
+}
+.noteCompras .tableReq table tbody tr .largeThat .largeThatContent .divideTop span {
+  font-size: 12px;
+  color: #666;
+}
+.noteCompras .tableReq table tbody tr .largeThat .largeThatContent .divideTop .margin {
+  margin: 0px 5px;
+}
+.noteCompras .tableReq table tbody tr .largeThat .largeThatContent .divideTop strong {
+  font-size: 12px;
+  font-weight: 600;
+  color: #454f5b;
+}
+.noteCompras .tableReq table tbody tr .largeThat .largeThatContent .divideTop button {
+  margin-right: 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #e6e3e3;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.noteCompras .tableReq table tbody tr .largeThat .largeThatContent .divideTop button span {
+  font-size: 12px;
+  color: #666;
+}
+.noteCompras .tableReq table tbody tr .largeThat .largeThatContent .containerData {
+  margin-top: 5px;
+}
+.noteCompras .tableReq table tbody tr .largeThat .largeThatContent .containerData h3 {
+  font-size: 14px;
+  font-weight: 300;
+  color: #046290;
+}
+.noteCompras .tableReq table tbody tr .largeThat .largeThatContent .containerData span {
+  font-size: 12px;
+  color: #666;
+}
+.noteCompras .tableReq table tbody tr .largeThat .largeThatContent .containerData button {
+  width: auto;
+  padding: 5px 2px;
+  border-radius: 5px;
+  background-color: #FFF;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.noteCompras .tableReq table tbody tr .largeThat .largeThatContent .containerData button span {
+  font-size: 12px;
+  color: #666;
+}
+.noteCompras .tableReq table tbody tr .largeThat .largeThatContent .containerData button:hover {
+  background-color: #f0f0f0;
+}
+.noteCompras .tableReq table tbody tr .largeThat .largeThatContent .containerData button:hover span {
+  color: #454f5b;
+}
+.noteCompras .tableReq table tbody tr .date {
+  width: 15%;
+  text-align: left;
+}
+.noteCompras .tableReq table tbody tr .date span {
+  font-size: 12px;
+  color: #666;
+}
+.noteCompras .tableReq table tbody tr:hover td {
+  background-color: #f8fafd;
+}
+.noteCompras .tableReq table tbody tr:hover .check button {
+  background-color: #f8fafd;
+}
+.noteCompras .tableReq table tbody tr:hover .check button .icon {
+  color: #454f5b;
+}
+.noteCompras .dragOverlayRow {
+  background-color: #FFF;
+  border: 2px solid #046290;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transform: rotate(2deg);
+  opacity: 0.95;
+}
+.noteCompras .dragOverlayRow table {
+  margin: 0;
+}
+.noteCompras .dragOverlayRow table tbody tr {
+  background-color: #FFF;
+}
+.noteCompras .dragOverlayRow table tbody tr td {
+  padding: 10px 0px;
+}
+.noteCompras .visualizarRequisicion {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #FFF;
+  z-index: 1000;
+}
+.noteCompras .visualizarRequisicion .containerVisualizar {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+}
+.noteCompras .visualizarRequisicion .containerVisualizar .leftZone {
+  width: 10%;
+  border-right: 1px solid #e6e3e3;
+  box-sizing: border-box;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: visible;
+  position: relative;
+}
+.noteCompras .visualizarRequisicion .containerVisualizar .rightZone {
+  width: 90%;
+  box-sizing: border-box;
+  height: 100%;
+  overflow-y: auto;
+}
+.noteCompras .leftNavVisualizacion {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.noteCompras .leftNavVisualizacion nav {
+  width: 100%;
+}
+.noteCompras .leftNavVisualizacion nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.noteCompras .leftNavVisualizacion nav ul li {
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+  position: relative;
+}
+.noteCompras .leftNavVisualizacion nav ul li div {
+  padding: 25px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.noteCompras .leftNavVisualizacion nav ul li div .icon {
+  font-size: 22px;
+  color: #666;
+  margin-bottom: 8px;
+  transition: 0.3s;
+}
+.noteCompras .leftNavVisualizacion nav ul li div span {
+  font-size: 12px;
+  color: #666;
+  transition: 0.3s;
+  font-weight: 400;
+}
+.noteCompras .leftNavVisualizacion nav ul li .tooltip {
+  position: fixed;
+  background-color: #454f5b;
+  color: #FFF;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 10000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  margin-left: 5px;
+}
+.noteCompras .leftNavVisualizacion nav ul li .tooltip span {
+  color: #FFF;
+  font-weight: 500;
+}
+.noteCompras .leftNavVisualizacion nav ul li .tooltip::before {
+  content: '';
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 5px solid transparent;
+  border-right-color: #454f5b;
+}
+.noteCompras .leftNavVisualizacion nav ul li:hover {
+  background-color: #f8f8f8;
+}
+.noteCompras .leftNavVisualizacion nav ul li:hover div .icon {
+  color: #046290;
+  transform: scale(1.1);
+}
+.noteCompras .leftNavVisualizacion nav ul li:hover div .spanTooltip {
+  color: #046290;
+}
+.noteCompras .leftNavVisualizacion nav ul li.active {
+  background-color: #046290;
+}
+.noteCompras .leftNavVisualizacion nav ul li.active div .icon {
+  color: #FFF;
+  transform: scale(1.1);
+}
+.noteCompras .leftNavVisualizacion nav ul li.active div span {
+  color: #FFF;
+  font-weight: 500;
+}
+.noteCompras .leftNavVisualizacion nav ul li.active:hover {
+  background-color: #046290;
+}
+.noteCompras .leftNavVisualizacion nav ul li.active:hover span {
+  color: #FFF;
+}
+.noteCompras .proyectosRequisicion {
+  width: 100%;
+  height: 100%;
+  padding: 40px;
+  box-sizing: border-box;
+}
+.noteCompras .proyectosRequisicion .containerProyectos {
+  width: 100%;
+}
+.noteCompras .proyectosRequisicion .containerProyectos .headerProyectos {
+  margin-bottom: 30px;
+}
+.noteCompras .proyectosRequisicion .containerProyectos .headerProyectos .titleSection h1 {
+  font-size: 32px;
+  font-weight: 400;
+  color: #454f5b;
+  margin: 0;
+  margin-bottom: 5px;
+}
+.noteCompras .proyectosRequisicion .containerProyectos .headerProyectos .titleSection span {
+  font-size: 14px;
+  color: #666;
+}
+.noteCompras .proyectosRequisicion .containerProyectos .contentProyectos {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+.noteCompras .proyectosRequisicion .containerProyectos .contentProyectos .leftContent {
+  flex: 1;
+}
+.noteCompras .proyectosRequisicion .containerProyectos .contentProyectos .leftContent .sectionTitle {
+  margin-bottom: 20px;
+}
+.noteCompras .proyectosRequisicion .containerProyectos .contentProyectos .leftContent .sectionTitle h3 {
+  font-size: 16px;
+  font-weight: 500;
+  color: #454f5b;
+  margin: 0;
+}
+.noteCompras .proyectosRequisicion .containerProyectos .contentProyectos .leftContent .listaProyectos {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.noteCompras .proyectosRequisicion .containerProyectos .contentProyectos .rightContent {
+  width: 300px;
+}
+.noteCompras .proyectosRequisicion .containerProyectos .contentProyectos .rightContent .sectionTitle {
+  margin-bottom: 20px;
+}
+.noteCompras .proyectosRequisicion .containerProyectos .contentProyectos .rightContent .sectionTitle h3 {
+  font-size: 16px;
+  font-weight: 500;
+  color: #454f5b;
+  margin: 0;
+}
+.noteCompras .proyectosRequisicion .containerProyectos .contentProyectos .rightContent .detalleProyecto .infoCliente {
+  margin-bottom: 30px;
+}
+.noteCompras .proyectosRequisicion .containerProyectos .contentProyectos .rightContent .detalleProyecto .infoCliente h4 {
+  font-size: 14px;
+  font-weight: 500;
+  color: #454f5b;
+  margin: 0;
+}
+.noteCompras .proyectosRequisicion .containerProyectos .contentProyectos .rightContent .detalleProyecto .resumenFinanciero {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+.noteCompras .proyectosRequisicion .containerProyectos .contentProyectos .rightContent .detalleProyecto .resumenFinanciero .itemResumen .label {
+  display: block;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 8px;
+}
+.noteCompras .proyectosRequisicion .containerProyectos .contentProyectos .rightContent .detalleProyecto .resumenFinanciero .itemResumen h3 {
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0;
+}
+.noteCompras .proyectosRequisicion .containerProyectos .contentProyectos .rightContent .detalleProyecto .resumenFinanciero .itemResumen h3.valorComprado {
+  color: #0a7;
+}
+.noteCompras .proyectosRequisicion .containerProyectos .contentProyectos .rightContent .detalleProyecto .resumenFinanciero .itemResumen h3.valorTotal {
+  color: #046290;
+}
+.noteCompras .proyectosRequisicion .containerProyectos .contentProyectos .rightContent .detalleProyecto .resumenFinanciero .itemResumen h3.valorFaltante {
+  color: #f39c12;
+}
+.noteCompras .proyectosRequisicion .containerProyectos .contentProyectos .rightContent .detalleProyecto .accionesProyecto {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.noteCompras .proyectosRequisicion .containerProyectos .contentProyectos .rightContent .detalleProyecto .accionesProyecto button {
+  padding: 12px 20px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+.noteCompras .proyectosRequisicion .containerProyectos .contentProyectos .rightContent .detalleProyecto .accionesProyecto button.btnCotizacion {
+  background-color: #046290;
+  color: #FFF;
+}
+.noteCompras .proyectosRequisicion .containerProyectos .contentProyectos .rightContent .detalleProyecto .accionesProyecto button.btnCotizacion:hover {
+  background-color: #03405e;
+}
+.noteCompras .proyectosRequisicion .containerProyectos .contentProyectos .rightContent .detalleProyecto .accionesProyecto button.btnPDF {
+  background-color: #FFF;
+  color: #046290;
+  border: 1px solid #046290;
+}
+.noteCompras .proyectosRequisicion .containerProyectos .contentProyectos .rightContent .detalleProyecto .accionesProyecto button.btnPDF:hover {
+  background-color: #f8f8f8;
+}
+.noteCompras .proyectosRequisicion .containerProyectos .contentProyectos .rightContent .sinSeleccion {
+  padding: 40px 20px;
+  text-align: center;
+}
+.noteCompras .proyectosRequisicion .containerProyectos .contentProyectos .rightContent .sinSeleccion p {
+  font-size: 14px;
+  color: #999;
+  margin: 0;
+}
+.noteCompras .itemProyecto {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  border: 1px solid transparent;
+}
+.noteCompras .itemProyecto:hover {
+  background-color: #f8f8f8;
+  border-color: #e6e3e3;
+}
+.noteCompras .itemProyecto.selected {
+  background-color: #f0f7ff;
+  border-color: #046290;
+}
+.noteCompras .itemProyecto .numeroProyecto {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #454f5b;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.noteCompras .itemProyecto .numeroProyecto h3 {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+  color: #FFF;
+}
+.noteCompras .itemProyecto .infoProyecto {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.noteCompras .itemProyecto .infoProyecto .nombreProyecto {
+  font-size: 14px;
+  font-weight: 600;
+  color: #454f5b;
+  margin: 0;
+}
+.noteCompras .itemProyecto .infoProyecto .cotizacion,
+.noteCompras .itemProyecto .infoProyecto .fecha,
+.noteCompras .itemProyecto .infoProyecto .estado {
+  font-size: 12px;
+  color: #666;
+}
+.noteCompras .itemProyecto .infoProyecto .estado {
+  text-transform: capitalize;
+}
+.noteCompras .itemProyecto .infoProyecto .estado.estado-pendiente {
+  color: #f39c12;
+}
+.noteCompras .itemProyecto .infoProyecto .estado.estado-en-proceso {
+  color: #046290;
+}
+.noteCompras .itemProyecto .infoProyecto .estado.estado-completada {
+  color: #0a7;
+}
+.noteCompras .kitsRequisicion {
+  width: 100%;
+  height: 100%;
+  padding: 40px;
+  box-sizing: border-box;
+}
+.noteCompras .kitsRequisicion .containerKits {
+  width: 100%;
+}
+.noteCompras .kitsRequisicion .containerKits .headerKits {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 30px;
+}
+.noteCompras .kitsRequisicion .containerKits .headerKits .leftHeader h1 {
+  font-size: 24px;
+  font-weight: 500;
+  color: #454f5b;
+  margin: 0;
+  margin-bottom: 5px;
+}
+.noteCompras .kitsRequisicion .containerKits .headerKits .leftHeader span {
+  font-size: 14px;
+  color: #666;
+}
+.noteCompras .kitsRequisicion .containerKits .headerKits .rightHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 15px;
+}
+.noteCompras .kitsRequisicion .containerKits .headerKits .rightHeader .proyectosSeleccionados h3 {
+  font-size: 14px;
+  font-weight: 500;
+  color: #046290;
+  margin: 0;
+}
+.noteCompras .kitsRequisicion .containerKits .headerKits .rightHeader .btnDescargarPDF {
+  padding: 10px 20px;
+  background-color: #046290;
+  color: #FFF;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+.noteCompras .kitsRequisicion .containerKits .headerKits .rightHeader .btnDescargarPDF:hover {
+  background-color: #03405e;
+}
+.noteCompras .kitsRequisicion .containerKits .listaKits {
+  width: 100%;
+}
+.noteCompras .kitsRequisicion .containerKits .listaKits .headerLista {
+  display: flex;
+  align-items: center;
+  padding: 15px 0;
+  padding-left: 55px;
+  padding-right: 90px;
+  border-bottom: 2px solid #e6e3e3;
+  margin-bottom: 10px;
+  gap: 10px;
+  box-sizing: border-box;
+  width: 100%;
+}
+.noteCompras .kitsRequisicion .containerKits .listaKits .headerLista .colItem {
+  width: 60%;
+  font-size: 14px;
+  font-weight: 600;
+  color: #454f5b;
+  text-align: left;
+}
+.noteCompras .kitsRequisicion .containerKits .listaKits .headerLista .colNecesidad {
+  width: 80px;
+  text-align: right;
+  font-size: 14px;
+  font-weight: 600;
+  color: #454f5b;
+  flex-shrink: 0;
+}
+.noteCompras .kitsRequisicion .containerKits .listaKits .itemsLista {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.noteCompras .itemKits {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 0;
+}
+.noteCompras .itemKits .numeroItem {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #454f5b;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-right: 5px;
+}
+.noteCompras .itemKits .numeroItem h3 {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+  color: #FFF;
+}
+.noteCompras .itemKits .infoItem {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 50%;
+  text-align: left;
+}
+.noteCompras .itemKits .infoItem .nombreItem {
+  font-size: 14px;
+  font-weight: 600;
+  color: #454f5b;
+  margin: 0;
+}
+.noteCompras .itemKits .infoItem .tipoItem {
+  font-size: 12px;
+  color: #666;
+}
+.noteCompras .itemKits .necesidadItem {
+  width: 80px;
+  text-align: right;
+  flex-shrink: 0;
+  margin-left: 10px;
+}
+.noteCompras .itemKits .necesidadItem span {
+  font-size: 14px;
+  font-weight: 500;
+  color: #454f5b;
+}
+.noteCompras .necesidadRequisicion {
+  width: 100%;
+  height: 100%;
+  padding: 40px;
+  box-sizing: border-box;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.noteCompras .necesidadRequisicion.panelAbierto:not(.panelProveedorAbierto) .containerNecesidad {
+  width: calc(100% - 40%);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.noteCompras .necesidadRequisicion.panelProveedorAbierto:not(.panelAbierto) .containerNecesidad {
+  width: calc(100% - 450px);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.noteCompras .necesidadRequisicion.panelAbierto.panelProveedorAbierto .containerNecesidad {
+  width: 0;
+  overflow: hidden;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.noteCompras .necesidadRequisicion .containerNecesidad {
+  width: 100%;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.noteCompras .necesidadRequisicion .containerNecesidad .headerNecesidad {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+.noteCompras .necesidadRequisicion .containerNecesidad .headerNecesidad .leftHeader h1 {
+  font-size: 24px;
+  font-weight: 500;
+  color: #454f5b;
+  margin: 0;
+  margin-bottom: 5px;
+}
+.noteCompras .necesidadRequisicion .containerNecesidad .headerNecesidad .leftHeader span {
+  font-size: 14px;
+  color: #666;
+}
+.noteCompras .necesidadRequisicion .containerNecesidad .headerNecesidad .rightHeader .proyectoSeleccionado {
+  font-size: 14px;
+  font-weight: 500;
+  color: #046290;
+  margin: 0;
+}
+.noteCompras .necesidadRequisicion .containerNecesidad .filtrosNecesidad {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+.noteCompras .necesidadRequisicion .containerNecesidad .filtrosNecesidad .inputBuscar {
+  flex: 1;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: 0.3s;
+}
+.noteCompras .necesidadRequisicion .containerNecesidad .filtrosNecesidad .inputBuscar:focus {
+  border-color: #046290;
+}
+.noteCompras .necesidadRequisicion .containerNecesidad .filtrosNecesidad .selectCategoria {
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: #FFF;
+  cursor: pointer;
+  outline: none;
+  transition: 0.3s;
+  min-width: 200px;
+}
+.noteCompras .necesidadRequisicion .containerNecesidad .filtrosNecesidad .selectCategoria:focus {
+  border-color: #046290;
+}
+.noteCompras .necesidadRequisicion .containerNecesidad .filtrosEstado {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.noteCompras .necesidadRequisicion .containerNecesidad .filtrosEstado .filtroEstadoBtn {
+  padding: 8px 20px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: #FFF;
+  color: #666;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+  position: relative;
+}
+.noteCompras .necesidadRequisicion .containerNecesidad .filtrosEstado .filtroEstadoBtn[title] {
+  cursor: help;
+}
+.noteCompras .necesidadRequisicion .containerNecesidad .filtrosEstado .filtroEstadoBtn:hover {
+  background-color: #f5f5f5;
+  border-color: #bbb;
+}
+.noteCompras .necesidadRequisicion .containerNecesidad .filtrosEstado .filtroEstadoBtn.active {
+  background-color: #046290;
+  color: #FFF;
+  border-color: #046290;
+}
+.noteCompras .necesidadRequisicion .containerNecesidad .filtrosEstado .filtroEstadoBtn.active:hover {
+  background-color: #035177;
+}
+.noteCompras .necesidadRequisicion .containerNecesidad .tablaNecesidad {
+  width: 100%;
+}
+.noteCompras .necesidadRequisicion .containerNecesidad .tablaNecesidad .headerTabla {
+  display: flex;
+  padding: 15px 0;
+  padding-left: 55px;
+  border-bottom: 2px solid #e6e3e3;
+  margin-bottom: 10px;
+  gap: 15px;
+}
+.noteCompras .necesidadRequisicion .containerNecesidad .tablaNecesidad .headerTabla .colItem {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #454f5b;
+  margin-right: 15px;
+}
+.noteCompras .necesidadRequisicion .containerNecesidad .tablaNecesidad .headerTabla .colMedConsumo {
+  width: 12%;
+  min-width: 80px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #454f5b;
+  text-align: right;
+  flex-shrink: 0;
+}
+.noteCompras .necesidadRequisicion .containerNecesidad .tablaNecesidad .headerTabla .colNecesidad {
+  width: 15%;
+  min-width: 100px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #454f5b;
+  text-align: right;
+  flex-shrink: 0;
+}
+.noteCompras .necesidadRequisicion .containerNecesidad .tablaNecesidad .headerTabla .colPrecio {
+  width: 13%;
+  min-width: 90px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #454f5b;
+  text-align: right;
+  flex-shrink: 0;
+}
+.noteCompras .necesidadRequisicion .containerNecesidad .tablaNecesidad .headerTabla .colTotal {
+  width: 15%;
+  min-width: 100px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #454f5b;
+  text-align: right;
+  flex-shrink: 0;
+}
+.noteCompras .necesidadRequisicion .containerNecesidad .tablaNecesidad .itemsTabla {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.noteCompras .necesidadRequisicion .containerNecesidad .footerNecesidad {
+  margin-top: 30px;
+  display: flex;
+  justify-content: flex-end;
+}
+.noteCompras .necesidadRequisicion .containerNecesidad .footerNecesidad .totalInversion {
+  text-align: right;
+}
+.noteCompras .necesidadRequisicion .containerNecesidad .footerNecesidad .totalInversion span {
+  display: block;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 5px;
+}
+.noteCompras .necesidadRequisicion .containerNecesidad .footerNecesidad .totalInversion h2 {
+  font-size: 32px;
+  font-weight: 500;
+  color: #046290;
+  margin: 0;
+}
+.noteCompras .itemNecesidad {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 0;
+  width: 100%;
+  box-sizing: border-box;
+  transition: background-color 0.2s ease;
+  border-radius: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: -10px;
+  margin-right: -10px;
+  user-select: none;
+}
+.noteCompras .itemNecesidad:hover {
+  background-color: #f5f5f5;
+}
+.noteCompras .itemNecesidad.selected {
+  background-color: #b3d9ff !important;
+  border: 2px solid #2980b9 !important;
+  box-shadow: 0 2px 8px rgba(41, 128, 185, 0.2) !important;
+}
+.noteCompras .itemNecesidad .numeroItem {
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #454f5b;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-right: 15px;
+}
+.noteCompras .itemNecesidad .numeroItem h3 {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+  color: #FFF;
+}
+.noteCompras .itemNecesidad .infoItem {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-right: 15px;
+}
+.noteCompras .itemNecesidad .infoItem .nombreItem {
+  font-size: 14px;
+  font-weight: 600;
+  color: #454f5b;
+  margin: 0;
+}
+.noteCompras .itemNecesidad .infoItem .detallesItem {
+  display: flex;
+  gap: 10px;
+}
+.noteCompras .itemNecesidad .infoItem .detallesItem .medidaOriginal,
+.noteCompras .itemNecesidad .infoItem .detallesItem .estado {
+  font-size: 12px;
+  color: #666;
+}
+.noteCompras .itemNecesidad .infoItem .detallesItem .estado {
+  text-transform: capitalize;
+}
+.noteCompras .itemNecesidad .colMedConsumo {
+  width: 12%;
+  min-width: 80px;
+  text-align: right;
+  flex-shrink: 0;
+}
+.noteCompras .itemNecesidad .colMedConsumo span {
+  font-size: 14px;
+  color: #454f5b;
+}
+.noteCompras .itemNecesidad .colNecesidad {
+  width: 15%;
+  min-width: 100px;
+  text-align: right;
+  flex-shrink: 0;
+}
+.noteCompras .itemNecesidad .colNecesidad span {
+  font-size: 14px;
+  color: #454f5b;
+}
+.noteCompras .itemNecesidad .colPrecio {
+  width: 13%;
+  min-width: 90px;
+  text-align: right;
+  flex-shrink: 0;
+}
+.noteCompras .itemNecesidad .colPrecio span {
+  font-size: 14px;
+  color: #454f5b;
+}
+.noteCompras .itemNecesidad .colTotal {
+  width: 15%;
+  min-width: 100px;
+  text-align: right;
+  flex-shrink: 0;
+}
+.noteCompras .itemNecesidad .colTotal span {
+  font-size: 14px;
+  font-weight: 500;
+  color: #454f5b;
+}
+.noteCompras .itemNecesidad.estado-comprado {
+  background-color: #e8f5e9;
+}
+.noteCompras .itemNecesidad.estado-comprado:hover {
+  background-color: #c8e6c9;
+}
+.noteCompras .itemNecesidad.estado-comprado.selected {
+  background-color: #b3d9ff !important;
+  border: 2px solid #2980b9 !important;
+  box-shadow: 0 2px 8px rgba(41, 128, 185, 0.2) !important;
+}
+.noteCompras .itemNecesidad.estado-parcialmente-comprado {
+  background-color: #fff3e0;
+}
+.noteCompras .itemNecesidad.estado-parcialmente-comprado:hover {
+  background-color: #ffe0b2;
+}
+.noteCompras .itemNecesidad.estado-parcialmente-comprado.selected {
+  background-color: #b3d9ff !important;
+  border: 2px solid #2980b9 !important;
+  box-shadow: 0 2px 8px rgba(41, 128, 185, 0.2) !important;
+}
+.noteCompras .itemNecesidad.estado-sin-comprar {
+  background-color: #FFF;
+}
+.noteCompras .itemNecesidad.estado-sin-comprar:hover {
+  background-color: #f5f5f5;
+}
+.noteCompras .itemNecesidad.estado-sin-comprar.selected {
+  background-color: #b3d9ff !important;
+  border: 2px solid #2980b9 !important;
+  box-shadow: 0 2px 8px rgba(41, 128, 185, 0.2) !important;
+}
+.noteCompras .overlayPanel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  animation: fadeIn 0.3s ease forwards;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.noteCompras .detalleProveedorPanel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 60%;
+  height: 100vh;
+  background-color: #FFF;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+  z-index: 1001;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+}
+.noteCompras .detalleProveedorPanel.abierto {
+  transform: translateX(0);
+}
+.necesidadRequisicion.panelAbierto.panelProveedorAbierto .noteCompras .detalleProveedorPanel {
+  width: 60%;
+  left: 0;
+  right: auto;
+}
+.noteCompras .detalleProveedorPanel .detalleProveedorContent {
+  padding: 30px;
+  height: 100%;
+  box-sizing: border-box;
+}
+.noteCompras .detalleProveedorPanel .detalleProveedorContent .detalleProveedorHeader {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 30px;
+}
+.noteCompras .detalleProveedorPanel .detalleProveedorContent .detalleProveedorHeader .btnCerrar {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #454f5b;
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+.noteCompras .detalleProveedorPanel .detalleProveedorContent .detalleProveedorHeader .btnCerrar:hover {
+  background-color: #454f5b;
+}
+.noteCompras .detalleProveedorPanel .detalleProveedorContent .detalleProveedorHeader .btnCerrar:hover span {
+  color: #FFF;
+}
+.noteCompras .detalleProveedorPanel .detalleProveedorContent .detalleProveedorHeader .btnCerrar span {
+  font-size: 24px;
+  color: #454f5b;
+  line-height: 1;
+  font-weight: 300;
+  transition: color 0.2s ease;
+}
+.noteCompras .detalleProveedorPanel .detalleProveedorContent .proveedorInfoHeader {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+  padding-bottom: 25px;
+  border-bottom: 2px solid #e6e3e3;
+}
+.noteCompras .detalleProveedorPanel .detalleProveedorContent .proveedorInfoHeader .proveedorAvatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #046290;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.noteCompras .detalleProveedorPanel .detalleProveedorContent .proveedorInfoHeader .proveedorNombre {
+  font-size: 20px;
+  font-weight: 600;
+  color: #046290;
+  margin: 0;
+  line-height: 1.3;
+}
+.noteCompras .detalleProveedorPanel .detalleProveedorContent .proveedorContacto {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 30px;
+  padding-bottom: 25px;
+  border-bottom: 2px solid #e6e3e3;
+}
+.noteCompras .detalleProveedorPanel .detalleProveedorContent .proveedorContacto .contactoItem {
+  display: flex;
+  gap: 10px;
+  font-size: 14px;
+}
+.noteCompras .detalleProveedorPanel .detalleProveedorContent .proveedorContacto .contactoItem .label {
+  font-weight: 600;
+  color: #454f5b;
+  min-width: 80px;
+}
+.noteCompras .detalleProveedorPanel .detalleProveedorContent .proveedorContacto .contactoItem .valor {
+  color: #666;
+}
+.noteCompras .detalleProveedorPanel .detalleProveedorContent .seccionPrecioValor {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 30px;
+  padding-bottom: 25px;
+  border-bottom: 2px solid #e6e3e3;
+}
+.noteCompras .detalleProveedorPanel .detalleProveedorContent .seccionPrecioValor .precioActual {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.noteCompras .detalleProveedorPanel .detalleProveedorContent .seccionPrecioValor .precioActual .label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.noteCompras .detalleProveedorPanel .detalleProveedorContent .seccionPrecioValor .precioActual .precio {
+  font-size: 28px;
+  font-weight: 600;
+  color: #046290;
+  margin: 0;
+}
+.noteCompras .detalleProveedorPanel .detalleProveedorContent .seccionPrecioValor .precioActual .fecha {
+  font-size: 12px;
+  color: #666;
+}
+.noteCompras .detalleProveedorPanel .detalleProveedorContent .seccionPrecioValor .valorInput {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.noteCompras .detalleProveedorPanel .detalleProveedorContent .seccionPrecioValor .valorInput .label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.noteCompras .detalleProveedorPanel .detalleProveedorContent .seccionPrecioValor .valorInput .inputValor {
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+.noteCompras .detalleProveedorPanel .detalleProveedorContent .seccionPrecioValor .valorInput .inputValor:focus {
+  border-color: #046290;
+}
+.noteCompras .detalleProveedorPanel .detalleProveedorContent .seccionAnalisis h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #454f5b;
+  margin: 0 0 20px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.noteCompras .detalleProveedorPanel .detalleProveedorContent .seccionAnalisis .indicadoresAnalisis {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.noteCompras .detalleProveedorPanel .detalleProveedorContent .seccionAnalisis .indicadoresAnalisis .indicador {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 100px;
+}
+.noteCompras .detalleProveedorPanel .detalleProveedorContent .seccionAnalisis .indicadoresAnalisis .indicador .indicadorCirculo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #046290;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 600;
+}
+.noteCompras .detalleProveedorPanel .detalleProveedorContent .seccionAnalisis .indicadoresAnalisis .indicador .indicadorCirculo span {
+  text-align: center;
+  line-height: 1.2;
+}
+.noteCompras .detalleProveedorPanel .detalleProveedorContent .seccionAnalisis .indicadoresAnalisis .indicador .indicadorLabel {
+  font-size: 12px;
+  color: #666;
+  text-align: center;
+  line-height: 1.3;
+}
+.noteCompras .nuevaOrdenPanel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 35%;
+  min-width: 420px;
+  max-width: 520px;
+  height: 100vh;
+  background-color: #FFF;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+  z-index: 1100;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+}
+.noteCompras .nuevaOrdenPanel.abierta {
+  transform: translateX(0);
+}
+.noteCompras .nuevaOrdenPanel .nuevaOrdenContent {
+  padding: 24px 28px;
+  box-sizing: border-box;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.noteCompras .nuevaOrdenPanel .nuevaOrdenHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.noteCompras .nuevaOrdenPanel .nuevaOrdenHeader h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #454f5b;
+}
+.noteCompras .nuevaOrdenPanel .nuevaOrdenHeader .btnCerrar {
+  border: none;
+  background: transparent;
+  font-size: 22px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px 8px;
+}
+.noteCompras .nuevaOrdenPanel .nuevaOrdenBody {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.noteCompras .nuevaOrdenPanel .nuevaOrdenBody .campoFormulario {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.noteCompras .nuevaOrdenPanel .nuevaOrdenBody .campoFormulario label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #454f5b;
+}
+.noteCompras .nuevaOrdenPanel .nuevaOrdenBody .campoFormulario input {
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.noteCompras .nuevaOrdenPanel .nuevaOrdenBody .campoFormulario input:focus {
+  border-color: #046290;
+}
+.noteCompras .nuevaOrdenPanel .nuevaOrdenBody .campoFormulario .ayudaCampo {
+  font-size: 11px;
+  color: #888;
+}
+.noteCompras .nuevaOrdenPanel .nuevaOrdenBody .campoFormulario .listaProveedores {
+  margin-top: 8px;
+  max-height: 220px;
+  overflow-y: auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background-color: #FFF;
+}
+.noteCompras .nuevaOrdenPanel .nuevaOrdenBody .campoFormulario .listaProveedores .itemProveedor {
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.15s;
+}
+.noteCompras .nuevaOrdenPanel .nuevaOrdenBody .campoFormulario .listaProveedores .itemProveedor.disabled {
+  cursor: default;
+  color: #888;
+}
+.noteCompras .nuevaOrdenPanel .nuevaOrdenBody .campoFormulario .listaProveedores .itemProveedor:last-child {
+  border-bottom: none;
+}
+.noteCompras .nuevaOrdenPanel .nuevaOrdenBody .campoFormulario .listaProveedores .itemProveedor:hover {
+  background-color: #f5f7fb;
+}
+.noteCompras .nuevaOrdenPanel .nuevaOrdenBody .campoFormulario .listaProveedores .itemProveedor.seleccionado {
+  background-color: #e3f2fd;
+}
+.noteCompras .nuevaOrdenPanel .nuevaOrdenBody .campoFormulario .listaProveedores .itemProveedor .inicialProveedor {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: #046290;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  margin-right: 10px;
+}
+.noteCompras .nuevaOrdenPanel .nuevaOrdenBody .campoFormulario .listaProveedores .itemProveedor .infoProveedor .nombreProveedor {
+  font-size: 13px;
+  font-weight: 500;
+  color: #454f5b;
+}
+.noteCompras .nuevaOrdenPanel .nuevaOrdenBody .campoFormulario .listaProveedores .itemProveedor .infoProveedor .nitProveedor {
+  font-size: 11px;
+  color: #777;
+}
+.noteCompras .nuevaOrdenPanel .nuevaOrdenFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 8px;
+}
+.noteCompras .nuevaOrdenPanel .nuevaOrdenFooter .btnPrimario,
+.noteCompras .nuevaOrdenPanel .nuevaOrdenFooter .btnSecundario {
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+.noteCompras .nuevaOrdenPanel .nuevaOrdenFooter .btnPrimario {
+  background-color: #046290;
+  color: #FFF;
+}
+.noteCompras .nuevaOrdenPanel .nuevaOrdenFooter .btnPrimario:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.noteCompras .nuevaOrdenPanel .nuevaOrdenFooter .btnSecundario {
+  background-color: transparent;
+  color: #454f5b;
+  border: 1px solid #ccc;
+}
+.noteCompras .ordenCompraView {
+  width: 100%;
+  height: 100%;
+  padding: 32px 40px;
+  box-sizing: border-box;
+}
+.noteCompras .ordenCompraView .ordenCompraHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+.noteCompras .ordenCompraView .ordenCompraHeader h1 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #454f5b;
+}
+.noteCompras .ordenCompraView .ordenCompraHeader .subtitulo {
+  display: block;
+  font-size: 13px;
+  color: #777;
+  margin-top: 4px;
+}
+.noteCompras .ordenCompraView .ordenCompraHeader .btnPrimario {
+  padding: 10px 18px;
+  border-radius: 6px;
+  border: none;
+  background-color: #046290;
+  color: #FFF;
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.noteCompras .ordenCompraView .ordenCompraListaVacia {
+  margin-top: 40px;
+  font-size: 14px;
+  color: #666;
+}
+.noteCompras .ordenCompraView .ordenCompraListaVacia p {
+  margin: 0 0 6px 0;
+}
+.noteCompras .ordenCompraView .ordenCompraLista {
+  margin-top: 24px;
+}
+.noteCompras .ordenCompraView .ordenCompraLista .tablaOrdenesCompra {
+  background-color: #FFF;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+.noteCompras .ordenCompraView .ordenCompraLista .tablaOrdenesCompra table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.noteCompras .ordenCompraView .ordenCompraLista .tablaOrdenesCompra table th,
+.noteCompras .ordenCompraView .ordenCompraLista .tablaOrdenesCompra table td {
+  padding: 10px 12px;
+  font-size: 13px;
+  text-align: left;
+}
+.noteCompras .ordenCompraView .ordenCompraLista .tablaOrdenesCompra table thead {
+  background-color: #f4f6fb;
+}
+.noteCompras .ordenCompraView .ordenCompraLista .tablaOrdenesCompra table thead th {
+  font-weight: 600;
+  color: #555;
+}
+.noteCompras .ordenCompraView .ordenCompraLista .tablaOrdenesCompra table tbody tr:nth-child(even) {
+  background-color: #fafbff;
+}
+.noteCompras .ordenCompraView .ordenCompraLista .tablaOrdenesCompra table .coding .code {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #454f5b;
+}
+.noteCompras .ordenCompraView .ordenCompraLista .tablaOrdenesCompra table .coding .code h3 {
+  color: #FFF;
+  font-size: 13px;
+  margin: 0;
+}
+.noteCompras .ordenCompraView .ordenCompraLista .tablaOrdenesCompra table .longer .titleNameKitAndData {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.noteCompras .ordenCompraView .ordenCompraLista .tablaOrdenesCompra table .longer .titleNameKitAndData .extensionColor span {
+  font-size: 11px;
+  color: #777;
+}
+.noteCompras .ordenCompraView .ordenCompraLista .tablaOrdenesCompra table .longer .titleNameKitAndData .nameData h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #454f5b;
+}
+.noteCompras .indexOrden {
+  width: 100%;
+  height: 100vh;
+  padding: 0px 20px;
+  padding-left: 0px;
+  box-sizing: border-box;
+  position: relative;
+}
+.noteCompras .indexOrden .btnCerrarOrden {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 100;
+}
+.noteCompras .indexOrden .btnCerrarOrden:hover {
+  background: rgba(0, 0, 0, 0.1);
+  transform: scale(1.05);
+}
+.noteCompras .indexOrden .btnCerrarOrden span {
+  font-size: 28px;
+  color: #454f5b;
+  line-height: 1;
+  font-weight: 300;
+}
+.noteCompras .indexOrden .divideContainerOrden {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftContainerOrden {
+  width: 50%;
+  height: 100%;
+  overflow-y: auto;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftContainerOrden .leftDataChoose {
+  width: 100%;
+  padding: 10px 0px;
+  padding-top: 30px;
+  box-sizing: border-box;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftContainerOrden .leftDataChoose .headerLeftData {
+  margin-bottom: 10px;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftContainerOrden .leftDataChoose .headerLeftData h1 {
+  color: #046290;
+  font-weight: 400;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftContainerOrden .leftDataChoose .headerLeftData span {
+  font-size: 14px;
+  color: #454f5b;
+  font-weight: 400;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftContainerOrden .leftDataChoose .bodyLeftData {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftContainerOrden .leftDataChoose .bodyLeftData .itemMPOrden {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 0;
+  box-sizing: border-box;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftContainerOrden .leftDataChoose .bodyLeftData .itemMPOrden:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%);
+}
+.noteCompras .indexOrden .divideContainerOrden .leftContainerOrden .leftDataChoose .bodyLeftData .itemMPOrden:hover .itemMPOrdenContent::before {
+  opacity: 1;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftContainerOrden .leftDataChoose .bodyLeftData .itemMPOrden::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, #046290 0%, #0695da 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftContainerOrden .leftDataChoose .bodyLeftData .itemMPOrden:hover::before {
+  opacity: 1;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftContainerOrden .leftDataChoose .bodyLeftData .itemMPOrden .itemMPOrdenContent {
+  padding: 18px 20px;
+  position: relative;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftContainerOrden .leftDataChoose .bodyLeftData .itemMPOrden .itemMPOrdenContent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(41, 128, 185, 0.02) 0%, rgba(41, 128, 185, 0.05) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftContainerOrden .leftDataChoose .bodyLeftData .itemMPOrden .itemMPOrdenHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 14px;
+  gap: 12px;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftContainerOrden .leftDataChoose .bodyLeftData .itemMPOrden .itemMPOrdenHeader .itemMPOrdenBadge .badgeText {
+  display: inline-block;
+  padding: 4px 10px;
+  background: linear-gradient(135deg, rgba(41, 128, 185, 0.1) 0%, rgba(41, 128, 185, 0.15) 100%);
+  color: #046290;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 6px;
+  line-height: 1.4;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftContainerOrden .leftDataChoose .bodyLeftData .itemMPOrden .itemMPOrdenHeader .itemMPOrdenCodigo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftContainerOrden .leftDataChoose .bodyLeftData .itemMPOrden .itemMPOrdenHeader .itemMPOrdenCodigo .codigoLabel {
+  font-size: 10px;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftContainerOrden .leftDataChoose .bodyLeftData .itemMPOrden .itemMPOrdenHeader .itemMPOrdenCodigo .codigoValue {
+  font-size: 13px;
+  color: #454f5b;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.5px;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftContainerOrden .leftDataChoose .bodyLeftData .itemMPOrden .itemMPOrdenBody {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftContainerOrden .leftDataChoose .bodyLeftData .itemMPOrden .itemMPOrdenBody .itemMPOrdenNombre {
+  font-size: 15px;
+  font-weight: 600;
+  color: #454f5b;
+  line-height: 1.4;
+  margin: 0;
+  letter-spacing: -0.2px;
+  transition: color 0.2s ease;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftContainerOrden .leftDataChoose .bodyLeftData .itemMPOrden .itemMPOrdenBody .itemMPOrdenCantidad {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+.noteCompras .indexOrden .divideContainerOrden .leftContainerOrden .leftDataChoose .bodyLeftData .itemMPOrden .itemMPOrdenBody .itemMPOrdenCantidad .cantidadLabel {
+  font-size: 12px;
+  color: #666;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftContainerOrden .leftDataChoose .bodyLeftData .itemMPOrden .itemMPOrdenBody .itemMPOrdenCantidad .cantidadValue {
+  font-size: 16px;
+  font-weight: 700;
+  color: #046290;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftContainerOrden .leftDataChoose .bodyLeftData .itemMPOrden .itemMPOrdenBody .itemMPOrdenCantidad .cantidadValue .cantidadUnidad {
+  font-size: 12px;
+  font-weight: 500;
+  color: #888;
+  text-transform: lowercase;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened {
+  width: 100%;
+  padding: 30px 25px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  position: relative;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .btnCerrarItem {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .btnCerrarItem span {
+  font-size: 24px;
+  color: #454f5b;
+  line-height: 1;
+  font-weight: 300;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .btnCerrarItem:hover {
+  background: rgba(0, 0, 0, 0.1);
+  transform: scale(1.1);
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .topSectionItemOpened {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-top: 50px;
+  box-sizing: border-box;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .topSectionItemOpened .productoInfo {
+  width: 50%;
+  box-sizing: border-box;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .topSectionItemOpened .productoInfo .flexDiv {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .topSectionItemOpened .productoInfo .productoBadge {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #454f5b;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .topSectionItemOpened .productoInfo .productoNombre {
+  font-size: 13px;
+  font-weight: 700;
+  color: #454f5b;
+  line-height: 1.3;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .topSectionItemOpened .productoInfo .productoMedida {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 13px;
+  color: #666;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .topSectionItemOpened .productoInfo .productoMedida span:first-child {
+  font-weight: 500;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .topSectionItemOpened .productoInfo .productoPrecio {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 40px;
+  margin-left: 15%;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .topSectionItemOpened .productoInfo .productoPrecio .precioLabel {
+  font-size: 11px;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .topSectionItemOpened .productoInfo .productoPrecio .precioValor {
+  margin-top: 5px;
+  font-size: 30px;
+  font-weight: 400;
+  color: #046290;
+  letter-spacing: -0.5px;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .topSectionItemOpened .productoInfo .productoFecha {
+  margin-left: 15%;
+  font-size: 12px;
+  color: #888;
+  margin-top: 4px;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .topSectionItemOpened .proveedorInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 50%;
+  box-sizing: border-box;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .topSectionItemOpened .proveedorInfo .proveedorNombre {
+  font-size: 13px;
+  font-weight: 700;
+  color: #046290;
+  margin: 0;
+  line-height: 1.3;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .topSectionItemOpened .proveedorInfo .proveedorContacto {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: #666;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .topSectionItemOpened .proveedorInfo .proveedorContacto span {
+  line-height: 1.4;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .topSectionItemOpened .proveedorInfo .proveedorAccion {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 20px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .topSectionItemOpened .proveedorInfo .proveedorAccion .accionLabel {
+  font-size: 12px;
+  color: #666;
+  font-weight: 500;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .topSectionItemOpened .proveedorInfo .proveedorAccion input {
+  width: 100%;
+  height: 30px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 0 10px;
+  font-size: 14px;
+  color: #454f5b;
+  font-weight: 400;
+  box-sizing: border-box;
+  margin-top: 5px;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .topSectionItemOpened .proveedorInfo .proveedorAccion .accionShortcut {
+  font-size: 13px;
+  color: #046290;
+  font-weight: 600;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .movimientoSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 25px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 12px;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .movimientoSection .movimientoTitulo {
+  font-size: 14px;
+  color: #454f5b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  margin: 0;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .movimientoSection .movimientoInput {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 32px;
+  font-weight: 700;
+  color: #454f5b;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .movimientoSection .movimientoInput .movimientoInputField {
+  max-width: 80px;
+  text-align: right;
+  font-size: 32px;
+  font-weight: 400;
+  color: #046290;
+  border: none;
+  background: rgba(255, 255, 255, 0.8);
+  border-bottom: 2px solid rgba(41, 128, 185, 0.3);
+  padding: 4px 8px;
+  outline: none;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  padding-right: 10px;
+  text-align: center;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .movimientoSection .movimientoInput .movimientoInputField:hover {
+  border-color: rgba(41, 128, 185, 0.5);
+  background: #ffffff;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .movimientoSection .movimientoInput .movimientoInputField:focus {
+  border-color: #046290;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(41, 128, 185, 0.1);
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .movimientoSection .movimientoInput .movimientoSeparador {
+  color: #ccc;
+  font-weight: 300;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .movimientoSection .movimientoInput .movimientoTotal {
+  min-width: 80px;
+  text-align: left;
+  font-weight: 400;
+  color: #666;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .proyectosSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .proyectosSection .proyectosTitulo {
+  font-size: 16px;
+  font-weight: 700;
+  color: #454f5b;
+  margin: 0;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .proyectosSection .cantidadRepartir {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-radius: 8px;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .proyectosSection .cantidadRepartir span:first-child {
+  font-size: 13px;
+  color: #666;
+  font-weight: 500;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .proyectosSection .cantidadRepartir .cantidadValor {
+  font-size: 15px;
+  font-weight: 700;
+  color: #046290;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .proyectosSection .proyectosLista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .proyectosSection .proyectosLista .proyectoItem {
+  display: flex;
+  gap: 14px;
+  padding: 16px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .proyectosSection .proyectosLista .proyectoItem:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .proyectosSection .proyectosLista .proyectoItem .proyectoBadge {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #454f5b;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .proyectosSection .proyectosLista .proyectoItem .proyectoContenido {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .proyectosSection .proyectosLista .proyectoItem .proyectoContenido .proyectoNombreEstado {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .proyectosSection .proyectosLista .proyectoItem .proyectoContenido .proyectoNombreEstado .proyectoNombre {
+  font-size: 14px;
+  font-weight: 700;
+  color: #454f5b;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .proyectosSection .proyectosLista .proyectoItem .proyectoContenido .proyectoNombreEstado .proyectoEstado {
+  font-size: 12px;
+  color: #666;
+  text-transform: capitalize;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .proyectosSection .proyectosLista .proyectoItem .proyectoContenido .proyectoCantidades {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .proyectosSection .proyectosLista .proyectoItem .proyectoContenido .proyectoCantidades .proyectoActual {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .proyectosSection .proyectosLista .proyectoItem .proyectoContenido .proyectoCantidades .proyectoActual span:first-child {
+  font-size: 12px;
+  color: #666;
+  text-transform: uppercase;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .proyectosSection .proyectosLista .proyectoItem .proyectoContenido .proyectoCantidades .proyectoActual .proyectoActualCantidad {
+  font-size: 13px;
+  color: #454f5b;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .proyectosSection .proyectosLista .proyectoItem .proyectoContenido .proyectoCantidades .proyectoActual .proyectoActualCantidad:hover {
+  background: rgba(41, 128, 185, 0.1);
+  color: #046290;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .proyectosSection .proyectosLista .proyectoItem .proyectoContenido .proyectoCantidades .proyectoActual .proyectoActualInputContainer {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .proyectosSection .proyectosLista .proyectoItem .proyectoContenido .proyectoCantidades .proyectoActual .proyectoActualInputContainer .proyectoActualInput {
+  width: 60px;
+  text-align: right;
+  font-size: 13px;
+  font-weight: 600;
+  color: #046290;
+  background: transparent;
+  border: 2px solid #046290;
+  border-radius: 4px;
+  padding: 2px 6px;
+  outline: none;
+  font-family: inherit;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .proyectosSection .proyectosLista .proyectoItem .proyectoContenido .proyectoCantidades .proyectoActual .proyectoActualInputContainer .proyectoActualInput:focus {
+  border-color: #03405e;
+  box-shadow: 0 0 0 2px rgba(41, 128, 185, 0.15);
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .proyectosSection .proyectosLista .proyectoItem .proyectoContenido .proyectoCantidades .proyectoActual .proyectoActualInputContainer .proyectoActualSeparador {
+  font-size: 13px;
+  color: #999;
+  font-weight: 400;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .proyectosSection .proyectosLista .proyectoItem .proyectoContenido .proyectoCantidades .proyectoActual .proyectoActualInputContainer .proyectoActualTotal {
+  font-size: 13px;
+  color: #454f5b;
+  font-weight: 600;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .proyectosSection .proyectosLista .proyectoItem .proyectoContenido .proyectoCantidades .proyectoFaltante {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .proyectosSection .proyectosLista .proyectoItem .proyectoContenido .proyectoCantidades .proyectoFaltante span:first-child {
+  font-size: 11px;
+  color: #999;
+  text-transform: uppercase;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .proyectosSection .proyectosLista .proyectoItem .proyectoContenido .proyectoCantidades .proyectoFaltante span:last-child {
+  font-size: 14px;
+  color: #046290;
+  font-weight: 700;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .detallesCompraSection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 25px;
+  border-radius: 12px;
+  margin-top: 20px;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .detallesCompraSection .detallesCompraTitulo {
+  font-size: 18px;
+  font-weight: 700;
+  color: #454f5b;
+  text-align: center;
+  margin: 0;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .detallesCompraSection .detallesCompraInputs {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+  justify-content: space-between;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .detallesCompraSection .detallesCompraInputs .detalleCompraInput {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .detallesCompraSection .detallesCompraInputs .detalleCompraInput .detalleCompraLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .detallesCompraSection .detallesCompraInputs .detalleCompraInput .detalleCompraLabel span {
+  font-size: 13px;
+  color: #454f5b;
+  font-weight: 500;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .detallesCompraSection .detallesCompraInputs .detalleCompraInput .detalleCompraLabel .infoIcon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #046290;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: help;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .detallesCompraSection .detallesCompraInputs .detalleCompraInput .detalleCompraInputField {
+  width: 100%;
+  font-size: 16px;
+  font-weight: 400;
+  color: #454f5b;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+  padding: 8px 0;
+  outline: none;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .detallesCompraSection .detallesCompraInputs .detalleCompraInput .detalleCompraInputField:hover {
+  border-bottom-color: rgba(0, 0, 0, 0.3);
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .detallesCompraSection .detallesCompraInputs .detalleCompraInput .detalleCompraInputField:focus {
+  border-bottom-color: #046290;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .detallesCompraSection .detalleCompraCheckbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .detallesCompraSection .detalleCompraCheckbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #046290;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .detallesCompraSection .detalleCompraCheckbox label {
+  flex: 1;
+  font-size: 13px;
+  color: #454f5b;
+  font-weight: 400;
+  cursor: pointer;
+  line-height: 1.4;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .detallesCompraSection .detalleCompraCheckbox .infoIcon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #046290;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: help;
+  flex-shrink: 0;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .detallesCompraSection .btnIncluirOrdenCompra {
+  width: 100%;
+  padding: 14px 20px;
+  background: #454f5b;
+  color: #FFF;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 10px;
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .detallesCompraSection .btnIncluirOrdenCompra:hover {
+  background: #3a424c;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.noteCompras .indexOrden .divideContainerOrden .leftItemOpened .detallesCompraSection .btnIncluirOrdenCompra:active {
+  transform: translateY(0);
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden {
+  width: 50%;
+  height: 100%;
+  overflow-y: auto;
+  padding: 40px 35px;
+  box-sizing: border-box;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  color: #454f5b;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenLoading,
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenEmpty {
+  margin-top: 40px;
+  text-align: center;
+  color: #666;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenLoading h3,
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenEmpty h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #454f5b;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenLoading span,
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenEmpty span {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #777;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenHeader h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 300;
+  letter-spacing: 0.2px;
+  color: #454f5b;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenHeader .rightOrdenMeta {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenHeader .rightOrdenMeta .metaLine {
+  display: flex;
+  gap: 6px;
+  font-size: 12px;
+  color: #666;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenHeader .rightOrdenMeta .metaLine .metaLabel {
+  font-weight: 600;
+  color: #444;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenHeader .rightOrdenMeta .metaLine .metaValue {
+  font-weight: 400;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenHeader .rightOrdenMeta .metaMuted {
+  font-size: 12px;
+  color: #888;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenHeader .rightOrdenMeta .metaProveedor {
+  font-size: 14px;
+  color: #046290;
+  font-weight: 600;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenNoProducts {
+  font-size: 18px;
+  color: #777;
+  text-align: center;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItemsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem {
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemDelete {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: #ff4444;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  transition: all 0.2s ease;
+  z-index: 10;
+  padding: 0;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemDelete:hover {
+  background-color: #cc0000;
+  transform: scale(1.1);
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemDelete:active {
+  transform: scale(0.95);
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemDelete:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemContent {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemBadge {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 50%;
+  background-color: #454f5b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemBadge .itemBadgeNumber {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemLeft {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemLeft .rightOrdenItemNombre {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #454f5b;
+  line-height: 1.3;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemLeft .rightOrdenItemFecha {
+  font-size: 12px;
+  color: #666;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemLeft .rightOrdenItemPrecio {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemLeft .rightOrdenItemPrecio .precioLabel {
+  font-size: 12px;
+  color: #666;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemLeft .rightOrdenItemPrecio .precioValue {
+  font-size: 18px;
+  font-weight: 700;
+  color: #454f5b;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemRight {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemRight .rightOrdenItemCol {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 100px;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemRight .rightOrdenItemCol .colLabel {
+  font-size: 12px;
+  color: #666;
+  white-space: nowrap;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemRight .rightOrdenItemCol .colValue {
+  font-size: 16px;
+  font-weight: 600;
+  color: #454f5b;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemMain {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemMain .rightOrdenItemNombre {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #454f5b;
+  line-height: 1.3;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemMain .rightOrdenItemInfo {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemMain .rightOrdenItemInfo .rightOrdenItemInfoItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 100px;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemMain .rightOrdenItemInfo .rightOrdenItemInfoItem .infoLabel {
+  font-size: 12px;
+  color: #666;
+  white-space: nowrap;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemMain .rightOrdenItemInfo .rightOrdenItemInfoItem .infoValue {
+  font-size: 16px;
+  font-weight: 600;
+  color: #454f5b;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemMain .rightOrdenItemFecha {
+  font-size: 12px;
+  color: #666;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemNota {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #eee;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemNota .notaLabel {
+  font-size: 13px;
+  font-weight: 700;
+  color: #444;
+  display: block;
+  margin-bottom: 4px;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemNota .notaHint {
+  font-size: 12px;
+  color: #777;
+  display: block;
+  margin-bottom: 8px;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemNota .notaContent {
+  font-size: 13px;
+  color: #666;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemProjects {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #eee;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemProjects .projectsLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  display: block;
+  margin-bottom: 8px;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemProjects .projectsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenBody .rightOrdenItem .rightOrdenItemProjects .projectsList .projectTag {
+  font-size: 11px;
+  color: #666;
+  background: #f5f5f5;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenNota {
+  margin-top: auto;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenNota .notaHeader {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenNota .notaHeader .notaTitle {
+  font-size: 13px;
+  font-weight: 700;
+  color: #444;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenNota .notaHeader .notaHint {
+  font-size: 12px;
+  color: #777;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenNota .notaBox {
+  font-size: 13px;
+  color: #666;
+  min-height: 44px;
+  cursor: pointer;
+  user-select: none;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenNota .notaBox:hover {
+  color: #444;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenNota .notaTextarea {
+  width: 100%;
+  min-height: 90px;
+  resize: vertical;
+  border: none;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+  outline: none;
+  font-size: 13px;
+  padding: 8px 0;
+  box-sizing: border-box;
+  color: #454f5b;
+  background: transparent;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenNota .notaTextarea:focus {
+  border-bottom-color: #046290;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenResumen {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 2px solid #eee;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenResumen .rightOrdenResumenTitle {
+  margin-bottom: 16px;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenResumen .rightOrdenResumenTitle h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #454f5b;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenResumen .rightOrdenIvaCheckbox {
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #eee;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenResumen .rightOrdenIvaCheckbox .ivaCheckboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #666;
+  user-select: none;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenResumen .rightOrdenIvaCheckbox .ivaCheckboxLabel:hover {
+  color: #454f5b;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenResumen .rightOrdenIvaCheckbox .ivaCheckboxLabel .ivaCheckbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #046290;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenResumen .rightOrdenIvaCheckbox .ivaCheckboxLabel span {
+  font-weight: 500;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenResumen .rightOrdenResumenDetalles {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenResumen .rightOrdenResumenDetalles .resumenLine {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenResumen .rightOrdenResumenDetalles .resumenLine.highlight {
+  padding-top: 12px;
+  border-top: 1px solid #ddd;
+  margin-top: 4px;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenResumen .rightOrdenResumenDetalles .resumenLine .resumenLabel {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenResumen .rightOrdenResumenDetalles .resumenLine .resumenValue {
+  font-size: 16px;
+  font-weight: 600;
+  color: #454f5b;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenResumen .rightOrdenResumenDetalles .resumenLine.highlight .resumenLabel,
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenResumen .rightOrdenResumenDetalles .resumenLine.highlight .resumenValue {
+  font-size: 16px;
+  font-weight: 700;
+  color: #046290;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenResumen .rightOrdenBotones {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenResumen .rightOrdenBotones .btnGuardarOrden,
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenResumen .rightOrdenBotones .btnDescargarPDF {
+  flex: 1;
+  min-width: 200px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  box-sizing: border-box;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenResumen .rightOrdenBotones .btnGuardarOrden:hover,
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenResumen .rightOrdenBotones .btnDescargarPDF:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenResumen .rightOrdenBotones .btnGuardarOrden:active,
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenResumen .rightOrdenBotones .btnDescargarPDF:active {
+  transform: translateY(0);
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenResumen .rightOrdenBotones .btnGuardarOrden {
+  background-color: #046290;
+  color: #fff;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenResumen .rightOrdenBotones .btnGuardarOrden:hover {
+  background-color: #035177;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenResumen .rightOrdenBotones .btnDescargarPDF {
+  background-color: #28a745;
+  color: #fff;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenResumen .rightOrdenBotones .btnDescargarPDF:hover {
+  background-color: #23923c;
+}
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenResumen .rightOrdenBotones .btnDescargarPDF:visited,
+.noteCompras .indexOrden .divideContainerOrden .rightContainerOrden .rightDataOrden .rightOrdenResumen .rightOrdenBotones .btnDescargarPDF:link {
+  color: #fff;
+  text-decoration: none;
+}
+.noteCompras .detalleItemPanel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 40%;
+  height: 100vh;
+  background-color: #FFF;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+}
+.noteCompras .detalleItemPanel.abierto {
+  transform: translateX(0);
+}
+.noteCompras .detalleItemPanel .detalleItemContent {
+  padding: 30px;
+  height: 100%;
+  box-sizing: border-box;
+}
+.noteCompras .detalleItemPanel .detalleItemContent .detalleItemHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e6e3e3;
+}
+.noteCompras .detalleItemPanel .detalleItemContent .detalleItemHeader h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #454f5b;
+  margin: 0;
+  flex: 1;
+  padding-right: 15px;
+  line-height: 1.4;
+}
+.noteCompras .detalleItemPanel .detalleItemContent .detalleItemHeader .btnCerrar {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+  flex-shrink: 0;
+}
+.noteCompras .detalleItemPanel .detalleItemContent .detalleItemHeader .btnCerrar:hover {
+  background-color: #f5f5f5;
+}
+.noteCompras .detalleItemPanel .detalleItemContent .detalleItemHeader .btnCerrar span {
+  font-size: 28px;
+  color: #666;
+  line-height: 1;
+  font-weight: 300;
+}
+.noteCompras .detalleItemPanel .detalleItemContent .seccionCantidades {
+  margin-bottom: 40px;
+}
+.noteCompras .detalleItemPanel .detalleItemContent .seccionCantidades h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #454f5b;
+  margin: 0 0 20px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.noteCompras .detalleItemPanel .detalleItemContent .seccionCantidades .proveedoresList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.noteCompras .detalleItemPanel .detalleItemContent .seccionCantidades .proveedoresList .proveedorItem {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: background-color 0.2s ease;
+  padding: 10px;
+  border-radius: 8px;
+  margin: -10px;
+}
+.noteCompras .detalleItemPanel .detalleItemContent .seccionCantidades .proveedoresList .proveedorItem:hover {
+  background-color: #f5f5f5;
+}
+.noteCompras .detalleItemPanel .detalleItemContent .seccionCantidades .proveedoresList .proveedorItem .proveedorInicial {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #046290;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.noteCompras .detalleItemPanel .detalleItemContent .seccionCantidades .proveedoresList .proveedorItem .proveedorInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+}
+.noteCompras .detalleItemPanel .detalleItemContent .seccionCantidades .proveedoresList .proveedorItem .proveedorInfo .proveedorNombre {
+  font-size: 14px;
+  font-weight: 500;
+  color: #454f5b;
+}
+.noteCompras .detalleItemPanel .detalleItemContent .seccionCantidades .proveedoresList .proveedorItem .proveedorInfo .proveedorPrecio {
+  font-size: 14px;
+  font-weight: 600;
+  color: #046290;
+}
+.noteCompras .detalleItemPanel .detalleItemContent .seccionProyectos h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #454f5b;
+  margin: 0 0 20px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.noteCompras .detalleItemPanel .detalleItemContent .seccionProyectos .proyectosList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.noteCompras .detalleItemPanel .detalleItemContent .seccionProyectos .proyectosList .proyectoItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+.noteCompras .detalleItemPanel .detalleItemContent .seccionProyectos .proyectosList .proyectoItem:hover {
+  background-color: #f0f0f0;
+}
+.noteCompras .detalleItemPanel .detalleItemContent .seccionProyectos .proyectosList .proyectoItem .proyectoNumero {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #454f5b;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+.noteCompras .detalleItemPanel .detalleItemContent .seccionProyectos .proyectosList .proyectoItem .proyectoInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+.noteCompras .detalleItemPanel .detalleItemContent .seccionProyectos .proyectosList .proyectoItem .proyectoInfo .proyectoNombreEstado {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.noteCompras .detalleItemPanel .detalleItemContent .seccionProyectos .proyectosList .proyectoItem .proyectoInfo .proyectoNombreEstado .proyectoNombre {
+  font-size: 14px;
+  font-weight: 600;
+  color: #454f5b;
+}
+.noteCompras .detalleItemPanel .detalleItemContent .seccionProyectos .proyectosList .proyectoItem .proyectoInfo .proyectoNombreEstado .proyectoEstado {
+  font-size: 12px;
+  color: #666;
+  text-transform: capitalize;
+}
+.noteCompras .detalleItemPanel .detalleItemContent .seccionProyectos .proyectosList .proyectoItem .proyectoInfo .proyectoCantidades {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.noteCompras .detalleItemPanel .detalleItemContent .seccionProyectos .proyectosList .proyectoItem .proyectoInfo .proyectoCantidades .proyectoActual {
+  font-size: 13px;
+  color: #666;
+}
+.noteCompras .detalleItemPanel .detalleItemContent .seccionProyectos .proyectosList .proyectoItem .proyectoInfo .proyectoCantidades .proyectoFaltante {
+  font-size: 13px;
+  font-weight: 600;
+  color: #046290;
+}
 .modal {
   position: fixed;
   top: 0;
@@ -7118,6 +10133,309 @@ body button {
 }
 .panelGaleria .homeViewGaleria .containerModal.Avance .bodyResults .containerKits .divide .myComponent .bottomAvance button span {
   color: #FFF;
+}
+.general-entradas {
+  box-sizing: border-box;
+}
+.general-entradas .containerEntradas {
+  width: 100%;
+  box-sizing: border-box;
+}
+.general-entradas .containerEntradas .topHeader {
+  padding: 10px 0px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.general-entradas .containerEntradas .topHeader .title h3 {
+  font-weight: 600;
+  font-size: 16px;
+  color: #333;
+}
+.general-entradas .containerEntradas .headerEntradas {
+  margin-top: 20px;
+}
+.general-entradas .containerEntradas .headerEntradas .divideHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.general-entradas .containerEntradas .headerEntradas .divideHeader .inputSearch {
+  width: 40%;
+  box-sizing: border-box;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #333;
+  outline: none;
+}
+.general-entradas .containerEntradas .headerEntradas .divideHeader .inputSearch input {
+  width: 70%;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 8px 10px;
+  font-size: 13px;
+  color: #333;
+  outline: none;
+  background-color: #FFF;
+  transition: 0.3s;
+}
+.general-entradas .containerEntradas .headerEntradas .divideHeader .inputSearch input:focus {
+  border: 1px solid #046290;
+  width: 80%;
+  border-radius: 20px;
+  color: black;
+}
+.general-entradas .containerEntradas .headerEntradas .divideHeader .inputSearch input::placeholder {
+  color: #666;
+}
+.general-entradas .containerEntradas .headerEntradas .divideHeader .buttonsOptions {
+  width: 50%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+.general-entradas .containerEntradas .headerEntradas .divideHeader .buttonsOptions button {
+  width: 30%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  background-color: #046290;
+  border: 1px solid #046290;
+  border-radius: 5px;
+}
+.general-entradas .containerEntradas .headerEntradas .divideHeader .buttonsOptions button span {
+  color: #FFF;
+}
+.general-entradas .containerEntradas .containerData {
+  margin-top: 30px;
+}
+.general-entradas .containerEntradas .containerData .containerTable {
+  width: 100%;
+}
+.general-entradas .containerEntradas .containerData .containerTable table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 5px;
+  border: 1px solid #f6f6f6;
+  padding: 5px;
+  font-size: 13px;
+  color: #333;
+  outline: none;
+}
+.general-entradas .containerEntradas .containerData .containerTable table thead tr th {
+  padding: 15px 10px;
+  text-align: left;
+  background-color: #fafafa;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #666;
+}
+.general-entradas .containerEntradas .containerData .containerTable table tbody tr {
+  transition: 0.3s;
+}
+.general-entradas .containerEntradas .containerData .containerTable table tbody tr td {
+  padding: 14px 10px;
+  text-align: left;
+  background-color: transparent;
+  font-size: 12px;
+  color: #666;
+  cursor: pointer;
+}
+.general-entradas .containerEntradas .containerData .containerTable table tbody tr .center {
+  text-align: left;
+  padding-left: 40px;
+}
+.general-entradas .containerEntradas .containerData .containerTable table tbody tr:hover {
+  background-color: #fafafa;
+}
+.general-entradas .orden-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.general-entradas .orden-modal .hidden-modal {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 2;
+}
+.general-entradas .orden-modal .container-modal {
+  width: 90%;
+  height: 90%;
+  background-color: #FFF;
+  border-radius: 15px;
+  padding: 20px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 3;
+  overflow-y: auto;
+}
+.general-entradas .orden-modal .container-modal .header-modal {
+  box-sizing: border-box;
+  padding: 10px 0px;
+}
+.general-entradas .orden-modal .container-modal .header-modal .dataHeader {
+  padding: 10px 0px;
+  box-sizing: border-box;
+  margin-left: 5%;
+  margin-bottom: 20px;
+}
+.general-entradas .orden-modal .container-modal .header-modal .dataHeader h3 {
+  font-weight: 400;
+  color: #666;
+}
+.general-entradas .orden-modal .container-modal .header-modal .divideZoneTime {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  margin: auto;
+  margin-top: 40px;
+}
+.general-entradas .orden-modal .container-modal .header-modal .divideZoneTime .boxDataInformation {
+  text-align: center;
+}
+.general-entradas .orden-modal .container-modal .header-modal .divideZoneTime .boxDataInformation .circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #046290;
+  color: #FFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  margin: auto;
+}
+.general-entradas .orden-modal .container-modal .header-modal .divideZoneTime .boxDataInformation .circle .icon {
+  font-size: 18px;
+}
+.general-entradas .orden-modal .container-modal .header-modal .divideZoneTime .boxDataInformation .dataBox {
+  margin-top: 10px;
+}
+.general-entradas .orden-modal .container-modal .header-modal .divideZoneTime .boxDataInformation .dataBox h3 {
+  font-size: 14px;
+  color: #046290;
+  font-weight: 400;
+}
+.general-entradas .orden-modal .container-modal .header-modal .divideZoneTime .boxDataInformation .dataBox span {
+  color: #666;
+  font-size: 12px;
+}
+.general-entradas .orden-modal .container-modal .header-modal .divideZoneTime .boxDataInformation:hover {
+  transform: scale(1.05);
+  transition: 0.3s;
+  cursor: pointer;
+}
+.general-entradas .orden-modal .container-modal .bodyContainerModal {
+  width: 90%;
+  margin: auto;
+  margin-top: 60px;
+}
+.general-entradas .orden-modal .container-modal .bodyContainerModal .TopBody .divideDataInformation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.general-entradas .orden-modal .container-modal .bodyContainerModal .TopBody .divideDataInformation .leftDataInformation span {
+  font-size: 14px;
+  color: #666;
+}
+.general-entradas .orden-modal .container-modal .bodyContainerModal .TopBody .divideDataInformation .leftDataInformation h1 {
+  font-weight: 400;
+  color: #046290;
+}
+.general-entradas .orden-modal .container-modal .bodyContainerModal .TopBody .divideDataInformation .leftDataInformation h3 {
+  font-weight: 400;
+  color: black;
+}
+.general-entradas .orden-modal .container-modal .bodyContainerModal .tableData {
+  box-sizing: border-box;
+  margin-top: 60px;
+}
+.general-entradas .orden-modal .container-modal .bodyContainerModal .tableData h3 {
+  font-weight: 400;
+  color: #666;
+  font-size: 14px;
+}
+.general-entradas .orden-modal .container-modal .bodyContainerModal .tableData table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 13px;
+  color: #333;
+  margin-top: 20px;
+}
+.general-entradas .orden-modal .container-modal .bodyContainerModal .tableData table thead tr th {
+  padding: 20px 10px;
+  text-align: left;
+}
+.general-entradas .orden-modal .container-modal .bodyContainerModal .tableData table thead tr .productCode {
+  width: 10%;
+}
+.general-entradas .orden-modal .container-modal .bodyContainerModal .tableData table thead tr .productName {
+  width: 40%;
+}
+.general-entradas .orden-modal .container-modal .bodyContainerModal .tableData table thead tr .productQuantity {
+  width: 10%;
+}
+.general-entradas .orden-modal .container-modal .bodyContainerModal .tableData table thead tr .productPrice {
+  width: 10%;
+}
+.general-entradas .orden-modal .container-modal .bodyContainerModal .tableData table tbody tr td {
+  padding: 15px 10px;
+  text-align: left;
+  background-color: transparent;
+  color: #333;
+  font-size: 14px;
+}
+.general-entradas .orden-modal .container-modal .bodyContainerModal .tableData table tbody tr .productCode {
+  width: 10%;
+}
+.general-entradas .orden-modal .container-modal .bodyContainerModal .tableData table tbody tr .productName {
+  width: 40%;
+}
+.general-entradas .orden-modal .container-modal .bodyContainerModal .tableData table tbody tr .productName span {
+  font-size: 12px;
+  color: #666;
+}
+.general-entradas .orden-modal .container-modal .bodyContainerModal .tableData table tbody tr .productQuantity {
+  width: 10%;
+}
+.general-entradas .orden-modal .container-modal .bodyContainerModal .tableData table tbody tr .productPrice {
+  width: 10%;
+}
+.general-entradas .orden-modal .container-modal .bodyContainerModal .tableData table tbody tr .productActions {
+  width: 15%;
+}
+.general-entradas .orden-modal .container-modal .bodyContainerModal .tableData table tbody tr .productActions button {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 5px;
+  background-color: #046290;
+  border: 1px solid #046290;
+  color: #FFF;
+  font-size: 12px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: 0.3s;
+  box-sizing: border-box;
+}
+.general-entradas .orden-modal .container-modal .bodyContainerModal .tableData table tbody tr:hover {
+  background-color: #fafafa;
+  transition: 0.3s;
 }
 .compras {
   box-sizing: border-box;

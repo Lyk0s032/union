@@ -10,7 +10,8 @@ import * as actions from '../store/action/action';
 import RoutesFinanciero from "./admin/adminRoutes";
 import RoutesInventario from "./inventario/routesInventario";
 import Connect from "./connect/connect";
- 
+import RouterAlmacen from "./almacen/routerAlmacen";
+  
 export default function RouterPanel(){
     const system = useSelector(store => store.system);
     const { alerta, typeAlerta } = system;
@@ -38,6 +39,7 @@ export default function RouterPanel(){
                         <Route path="/comercial/*" element={<RoutesComercial />} />
                         <Route path="/inventario/*" element={<RoutesInventario />} />
                         <Route path="/admin/*" element={<RoutesFinanciero />} />
+                        <Route path="/almacen/*" element={<RouterAlmacen />} />
                     </Routes>
                 </div>
                 {

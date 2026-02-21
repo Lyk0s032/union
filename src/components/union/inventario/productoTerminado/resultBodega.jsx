@@ -85,8 +85,7 @@ export default function ResultBodegaProducto({ item }){
                                             <th></th>
                                             <th>Cantidad</th>
                                             <th>Movimiento</th>
-                                            {/* <th>Salida</th>
-                                            <th>Llegada</th> */}
+                                            <th>Bodega</th>
                                             <th></th>
                                         </tr>
                                     </thead>

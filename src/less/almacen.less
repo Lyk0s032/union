@@ -1,0 +1,336 @@
+.general-entradas{
+    box-sizing: border-box;
+
+    .containerEntradas{
+        width:100%;
+        box-sizing: border-box;
+
+        .topHeader{
+            box-sizing: border-box;
+            padding:10px 0px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .title{
+                h3{
+                    font-weight: 600;
+                    font-size: 16px;
+                    color: #333;
+                }
+            }
+        }
+        .headerEntradas{
+            margin-top:20px;
+            .divideHeader{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                .inputSearch{
+                    width:40%;
+                    box-sizing: border-box;
+                    border-radius: 5px;
+                    font-size: 14px;
+                    color: #333;
+                    outline: none;
+
+                    input{
+                        width:70%;
+                        box-sizing: border-box;
+                        border-radius: 5px;
+                        border:1px solid #ccc;
+                        padding:8px 10px;
+                        font-size: 13px;
+                        color: #333;
+                        outline: none;
+                        background-color: @bgDefault;
+                        transition: .3s;
+                    }
+                    input:focus{
+                        border:1px solid @bgAzulDark;
+                        width:80%;
+                        border-radius: 20px;
+                        color: black;
+                    } 
+                    input::placeholder{
+                        color: #666;
+                    }
+                }
+
+                .buttonsOptions{
+                    width:50%;
+                    box-sizing: border-box;
+                    display: flex;
+                    justify-content: end;
+                    align-items: center;
+                    button{
+                        width:30%;
+                        box-sizing: border-box;
+                        padding:8px 10px;
+                        background-color: @bgAzulDark;
+                        border:1px solid @bgAzulDark;
+                        border-radius: 5px;
+                        span{
+                            color: @bgDefault;
+                        }
+                    }
+                }
+            }
+        }
+
+        .containerData{
+            margin-top:30px;
+            .containerTable{
+                width:100%;
+                table{
+                    width:100%;
+                    border-collapse: collapse;
+                    border-radius: 5px;
+                    border:1px solid #f6f6f6;
+                    padding:5px;
+                    font-size: 13px;
+                    color: #333;
+                    outline: none;
+                    thead{
+                        tr{
+                            th{
+                                padding:15px 10px;
+                                text-align: left;
+                                background-color: #fafafa;
+                                font-size: 12px;
+                                text-transform: uppercase;
+                                font-weight: 600;    
+                                color: #666;                               
+                            }
+                        }
+                        
+                    }
+                    tbody{
+                        tr{
+                            transition: .3s;
+                            td{
+                                padding:14px 10px;
+                                text-align: left;
+                                background-color: transparent;
+                                font-size: 12px;
+                                color: #666;
+                                cursor: pointer;
+                            }
+                            .center{
+                                text-align: left;
+                                padding-left: 40px;
+                            }
+                        }
+                        tr:hover{
+                            background-color: #fafafa;
+                        }
+                    }
+                }
+            }
+        }
+        
+    }
+    .orden-modal{
+        position: fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .hidden-modal{
+            width:100%;
+            height:100%;
+            position:absolute;
+            z-index:2;
+        }
+        .container-modal{
+            width:90%;
+            height:90%;
+            background-color: @bgDefault;
+            border-radius: 15px;
+            padding:20px;
+            box-sizing: border-box;
+            position:relative;
+            z-index:3;
+            overflow-y: auto;
+
+            .header-modal{
+                box-sizing: border-box;
+                padding:10px 0px;
+                .dataHeader{
+                    padding:10px 0px;
+                    box-sizing: border-box;
+                    margin-left:5%;
+                    margin-bottom: 20px;
+                    h3{
+                        font-weight: 400;
+                        color: #666;
+                    }
+                }
+                .divideZoneTime{
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    width:90%;
+                    margin:auto;
+                    margin-top:40px;
+                    .boxDataInformation{
+                        text-align: center;
+                        .circle{
+                            width:40px;
+                            height:40px;
+                            border-radius: 50%;
+                            background-color: @bgAzulDark;
+                            color: @bgDefault;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            font-size: 12px;
+                            font-weight: 600;
+                            margin:auto;
+                            .icon{
+                                font-size: 18px;
+                            }
+                        }
+                        .dataBox{
+                            margin-top:10px;
+                            h3{
+                                font-size: 14px;
+                                color: @bgAzulDark;
+                                font-weight: 400;
+
+                            }
+                            span{
+                                color: #666;
+                                font-size: 12px;
+                            }
+                        }
+                    }
+                    .boxDataInformation:hover{
+                        transform: scale(1.05);
+                        transition: .3s;
+                        cursor: pointer;
+                    }
+                }
+            }
+            .bodyContainerModal{
+                width:90%;
+                margin:auto;
+                margin-top:60px;
+                .TopBody{
+                    
+                    .divideDataInformation{
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+
+                        .leftDataInformation{
+                            span{
+                                font-size: 14px;
+                                color: #666;
+                            }
+
+                            h1{
+                                font-weight: 400;
+                                color: @bgAzulDark;
+                            }
+                            h3{
+                                font-weight: 400;
+                                color: black;
+                            }
+                        }
+                    }
+                }
+                .tableData{
+                    box-sizing: border-box;
+                    margin-top:60px;
+                    h3{
+                        font-weight: 400;
+                        color: #666;
+                        font-size: 14px;
+                    }
+                    table{
+                        width:100%;
+                        border-collapse: collapse;
+                        border-radius: 5px;
+                        padding:5px;
+                        font-size: 13px;
+                        color: #333;
+                        margin-top:20px;
+                        thead{
+                            tr{
+                                th{
+                                    padding:20px 10px;
+                                    text-align: left;
+                                }
+                                .productCode{
+                                    width:10%;
+                                }
+                                .productName{
+                                    width:40%;
+                                }
+                                .productQuantity{
+                                    width:10%;
+                                }
+                                .productPrice{
+                                    width:10%;
+                                }
+                            }
+                        }
+                        tbody{
+                            tr{
+                                td{
+                                    padding:15px 10px;
+                                    text-align: left;
+                                    background-color: transparent;
+                                    color: #333;
+                                    font-size: 14px;
+                                }
+                                .productCode{
+                                    width:10%;
+                                }
+                                .productName{
+                                    width:40%;
+                                    span{
+                                        font-size: 12px;
+                                        color: #666;
+                                    }
+                                }
+                                .productQuantity{
+                                    width:10%;
+                                }
+                                .productPrice{
+                                    width:10%;
+                                }
+                                .productActions{
+                                    width:15%;
+                                    button{
+                                        width:100%;
+                                        padding:8px 10px;
+                                        border-radius: 5px;
+                                        background-color: @bgAzulDark;
+                                        border:1px solid @bgAzulDark;
+                                        color: @bgDefault;
+                                        font-size: 12px;
+                                        font-weight: 400;
+                                        cursor: pointer;
+                                        transition: .3s;
+                                        box-sizing: border-box;
+                                    }
+                                }
+                            }
+                            tr:hover{
+                                background-color: #fafafa;
+                                transition: .3s;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

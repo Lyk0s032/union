@@ -37,15 +37,26 @@ export default function LeftNav(){
                                         </div>
                                         {/* <FaChevronDown className="icon" /> */}
                                         
-                                    </div>
+                                    </div> 
                                 </li>
-                                <li className={location.pathname === '/compras/requisiciones' ||  location.pathname === '/compras//requisiciones/' ? 'Active' : null } onClick={() => {
+                                {/* <li className={location.pathname === '/compras/requisiciones' ||  location.pathname === '/compras//requisiciones/' ? 'Active' : null } onClick={() => {
                                         navigate('/compras/requisiciones')
                                     }}>
                                     <div className='divideLi'>
                                         <div className="leftOption">
                                             <MdFormatListBulleted className="icon" />
                                             <span>Requisiciones</span>
+                                        </div>
+                                        
+                                    </div>
+                                </li> */}
+                                <li className={location.pathname === '/compras/req' ||  location.pathname === '/compras//req/' ? 'Active' : null } onClick={() => {
+                                        navigate('/compras/req')
+                                    }}>
+                                    <div className='divideLi'>
+                                        <div className="leftOption">
+                                            <MdFormatListBulleted className="icon" />
+                                            <span>Nuevas requisiciones</span>
                                         </div>
                                         
                                     </div>

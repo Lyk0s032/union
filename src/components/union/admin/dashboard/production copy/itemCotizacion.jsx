@@ -25,13 +25,14 @@ export default function CotizacionItemGeneral({ item, openMenuId, toggleMenu  })
         })
         .then(async (res) => { 
             console.log(res.data)
-            const send = await axios.get(`/api/requisicion/get/post/generateAll/${res.data.id}`)
+            // const send = await axios.get(`/api/requisicion/get/post/generateAll/${res.data.id}`)
+            const send = await axios.get(`/api/requisicion/get/avance/cotizacion/${res.data.id}`)
             return res; 
         })
-        .then(async (res) => {
-            const addProduction = await axios.get(`/api/requisicion/add/register/necesidad/${res.data.id}`)
-            return res;
-        })
+        // .then(async (res) => {
+        //     const addProduction = await axios.get(`/api/requisicion/add/register/necesidad/${res.data.id}`)
+        //     return res;
+        // })
         .then((res) => {
             dispatch(actions.HandleAlerta('Cotización aprobada', 'positive')) 
             dispatch(actions.axiosToGetCotizacionesAdmin(false))

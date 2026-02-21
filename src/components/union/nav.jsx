@@ -47,19 +47,23 @@ export default function Nav(){
                                     <span>Producción</span>
                                 </div>
                             </li>
-
+                            <li onClick={() => navigate('/almacen')}>
+                                <div>
+                                    <span>Almacén</span>
+                                </div>
+                            </li>
 
                             <li onClick={() => navigate('/comercial')}>
                                     <div>
                                     <span>Comercial</span>
-                                </div>
+                                </div> 
                             </li>
 
-                            <li onClick={() => navigate('/inventario')}>
+                            {/* <li onClick={() => navigate('/inventario')}>
                                     <div>
-                                    <span>Almacen</span>
+                                    <span>Inv</span>
                                 </div>
-                            </li>
+                            </li> */}
 
                             {
                                 hasPermission(user.user, 'administracion') && (

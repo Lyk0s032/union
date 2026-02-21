@@ -11,6 +11,7 @@ import RouteCompras from './compras/routeCompras';
 import ProductoTerminado from './productoTerminado/productoTerminado';
 import RouteRequisiciones from './requisiciones/routeRequisiciones';
 import DashboardCompras from './dashboard/dashboard';
+import RequisicionDashboard from './req';
 
 export default function RoutesCompras(){
     const [params, setParams] = useSearchParams();
@@ -33,6 +34,7 @@ export default function RoutesCompras(){
                         <Routes> 
                             <Route index element={<DashboardCompras /> } />
                             <Route path="requisiciones/*" element={<RouteRequisiciones />} />
+                            <Route path="req/*" element={<RequisicionDashboard />} />
                             <Route path="pv/*" element={<Providers />} />
                             <Route path="mp/*" element={<MateriaPrima />} />
                             <Route path="pt/*" element={<ProductoTerminado />} />

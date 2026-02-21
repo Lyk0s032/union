@@ -17,6 +17,8 @@ export default function Project(){
     useEffect(() => {
         dispatch(actions.axiosToGetItemProduction(true, params.get('project')))
     }, [params.get('project')])
+    
+    console.log('productionItem, ', productionItem)
     return (
         <div className="modal" style={{zIndex:5}} > 
             <div className="hiddenModal"></div>
