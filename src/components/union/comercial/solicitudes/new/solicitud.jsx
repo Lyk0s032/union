@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AdjuntMessage from '../mensajeAdjunto';
 import { io } from 'socket.io-client';
 
-const SOCKET_URL = "http://192.168.1.15:3000"; // ajusta al dominio/puerto real
+const SOCKET_URL = "https://unionapi-production.up.railway.app/"; // ajusta al dominio/puerto real
 const socket = io(SOCKET_URL, { transports: ["websocket"] });
 
 export default function Solicitud(){
@@ -26,7 +26,7 @@ export default function Solicitud(){
 
     useEffect(() => {
         if(!requerimiento?.id) return;
-
+ 
         // Unirse al room
         socket.emit("join:requerimiento", requerimiento.id );
 
