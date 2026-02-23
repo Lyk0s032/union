@@ -718,9 +718,9 @@ export function getKitsRequisicion(data){
 }
 
 // Acción para obtener proyectos reales de requisiciones
-export function axiosToGetRealProyectosRequisicion(ids){
+export function axiosToGetRealProyectosRequisicion(ids, loading = true){
     return function(dispatch){
-        dispatch(gettingRealProyectosRequisicion(true));
+        dispatch(gettingRealProyectosRequisicion(loading));
         axios.post('/api/requisicion/get/req/multipleReal/', { ids })
         .then((res) => {
             dispatch(getRealProyectosRequisicion(res.data));

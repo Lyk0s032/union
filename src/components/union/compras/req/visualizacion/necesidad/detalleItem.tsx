@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ItemNecesidad as ItemNecesidadType } from '../types';
 import * as actions from '../../../../../store/action/action';
@@ -18,6 +18,7 @@ interface ProyectoItem {
     actual: number;
     total: number;
     faltante: number;
+    comprasCotizacionItemId: number; // ID del item de comprasCotizacionItem
 }
 
 interface DetalleItemProps {
@@ -33,6 +34,71 @@ export default function DetalleItem({ item, onClose, onProveedorClick }: Detalle
     const ids = req.requisicionesSeleccionadas || req.ids || [];
     const itemRequisicion = req.itemRequisicion;
     const loadingItemRequisicion = req.loadingItemRequisicion;
+
+    // Estados para edición de cantidad
+    const [editandoProyectoId, setEditandoProyectoId] = useState<number | null>(null);
+    const [cantidadEditada, setCantidadEditada] = useState<string>('');
+    const [guardando, setGuardando] = useState(false);
+
+    // Función para recargar los datos silenciosamente
+    const recargarDatos = () => {
+        if (!item?.id || !item?.tipo) return;
+        
+        dispatch(actions.gettingItemRequisicion(false)); // false para carga silenciosa
+        
+        const body = {
+            mpId: item.id,
+            ids: ids
+        };
+        
+        const endpoint = item.tipo === 'materia-prima' 
+            ? '/api/requisicion/get/materiales/materia/'
+            : '/api/requisicion/get/materiales/producto/';
+        
+        axios.post(endpoint, body)
+            .then((res) => {
+                dispatch(actions.getItemRequisicion(res.data));
+            })
+            .catch((err) => {
+                console.log(err);
+                dispatch(actions.getItemRequisicion(404));
+            });
+    };
+
+    // Función para enviar la cantidad actualizada
+    const sendHowMany = async (how: string, comprasCotizacionItemId: number) => {
+        if (!how || isNaN(Number(how))) {
+            setEditandoProyectoId(null);
+            setCantidadEditada('');
+            return;
+        }
+
+        setGuardando(true);
+        try {
+            const body = {
+                cantidadEntrega: Number(how),
+                comprasItemCotizacion: comprasCotizacionItemId
+            };
+
+            await axios.put(`/api/requisicion/put/updateCantidad/comprasCotizacionItem`, body);
+            
+            // Recargar datos silenciosamente
+            recargarDatos();
+            
+            // Recargar requisiciones silenciosamente
+            if (ids && ids.length > 0) {
+                (dispatch as any)(actions.axiosToGetRealProyectosRequisicion(ids, false));
+            }
+            
+            setEditandoProyectoId(null);
+            setCantidadEditada('');
+        } catch (error) {
+            console.error('Error al actualizar cantidad:', error);
+            (dispatch as any)(actions.HandleAlerta('No hemos logrado actualizar la cantidad', 'mistake'));
+        } finally {
+            setGuardando(false);
+        }
+    };
 
     // Llamar a la API cuando se abre el panel (usando la función existente como en itemMp.jsx)
     useEffect(() => {
@@ -55,7 +121,6 @@ export default function DetalleItem({ item, onClose, onProveedorClick }: Detalle
         
         axios.post(endpoint, body)
             .then((res) => {
-                console.log('res', res.data);
                 dispatch(actions.getItemRequisicion(res.data));
             })
             .catch((err) => {
@@ -65,7 +130,6 @@ export default function DetalleItem({ item, onClose, onProveedorClick }: Detalle
     }, [item?.id, item?.tipo, ids, dispatch]);
     
     
-
     if (!item) return null;
 
     // Obtener datos de itemRequisicion (donde se guardan los datos de la API)
@@ -75,15 +139,15 @@ export default function DetalleItem({ item, onClose, onProveedorClick }: Detalle
     // Mapear datos de la API a la estructura esperada
     // La estructura puede variar según la respuesta real de la API
     const proveedores: Proveedor[] = item.tipo === 'materia-prima' ? data?.prices?.map((pr: any) => ({
-        id: pr.id,
-        nombre: pr.proveedor.nombre || pr.name,
-        inicial: (pr.proveedor.nombre || pr.name || '?').charAt(0).toUpperCase(),
+        id: pr.proveedor?.id || pr.pvId || pr.proveedorId || pr.id, // ID del proveedor, no del precio
+        nombre: pr.proveedor?.nombre || pr.name,
+        inicial: (pr.proveedor?.nombre || pr.name || '?').charAt(0).toUpperCase(),
         precio: pr.precio || pr.price || pr.valor || 0
     })) || [] : data?.productPrices?.map((pr: any) => ({
-        id: pr.id,
-        nombre: pr.proveedor.nombre || pr.name,
-        inicial: (pr.proveedor.nombre || pr.name || '?').charAt(0).toUpperCase(),
-        precio: pr.proveedor.precio || pr.price || pr.valor || 0
+        id: pr.proveedor?.id || pr.pvId || pr.proveedorId || pr.id, // ID del proveedor, no del precio
+        nombre: pr.proveedor?.nombre || pr.name,
+        inicial: (pr.proveedor?.nombre || pr.name || '?').charAt(0).toUpperCase(),
+        precio: pr.precio || pr.price || pr.valor || 0
     })) || [];
 
     const proyectos: ProyectoItem[] = data?.itemRequisicions?.map((proj: any) => ({
@@ -92,7 +156,8 @@ export default function DetalleItem({ item, onClose, onProveedorClick }: Detalle
         estado: proj.estado || proj.state || 'Pendiente',
         actual: proj.cantidadEntrega || proj.entregado || 0,
         total: proj.cantidad || proj.totalCantidad || 0,
-        faltante: (proj.total || proj.totalCantidad || 0) - (proj.actual || proj.entregado || 0)
+        faltante: (proj.cantidad || proj.totalCantidad || 0) - (proj.cantidadEntrega || proj.entregado || 0),
+        comprasCotizacionItemId: proj.id || proj.comprasCotizacionItemId || proj.comprasItemCotizacionId || 0
     })) || [];
 
     return (
@@ -144,25 +209,77 @@ export default function DetalleItem({ item, onClose, onProveedorClick }: Detalle
                         <div style={{ padding: '20px', textAlign: 'center' }}>Cargando...</div>
                     ) : (
                         <div className="proyectosList">
-                            {proyectos.length > 0 ? proyectos.map((proyecto) => (
-                            <div key={proyecto.id} className="proyectoItem">
-                                <div className="proyectoNumero">{proyecto.id}</div>
-                                <div className="proyectoInfo">
-                                    <div className="proyectoNombreEstado">
-                                        <span className="proyectoNombre">{proyecto.nombre}</span>
-                                        <span className="proyectoEstado">{proyecto.estado}</span>
+                            {proyectos.length > 0 ? proyectos.map((proyecto) => {
+                                const estaEditando = editandoProyectoId === proyecto.id;
+                                const valorMostrado = item.tipo == 'materia-prima' && item.unidad == 'mt2' 
+                                    ? (proyecto.actual * (item.medida || 1) > proyecto.total ? proyecto.total : proyecto.actual * (item.medida || 1))
+                                    : proyecto.actual;
+                                
+                                return (
+                                    <div key={proyecto.id} className="proyectoItem">
+                                        <div className="proyectoNumero">{proyecto.id}</div>
+                                        <div className="proyectoInfo">
+                                            <div className="proyectoNombreEstado">
+                                                <span className="proyectoNombre">{proyecto.nombre}</span>
+                                                <span className="proyectoEstado">{proyecto.estado}</span>
+                                            </div>
+                                            <div className="proyectoCantidades">
+                                                {!estaEditando ? (
+                                                    <span 
+                                                        className="proyectoActual"
+                                                        onClick={() => {
+                                                            setEditandoProyectoId(proyecto.id);
+                                                            setCantidadEditada(String(proyecto.actual));
+                                                        }}
+                                                        style={{ cursor: 'pointer' }}
+                                                        title="Click para editar"
+                                                    >
+                                                        Actualmente {valorMostrado} / {proyecto.total}
+                                                    </span>
+                                                ) : (
+                                                    <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                                                        <span>Actualmente</span>
+                                                        <input
+                                                            type="number"
+                                                            value={cantidadEditada}
+                                                            onChange={(e) => setCantidadEditada(e.target.value)}
+                                                            onKeyDown={(e) => {
+                                                                if (e.key === 'Enter') {
+                                                                    e.preventDefault();
+                                                                    sendHowMany(cantidadEditada, proyecto.comprasCotizacionItemId);
+                                                                } else if (e.key === 'Escape') {
+                                                                    setEditandoProyectoId(null);
+                                                                    setCantidadEditada('');
+                                                                }
+                                                            }}
+                                                            onBlur={() => {
+                                                                if (!guardando) {
+                                                                    setEditandoProyectoId(null);
+                                                                    setCantidadEditada('');
+                                                                }
+                                                            }}
+                                                            autoFocus
+                                                            disabled={guardando}
+                                                            style={{
+                                                                width: '80px',
+                                                                padding: '4px 8px',
+                                                                border: '1px solid #007bff',
+                                                                borderRadius: '4px',
+                                                                fontSize: '14px'
+                                                            }}
+                                                        />
+                                                        <span>/ {proyecto.total}</span>
+                                                        {guardando && <span style={{ fontSize: '12px', color: '#666' }}>Guardando...</span>}
+                                                    </div>
+                                                )}
+                                                <span className="proyectoFaltante">
+                                                    Faltante {proyecto.faltante}
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className="proyectoCantidades">
-                                        <span className="proyectoActual">
-                                            Actualmente {proyecto.actual} / {proyecto.total}
-                                        </span>
-                                        <span className="proyectoFaltante">
-                                            Faltante {proyecto.faltante}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            )) : (
+                                );
+                            }) : (
                                 <div style={{ padding: '20px', textAlign: 'center', color: '#666' }}>
                                     No hay proyectos que requieran este producto
                                 </div>

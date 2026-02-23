@@ -23,7 +23,7 @@ interface ItemNecesidadProps {
     index?: number;
 }
 
-export default function ItemNecesidad({
+export default function ItemNecesidadMP({
     item,
     medConsumo,
     necesidad,
@@ -57,6 +57,7 @@ export default function ItemNecesidad({
     // Conocer la cantidad que se necesita en mt2
     const cantidadNecesaria2 =  necesidad;
     // Formatear necesidad
+    //
     // Para materia-prima con mt2/mt: convertir entregado (mt2) a piezas entregadas
     let formatoNecesidad: string | number = entregado;
     if (item.tipo == 'materia-prima' && (item.unidad == 'mt2' || item.unidad == 'mt')) {
@@ -65,8 +66,8 @@ export default function ItemNecesidad({
             // Si ya está comprado (faltaPorComprar <= 0.09), mostrar 1 pieza
             // Convertir a número para asegurar comparación correcta
             const faltaPorComprarNum = Number(faltaPorComprar);
-            if (faltaPorComprarNum <= 0.09) {
-                formatoNecesidad = 1;
+            if (Number(faltaPorComprarNum) <= 0.09) {
+                formatoNecesidad = cantidadNecesaria2;
             } else if (entregado >= item.medida) {
                 // Si entregado es mayor o igual a medida, mostrar 1 pieza completa
                 formatoNecesidad = 1;
@@ -80,11 +81,9 @@ export default function ItemNecesidad({
         }
     }
     // Formatear Necesidad con formato (entregado) - falta / necesidad
-    const necesidadFormato = `(${falta}) - ${formatoNecesidad} / ${item.unidad == 'mt2' ? cantidadNecesaria2 :necesidad}`;
- 
+    const necesidadFormato = falta > 0 ? `(${falta}) - ${formatoNecesidad} / ${item.unidad == 'mt2' ? cantidadNecesaria2 :necesidad}` : `(0) - ${formatoNecesidad} / ${ cantidadNecesaria2 }`;
 
     // FORMATEO PARA DATOS PRODUCTO TERMINADO
-    const necesidadFormatoProductoTerminado = `(${falta}) -  ${formatoNecesidad} / ${necesidad}`;
 
     // Calcular el estado del item
     const estadoItem = faltaPorComprar <= 0.09 ? 'comprado' : entregado <= 0 ? 'sin-comprar' : 'parcialmente-comprado';
@@ -105,7 +104,6 @@ export default function ItemNecesidad({
     };
 
     return (
-        item.tipo == 'materia-prima' ? 
             <div 
                 className={`itemNecesidad ${isSelected ? 'selected' : ''} estado-${estadoItem}`}
                 onClick={handleClick}
@@ -137,38 +135,6 @@ export default function ItemNecesidad({
                     <span>$ {new Intl.NumberFormat('es-CO').format(faltaPorComprar)}</span>
                 </div>
             </div>
-        :
 
-        <div 
-            className={`itemNecesidad ${isSelected ? 'selected' : ''} estado-${estadoItem}`}
-            onClick={handleClick}
-            style={{ cursor: (onClick || onCtrlClick) ? 'pointer' : 'default' }}
-        >
-            <div className="numeroItem">
-                <h3>{item.id}</h3>
-            </div>
-            <div className="infoItem">
-                <h3 className="nombreItem">{item.nombre}</h3>
-                <div className="detallesItem">
-                    <span className="medidaOriginal">{medidaFormateada} {item.unidad}</span>
-                    <span className="estado">{estadoTexto}</span>
-                    </div>
-            </div>
-            <div className="colMedConsumo">
-                <span>{medConsumoFormato}</span>
-            </div>
-            <div className="colNecesidad">
-                <span>{necesidadFormatoProductoTerminado}</span>
-            </div>
-            <div className="colPrecio">
-                <span>$ {new Intl.NumberFormat('es-CO').format(precioUnitario)}</span>
-            </div>
-            <div className="colTotal">
-                <span>$ {new Intl.NumberFormat('es-CO').format(totalPromedio)}</span>
-            </div>
-            <div className="colTotal">
-                <span>$ {new Intl.NumberFormat('es-CO').format(faltaPorComprar)}</span>
-            </div>
-        </div>
     )
 }

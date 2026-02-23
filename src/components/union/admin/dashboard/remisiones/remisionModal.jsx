@@ -200,8 +200,11 @@ export default function RemisionModal({ remision, onClose }) {
             doc.text(`OC.Nro: ${String(ocNumero || 'N/A')}`, margin, yPos);
             yPos += 5;
             doc.text(`OV.Nro: ${String(ovNumero || 'N/A')}`, margin, yPos);
+            yPos += 5;
+            const numeroCotizacion = remision?.requisicionId ? Number(remision.requisicionId + 21719) : 'N/A';
+            doc.text(`Nro. Cotización: ${String(numeroCotizacion)}`, margin, yPos);
 
-            yPos = detallesStartY + 25;
+            yPos = detallesStartY + 30;
 
             // ========== TABLA DE PRODUCTOS ==========
             const tableStartY = yPos;
@@ -335,6 +338,74 @@ export default function RemisionModal({ remision, onClose }) {
             doc.setFontSize(12);
             const totalDespachadaTexto = String(totalDespachada.toFixed(0));
             doc.text(`Total Unidades Despachadas: ${totalDespachadaTexto}`, resumenX, yPos);
+
+            // ========== LÍNEAS DE FIRMA Y PIE DE PÁGINA (casi al final de la página) ==========
+            // Configurar fuente para calcular el texto del pie de página
+            doc.setFontSize(8);
+            doc.setFont(undefined, 'normal');
+            
+            // Calcular posición cerca del final de la página
+            // Texto del pie de página
+            const textoPiePagina = 'Los materiales con este documento recibido, los aceptamos a satisfacción, acorde a nuestro pedido y con el nivel de calidad requerido. No se aceptan reclamaciones posteriores a la entrega aceptada.';
+            // Asegurar que el ancho respete los márgenes izquierdo y derecho
+            const anchoTextoPie = pageWidth - (margin * 2);
+            // Calcular líneas para estimar altura (pero usaremos maxWidth al dibujar)
+            const lineasPiePagina = doc.splitTextToSize(textoPiePagina, anchoTextoPie);
+            const alturaPiePagina = lineasPiePagina.length * 4 + 15; // Altura del texto + separador + margen
+            
+            // Posición de las firmas: aproximadamente 50mm del borde inferior
+            const espacioDesdeAbajo = 50;
+            const firmaY = pageHeight - espacioDesdeAbajo;
+            
+            // Verificar si hay suficiente espacio en la página actual
+            if (firmaY < yPos + 20) {
+                // Si no hay espacio, crear nueva página
+                doc.addPage();
+                yPos = margin;
+            } else {
+                // Si hay espacio, mover yPos a la posición de las firmas
+                yPos = firmaY - 15; // Dejar un poco de espacio antes de las firmas
+            }
+
+            const firmaLineWidth = 60;
+            const espacioEntreFirmas = pageWidth - (margin * 2) - (firmaLineWidth * 2);
+            const firmaIzquierdaX = margin;
+            const firmaDerechaX = margin + firmaLineWidth + espacioEntreFirmas;
+
+            // Línea izquierda - Despachado
+            doc.setDrawColor(0, 0, 0);
+            doc.setLineWidth(0.5);
+            doc.line(firmaIzquierdaX, firmaY, firmaIzquierdaX + firmaLineWidth, firmaY);
+            
+            doc.setFontSize(9);
+            doc.setFont(undefined, 'normal');
+            doc.setTextColor(0, 0, 0);
+            const textoDespachado = 'Despachado';
+            const textoDespachadoWidth = doc.getTextWidth(textoDespachado);
+            doc.text(textoDespachado, firmaIzquierdaX + (firmaLineWidth - textoDespachadoWidth) / 2, firmaY + 5);
+
+            // Línea derecha - Recibido
+            doc.line(firmaDerechaX, firmaY, firmaDerechaX + firmaLineWidth, firmaY);
+            
+            const textoRecibido = 'Recibido';
+            const textoRecibidoWidth = doc.getTextWidth(textoRecibido);
+            doc.text(textoRecibido, firmaDerechaX + (firmaLineWidth - textoRecibidoWidth) / 2, firmaY + 5);
+
+            // ========== PIE DE PÁGINA (justo después de las firmas, cerca del final) ==========
+            const piePaginaY = firmaY + 15; // 15mm después de las firmas
+            
+            // Línea separadora antes del pie de página
+            doc.setDrawColor(200, 200, 200);
+            doc.setLineWidth(0.3);
+            doc.line(margin, piePaginaY, pageWidth - margin, piePaginaY);
+
+            // Texto del pie de página (la fuente ya está configurada arriba)
+            doc.setTextColor(...colorGris);
+            // Dibujar el texto completo respetando el margen derecho usando maxWidth
+            doc.text(textoPiePagina, margin, piePaginaY + 8, {
+                maxWidth: anchoTextoPie,
+                align: 'left'
+            });
 
             // Descargar PDF
             doc.save(`${remision.numeroRemision}.pdf`);
@@ -897,10 +968,24 @@ export default function RemisionModal({ remision, onClose }) {
                                         >
                                             {ovNumero || 'Click para editar...'}
                                         </div>
+
+                                        
                                     )}
+                                    <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>
+                                        Nro. Cotización:
+                                    </label>
+                                    <div style={{
+                                        padding: '8px 12px',
+                                        fontSize: '13px',
+                                        borderRadius: '6px',
+                                        color: '#666'
+                                    }}>
+                                        {Number(remision?.requisicionId + 21719)}
+                                    </div>
+                                    {console.log('remision', remision)}
                                 </div>
                             </div>
-                        </div>
+                        </div><br /><br />
 
                     {/* Tabla de productos */}
                     <div style={{ marginBottom: '30px' }}>

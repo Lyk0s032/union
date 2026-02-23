@@ -11,7 +11,7 @@ interface ItemOrdenCompraProps {
 export default function ItemOrdenCompra({ orden }: ItemOrdenCompraProps) {
     const [params, setParams] = useSearchParams();
     const [descargandoPDF, setDescargandoPDF] = useState(false);
-    
+
     const proyectosCount = Array.isArray(orden?.requisiciones)
         ? orden.requisiciones.length
         : 0;

@@ -85,7 +85,7 @@ export default function OrdenModal() {
                             ✕
                         </button>
                     </div>
-                    <div className="divideZoneTime">
+                    {/* <div className="divideZoneTime">
                         <div className="boxDataInformation">
                             <div className="circle">
                                 <MdOutlineCheckCircle className='icon' />
@@ -122,7 +122,7 @@ export default function OrdenModal() {
                                 <span>14 de Febrero de 2026</span>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="bodyContainerModal">
                     <div className="TopBody">

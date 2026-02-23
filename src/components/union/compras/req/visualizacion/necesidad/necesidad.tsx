@@ -1,5 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
+import * as actions from '../../../../../store/action/action';
 import ItemNecesidad from './itemNecesidad';
 import DetalleItem from './detalleItem';
 import DetalleProveedor from './detalleProveedor';
@@ -7,13 +9,15 @@ import { ItemNecesidad as ItemNecesidadType, MedidasCalculadas } from '../types'
 import NuevaOrdenCompra from '../ordenCompra/nueva';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import ItemNecesidadMP from './itemNecesidadMP';
 
 export default function NecesidadRequisicion(){
+    const dispatch = useDispatch();
     const realData = useSelector((state: any) => state.requisicion.realProyectosRequisicion);
     const lineas = useSelector((state: any) => state.system?.lineas || []);
+    const req = useSelector((state: any) => state.requisicion);
+    const ids = req.requisicionesSeleccionadas || req.ids || [];
     
-    console.log('realData', realData)
-    console.log('lineas', lineas)
     
     // Crear un mapa de ID de línea -> nombre de línea para búsqueda rápida
     const mapaLineas = useMemo(() => {
@@ -213,22 +217,58 @@ export default function NecesidadRequisicion(){
 
     // Función para manejar el click en un proveedor
     const handleProveedorClick = (proveedor: any) => {
-        // Convertir el proveedor básico a un proveedor con detalles completos
-        // En producción, aquí harías una llamada a la API
-        const proveedorCompleto = {
+        // Solo pasar los datos básicos, el componente DetalleProveedor cargará los datos desde el backend
+        setProveedorSeleccionado({
             id: proveedor.id,
             nombre: proveedor.nombre,
             inicial: proveedor.inicial,
-            nit: '890324420-0', // Datos de ejemplo - reemplazar con API
-            telefono: '3177720287',
-            email: 'asesor106@tubolaminas.com',
-            precioActual: proveedor.precio,
-            fechaPrecio: new Date().toISOString(),
-            totalCotizaciones: 14,
-            ordenesCompra: 0,
-            tiempoEntrega: '5 Días'
+            precio: proveedor.precio
+        });
+    };
+
+    // Función para recargar los datos del item después de actualizar el precio
+    const recargarItemData = () => {
+        if (!itemSeleccionado?.id || !itemSeleccionado?.tipo) return;
+        
+        dispatch(actions.gettingItemRequisicion(false)); // false para carga silenciosa
+        
+        const body = {
+            mpId: itemSeleccionado.id,
+            ids: ids
         };
-        setProveedorSeleccionado(proveedorCompleto);
+        
+        const endpoint = itemSeleccionado.tipo === 'materia-prima' 
+            ? '/api/requisicion/get/materiales/materia/'
+            : '/api/requisicion/get/materiales/producto/';
+        
+        axios.post(endpoint, body)
+            .then((res) => {
+                dispatch(actions.getItemRequisicion(res.data));
+                
+                // Actualizar el precio del proveedor seleccionado si existe
+                if (proveedorSeleccionado && res.data) {
+                    const proveedores = itemSeleccionado.tipo === 'materia-prima' 
+                        ? res.data.prices || []
+                        : res.data.productPrices || [];
+                    
+                    const proveedorActualizado = proveedores.find((p: any) => 
+                        p.proveedor?.id === proveedorSeleccionado.id || p.id === proveedorSeleccionado.id
+                    );
+                    
+                    if (proveedorActualizado) {
+                        const nuevoPrecio = proveedorActualizado.precio || proveedorActualizado.price || proveedorActualizado.valor || 0;
+                        setProveedorSeleccionado({
+                            ...proveedorSeleccionado,
+                            precioActual: nuevoPrecio,
+                            fechaPrecio: new Date().toISOString()
+                        });
+                    }
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                dispatch(actions.getItemRequisicion(404));
+            });
     };
 
     // ============================================
@@ -252,7 +292,6 @@ export default function NecesidadRequisicion(){
                 medConsumo = item.totalCantidad; 
                 
                 necesidad = Math.ceil(item.totalCantidad);
-                console.log('producto terminado', item) 
             }
         }else if(item.unidad === 'mt') {
             medConsumo = item.totalCantidad;
@@ -678,6 +717,24 @@ export default function NecesidadRequisicion(){
                             const totalPromedio = precioUnitarioReal * necesidad;
                             const faltaPorComprar = falta > 0 ? precioUnitarioReal * falta : 0;
                             return (
+                                item.unidad == 'mt2' && item.tipo == 'materia-prima' ?
+                                <ItemNecesidadMP
+                                    key={getItemKey(item)}
+                                    item={item}
+                                    index={index}
+                                    medConsumo={medConsumo}
+                                    necesidad={necesidad}
+                                    entregado={entregado}
+                                    falta={falta}
+                                    precioUnitario={precioUnitarioReal}
+                                    totalPromedio={totalPromedio}
+                                    faltaPorComprar={faltaPorComprar}
+                                    onClick={() => setItemSeleccionado(item)}
+                                    isSelected={itemsSeleccionados.includes(getItemKey(item))}
+                                    onCtrlClick={() => handleCtrlClick(item)}
+                                    onShiftClick={() => handleShiftClick(item, index)}
+                                />
+                                :
                                 <ItemNecesidad
                                     key={getItemKey(item)}
                                     item={item}
@@ -721,7 +778,9 @@ export default function NecesidadRequisicion(){
             {/* Panel lateral izquierdo - Detalles del proveedor */}
             <DetalleProveedor 
                 proveedor={proveedorSeleccionado} 
+                item={itemSeleccionado}
                 onClose={() => setProveedorSeleccionado(null)} 
+                onUpdate={recargarItemData}
             />
             
             {/* Panel lateral derecho - Detalles del item */}

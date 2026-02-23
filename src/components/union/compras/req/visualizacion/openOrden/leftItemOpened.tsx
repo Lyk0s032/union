@@ -175,7 +175,7 @@ export default function LeftItemOpened() {
         if (unidad === 'kg') {
             resultado = Math.max(0, faltante);
         } else {
-            const medida = Number(data.itemRequisicions[0]?.medida || 1);
+        const medida = Number(data.itemRequisicions[0]?.medida || 1);
             resultado = medida > 0 ? Math.max(0, faltante) / medida : 0;
         }
         

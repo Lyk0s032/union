@@ -244,7 +244,7 @@ export default function ProyectosRequisicion(){
             };
         });
     }, [realData]);
-
+   
     // Efecto para cargar los datos cuando se selecciona un proyecto
     useEffect(() => {
         console.log('🔄 useEffect ejecutado - Proyecto seleccionado:', proyectoSeleccionado);
