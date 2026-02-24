@@ -64,9 +64,10 @@ export default function DetalleItem({ item, onClose, onProveedorClick }: Detalle
                 dispatch(actions.getItemRequisicion(404));
             });
     };
-
+    console.log('itemRequisicion', itemRequisicion);
+    console.log('itemssssssssss', item);
     // Función para enviar la cantidad actualizada
-    const sendHowMany = async (how: string, comprasCotizacionItemId: number) => {
+    const sendHowMany = async (how: string, comprasCotizacionItemId: number, proyecto) => {
         if (!how || isNaN(Number(how))) {
             setEditandoProyectoId(null);
             setCantidadEditada('');
@@ -77,9 +78,13 @@ export default function DetalleItem({ item, onClose, onProveedorClick }: Detalle
         try {
             const body = {
                 cantidadEntrega: Number(how),
-                comprasItemCotizacion: comprasCotizacionItemId
+                comprasItemCotizacion: comprasCotizacionItemId,
+                requisicionId: proyecto.requisicionId,
+                materiaId: item.tipo === 'materia-prima' ? item.id : null,
+                productoId: item.tipo === 'producto-terminado' ? item.id : null,
             };
-
+            console.log('body', body)
+            console.log('item en body', item)
             await axios.put(`/api/requisicion/put/updateCantidad/comprasCotizacionItem`, body);
             
             // Recargar datos silenciosamente
@@ -152,6 +157,7 @@ export default function DetalleItem({ item, onClose, onProveedorClick }: Detalle
 
     const proyectos: ProyectoItem[] = data?.itemRequisicions?.map((proj: any) => ({
         id: proj.requisicion.cotizacionId,
+        requisicionId: proj.requisicion.id,
         nombre: proj.requisicion.nombre || proj.name,
         estado: proj.estado || proj.state || 'Pendiente',
         actual: proj.cantidadEntrega || proj.entregado || 0,
@@ -208,7 +214,9 @@ export default function DetalleItem({ item, onClose, onProveedorClick }: Detalle
                     {loading ? (
                         <div style={{ padding: '20px', textAlign: 'center' }}>Cargando...</div>
                     ) : (
+                        
                         <div className="proyectosList">
+                            {console.log('proyectos', proyectos)}
                             {proyectos.length > 0 ? proyectos.map((proyecto) => {
                                 const estaEditando = editandoProyectoId === proyecto.id;
                                 const valorMostrado = item.tipo == 'materia-prima' && item.unidad == 'mt2' 
@@ -246,7 +254,7 @@ export default function DetalleItem({ item, onClose, onProveedorClick }: Detalle
                                                             onKeyDown={(e) => {
                                                                 if (e.key === 'Enter') {
                                                                     e.preventDefault();
-                                                                    sendHowMany(cantidadEditada, proyecto.comprasCotizacionItemId);
+                                                                    sendHowMany(cantidadEditada, proyecto.comprasCotizacionItemId, proyecto);
                                                                 } else if (e.key === 'Escape') {
                                                                     setEditandoProyectoId(null);
                                                                     setCantidadEditada('');

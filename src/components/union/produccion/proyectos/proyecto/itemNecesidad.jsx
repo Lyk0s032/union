@@ -151,7 +151,7 @@ export default function ItemProjectNecesidad({ item, isSelected = false, onToggl
             <td>
                 <div>
                     {
-                        item.itemAreaProductions.length > 0 && item.itemAreaProductions.some(area => area.areaProductionId === 2) ? (
+                        item && item.itemAreaProductions && item.itemAreaProductions.length > 0 && item?.itemAreaProductions?.some(area => area.areaProductionId === 2) ? (
                             <div 
                                 onClick={(e) => {
                                     e.stopPropagation();
@@ -189,7 +189,7 @@ export default function ItemProjectNecesidad({ item, isSelected = false, onToggl
             <td>
             <div>
                     {
-                        item.itemAreaProductions.length > 0 && item.itemAreaProductions.some(area => area.areaProductionId === 3) ? (
+                        item?.itemAreaProductions?.length > 0 && item.itemAreaProductions.some(area => area.areaProductionId === 3) ? (
                             <div
                                 onClick={(e) => {
                                     e.stopPropagation();
