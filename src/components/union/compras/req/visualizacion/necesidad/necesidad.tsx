@@ -145,10 +145,56 @@ export default function NecesidadRequisicion(){
     const [itemsSeleccionados, setItemsSeleccionados] = useState<string[]>([]);
     const [ultimoItemSeleccionado, setUltimoItemSeleccionado] = useState<string | null>(null);
 
+    // Modal de reemplazo
+    const [modalReemplazoAbierta, setModalReemplazoAbierta] = useState(false);
+    const [itemOriginalReemplazo, setItemOriginalReemplazo] = useState<ItemNecesidadType | null>(null);
+    const [busquedaReemplazo, setBusquedaReemplazo] = useState('');
+    const [resultadosReemplazo, setResultadosReemplazo] = useState<any[]>([]);
+    const [buscandoReemplazo, setBuscandoReemplazo] = useState(false);
+    const [itemSeleccionadoReemplazo, setItemSeleccionadoReemplazo] = useState<any | null>(null);
+    const [reemplazando, setReemplazando] = useState(false);
+
     // Función helper para generar clave única: id-medida
     const getItemKey = (item: ItemNecesidadType): string => {
         return `${item.id}-${item.medida}`;
     };
+
+    // Buscar items para reemplazo usando el endpoint
+    useEffect(() => {
+        if (!busquedaReemplazo.trim()) {
+            setResultadosReemplazo([]);
+            setItemSeleccionadoReemplazo(null);
+            return;
+        }
+
+        const buscarItems = async () => {
+            setBuscandoReemplazo(true);
+            try {
+                const response = await axios.get(`/api/materia/searchByQuery?q=${encodeURIComponent(busquedaReemplazo)}`);
+                if (response.data && Array.isArray(response.data)) {
+                    // Filtrar el item original si está en los resultados
+                    const filtrados = response.data.filter((item: any) => {
+                        if (itemOriginalReemplazo && item.id === itemOriginalReemplazo.id) {
+                            return false;
+                        }
+                        return true;
+                    });
+                    setResultadosReemplazo(filtrados.slice(0, 30)); // Limitar a 30 resultados
+                } else {
+                    setResultadosReemplazo([]);
+                }
+            } catch (error) {
+                console.error('Error al buscar items para reemplazo:', error);
+                setResultadosReemplazo([]);
+            } finally {
+                setBuscandoReemplazo(false);
+            }
+        };
+
+        // Debounce: esperar 300ms después de que el usuario deje de escribir
+        const timeoutId = setTimeout(buscarItems, 300);
+        return () => clearTimeout(timeoutId);
+    }, [busquedaReemplazo, itemOriginalReemplazo]);
 
     // Atajos de teclado - letras T, C, P, S cuando no hay input activo
     useEffect(() => {
@@ -293,7 +339,7 @@ export default function NecesidadRequisicion(){
                 
                 necesidad = Math.ceil(item.totalCantidad);
             }
-        }else if(item.unidad === 'mt') {
+        }else if(item.unidad === 'mt' as any) {
             medConsumo = item.totalCantidad;
             necesidad = Math.ceil(item.totalCantidad / item.medida);
         
@@ -372,6 +418,7 @@ export default function NecesidadRequisicion(){
             return total + (Number(precioUnitarioReal) * falta);
         }, 0);
     }, [itemsSeleccionados, itemsFiltrados]);
+
 
     // Manejar Ctrl+Click para seleccionar/deseleccionar
     const handleCtrlClick = (item: ItemNecesidadType) => {
@@ -799,13 +846,253 @@ export default function NecesidadRequisicion(){
                 onClose={() => setPanelOrdenAbierto(false)}
             />
 
+            {/* Modal pequeña para reemplazar item */}
+            {modalReemplazoAbierta && itemOriginalReemplazo && (
+                <div
+                    style={{
+                        position: 'fixed',
+                        inset: 0,
+                        backgroundColor: 'rgba(0,0,0,0.35)',
+                        zIndex: 1100,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}
+                    onClick={() => setModalReemplazoAbierta(false)}
+                >
+                    <div
+                        style={{
+                            backgroundColor: 'white',
+                            borderRadius: '10px',
+                            padding: '20px',
+                            width: '520px',
+                            maxWidth: '95vw',
+                            boxShadow: '0 4px 16px rgba(0,0,0,0.2)'
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <h3 style={{ marginTop: 0, marginBottom: '10px' }}>Reemplazar item</h3>
+                        <div
+                            style={{
+                                marginBottom: '12px',
+                                padding: '10px',
+                                borderRadius: '8px',
+                                backgroundColor: '#f5f7fa',
+                                fontSize: '13px',
+                                lineHeight: 1.4
+                            }}
+                        >
+                            <strong>Item actual:</strong><br />
+                            ID: {itemOriginalReemplazo.id} <br />
+                            Nombre: {itemOriginalReemplazo.nombre} <br />
+                            Unidad: {itemOriginalReemplazo.unidad} &nbsp;|&nbsp; Medida: {itemOriginalReemplazo.medidaOriginal || itemOriginalReemplazo.medida}
+                        </div>
+
+                        <label style={{ fontSize: '13px', fontWeight: 500 }}>Buscar item para reemplazar</label>
+                        <input
+                            type="text"
+                            value={busquedaReemplazo}
+                            onChange={(e) => setBusquedaReemplazo(e.target.value)}
+                            placeholder="Escribe código o nombre del item"
+                            style={{
+                                width: '100%',
+                                marginTop: '4px',
+                                marginBottom: '10px',
+                                padding: '8px 10px',
+                                borderRadius: '6px',
+                                border: '1px solid #d0d7de',
+                                fontSize: '13px',
+                                boxSizing: 'border-box'
+                            }}
+                        />
+
+                        <div
+                            style={{
+                                maxHeight: '220px',
+                                overflowY: 'auto',
+                                borderRadius: '6px',
+                                border: '1px solid #e1e4e8'
+                            }}
+                        >
+                            {busquedaReemplazo.trim() === '' ? (
+                                <div style={{ padding: '10px', fontSize: '12px', color: '#6a737d' }}>
+                                    Escribe para buscar otros items disponibles.
+                                </div>
+                            ) : buscandoReemplazo ? (
+                                <div style={{ padding: '10px', fontSize: '12px', color: '#6a737d', textAlign: 'center' }}>
+                                    Buscando...
+                                </div>
+                            ) : resultadosReemplazo.length === 0 ? (
+                                <div style={{ padding: '10px', fontSize: '12px', color: '#6a737d' }}>
+                                    No se encontraron items que coincidan con la búsqueda.
+                                </div>
+                            ) : (
+                                resultadosReemplazo.map((item) => {
+                                    const estaSeleccionado = itemSeleccionadoReemplazo && itemSeleccionadoReemplazo.id === item.id;
+                                    return (
+                                        <div
+                                            key={item.id}
+                                            style={{
+                                                padding: '8px 10px',
+                                                fontSize: '12px',
+                                                borderBottom: '1px solid #f1f4f8',
+                                                cursor: 'pointer',
+                                                display: 'flex',
+                                                flexDirection: 'column',
+                                                backgroundColor: estaSeleccionado ? '#e3f2fd' : 'white',
+                                                borderLeft: estaSeleccionado ? '3px solid #2980b9' : 'none'
+                                            }}
+                                            onClick={() => {
+                                                setItemSeleccionadoReemplazo(item);
+                                            }}
+                                            onMouseEnter={(e) => {
+                                                if (!estaSeleccionado) {
+                                                    (e.currentTarget as HTMLDivElement).style.backgroundColor = '#f5f7fa';
+                                                }
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                if (!estaSeleccionado) {
+                                                    (e.currentTarget as HTMLDivElement).style.backgroundColor = 'white';
+                                                }
+                                            }}
+                                        >
+                                            <span style={{ fontWeight: 600 }}>
+                                                {item.id} - {item.description || item.nombre || 'Sin nombre'}
+                                            </span>
+                                            <span style={{ color: '#6a737d' }}>
+                                                {item.unidad ? `Unidad: ${item.unidad}` : ''} {item.medida ? `| Medida: ${item.medida}` : ''}
+                                            </span>
+                                        </div>
+                                    );
+                                })
+                            )}
+                        </div>
+
+                        <div
+                            style={{
+                                marginTop: '12px',
+                                display: 'flex',
+                                justifyContent: 'flex-end',
+                                gap: '8px'
+                            }}
+                        >
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setModalReemplazoAbierta(false);
+                                    setBusquedaReemplazo('');
+                                    setItemSeleccionadoReemplazo(null);
+                                    setResultadosReemplazo([]);
+                                }}
+                                style={{
+                                    padding: '6px 14px',
+                                    borderRadius: '6px',
+                                    border: '1px solid #d0d7de',
+                                    backgroundColor: 'white',
+                                    fontSize: '13px',
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                Cerrar
+                            </button>
+                            <button
+                                type="button"
+                                onClick={async () => {
+                                    if (itemSeleccionadoReemplazo && itemOriginalReemplazo && !reemplazando) {
+                                        // Validar que solo sea materia prima
+                                        if (itemOriginalReemplazo.tipo !== 'materia-prima') {
+                                            (actions.HandleAlerta as any)('El reemplazo solo aplica para materia prima', 'mistake')(dispatch);
+                                            return;
+                                        }
+
+                                        setReemplazando(true);
+                                        try {
+                                            // Obtener requisicionId y cotizacionId desde realData
+                                            const proyectos = realData?.proyectos || [];
+                                            if (!proyectos.length) {
+                                                throw new Error('No se encontraron proyectos');
+                                            }
+
+                                            // Tomar el primer proyecto (o podrías iterar todos si aplica a múltiples)
+                                            const primerProyecto = proyectos[0];
+                                            const requisicionId = primerProyecto.id;
+                                            const cotizacionId = primerProyecto.cotizacionId || primerProyecto.cotizacion?.id;
+
+                                            if (!requisicionId || !cotizacionId) {
+                                                throw new Error('No se encontraron los IDs necesarios');
+                                            }
+
+                                            let body = {
+                                                requisicionId,
+                                                materiaId: itemOriginalReemplazo.id, // ID de la materia original
+                                                itemId: itemSeleccionadoReemplazo.id, // ID de la nueva materia
+                                                cotizacionId
+                                            };
+                                            console.log('body', body);
+                                            const response = await axios.post('/api/requisicion/put/changeItem/onReqAndNeed', body);
+                                            if (response.status === 200) {
+                                                (actions.HandleAlerta as any)('Item reemplazado correctamente', 'positive')(dispatch);
+                                                
+                                                // Recargar los datos silenciosamente
+                                                dispatch(actions.gettingItemRequisicion(false));
+                                                const body = {
+                                                    mpId: itemSeleccionadoReemplazo.id,
+                                                    ids: ids
+                                                };
+                                                await axios.post('/api/requisicion/get/materiales/materia/', body)
+                                                    .then((res) => {
+                                                        dispatch(actions.getItemRequisicion(res.data));
+                                                    });
+
+                                                // Recargar proyectos
+                                                dispatch(actions.gettingRealProyectosRequisicion(false));
+                                                await axios.post('/api/requisicion/get/req/multipleReal/', { ids })
+                                                    .then((res) => {
+                                                        dispatch(actions.getRealProyectosRequisicion(res.data));
+                                                    });
+
+                                                setModalReemplazoAbierta(false);
+                                                setBusquedaReemplazo('');
+                                                setItemSeleccionadoReemplazo(null);
+                                                setResultadosReemplazo([]);
+                                                setItemsSeleccionados([]);
+                                                setUltimoItemSeleccionado(null);
+                                            }
+                                        } catch (error: any) {
+                                            console.error('Error al reemplazar item:', error);
+                                            const mensaje = error.response?.data?.msg || error.message || 'Error al reemplazar el item';
+                                            (actions.HandleAlerta as any)(mensaje, 'mistake')(dispatch);
+                                        } finally {
+                                            setReemplazando(false);
+                                        }
+                                    }
+                                }}
+                                disabled={!itemSeleccionadoReemplazo || reemplazando}
+                                style={{
+                                    padding: '6px 14px',
+                                    borderRadius: '6px',
+                                    border: 'none',
+                                    backgroundColor: (itemSeleccionadoReemplazo && !reemplazando) ? '#2980b9' : '#d0d7de',
+                                    color: (itemSeleccionadoReemplazo && !reemplazando) ? 'white' : '#6a737d',
+                                    fontSize: '13px',
+                                    cursor: (itemSeleccionadoReemplazo && !reemplazando) ? 'pointer' : 'not-allowed',
+                                    fontWeight: '500'
+                                }}
+                            >
+                                {reemplazando ? 'Reemplazando...' : 'Reemplazar'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* Barra flotante cuando hay items seleccionados */}
             {itemsSeleccionados.length > 0 && (
                 <div className="barraItemsSeleccionados" style={{
                     position: 'fixed',
                     bottom: '20px',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
+                    left: '55%',
+                    transform: `translateX(-${itemsSeleccionados.length > 1 ? '55%' : '60%'})`,
                     zIndex: 1000,
                     background: '#2980b9',
                     color: 'white',
@@ -854,6 +1141,31 @@ export default function NecesidadRequisicion(){
                     >
                         PDF General
                     </button>
+                    {itemsSeleccionados.length === 1 && (
+                        <button
+                            style={{
+                                background: 'white',
+                                color: '#2980b9',
+                                border: 'none',
+                                padding: '8px 20px',
+                                borderRadius: '6px',
+                                cursor: 'pointer',
+                                fontWeight: '600',
+                                transition: 'all 0.2s'
+                            }}
+                            onClick={() => {
+                                const keySeleccionado = itemsSeleccionados[0];
+                                const item = itemsFiltrados.find(i => getItemKey(i) === keySeleccionado);
+                                if (item) {
+                                    setItemOriginalReemplazo(item);
+                                    setBusquedaReemplazo('');
+                                    setModalReemplazoAbierta(true);
+                                }
+                            }}
+                        >
+                            Reemplazar
+                        </button>
+                    )}
                     <button 
                         onClick={() => {
                             setItemsSeleccionados([]);

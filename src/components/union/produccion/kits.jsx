@@ -91,16 +91,33 @@ export default function KitsPanel(){
 
 
     useEffect(() => {
-        if(!kits){
-            dispatch(actions.axiosToGetKits(true))
+        // Determinar qué estado enviar según el estado actual
+        let estadoQuery = null;
+        if (state === 'desarrollo') {
+            estadoQuery = 'desarrollo';
+        } else if (state === 'simulation') {
+            estadoQuery = 'simulacion';
+        } else if (state === 'completa') {
+            estadoQuery = 'completa';
         }
-    }, [kits]) 
+        // Si state es 'completa' o cualquier otro, estadoQuery queda null (comportamiento normal)
+        
+        if(!kits){
+            dispatch(actions.axiosToGetKits(true, estadoQuery))
+        }else{
+            dispatch(actions.axiosToGetKits(false, estadoQuery))
+        }
+    }, [state]) 
 
     const dataToRender = kitsFiltrados ?? kits;
 
     return (
         loadingKits || !kits ? (
-            <h1>Cargando</h1>
+            <div className="loading" style={{height: '80vh', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                <div className="containerLoading">
+                    <h1 style={{color: '#02618f', fontWeight: '400', fontSize: '20px'}}>Cargando...</h1>
+                </div>
+            </div>
         )
         : (
         <div className="provider"> 

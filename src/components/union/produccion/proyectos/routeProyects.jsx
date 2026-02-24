@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useSearchParams } from 'react-router-dom';
 import ItemProject from './itemProject';
@@ -8,8 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export default function RouteProyects(){
     const [params, setParams] = useSearchParams();
-    const [word, setWord] = useState(null);
-    const req = useSelector(store => store.requisicion); 
+    const [word, setWord] = useState(''); 
+    const req = useSelector(store => store.requisicion);
     const { requisicions, loadingRequisicions } = req;
 
     const dispatch = useDispatch();
@@ -18,6 +18,26 @@ export default function RouteProyects(){
     useEffect(() => {
         dispatch(actions.axiosToGetRequisicions(true)) 
     }, [])
+
+    // Filtrar proyectos por nombre o número de cotización
+    const proyectosFiltrados = useMemo(() => {
+        if (!word || word.trim() === '') {
+            return requisicions || [];
+        }
+
+        const searchTerm = word.toLowerCase().trim();
+        
+        return (requisicions || []).filter((item) => {
+            // Buscar por nombre del proyecto
+            const nombreMatch = item.nombre?.toLowerCase().includes(searchTerm);
+            
+            // Buscar por número de cotización (21719 + cotizacionId)
+            const numeroCotizacion = String(21719 + (item.cotizacionId || 0));
+            const numeroMatch = numeroCotizacion.includes(searchTerm);
+            
+            return nombreMatch || numeroMatch;
+        });
+    }, [requisicions, word]);
     return (
         <div className="provider">
             <div className="containerProviders Dashboard-grid">
@@ -47,27 +67,15 @@ export default function RouteProyects(){
                         <div className="topSearchData">
                             <div className="divideSearching">
                                 <div className="data">
-                                    <h3>Cantidad en el sistema 5</h3>
-                                    <button onClick={() => {
-                                        params.set('w', 'newMp');
-                                        setParams(params);
-                                    }}>
-                                        <AiOutlinePlus className="icon" />
-                                    </button>
+                                    <h3>Cantidad en el sistema</h3>
+                                    <h3>{word ? proyectosFiltrados?.length : requisicions?.length}</h3>
                                 </div>
                                 <div className="filterOptions">
                                     <div className="inputDivA">
-                                        <div className="inputUX" style={{width:'80%'}}>
+                                        <div className="inputUX" style={{width:'100%'}}>
                                             <input type="text" placeholder="Buscar aquí..." onChange={(e) => {
                                                 setWord(e.target.value)
                                             }} />
-                                        </div>
-                                        <div className="filtersUX">
-                                            <select name="" id=""  style={{width:150}}>
-                                                <option value="">Categoría</option>
-                                            </select>
-
-                                            
                                         </div>
                                     </div>
                                 </div>
@@ -89,14 +97,20 @@ export default function RouteProyects(){
                                     </thead>
                                     <tbody>
                                         {
-                                            requisicions?.length ? 
-                                                requisicions.map((re, i) => {
+                                            proyectosFiltrados?.length ? 
+                                                proyectosFiltrados.map((re, i) => {
                                                     return (
                                                         <ItemProject item={re} key={i+1} />
                                                     )
                                                 })
 
-                                            : null
+                                            : word ? (
+                                                <tr>
+                                                    <td colSpan="7" style={{ textAlign: 'center', padding: '20px' }}>
+                                                        No se encontraron proyectos que coincidan con "{word}"
+                                                    </td>
+                                                </tr>
+                                            ) : null
                                         }   
                                     </tbody>
                                 </table>

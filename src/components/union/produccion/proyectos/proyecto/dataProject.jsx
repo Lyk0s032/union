@@ -41,6 +41,7 @@ function calcTotal(project) {
 
 export default function DataProject({ project }){
     const [params, setParams] = useSearchParams();
+    const dispatch = useDispatch();
     console.log(project)
 
     const compromiso = project?.necesidadProyectos?.reduce(
@@ -55,14 +56,34 @@ export default function DataProject({ project }){
 
     const avance = entregada > 0 ? Number(Number(entregada / compromiso) * 100).toFixed(0) : 0
 
-
-
     const [valor, setValor] = useState(0);
+    const [itemsSeleccionados, setItemsSeleccionados] = useState([]);
 
     // recalcula cuando cambie `project`
     useEffect(() => {
         setValor(calcTotal(project));
     }, [project]);
+
+    // Función para manejar la selección de items con Ctrl
+    const handleToggleSeleccion = (itemId) => {
+        setItemsSeleccionados(prev => {
+            if (prev.includes(itemId)) {
+                return prev.filter(id => id !== itemId);
+            } else {
+                return [...prev, itemId];
+            }
+        });
+    };
+
+    // Función para reemplazar item
+    const handleReemplazar = async () => {
+        if (itemsSeleccionados.length !== 1) return;
+        
+        const itemId = itemsSeleccionados[0];
+        // TODO: Implementar lógica de reemplazo
+        console.log('Reemplazar item:', itemId);
+        dispatch(actions.HandleAlerta('Funcionalidad de reemplazo en desarrollo', 'info'));
+    };
 
     return (
         <div className="DataCotizacionCompras">
@@ -136,6 +157,30 @@ export default function DataProject({ project }){
                             </div>
                         </div>
                         <div className="tableDataItems">
+                            {itemsSeleccionados.length === 1 && (
+                                <div style={{
+                                    marginBottom: '10px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '10px'
+                                }}>
+                                    <button
+                                        onClick={handleReemplazar}
+                                        style={{
+                                            padding: '8px 16px',
+                                            backgroundColor: '#2f8bfd',
+                                            color: 'white',
+                                            border: 'none',
+                                            borderRadius: '5px',
+                                            cursor: 'pointer',
+                                            fontSize: '14px',
+                                            fontWeight: '500'
+                                        }}
+                                    >
+                                        Reemplazar
+                                    </button>
+                                </div>
+                            )}
                             <div className="listaMP">
                                 <table>
                                     <thead> 
@@ -152,7 +197,12 @@ export default function DataProject({ project }){
                                             project?.necesidadProyectos?.length ?
                                                 project.necesidadProyectos.map((r, i) => {
                                                     return (
-                                                        <ItemProjectNecesidad item={r} key={i+1} />
+                                                        <ItemProjectNecesidad 
+                                                            item={r} 
+                                                            key={r.id || i+1}
+                                                            isSelected={itemsSeleccionados.includes(r.id)}
+                                                            onToggleSeleccion={handleToggleSeleccion}
+                                                        />
 
                                                     )
                                                 })

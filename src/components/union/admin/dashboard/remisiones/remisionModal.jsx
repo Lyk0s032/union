@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../../../store/action/action';
 import jsPDF from 'jspdf';
 import axios from 'axios';
 
 export default function RemisionModal({ remision, onClose }) {
     const dispatch = useDispatch();
+    // Obtener usuario actual del store
+    const usuarioActual = useSelector((store) => {
+        return store?.usuario?.user?.user?.name || 
+               store?.user?.nombre || 
+               store?.auth?.user?.name || 
+               store?.auth?.user?.nombre ||
+               'Usuario';
+    });
 
     if (!remision) return null;
 
@@ -373,7 +381,7 @@ export default function RemisionModal({ remision, onClose }) {
             const firmaDerechaX = margin + firmaLineWidth + espacioEntreFirmas;
 
             // Línea izquierda - Despachado
-            doc.setDrawColor(0, 0, 0);
+            doc.setDrawColor(0, 0, 0); 
             doc.setLineWidth(0.5);
             doc.line(firmaIzquierdaX, firmaY, firmaIzquierdaX + firmaLineWidth, firmaY);
             
@@ -402,7 +410,23 @@ export default function RemisionModal({ remision, onClose }) {
             // Texto del pie de página (la fuente ya está configurada arriba)
             doc.setTextColor(...colorGris);
             // Dibujar el texto completo respetando el margen derecho usando maxWidth
-            doc.text(textoPiePagina, margin, piePaginaY + 8, {
+            const textoPieY = piePaginaY + 8;
+            doc.text(textoPiePagina, margin, textoPieY, {
+                maxWidth: anchoTextoPie,
+                align: 'left'
+            });
+
+            // Calcular altura del texto del pie de página para saber dónde poner "Remisionado por"
+            const lineasPiePaginaCalculadas = doc.splitTextToSize(textoPiePagina, anchoTextoPie);
+            const alturaTextoPie = lineasPiePaginaCalculadas.length * 4; // Aproximadamente 4mm por línea
+            
+            // Texto "Remisionado por [usuario]" - debajo del texto del pie de página
+            const remisionadoPorY = textoPieY + alturaTextoPie + 6; // 6mm de separación
+            doc.setFontSize(9);
+            doc.setFont(undefined, 'normal');
+            doc.setTextColor(0, 0, 0); // Negro para que sea más visible
+            const textoRemisionado = `Remisionado por ${usuarioActual}`;
+            doc.text(textoRemisionado, margin, remisionadoPorY, {
                 maxWidth: anchoTextoPie,
                 align: 'left'
             });
@@ -1007,7 +1031,7 @@ export default function RemisionModal({ remision, onClose }) {
                                         color: '#666',
                                         borderBottom: '2px solid #e0e0e0'
                                     }}>
-                                        REF. / SKU
+                                        Código
                                     </th>
                                     <th style={{ 
                                         padding: '15px', 
@@ -1050,7 +1074,7 @@ export default function RemisionModal({ remision, onClose }) {
                                             fontSize: '13px',
                                             color: '#333'
                                         }}>
-                                            {item.id || `REF-${index + 1}`}
+                                            {item?.kitId || item?.productoId}
                                         </td>
                                         <td style={{ 
                                             padding: '15px', 

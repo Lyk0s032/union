@@ -368,12 +368,25 @@ export function gettingKits(carga){
     }
 }
 
-export function axiosToGetKits(carga){
+export function axiosToGetKits(carga, estado = null){
     return function(dispatch){ 
         dispatch(gettingKits(carga))
-        axios.get(`/api/kit/getAll`)
+        
+        // Construir query params según el estado
+        let url = `/api/kit/getAll/general/v2`;
+        const params = {};
+        
+        if (estado === 'desarrollo') {
+            params.estado = 'desarrollo';
+        } else if (estado === 'simulacion') {
+            params.estado = 'simulacion'; 
+        }
+        // Si estado es 'completa' o null, no se envía query (comportamiento normal)
+        
+        axios.get(url, { params: Object.keys(params).length > 0 ? params : undefined })
         .then((info) => info.data) 
-        .then(inf => {
+        .then(inf => { 
+            console.log('inf', inf)
             return dispatch(getKits(inf))
         })
         .catch((e) => {

@@ -6,7 +6,7 @@ import axios from 'axios';
 import ModalIncrementarArea from './modalIncrementarArea';
 import ModalIngresarListo from './modalIngresarListo';
 
-export default function ItemProjectNecesidad({ item }){
+export default function ItemProjectNecesidad({ item, isSelected = false, onToggleSeleccion }){
 
     const [params, setParams] = useSearchParams();
     const dispatch = useDispatch();
@@ -16,6 +16,18 @@ export default function ItemProjectNecesidad({ item }){
     const [loadingTuberia, setLoadingTuberia] = useState(false);
     const [modalAreaData, setModalAreaData] = useState(null);
     const [mostrarModalListo, setMostrarModalListo] = useState(false);
+
+    // Manejar clic con Ctrl para seleccionar
+    const handleRowClick = (e) => {
+        // Solo seleccionar si se presiona Ctrl (o Cmd en Mac)
+        if (e.ctrlKey || e.metaKey) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (onToggleSeleccion) {
+                onToggleSeleccion(item.id);
+            }
+        }
+    };
 
     const porcentaje = Number(Number(item.cantidadEntregada).toFixed(0) / Number(item.cantidadComprometida).toFixed(0)) * 100;
     console.log('ITEMS PARA OBTENER EL PROYECTO ID, ', item);
@@ -83,15 +95,32 @@ export default function ItemProjectNecesidad({ item }){
     };
     return (
         <>
-        <tr> {console.log('item en producción, ', item)}
+        <tr 
+            onClick={handleRowClick}
+            style={{
+                backgroundColor: isSelected ? '#e3f2fd' : 'transparent',
+                cursor: 'pointer',
+                transition: 'background-color 0.2s'
+            }}
+            onMouseEnter={(e) => {
+                if (!isSelected) {
+                    e.currentTarget.style.backgroundColor = '#f5f5f5';
+                }
+            }}
+            onMouseLeave={(e) => {
+                if (!isSelected) {
+                    e.currentTarget.style.backgroundColor = 'transparent';
+                }
+            }}
+        > {console.log('item en producción, ', item)}
             <td className="longer"> 
                 <div className="nameLonger">
                     <div className="letter">
                         <h3 style={{fontSize: '10px'}}>{item.kit ? item.kit.id : null} {item?.productoId}</h3>
                     </div> 
-                    <div className="name">
+                    <div className="name"> {console.log('item en producción, ', item)}
                         {console.log('item en producción, ', item)}
-                        <h3 style={{fontSize: '12px'}}>{item?.kit?.name} {item.kit ? ` - ${item.kit.extension?.name}` : null} {item?.producto?.item} {item?.medida ? ` - ${item.medida} ${item?.producto?.unidad}` : null}</h3>
+                        <h3 style={{fontSize: '12px'}}>{item?.kit?.name} {item.kit ? ` - ${item.kit.extension?.name}` : null} {item?.producto?.item} {item?.medida ? ` - ${Number(item.medida).toFixed(2)} ${item?.producto?.unidad}` : null}</h3>
                         <span>{item.kit ? 'KIT' : 'Producto terminado' }</span> <br /> 
                     </div> 
                 </div>
@@ -99,7 +128,10 @@ export default function ItemProjectNecesidad({ item }){
             <td>
                 <div 
                     className=""
-                    onClick={handleAbrirModalListo}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        handleAbrirModalListo();
+                    }}
                     style={{ cursor: 'pointer' }}
                 > 
                     <span style={{ 
@@ -121,7 +153,10 @@ export default function ItemProjectNecesidad({ item }){
                     {
                         item.itemAreaProductions.length > 0 && item.itemAreaProductions.some(area => area.areaProductionId === 2) ? (
                             <div 
-                                onClick={() => handleAbrirModalArea(item.itemAreaProductions.find(area => area.areaProductionId === 2))}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleAbrirModalArea(item.itemAreaProductions.find(area => area.areaProductionId === 2));
+                                }}
                                 style={{ cursor: 'pointer' }}
                             >
                                 <span style={{ 
@@ -156,7 +191,10 @@ export default function ItemProjectNecesidad({ item }){
                     {
                         item.itemAreaProductions.length > 0 && item.itemAreaProductions.some(area => area.areaProductionId === 3) ? (
                             <div
-                                onClick={() => handleAbrirModalArea(item.itemAreaProductions.find(area => area.areaProductionId === 3))}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleAbrirModalArea(item.itemAreaProductions.find(area => area.areaProductionId === 3));
+                                }}
                                 style={{ cursor: 'pointer' }}
                             >
                                 <span style={{ 
