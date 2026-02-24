@@ -4,7 +4,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
 import axios from 'axios'
+import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+import 'dayjs/locale/es'
 import * as actions from '../../../../store/action/action'
+
+dayjs.extend(customParseFormat)
+dayjs.locale('es')
 import {
     DndContext,
     closestCenter,
@@ -36,7 +42,7 @@ export default function TableReq({ searchText, activeFilter, requisiciones: init
     const [openMenuId, setOpenMenuId] = useState(null);
     const [activeId, setActiveId] = useState(null);
     const [ultimaSeleccionada, setUltimaSeleccionada] = useState<number | null>(null);
-    const [modalEditarFecha, setModalEditarFecha] = useState<{ open: boolean; requisicionId: number | null }>({ open: false, requisicionId: null });
+    const [modalEditarFecha, setModalEditarFecha] = useState<{ open: boolean; requisicionId: number | null; fechaBaseDefault?: string | null; fechaNecesariaDefault?: string | null }>({ open: false, requisicionId: null });
     const dispatch = useDispatch();
     const requisicionesSeleccionadas = useSelector((state: any) => state.requisicion.requisicionesSeleccionadas);
     // Estado separado para la selección VISUAL (solo cuando se usa Ctrl+Click)
@@ -160,7 +166,13 @@ export default function TableReq({ searchText, activeFilter, requisiciones: init
 
     // Función para abrir modal de editar fecha
     const handleAbrirModalEditarFecha = (requisicionId: number) => {
-        setModalEditarFecha({ open: true, requisicionId });
+        const reqActual = requisicionesFiltradas.find(r => Number(r.id) === Number(requisicionId));
+        setModalEditarFecha({
+            open: true,
+            requisicionId,
+            fechaBaseDefault: reqActual?.fechaCreacion || null,
+            fechaNecesariaDefault: reqActual?.fechaNecesaria || null,
+        });
         setOpenMenuId(null);
     };
 
@@ -262,7 +274,9 @@ export default function TableReq({ searchText, activeFilter, requisiciones: init
             {modalEditarFecha.open && (
                 <ModalEditarFecha
                     requisicionId={modalEditarFecha.requisicionId}
-                    onClose={() => setModalEditarFecha({ open: false, requisicionId: null })}
+                    fechaBaseDefault={modalEditarFecha.fechaBaseDefault || null}
+                    fechaNecesariaDefault={modalEditarFecha.fechaNecesariaDefault || null}
+                    onClose={() => setModalEditarFecha({ open: false, requisicionId: null, fechaBaseDefault: null, fechaNecesariaDefault: null })}
                     onUpdate={() => {
                         // Recargar requisiciones con false para que no muestre loading
                         (dispatch as any)(actions.axiosToGetRequisicions(false));
@@ -726,23 +740,83 @@ function SortableRow({ req, index, openMenuId, toggleMenu, isSelected, ultimaSel
 }
 
 // Componente Modal para editar fecha de requisición
-function ModalEditarFecha({ requisicionId, onClose, onUpdate }: { requisicionId: number | null; onClose: () => void; onUpdate: () => void }) {
+function ModalEditarFecha({ requisicionId, fechaBaseDefault, fechaNecesariaDefault, onClose, onUpdate }: { requisicionId: number | null; fechaBaseDefault?: string | null; fechaNecesariaDefault?: string | null; onClose: () => void; onUpdate: () => void }) {
     const [fechaBase, setFechaBase] = useState<string>('');
-    const [diasHabiles, setDiasHabiles] = useState<string>('0');
+    const [fechaNecesaria, setFechaNecesaria] = useState<string>('');
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
+
+    const normalizarParaDateInput = (value: any): string => {
+        if (value === null || value === undefined) return '';
+        const raw = String(value).trim();
+        if (!raw) return '';
+        if (raw.toLowerCase() === 'sin fecha') return '';
+
+        // 1) Intenta parseo directo (ISO normalmente)
+        let d = dayjs(raw);
+        if (d.isValid()) return d.format('YYYY-MM-DD');
+
+        // 2) Intenta formatos comunes del sistema
+        const formatos = [
+            'YYYY-MM-DD',
+            'YYYY/MM/DD',
+            'DD/MM/YYYY',
+            'DD-MM-YYYY',
+            'YYYY-MM-DDTHH:mm:ss.SSSZ',
+            'YYYY-MM-DDTHH:mm:ssZ',
+            'YYYY-MM-DDTHH:mm:ss.SSS',
+            'YYYY-MM-DDTHH:mm:ss',
+            'YYYY-MM-DD HH:mm:ss',
+        ];
+
+        for (const fmt of formatos) {
+            d = dayjs(raw, fmt, 'es', true);
+            if (d.isValid()) return d.format('YYYY-MM-DD');
+        }
+
+        return '';
+    };
+
+    // Precargar fechas al abrir el modal (fechaBase desde "Creación")
+    useEffect(() => {
+        const baseFromReq = normalizarParaDateInput(fechaBaseDefault);
+        const necesariaFromReq = normalizarParaDateInput(fechaNecesariaDefault);
+
+        // Siempre debe haber una fecha base visible (si no parsea, caemos a hoy)
+        const base = baseFromReq || dayjs().format('YYYY-MM-DD');
+        // Siempre debe haber una fecha necesaria visible:
+        // si la requisición no trae "Entrega", la precargamos igual a la base (Creación)
+        const necesaria = necesariaFromReq || base;
+
+        setFechaBase(base);
+        setFechaNecesaria(necesaria);
+    }, [requisicionId, fechaBaseDefault, fechaNecesariaDefault]);
+
+    // Días calendario entre fecha base y fecha necesaria.
+    // Queremos que: fechaBase + dias = fechaNecesaria
+    const calcularDiasEntre = (inicio: string, fin: string) => {
+        if (!inicio || !fin) return 0;
+
+        const fechaInicio = dayjs(inicio).startOf('day');
+        const fechaFin = dayjs(fin).startOf('day');
+        
+        if (!fechaInicio.isValid() || !fechaFin.isValid()) return 0;
+        if (fechaFin.isBefore(fechaInicio)) return -1;
+
+        return fechaFin.diff(fechaInicio, 'day'); // 0 si es el mismo día, 1 si es el día siguiente, etc.
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         
-        if (!requisicionId || !fechaBase) {
-            (dispatch as any)(actions.HandleAlerta('Debes seleccionar una fecha base', 'mistake'));
+        if (!requisicionId || !fechaBase || !fechaNecesaria) {
+            (dispatch as any)(actions.HandleAlerta('Debes seleccionar la fecha base y la fecha necesaria', 'mistake'));
             return;
         }
 
-        const dias = parseInt(diasHabiles) || 0;
+        const dias = calcularDiasEntre(fechaBase, fechaNecesaria);
         if (dias < 0) {
-            (dispatch as any)(actions.HandleAlerta('Los días hábiles deben ser un número positivo', 'mistake'));
+            (dispatch as any)(actions.HandleAlerta('La fecha necesaria debe ser mayor o igual a la fecha base', 'mistake'));
             return;
         }
 
@@ -750,7 +824,9 @@ function ModalEditarFecha({ requisicionId, onClose, onUpdate }: { requisicionId:
         try {
             const body = {
                 requisicionId: requisicionId,
-                fecha: fechaBase,
+                // Mandamos una hora “segura” para evitar corrimiento por parseo UTC en backend (20 -> 19)
+                // Backend puede estar haciendo new Date('YYYY-MM-DD') (UTC) y al serializar en -05 baja un día.
+                fecha: `${fechaBase}T12:00:00`,
                 necesaria: dias
             };
 
@@ -767,40 +843,13 @@ function ModalEditarFecha({ requisicionId, onClose, onUpdate }: { requisicionId:
         }
     };
 
-    // Obtener fecha de hoy como valor por defecto
-    const today = new Date().toISOString().split('T')[0];
-
-    // Calcular fecha resultante
-    const calcularFechaResultante = () => {
-        if (!fechaBase) return '';
-        const dias = parseInt(diasHabiles) || 0;
-        if (dias === 0) return fechaBase;
-        
-        const fecha = new Date(fechaBase);
-        let diasSumados = 0;
-        let diasHabilesSumados = 0;
-        
-        // Sumar días hábiles (excluyendo sábados y domingos)
-        while (diasHabilesSumados < dias) {
-            fecha.setDate(fecha.getDate() + 1);
-            diasSumados++;
-            const diaSemana = fecha.getDay();
-            if (diaSemana !== 0 && diaSemana !== 6) { // No es domingo (0) ni sábado (6)
-                diasHabilesSumados++;
-            }
-        }
-        
-        return fecha.toISOString().split('T')[0];
-    };
-
-    const fechaResultante = calcularFechaResultante();
+    // La fecha resultante es la fecha necesaria (si está seleccionada)
+    const fechaResultante = fechaNecesaria || '';
+    const diasHabilesCalculados =
+        fechaBase && fechaNecesaria ? calcularDiasEntre(fechaBase, fechaNecesaria) : 0;
+    
     const fechaFormateada = fechaResultante 
-        ? new Date(fechaResultante).toLocaleDateString('es-CO', { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
-        })
+        ? dayjs(fechaResultante).format('dddd, D [de] MMMM [de] YYYY')
         : '';
 
     return (
@@ -846,7 +895,7 @@ function ModalEditarFecha({ requisicionId, onClose, onUpdate }: { requisicionId:
                                 <input
                                     type="date"
                                     id="fechaBase"
-                                    value={fechaBase || today}
+                                    value={fechaBase}
                                     onChange={(e) => setFechaBase(e.target.value)}
                                     required
                                     style={{
@@ -875,7 +924,7 @@ function ModalEditarFecha({ requisicionId, onClose, onUpdate }: { requisicionId:
                         </div>
                         
                         <div className="inputDiv" style={{ marginBottom: '25px' }}>
-                            <label htmlFor="diasHabiles" style={{ 
+                            <label htmlFor="fechaNecesaria" style={{ 
                                 fontSize: '13px',
                                 fontWeight: '600',
                                 color: '#2c3e50',
@@ -883,37 +932,39 @@ function ModalEditarFecha({ requisicionId, onClose, onUpdate }: { requisicionId:
                                 display: 'block',
                                 letterSpacing: '0.3px'
                             }}>
-                                Días hábiles a sumar
+                                Fecha necesaria
                             </label>
-                            <input
-                                type="number"
-                                id="diasHabiles"
-                                min="0"
-                                value={diasHabiles}
-                                onChange={(e) => setDiasHabiles(e.target.value)}
-                                placeholder="Ejemplo: 5"
-                                required
-                                style={{
-                                    width: '100%',
-                                    padding: '12px 15px',
-                                    border: '2px solid #e0e0e0',
-                                    borderRadius: '8px',
-                                    fontSize: '14px',
-                                    color: '#2c3e50',
-                                    background: '#fff',
-                                    boxSizing: 'border-box',
-                                    transition: 'all 0.3s ease',
-                                    fontFamily: 'inherit'
-                                }}
-                                onFocus={(e) => {
-                                    e.target.style.borderColor = '#2980b9';
-                                    e.target.style.boxShadow = '0 0 0 3px rgba(41, 128, 185, 0.1)';
-                                }}
-                                onBlur={(e) => {
-                                    e.target.style.borderColor = '#e0e0e0';
-                                    e.target.style.boxShadow = 'none';
-                                }}
-                            />
+                            <div style={{ position: 'relative' }}>
+                                <input
+                                    type="date"
+                                    id="fechaNecesaria"
+                                    value={fechaNecesaria}
+                                    onChange={(e) => setFechaNecesaria(e.target.value)}
+                                    min={fechaBase || undefined}
+                                    required
+                                    style={{
+                                        width: '100%',
+                                        padding: '12px 15px',
+                                        border: '2px solid #e0e0e0',
+                                        borderRadius: '8px',
+                                        fontSize: '14px',
+                                        color: '#2c3e50',
+                                        background: '#fff',
+                                        boxSizing: 'border-box',
+                                        transition: 'all 0.3s ease',
+                                        cursor: 'pointer',
+                                        fontFamily: 'inherit'
+                                    }}
+                                    onFocus={(e) => {
+                                        e.target.style.borderColor = '#2980b9';
+                                        e.target.style.boxShadow = '0 0 0 3px rgba(41, 128, 185, 0.1)';
+                                    }}
+                                    onBlur={(e) => {
+                                        e.target.style.borderColor = '#e0e0e0';
+                                        e.target.style.boxShadow = 'none';
+                                    }}
+                                />
+                            </div>
                             {fechaResultante && (
                                 <div style={{
                                     marginTop: '15px',
@@ -944,7 +995,7 @@ function ModalEditarFecha({ requisicionId, onClose, onUpdate }: { requisicionId:
                                         marginTop: '8px',
                                         fontStyle: 'italic'
                                     }}>
-                                        Se sumarán {diasHabiles || 0} días hábiles a la fecha base
+                                        Entre la fecha base y la fecha necesaria hay {Math.max(0, diasHabilesCalculados)} días hábiles
                                     </div>
                                 </div>
                             )}
