@@ -688,7 +688,7 @@ export default function RightDataOrden() {
                                                     <div className="projectsList">
                                                         {item.itemToProjects.map((proj: any, pIndex: number) => (
                                                             <span key={pIndex} className="projectTag">
-                                                                {proj.requisicion?.nombre || `Proyecto ${proj.requisicionId}`} ({proj.cantidad})
+                                                                {Number(proj.requisicion.cotizacionId + 21719)} - {proj.requisicion?.nombre || `Proyecto ${proj.requisicionId}`} ({proj.cantidad})
                                                             </span>
                                                         ))}
                                                     </div>
