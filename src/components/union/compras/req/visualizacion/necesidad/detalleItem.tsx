@@ -64,8 +64,6 @@ export default function DetalleItem({ item, onClose, onProveedorClick }: Detalle
                 dispatch(actions.getItemRequisicion(404));
             });
     };
-    console.log('itemRequisicion', itemRequisicion);
-    console.log('itemssssssssss', item);
     // Función para enviar la cantidad actualizada
     const sendHowMany = async (how: string, comprasCotizacionItemId: number, proyecto) => {
         if (!how || isNaN(Number(how))) {
@@ -156,16 +154,18 @@ export default function DetalleItem({ item, onClose, onProveedorClick }: Detalle
     })) || [];
 
     const proyectos: ProyectoItem[] = data?.itemRequisicions?.map((proj: any) => ({
-        id: proj.requisicion.cotizacionId,
-        requisicionId: proj.requisicion.id,
-        nombre: proj.requisicion.nombre || proj.name,
+        id: proj?.requisicion?.cotizacionId || proj.cotizacionId,
+        requisicionId: proj?.requisicion?.id || proj.requisicionId,
+        nombre: proj?.requisicion?.nombre || proj?.name,
         estado: proj.estado || proj.state || 'Pendiente',
-        actual: proj.cantidadEntrega || proj.entregado || 0,
-        total: proj.cantidad || proj.totalCantidad || 0,
-        faltante: (proj.cantidad || proj.totalCantidad || 0) - (proj.cantidadEntrega || proj.entregado || 0),
+        actual: proj?.cantidadEntrega || proj.entregado || 0,
+        total: proj?.cantidad || proj.totalCantidad || 0,
+        faltante: (proj?.cantidad || proj.totalCantidad || 0) - (proj?.cantidadEntrega || proj.entregado || 0),
         comprasCotizacionItemId: proj.id || proj.comprasCotizacionItemId || proj.comprasItemCotizacionId || 0
     })) || [];
 
+    console.log('itemRequisicion', itemRequisicion);
+    console.log('item', item);
     return (
         <div className={`detalleItemPanel ${item ? 'abierto' : ''}`}>
             <div className="detalleItemContent">
@@ -216,7 +216,6 @@ export default function DetalleItem({ item, onClose, onProveedorClick }: Detalle
                     ) : (
                         
                         <div className="proyectosList">
-                            {console.log('proyectos', proyectos)}
                             {proyectos.length > 0 ? proyectos.map((proyecto) => {
                                 const estaEditando = editandoProyectoId === proyecto.id;
                                 const valorMostrado = item.tipo == 'materia-prima' && item.unidad == 'mt2' 
@@ -281,7 +280,7 @@ export default function DetalleItem({ item, onClose, onProveedorClick }: Detalle
                                                     </div>
                                                 )}
                                                 <span className="proyectoFaltante">
-                                                    Faltante {proyecto.faltante}
+                                                    {/* Faltante {proyecto.faltante} */} 
                                                 </span>
                                             </div>
                                         </div>

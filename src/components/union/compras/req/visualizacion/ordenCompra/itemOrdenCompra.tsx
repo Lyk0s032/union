@@ -68,9 +68,20 @@ export default function ItemOrdenCompra({ orden }: ItemOrdenCompraProps) {
             doc.setFont('helvetica', 'normal');
             doc.text(`Fecha: ${fechaFormateada}`, pageWidth / 2, 27, { align: 'center' });
 
+            // Información de la empresa
+            let startY = 35;
+            doc.setFontSize(12);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Modulares Costa Gomez SAS', 14, startY);
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(9);
+            doc.text('NIT: 901165150-3', 14, startY + 5);
+            doc.text('CL 11 13 15, Cali - Valle del Cauca', 14, startY + 10);
+            doc.text('PBX: 3739940', 14, startY + 15);
+            startY += 22;
+
             // Información del proveedor
             const proveedor = ordenCompleta.proveedor || ordenCompleta.provider || {};
-            let startY = 35;
             
             if (proveedor.nombre || proveedor.name) {
                 doc.setFontSize(12);
@@ -89,6 +100,54 @@ export default function ItemOrdenCompra({ orden }: ItemOrdenCompraProps) {
                     doc.text(`Teléfono: ${proveedor.telefono}`, 14, startY + 18);
                 }
                 startY += 25;
+            }
+
+            // Tabla de proyectos asociados
+            const requisiciones = Array.isArray(ordenCompleta?.requisiciones) 
+                ? ordenCompleta.requisiciones 
+                : [];
+            
+            if (requisiciones.length > 0) {
+                // Título de la sección de proyectos
+                doc.setFontSize(11);
+                doc.setFont('helvetica', 'bold');
+                doc.setTextColor(0, 123, 255); // Color azul #007bff
+                doc.text('Proyectos asociados', 14, startY);
+                doc.setTextColor(0, 0, 0); // Volver a color negro
+                
+                // Preparar datos de la tabla de proyectos
+                const proyectosHead = [['ID Proyecto', 'Nombre del Proyecto', 'Nro. Cotización']];
+                const proyectosBody = requisiciones.map((req: any) => {
+                    const proyectoId = req.id || req.requisicionId || 'N/A';
+                    const proyectoNombre = req.nombre || req.name || `Proyecto ${proyectoId}`;
+                    const cotizacionId = req.cotizacionId || req.cotizacion?.id;
+                    const numeroCotizacion = cotizacionId ? String(Number(cotizacionId) + 21719) : 'N/A';
+                    
+                    return [
+                        String(proyectoId),
+                        String(proyectoNombre),
+                        numeroCotizacion
+                    ];
+                });
+
+                // Agregar tabla de proyectos
+                autoTable(doc, {
+                    startY: startY + 5,
+                    head: proyectosHead,
+                    body: proyectosBody,
+                    styles: { fontSize: 9, cellPadding: 3 },
+                    headStyles: { fillColor: [245, 245, 245], textColor: 0, fontStyle: 'bold' },
+                    alternateRowStyles: { fillColor: [250, 250, 250] },
+                    margin: { left: 14, right: 14 },
+                    columnStyles: {
+                        0: { cellWidth: 'auto' },
+                        1: { cellWidth: 'auto' },
+                        2: { cellWidth: 'auto' }
+                    }
+                });
+
+                // Actualizar startY después de la tabla de proyectos
+                startY = (doc as any).lastAutoTable ? ((doc as any).lastAutoTable.finalY as number) + 10 : startY + 20;
             }
 
             // Tabla de items - usar la misma lógica que rightDataOrden.tsx

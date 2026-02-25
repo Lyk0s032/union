@@ -21,6 +21,21 @@ const pdfStyles = StyleSheet.create({
         color: '#007bff',
         marginBottom: 5,
     },
+    companySection: {
+        marginBottom: 15,
+        marginTop: 5,
+    },
+    companyName: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        color: '#333',
+        marginBottom: 4,
+    },
+    companyInfo: {
+        fontSize: 9,
+        color: '#666',
+        marginBottom: 2,
+    },
     supplierSection: {
         marginBottom: 20,
     },
@@ -56,6 +71,35 @@ const pdfStyles = StyleSheet.create({
     colQty: { width: '15%', fontSize: 10 },
     colPrice: { width: '15%', fontSize: 10, textAlign: 'right' },
     colTotal: { width: '20%', fontSize: 10, textAlign: 'right' },
+    projectsSection: {
+        marginTop: 15,
+        marginBottom: 20,
+    },
+    projectsTitle: {
+        fontSize: 12,
+        fontWeight: 'bold',
+        color: '#007bff',
+        marginBottom: 8,
+    },
+    projectsTable: {
+        marginTop: 5,
+    },
+    projectsTableHeader: {
+        flexDirection: 'row',
+        backgroundColor: '#f5f5f5',
+        padding: 6,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+    },
+    projectsTableRow: {
+        flexDirection: 'row',
+        padding: 6,
+        borderBottomWidth: 1,
+        borderBottomColor: '#eee',
+    },
+    colProjectId: { width: '20%', fontSize: 9 },
+    colProjectName: { width: '50%', fontSize: 9 },
+    colProjectCotizacion: { width: '30%', fontSize: 9 },
     summary: {
         marginTop: 20,
         marginBottom: 30,
@@ -171,6 +215,12 @@ const PdfDocument = ({
     const nota = ordenCompras?.description || ordenCompras?.note || ordenCompras?.descripcion || '';
     const tieneNota = nota && nota.trim();
 
+    // Obtener requisiciones (proyectos) asociados
+    const requisiciones = Array.isArray(ordenCompras?.requisiciones) 
+        ? ordenCompras.requisiciones 
+        : [];
+    const tieneProyectos = requisiciones.length > 0;
+
     return (
         <Document>
             <Page size="A4" style={pdfStyles.page}>
@@ -179,6 +229,14 @@ const PdfDocument = ({
                         Orden de Compra #{ordenCompras?.id || 'N/A'}
                     </Text>
                     <Text style={pdfStyles.supplierInfo}>Fecha: {fechaFormateada}</Text>
+                </View>
+
+                {/* Información de la empresa */}
+                <View style={pdfStyles.companySection}>
+                    <Text style={pdfStyles.companyName}>Modulares Costa Gomez SAS</Text>
+                    <Text style={pdfStyles.companyInfo}>NIT: 901165150-3</Text>
+                    <Text style={pdfStyles.companyInfo}>CL 11 13 15, Cali - Valle del Cauca</Text>
+                    <Text style={pdfStyles.companyInfo}>PBX: 3739940</Text>
                 </View>
 
                 <View style={pdfStyles.supplierSection}>
@@ -193,6 +251,34 @@ const PdfDocument = ({
                         <Text style={pdfStyles.supplierInfo}>Teléfono: {proveedor.telefono}</Text>
                     )}
                 </View>
+
+                {/* Tabla de proyectos asociados */}
+                {tieneProyectos && (
+                    <View style={pdfStyles.projectsSection}>
+                        <Text style={pdfStyles.projectsTitle}>Proyectos asociados</Text>
+                        <View style={pdfStyles.projectsTable}>
+                            <View style={pdfStyles.projectsTableHeader}>
+                                <Text style={pdfStyles.colProjectId}>ID Proyecto</Text>
+                                <Text style={pdfStyles.colProjectName}>Nombre del Proyecto</Text>
+                                <Text style={pdfStyles.colProjectCotizacion}>Nro. Cotización</Text>
+                            </View>
+                            {requisiciones.map((req, index) => {
+                                const proyectoId = req.id || req.requisicionId || 'N/A';
+                                const proyectoNombre = req.nombre || req.name || `Proyecto ${proyectoId}`;
+                                const cotizacionId = req.cotizacionId || req.cotizacion?.id;
+                                const numeroCotizacion = cotizacionId ? String(Number(cotizacionId) + 21719) : 'N/A';
+                                
+                                return (
+                                    <View key={req.id || index} style={pdfStyles.projectsTableRow}>
+                                        <Text style={pdfStyles.colProjectId}>{String(proyectoId)}</Text>
+                                        <Text style={pdfStyles.colProjectName}>{String(proyectoNombre)}</Text>
+                                        <Text style={pdfStyles.colProjectCotizacion}>{numeroCotizacion}</Text>
+                                    </View>
+                                );
+                            })}
+                        </View>
+                    </View>
+                )}
 
                 {items.length > 0 && (
                     <View style={pdfStyles.table}>

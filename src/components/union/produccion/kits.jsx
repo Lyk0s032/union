@@ -49,9 +49,17 @@ export default function KitsPanel(){
                 categoriaId: cat || undefined, 
                 lineaId: li || undefined,
                 extensionId: ex || undefined,
-                state: state || undefined
+                state:  state == 'simulation' ? 'simulacion' : state == 'desarrollo' ? 'desarrollo' : state == 'completa' ? 'completa' : undefined
             }
             });
+            console.log('params', {
+                name: word || undefined,
+                categoriaId: cat || undefined, 
+                lineaId: li || undefined,
+                extensionId: ex || undefined,
+                state:  state == 'simulation' ? 'simulacion' : state == 'desarrollo' ? 'desarrollo' : state == 'completa' ? 'completa' : undefined
+            });
+            console.log('data', data);
 
             setKitsFiltrados(data);
         } catch (err) {
@@ -270,30 +278,16 @@ export default function KitsPanel(){
                                     </tbody>
                                     : state == 'desarrollo' ?
                                     <tbody>
-                                        {
-                                            !kits || loadingKits ?
-                                                <span>Cargando</span>
-                                            : kits && kits.length ?
-                                                word || ex || lineas || categorias ?
-                                                    kits.filter(m => {
-                                                            const porLetra = word ? m.name.toLowerCase().includes(word.toLowerCase()) : true
-                                                            const porLinea = li ? m.lineaId == li : true
-                                                            const porCategoria = cat ? m.categoriumId == cat : true
-                                                            const porExtension = ex ? m.extensionId == ex : true
-                                                            return porLetra && porLinea && porCategoria && porExtension
-                                                        }
-                                                        ).map((pv, i) => {
-                                                            return (
-                                                                pv.state == 'desarrollo' || !pv.state ? 
-                                                                        <KitItem key={i+1} kit={pv} /> 
-                                                                : null
-                                                            )
-                                                        })
-                                                :
-                                                kits.map((kt, i) => {
+                                        { 
+                                            !kits || loadingKits || loadingFilter ?
+                                                <Loading />
+                                            : dataToRender && dataToRender.length ?
+                                                dataToRender.map((pv, i) => { 
                                                     return (
-                                                        kt.state == 'desarrollo' || !kt.state ? <KitItem kit={kt} key={i+1} /> : null
-                                                    ) 
+                                                        pv.state == 'desarrollo' || !pv.state ? 
+                                                            <KitItem key={i+1} kit={pv} /> 
+                                                        : null
+                                                    )
                                                 })
                                             : <h1>No hay resultados</h1>
                                         }
@@ -301,29 +295,15 @@ export default function KitsPanel(){
                                     : state == 'simulation' ?
                                     <tbody>
                                         {
-                                            !kits || loadingKits ?
-                                                <span>Cargando</span>
-                                            : kits && kits.length ?
-                                                word || ex || lineas || categorias ?
-                                                    kits.filter(m => {
-                                                            const porLetra = word ? m.name.toLowerCase().includes(word.toLowerCase()) : true
-                                                            const porLinea = li ? m.lineaId == li : true
-                                                            const porCategoria = cat ? m.categoriumId == cat : true
-                                                            const porExtension = ex ? m.extensionId == ex : true
-                                                            return porLetra && porLinea && porCategoria && porExtension
-                                                        }
-                                                        ).map((pv, i) => {
-                                                            return (
-                                                                pv.state == 'simulacion' ? 
-                                                                        <KitItem key={i+1} kit={pv} /> 
-                                                                : null
-                                                            )
-                                                        })
-                                                :
-                                                kits.map((kt, i) => {
+                                            !kits || loadingKits || loadingFilter ?
+                                                <Loading />
+                                            : dataToRender && dataToRender.length ?
+                                                dataToRender.map((pv, i) => { 
                                                     return (
-                                                        kt.state == 'simulacion'  ? <KitItem kit={kt} key={i+1} /> : null
-                                                    ) 
+                                                        pv.state == 'simulacion' ? 
+                                                            <KitItem key={i+1} kit={pv} /> 
+                                                        : null
+                                                    )
                                                 })
                                             : <h1>No hay resultados</h1>
                                         }
