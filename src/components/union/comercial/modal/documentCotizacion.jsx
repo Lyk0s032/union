@@ -445,8 +445,6 @@ export default function DocumentCotizacion(){
                                                                                     
                                                                             return (
                                                                                 <tr key={i+1}>
-                                                                                    {console.log('itt',it)}
-                                                                                    
                                                                                     { // ID
                                                                                         it.kitCotizacion ?
                                                                                             <td className='left Small'>0{it.id}</td>
@@ -470,7 +468,7 @@ export default function DocumentCotizacion(){
                                                                                         it.armadoCotizacion ?
                                                                                             <td className="left Longer">{it.name.toUpperCase()}</td>
                                                                                         :
-                                                                                            <td className='left Longer'> {it.name.toUpperCase()} {it.state == 'simulacion' ? null : `- ${it.extension.name.toUpperCase()}`} </td>
+                                                                                            <td className='left Longer'> {it.name.toUpperCase()} {it.state == `${it.extension.name.toUpperCase()}` ? null : `- ${it.extension.name.toUpperCase()}`} </td>
                                                                                     }
                                                                                     { // CANTIDAD
                                                                                         it.kitCotizacion ?
