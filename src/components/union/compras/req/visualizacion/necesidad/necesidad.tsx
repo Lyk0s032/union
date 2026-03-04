@@ -575,7 +575,7 @@ export default function NecesidadRequisicion(){
                 const cliente = cotizacion.client || {};
                 const nombreProyecto = cotizacion.name || proyecto.nombre || `Proyecto ${proyecto.id || ''}`;
                 const codigo = proyecto.codigo || cotizacion.codigo || 0;
-                const numeroCotizacion = Number(codigo) + 21719;
+                const numeroCotizacion = Number(cotizacion.id) + 21719;
                 const nombreCliente = cliente.name || cliente.nombre || 'N/A';
                 
                 return [

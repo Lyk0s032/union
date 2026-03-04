@@ -598,6 +598,50 @@
     cursor: not-allowed;
 }
 
+/* Table Styles for Modal */
+.item-modal-content .tableDataItems {
+    margin-top: 16px;
+}
+
+.item-modal-content .listaMP {
+    overflow-x: auto;
+}
+
+.item-modal-content .listaMP table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.item-modal-content .listaMP thead {
+    background: #f9fafb;
+}
+
+.item-modal-content .listaMP th {
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    color: #374151;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #e6e9ef;
+}
+
+.item-modal-content .listaMP td {
+    padding: 14px 16px;
+    border-top: 1px solid #e6e9ef;
+    color: #6b7280;
+}
+
+.item-modal-content .listaMP tbody tr:hover {
+    background: #fafbfc;
+}
+
+.item-modal-content .listaMP tbody tr:last-child td {
+    border-bottom: 1px solid #e6e9ef;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .item-modal-container {

@@ -5,14 +5,14 @@ import MovimientosItem from './movimientosItem';
 import TransferirItem from './transferirItem';
 import './itemModal.css';
 
-export default function ItemModal({ item, bodegaId, onClose, onOperacionExitosa }) {
+export default function ItemModal({ item, bodegaId, onClose, onOperacionExitosa, itemNecesidad = null }) {
     console.log('[ItemModal] mount', { item, bodegaId });
     const [itemData, setItemData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [vistaActual, setVistaActual] = useState('detalles'); // 'detalles', 'transferir'
     const [movimientosPage, setMovimientosPage] = useState(1);
     const movimientosLimit = 20;
-
+    console.log('item desde el modal', itemData)
     // Cerrar con tecla Escape
     useEffect(() => {
         const handleEscape = (e) => {
@@ -194,6 +194,7 @@ export default function ItemModal({ item, bodegaId, onClose, onOperacionExitosa 
         <div className="item-modal-overlay" onClick={onClose}>
             <div className="item-modal-container" onClick={(e) => e.stopPropagation()}>
                 {/* Header con X para cerrar */}
+                {console.log('item', item)}
                 <div className="item-modal-header">
                     <div className="item-modal-header-content">
                         <div className="item-modal-icon">
@@ -232,7 +233,7 @@ export default function ItemModal({ item, bodegaId, onClose, onOperacionExitosa 
                         <div className="item-modal-stats">
                             <div className="item-stat-card">
                                 <h1>{Number(cantidadTotal) === 0 ? '—' : Number(cantidadTotal).toLocaleString('es-ES')}</h1>
-                                <span>Cantidad Total</span>
+                                <span>Cantidad Total en Almacén</span>
                             </div>
                             <div className="item-stat-card">
                                 <h1>
@@ -241,6 +242,30 @@ export default function ItemModal({ item, bodegaId, onClose, onOperacionExitosa 
                                 </h1>
                                 <span>Medida</span>
                             </div>
+                            {/* Información del proyecto si viene desde necesidad */}
+                            {itemNecesidad && (
+                                <>
+                                    <div className="item-stat-card">
+                                        <h1>{Number(itemNecesidad.cantidadComprometida || 0).toLocaleString('es-ES')}</h1>
+                                        <span>Necesidad del Proyecto</span>
+                                    </div>
+                                    <div className="item-stat-card">
+                                        <h1>{Number(itemNecesidad.cantidadEntregada || 0).toLocaleString('es-ES')}</h1>
+                                        <span>Entregado al Proyecto</span>
+                                    </div>
+                                    <div className="item-stat-card">
+                                        <h1>
+                                            {(() => {
+                                                const comprometida = Number(itemNecesidad.cantidadComprometida || 0);
+                                                const entregada = Number(itemNecesidad.cantidadEntregada || 0);
+                                                const pendiente = comprometida - entregada;
+                                                return (pendiente < 0 ? 0 : pendiente).toLocaleString('es-ES');
+                                            })()}
+                                        </h1>
+                                        <span>Pendiente por Entregar</span>
+                                    </div>
+                                </>
+                            )}
                         </div>
 
                         {/* Detalles del producto */}

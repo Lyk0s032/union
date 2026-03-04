@@ -298,14 +298,14 @@ export default function GeneralAlmacen() {
               const rowMenuKey = `${String(p?.itemId ?? p?.id ?? '')}${(selectedBodega === 'PT' && p?.medida) ? `::${String(p.medida)}` : ''}`;
               return (
               <tr key={p.id} className="product-row" style={{ borderTop: '1px solid #f1f3f6' }}>
-                <td style={{ padding: 12, fontSize: 12 }}>{p?.itemId}</td>
-                <td style={{ padding: 12, fontSize: 11, color: '#666'}}>
-                    {p.nombre} <span style={{ fontSize: 12, color: '#666' }}>{p.isMt2 ? `| ${p.medida} mt2` : ''}</span> <br />
-                    <span style={{ fontSize: 12, color: '#666' }}>{p?.tipo == 'MP' ? 'Materia' : 'Producto'}</span>
+                <td style={{ padding: 12, fontSize: 12 }} onClick={() => handleOpenItem(p)}>{p?.itemId}</td>
+                <td style={{ padding: 12, fontSize: 11, color: '#666'}} onClick={() => handleOpenItem(p)}>
+                    {p.nombre} <span style={{ fontSize: 12, color: '#666' }} onClick={() => handleOpenItem(p)}>{p.isMt2 ? `| ${p.medida} mt2` : ''}</span> <br />
+                    <span style={{ fontSize: 12, color: '#666' }} onClick={() => handleOpenItem(p)}>{p?.tipo == 'MP' ? 'Materia' : 'Producto'}</span>
                 </td>
-                <td style={{ padding: 12, fontSize: 12 }}>{p.cantidad}</td>
-                 <td style={{ padding: 12, fontSize: 12, color: '#666' }}>{formatearFechaEspañol(p?.updatedAt)}</td>
-                <td style={{ padding: 12, fontSize: 12 }}>
+                <td style={{ padding: 12, fontSize: 12 }} onClick={() => handleOpenItem(p)}>{p.cantidad}</td>
+                 <td style={{ padding: 12, fontSize: 12, color: '#666' }} onClick={() => handleOpenItem(p)}>{formatearFechaEspañol(p?.updatedAt)}</td>
+                <td style={{ padding: 12, fontSize: 12 }} onClick={() => handleOpenItem(p)}>
                   <span style={{
                     display: 'inline-block',
                     padding: '4px 8px',

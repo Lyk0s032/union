@@ -42,6 +42,19 @@ export default function RemisionModal({ remision, onClose }) {
     const [editandoFechaRemision, setEditandoFechaRemision] = useState(false);
     const [editandoObservaciones, setEditandoObservaciones] = useState(false);
 
+    // Estados para items manuales
+    const [itemsManuales, setItemsManuales] = useState(() => {
+        // Cargar items manuales desde localStorage usando el ID de la remisión
+        try {
+            const saved = localStorage.getItem(`remision_${remision.id}_items_manuales`);
+            return saved ? JSON.parse(saved) : [];
+        } catch {
+            return [];
+        }
+    });
+    const [mostrarModalItemManual, setMostrarModalItemManual] = useState(false);
+    const [itemManualEditando, setItemManualEditando] = useState(null); // null = nuevo, objeto = editando
+
     const formatearFecha = (fecha) => {
         if (!fecha) return 'N/A';
         const date = new Date(fecha);
@@ -65,8 +78,28 @@ export default function RemisionModal({ remision, onClose }) {
             } else {
                 setFechaRemision('');
             }
+            // Cargar items manuales desde localStorage
+            try {
+                const saved = localStorage.getItem(`remision_${remision.id}_items_manuales`);
+                if (saved) {
+                    setItemsManuales(JSON.parse(saved));
+                }
+            } catch (e) {
+                console.error('Error cargando items manuales:', e);
+            }
         }
     }, [remision]);
+
+    // Guardar items manuales en localStorage cuando cambien
+    useEffect(() => {
+        if (remision?.id) {
+            try {
+                localStorage.setItem(`remision_${remision.id}_items_manuales`, JSON.stringify(itemsManuales));
+            } catch (e) {
+                console.error('Error guardando items manuales:', e);
+            }
+        }
+    }, [itemsManuales, remision?.id]);
 
     const handleGuardarCambios = async () => {
         if (guardando) return; // Evitar múltiples llamadas simultáneas
@@ -245,6 +278,7 @@ export default function RemisionModal({ remision, onClose }) {
             doc.setFontSize(9);
             doc.setTextColor(0, 0, 0);
             
+            // Items normales de la remisión
             remision?.itemRemisions?.forEach((item, index) => {
                 // Verificar si necesita nueva página
                 if (yPos > pageHeight - 60) {
@@ -279,6 +313,52 @@ export default function RemisionModal({ remision, onClose }) {
                 // Descripción (con manejo de texto largo)
                 const descripcionWidth = colSolicitada - colDesc - 5;
                 const descripcionLines = doc.splitTextToSize(String(descripcion), descripcionWidth);
+                doc.text(descripcionLines, colDesc, yPos);
+                
+                // Cantidades (alineadas a la derecha)
+                const solicitadaWidth = doc.getTextWidth(solicitada);
+                doc.text(solicitada, colSolicitada + (20 - solicitadaWidth), yPos);
+                
+                const despachadaWidth = doc.getTextWidth(despachada);
+                doc.text(despachada, colDespachada + (20 - despachadaWidth), yPos);
+                
+                // Incrementar Y según la altura de la descripción
+                yPos += Math.max(7, descripcionLines.length * 5);
+            });
+
+            // Items manuales (sin trazabilidad completa)
+            itemsManuales.forEach((item, index) => {
+                // Verificar si necesita nueva página
+                if (yPos > pageHeight - 60) {
+                    doc.addPage();
+                    yPos = margin;
+                    
+                    // Redibujar header de tabla en nueva página
+                    doc.setFillColor(...colorGrisClaro);
+                    doc.rect(margin, yPos - 5, tableWidth, 8, 'F');
+                    doc.setFont(undefined, 'bold');
+                    doc.setFontSize(9);
+                    doc.text('Cantidad', colRef, yPos);
+                    doc.text('Producto', colDesc, yPos);
+                    doc.text('Solicitada', colSolicitada, yPos);
+                    doc.text('Despachada', colDespachada, yPos);
+                    yPos += 10;
+                    doc.line(margin, yPos, pageWidth - margin, yPos);
+                    yPos += 5;
+                    doc.setFont(undefined, 'normal');
+                }
+
+                const ref = `MANUAL-${index + 1}`;
+                const descripcion = String(item.descripcion || 'Item manual');
+                const solicitada = String(Number(item.cantidadSolicitada || 0).toFixed(0));
+                const despachada = String(Number(item.cantidadDespachada || 0).toFixed(0));
+
+                // REF/SKU
+                doc.text(ref, colRef, yPos);
+                
+                // Descripción (con manejo de texto largo)
+                const descripcionWidth = colSolicitada - colDesc - 5;
+                const descripcionLines = doc.splitTextToSize(descripcion, descripcionWidth);
                 doc.text(descripcionLines, colDesc, yPos);
                 
                 // Cantidades (alineadas a la derecha)
@@ -335,7 +415,8 @@ export default function RemisionModal({ remision, onClose }) {
 
             doc.setFont(undefined, 'normal');
             doc.setFontSize(9);
-            doc.text(`Total Referencias: ${String(totalReferencias)}`, resumenX, yPos);
+            const totalReferenciasConManuales = totalReferencias + itemsManuales.length;
+            doc.text(`Total Referencias: ${String(totalReferenciasConManuales)}`, resumenX, yPos);
             yPos += 6;
             doc.text(`Total Unidades Solicitadas: ${String(totalSolicitada.toFixed(0))}`, resumenX, yPos);
             yPos += 6;
@@ -457,6 +538,47 @@ export default function RemisionModal({ remision, onClose }) {
         sum + Number(item?.necesidadProyecto?.cantidadComprometida || 0), 0) || 0;
     const totalDespachada = remision?.itemRemisions?.reduce((sum, item) => 
         sum + Number(item?.cantidad || 0), 0) || 0;
+    
+    // Totales incluyendo items manuales
+    const totalSolicitadaManual = itemsManuales.reduce((sum, item) => 
+        sum + Number(item.cantidadSolicitada || 0), 0);
+    const totalDespachadaManual = itemsManuales.reduce((sum, item) => 
+        sum + Number(item.cantidadDespachada || 0), 0);
+    
+    const totalReferenciasConManuales = totalReferencias + itemsManuales.length;
+    const totalSolicitadaConManuales = totalSolicitada + totalSolicitadaManual;
+    const totalDespachadaConManuales = totalDespachada + totalDespachadaManual;
+
+    // Funciones para manejar items manuales
+    const handleAgregarItemManual = () => {
+        setItemManualEditando(null);
+        setMostrarModalItemManual(true);
+    };
+
+    const handleGuardarItemManual = (itemData) => {
+        if (itemManualEditando !== null) {
+            // Editar item existente
+            setItemsManuales(prev => prev.map((item, index) => 
+                index === itemManualEditando ? { ...itemData } : item
+            ));
+        } else {
+            // Agregar nuevo item
+            setItemsManuales(prev => [...prev, { ...itemData, id: Date.now() }]);
+        }
+        setMostrarModalItemManual(false);
+        setItemManualEditando(null);
+    };
+
+    const handleEditarItemManual = (index) => {
+        setItemManualEditando(index);
+        setMostrarModalItemManual(true);
+    };
+
+    const handleEliminarItemManual = (index) => {
+        if (window.confirm('¿Estás seguro de eliminar este item manual?')) {
+            setItemsManuales(prev => prev.filter((_, i) => i !== index));
+        }
+    };
 
     return (
         <div className="modal" style={{ zIndex: 15 }}>
@@ -1013,6 +1135,46 @@ export default function RemisionModal({ remision, onClose }) {
 
                     {/* Tabla de productos */}
                     <div style={{ marginBottom: '30px' }}>
+                        <div style={{ 
+                            display: 'flex', 
+                            justifyContent: 'space-between', 
+                            alignItems: 'center',
+                            marginBottom: '15px'
+                        }}>
+                            <h3 style={{ 
+                                margin: 0, 
+                                fontSize: '16px', 
+                                fontWeight: '600', 
+                                color: '#333' 
+                            }}>
+                                PRODUCTOS DE LA REMISIÓN
+                            </h3>
+                            <button
+                                onClick={handleAgregarItemManual}
+                                style={{
+                                    padding: '10px 20px',
+                                    fontSize: '13px',
+                                    fontWeight: '600',
+                                    border: 'none',
+                                    borderRadius: '6px',
+                                    background: '#2f8bfd',
+                                    color: '#fff',
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px',
+                                    transition: 'all 0.2s'
+                                }}
+                                onMouseOver={(e) => {
+                                    e.currentTarget.style.background = '#1976d2';
+                                }}
+                                onMouseOut={(e) => {
+                                    e.currentTarget.style.background = '#2f8bfd';
+                                }}
+                            >
+                                ➕ Agregar Item Manual
+                            </button>
+                        </div>
                         <table style={{ 
                             width: '100%', 
                             borderCollapse: 'collapse',
@@ -1063,9 +1225,21 @@ export default function RemisionModal({ remision, onClose }) {
                                     }}>
                                         CANT. DESPACHADA
                                     </th>
+                                    <th style={{ 
+                                        padding: '15px', 
+                                        textAlign: 'center',
+                                        fontSize: '13px',
+                                        fontWeight: '600',
+                                        color: '#666',
+                                        borderBottom: '2px solid #e0e0e0',
+                                        width: '100px'
+                                    }}>
+                                        ACCIONES
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
+                                {/* Items normales de la remisión */}
                                 {remision?.itemRemisions?.map((item, index) => (
                                     <tr key={item.id || index}>
                                         <td style={{ 
@@ -1114,6 +1288,97 @@ export default function RemisionModal({ remision, onClose }) {
                                             }}>
                                                 {Number(item?.cantidad || 0).toFixed(0)}
                                             </span>
+                                        </td>
+                                        <td style={{ 
+                                            padding: '15px', 
+                                            textAlign: 'center',
+                                            borderBottom: '1px solid #e0e0e0'
+                                        }}>
+                                            {/* Sin acciones para items normales */}
+                                        </td>
+                                    </tr>
+                                ))}
+                                {/* Items manuales */}
+                                {itemsManuales.map((item, index) => (
+                                    <tr key={`manual-${item.id || index}`} style={{ background: '#fff9e6' }}>
+                                        <td style={{ 
+                                            padding: '15px', 
+                                            borderBottom: '1px solid #e0e0e0',
+                                            fontSize: '13px',
+                                            color: '#333'
+                                        }}>
+                                            MANUAL-{index + 1}
+                                        </td>
+                                        <td style={{ 
+                                            padding: '15px', 
+                                            borderBottom: '1px solid #e0e0e0',
+                                            fontSize: '13px',
+                                            color: '#333'
+                                        }}>
+                                            {item.descripcion || 'Item manual'}
+                                        </td>
+                                        <td style={{ 
+                                            padding: '15px', 
+                                            textAlign: 'center',
+                                            borderBottom: '1px solid #e0e0e0',
+                                            fontSize: '13px',
+                                            color: '#333'
+                                        }}>
+                                            {Number(item.cantidadSolicitada || 0).toFixed(0)}
+                                        </td>
+                                        <td style={{ 
+                                            padding: '15px', 
+                                            textAlign: 'center',
+                                            borderBottom: '1px solid #e0e0e0',
+                                            fontSize: '13px',
+                                            color: '#333'
+                                        }}>
+                                            <span style={{
+                                                background: '#fff3cd',
+                                                color: '#856404',
+                                                padding: '4px 12px',
+                                                borderRadius: '12px',
+                                                fontWeight: '600',
+                                                display: 'inline-block'
+                                            }}>
+                                                {Number(item.cantidadDespachada || 0).toFixed(0)}
+                                            </span>
+                                        </td>
+                                        <td style={{ 
+                                            padding: '15px', 
+                                            textAlign: 'center',
+                                            borderBottom: '1px solid #e0e0e0'
+                                        }}>
+                                            <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
+                                                <button
+                                                    onClick={() => handleEditarItemManual(index)}
+                                                    style={{
+                                                        padding: '6px 12px',
+                                                        fontSize: '12px',
+                                                        border: '1px solid #2f8bfd',
+                                                        borderRadius: '4px',
+                                                        background: 'transparent',
+                                                        color: '#2f8bfd',
+                                                        cursor: 'pointer'
+                                                    }}
+                                                >
+                                                    ✏️
+                                                </button>
+                                                <button
+                                                    onClick={() => handleEliminarItemManual(index)}
+                                                    style={{
+                                                        padding: '6px 12px',
+                                                        fontSize: '12px',
+                                                        border: '1px solid #dc3545',
+                                                        borderRadius: '4px',
+                                                        background: 'transparent',
+                                                        color: '#dc3545',
+                                                        cursor: 'pointer'
+                                                    }}
+                                                >
+                                                    🗑️
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))}
@@ -1217,11 +1482,11 @@ export default function RemisionModal({ remision, onClose }) {
                             <div style={{ fontSize: '13px', color: '#666', lineHeight: '2' }}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
                                     <span>Total Referencias:</span>
-                                    <span style={{ fontWeight: '600' }}>{totalReferencias}</span>
+                                    <span style={{ fontWeight: '600' }}>{totalReferenciasConManuales}</span>
                                 </div>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
                                     <span>Total Unidades Solicitadas:</span>
-                                    <span style={{ fontWeight: '600' }}>{totalSolicitada.toFixed(0)}</span>
+                                    <span style={{ fontWeight: '600' }}>{totalSolicitadaConManuales.toFixed(0)}</span>
                                 </div>
                                 <div style={{ 
                                     display: 'flex', 
@@ -1236,7 +1501,7 @@ export default function RemisionModal({ remision, onClose }) {
                                         fontSize: '18px',
                                         color: '#2f8bfd'
                                     }}>
-                                        {totalDespachada.toFixed(0)}
+                                        {totalDespachadaConManuales.toFixed(0)}
                                     </span>
                                 </div>
                             </div>
@@ -1326,6 +1591,199 @@ export default function RemisionModal({ remision, onClose }) {
                         </div>
                     </div>
                 </div>
+            </div>
+
+            {/* Modal para agregar/editar item manual */}
+            {mostrarModalItemManual && (
+                <ModalItemManual
+                    item={itemManualEditando !== null ? itemsManuales[itemManualEditando] : null}
+                    onGuardar={handleGuardarItemManual}
+                    onCerrar={() => {
+                        setMostrarModalItemManual(false);
+                        setItemManualEditando(null);
+                    }}
+                />
+            )}
+        </div>
+    );
+}
+
+// Componente modal para agregar/editar item manual
+function ModalItemManual({ item, onGuardar, onCerrar }) {
+    const [descripcion, setDescripcion] = useState(item?.descripcion || '');
+    const [cantidadSolicitada, setCantidadSolicitada] = useState(item?.cantidadSolicitada || '');
+    const [cantidadDespachada, setCantidadDespachada] = useState(item?.cantidadDespachada || '');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (!descripcion.trim()) {
+            alert('Por favor ingresa una descripción');
+            return;
+        }
+        onGuardar({
+            descripcion: descripcion.trim(),
+            cantidadSolicitada: Number(cantidadSolicitada) || 0,
+            cantidadDespachada: Number(cantidadDespachada) || 0
+        });
+    };
+
+    return (
+        <div className="modal" style={{ zIndex: 20 }}>
+            <div className="hiddenModal" onClick={onCerrar}></div>
+            <div className="containerModal" style={{ 
+                maxWidth: '500px',
+                padding: '30px',
+                borderRadius: '12px'
+            }}>
+                <div style={{ 
+                    display: 'flex', 
+                    justifyContent: 'space-between', 
+                    alignItems: 'center',
+                    marginBottom: '20px'
+                }}>
+                    <h2 style={{ margin: 0, fontSize: '18px', fontWeight: '600' }}>
+                        {item ? 'Editar Item Manual' : 'Agregar Item Manual'}
+                    </h2>
+                    <button
+                        onClick={onCerrar}
+                        style={{
+                            background: 'transparent',
+                            border: 'none',
+                            fontSize: '24px',
+                            cursor: 'pointer',
+                            color: '#666'
+                        }}
+                    >
+                        ✕
+                    </button>
+                </div>
+
+                <form onSubmit={handleSubmit}>
+                    <div style={{ marginBottom: '20px' }}>
+                        <label style={{ 
+                            display: 'block', 
+                            marginBottom: '8px', 
+                            fontWeight: '500',
+                            fontSize: '14px'
+                        }}>
+                            Descripción del Item *
+                        </label>
+                        <textarea
+                            value={descripcion}
+                            onChange={(e) => setDescripcion(e.target.value)}
+                            placeholder="Ej: Servicio de instalación, Transporte especial, etc."
+                            required
+                            rows="3"
+                            style={{
+                                width: '100%',
+                                padding: '10px',
+                                fontSize: '14px',
+                                border: '1px solid #ddd',
+                                borderRadius: '6px',
+                                boxSizing: 'border-box',
+                                resize: 'vertical',
+                                fontFamily: 'inherit'
+                            }}
+                        />
+                    </div>
+
+                    <div style={{ 
+                        display: 'grid', 
+                        gridTemplateColumns: '1fr 1fr', 
+                        gap: '15px',
+                        marginBottom: '20px'
+                    }}>
+                        <div>
+                            <label style={{ 
+                                display: 'block', 
+                                marginBottom: '8px', 
+                                fontWeight: '500',
+                                fontSize: '14px'
+                            }}>
+                                Cantidad Solicitada
+                            </label>
+                            <input
+                                type="number"
+                                value={cantidadSolicitada}
+                                onChange={(e) => setCantidadSolicitada(e.target.value)}
+                                placeholder="0"
+                                min="0"
+                                step="0.01"
+                                style={{
+                                    width: '100%',
+                                    padding: '10px',
+                                    fontSize: '14px',
+                                    border: '1px solid #ddd',
+                                    borderRadius: '6px',
+                                    boxSizing: 'border-box'
+                                }}
+                            />
+                        </div>
+                        <div>
+                            <label style={{ 
+                                display: 'block', 
+                                marginBottom: '8px', 
+                                fontWeight: '500',
+                                fontSize: '14px'
+                            }}>
+                                Cantidad Despachada
+                            </label>
+                            <input
+                                type="number"
+                                value={cantidadDespachada}
+                                onChange={(e) => setCantidadDespachada(e.target.value)}
+                                placeholder="0"
+                                min="0"
+                                step="0.01"
+                                style={{
+                                    width: '100%',
+                                    padding: '10px',
+                                    fontSize: '14px',
+                                    border: '1px solid #ddd',
+                                    borderRadius: '6px',
+                                    boxSizing: 'border-box'
+                                }}
+                            />
+                        </div>
+                    </div>
+
+                    <div style={{ 
+                        display: 'flex', 
+                        gap: '10px', 
+                        justifyContent: 'flex-end' 
+                    }}>
+                        <button
+                            type="button"
+                            onClick={onCerrar}
+                            style={{
+                                padding: '10px 20px',
+                                fontSize: '14px',
+                                border: '1px solid #ddd',
+                                borderRadius: '6px',
+                                background: '#fff',
+                                color: '#666',
+                                cursor: 'pointer'
+                            }}
+                        >
+                            Cancelar
+                        </button>
+                        <button
+                            type="submit"
+                            style={{
+                                padding: '10px 20px',
+                                fontSize: '14px',
+                                border: 'none',
+                                borderRadius: '6px',
+                                background: '#2f8bfd',
+                                color: '#fff',
+                                cursor: 'pointer',
+                                fontWeight: '600'
+                            }}
+                        >
+                            {item ? 'Actualizar' : 'Agregar'}
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     );

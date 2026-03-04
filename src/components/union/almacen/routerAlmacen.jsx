@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import GeneralAlmacen from './bodegas/general';
 import LeftNavAlmacen from './leftNav';
 import GeneralEntradas from './entradas/generalEntradas';
+import GeneralPedidos from './pedidos/general';
 
 export default function RouterAlmacen() {
     return (
@@ -19,6 +20,7 @@ export default function RouterAlmacen() {
                                 <Routes>
                                     <Route path="/" element={<GeneralAlmacen />} />
                                     <Route path="/entradas" element={<GeneralEntradas />} />
+                                    <Route path="/pedidos" element={<GeneralPedidos />} />
                                 </Routes>
                             </div>
                         </div>
