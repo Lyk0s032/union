@@ -190,6 +190,11 @@ export default function ItemModal({ item, bodegaId, onClose, onOperacionExitosa,
         }
     }
 
+    const abrirFormularioTransferir = () => {
+        // Cambiar a la vista de transferencia (formulario para sacar / transferir materia prima)
+        setVistaActual('transferir');
+    };
+
     return (
         <div className="item-modal-overlay" onClick={onClose}>
             <div className="item-modal-container" onClick={(e) => e.stopPropagation()}>
@@ -201,7 +206,18 @@ export default function ItemModal({ item, bodegaId, onClose, onOperacionExitosa,
                             {item.itemId || item.id}
                         </div>
                         <div className="item-modal-title-group">
-                            <h2 className="item-modal-title">{item.nombre}</h2>
+                            <h2
+                                className="item-modal-title"
+                                onClick={abrirFormularioTransferir}
+                                style={{
+                                    cursor: 'pointer',
+                                    textDecoration: 'underline',
+                                    textDecorationStyle: 'dotted'
+                                }}
+                                title="Click para transferir materia prima / producto para este item"
+                            >
+                                {item.nombre}
+                            </h2>
                             <span className="item-modal-subtitle">
                                 {item.tipo === 'MP' ? 'Materia Prima' : 'Producto Terminado'}
                                 {item.medida && ` | ${item.medida} ${item.unidad}`}

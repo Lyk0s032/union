@@ -43,6 +43,11 @@ export default function GeneralAlmacen() {
   const almacen = useSelector((s: any) => s.almacen || {});
   const productosBodega = almacen.productosBodega || null;
   const loadingProductosBodega = almacen.loadingProductosBodega || false;
+  
+  // Estados para búsqueda por endpoint
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchTimeout, setSearchTimeout] = useState<ReturnType<typeof setTimeout> | null>(null);
 
   // track initial load per bodega to show skeleton only first time
   const [firstLoadDone, setFirstLoadDone] = useState<{ MP?: boolean; PT?: boolean }>({});
@@ -51,11 +56,6 @@ export default function GeneralAlmacen() {
   // local deleted ids (optimistic client-side removal)
   const [deletedIds, setDeletedIds] = useState<number[]>([]);
 
-  // derive source data solely from backend reducer (no client-side mock)
-  const sourceData = (productosBodega && productosBodega.data)
-    ? productosBodega.data.filter((r: any) => !deletedIds.includes(r.itemId))
-    : [];
-
   // track first load per bodega to show skeleton first time
   useEffect(() => {
     if (productosBodega && productosBodega.data && productosBodega.data.length > 0) {
@@ -63,16 +63,133 @@ export default function GeneralAlmacen() {
     }
   }, [productosBodega, selectedBodega]);
 
+  // derive source data solely from backend reducer (no client-side mock)
+  const sourceData = (productosBodega && productosBodega.data)
+    ? productosBodega.data.filter((r: any) => !deletedIds.includes(r.itemId))
+    : [];
+
+  // Función para normalizar resultados de búsqueda a la estructura esperada
+  const normalizeSearchResults = (searchResults: any[], currentSourceData: any[]): any[] => {
+    return searchResults.map((item: any) => {
+      // Buscar si el item existe en sourceData (por itemId y medida si es PT)
+      const existingItem = currentSourceData.find((existing: any) => {
+        const itemId = item.id || item.materiaId || item.productoId;
+        const existingId = existing.itemId || existing.id;
+        const sameId = existingId === itemId;
+        
+        if (selectedBodega === 'PT' && item.medida) {
+          // Para productos terminados, también comparar medida
+          return sameId && existing.medida === item.medida;
+        }
+        return sameId;
+      });
+
+      // Si existe en sourceData, usar esos datos (incluyendo cantidad)
+      if (existingItem) {
+        return existingItem;
+      }
+
+      // Si no existe, normalizar los datos de búsqueda con estructura esperada
+      const normalized: any = {
+        id: item.id || item.materiaId || item.productoId,
+        itemId: item.id || item.materiaId || item.productoId,
+        nombre: item.nombre || item.name || item.description || item.item || '',
+        cantidad: 0, // Por defecto 0 si no está en la lista
+        medida: item.medida || null,
+        unidad: item.unidad || null,
+        estado: item.estado || 'Activo',
+        tipo: selectedBodega === 'MP' ? 'MP' : 'PR',
+        updatedAt: item.updatedAt || null,
+        isMt2: item.unidad === 'mt2' || item.unidad === 'mt²',
+        maker: item.maker || '',
+        trademark: item.trademark || null,
+        sku: item.sku || '',
+        ean: item.ean || '',
+      };
+
+      return normalized;
+    });
+  };
+
+  // Función para buscar en el backend
+  const performSearch = async (searchQuery: string) => {
+    if (!searchQuery.trim()) {
+      setSearchResults([]);
+      setIsSearching(false);
+      return;
+    }
+
+    setIsSearching(true);
+    try {
+      const endpoint = selectedBodega === 'MP' 
+        ? '/api/materia/searchByQuery'
+        : '/api/materia/producto/searching';
+      
+      const response = await axios.get(endpoint, {
+        params: { q: searchQuery.trim() }
+      });
+
+      // Obtener resultados crudos
+      const rawResults = response.data?.data || response.data || [];
+      console.log('Raw search results', rawResults);
+      
+      // Normalizar los resultados para que coincidan con la estructura inicial
+      const normalizedResults = normalizeSearchResults(rawResults, sourceData);
+      console.log('Normalized search results', normalizedResults);
+      
+      setSearchResults(normalizedResults);
+    } catch (error) {
+      console.error('Error en búsqueda:', error);
+      setSearchResults([]);
+      (dispatch as any)(actions.HandleAlerta('Error al realizar la búsqueda', 'mistake'));
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
+  // Debounce para la búsqueda
+  useEffect(() => {
+    // Limpiar timeout anterior
+    if (searchTimeout) {
+      clearTimeout(searchTimeout);
+    }
+
+    // Si no hay query, limpiar resultados y usar datos normales
+    if (!query.trim()) {
+      setSearchResults([]);
+      setIsSearching(false);
+      return;
+    }
+
+    // Crear nuevo timeout para buscar después de 500ms sin escribir
+    const timeout = setTimeout(() => {
+      performSearch(query);
+    }, 500);
+
+    setSearchTimeout(timeout);
+
+    return () => {
+      if (timeout) clearTimeout(timeout);
+    };
+  }, [query, selectedBodega]);
+
+  // Limpiar resultados cuando cambia la bodega
+  useEffect(() => {
+    setQuery('');
+    setSearchResults([]);
+    setPage(1);
+  }, [selectedBodega]);
+
+  // Determinar qué datos mostrar: resultados de búsqueda o datos normales
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    if (!q) return sourceData;
-    return sourceData.filter(p =>
-      String(p.id).includes(q) ||
-      (p.sku || '').toString().toLowerCase().includes(q) ||
-      (p.nombre || p.name || '').toString().toLowerCase().includes(q) ||
-      (p.maker || '').toLowerCase().includes(q)
-    );
-  }, [sourceData, query]);
+    if (query.trim() && searchResults.length > 0) {
+      return searchResults;
+    }
+    if (query.trim() && !isSearching) {
+      return []; // No hay resultados pero ya terminó la búsqueda
+    }
+    return sourceData;
+  }, [sourceData, query, searchResults, isSearching]);
 
   const total = filtered.length;
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
@@ -264,12 +381,32 @@ export default function GeneralAlmacen() {
       </div>
 
       <div style={{ marginBottom: 20, display: 'flex', gap: 12, alignItems: 'center' }} className="section-gap">
-        <input
-          placeholder={`Buscar ${total} registros...`}
-          value={query}
-          onChange={e => { setQuery(e.target.value); setPage(1); }}
-          style={{ padding: '8px 12px', borderRadius: 6, border: '1px solid #e0e0e0', width: 300 }}
-        />
+        <div style={{ position: 'relative', width: 300 }}>
+          <input
+            placeholder={isSearching ? 'Buscando...' : `Buscar ${query.trim() ? 'en servidor' : total + ' registros'}...`}
+            value={query}
+            onChange={e => { setQuery(e.target.value); setPage(1); }}
+            style={{ 
+              padding: '8px 12px', 
+              borderRadius: 6, 
+              border: '1px solid #e0e0e0', 
+              width: '100%',
+              paddingRight: isSearching ? '32px' : '12px'
+            }}
+          />
+          {isSearching && (
+            <span style={{
+              position: 'absolute',
+              right: 12,
+              top: '50%',
+              transform: 'translateY(-50%)',
+              fontSize: 12,
+              color: '#2f8bfd'
+            }}>
+              🔍
+            </span>
+          )}
+        </div>
         <div style={{ marginLeft: 'auto', display: 'flex', gap: 8 }} className="controls">
           <button style={{ padding: '8px 12px', borderRadius: 6, background: '#2f8bfd', color: '#fff', border: 'none' }}>
             Descargar Plantilla
@@ -355,7 +492,11 @@ export default function GeneralAlmacen() {
             {paged.length === 0 && (
               <tr>
                 <td colSpan={8} style={{ textAlign: 'center', padding: 40, color: '#666' }}>
-                  No hay movimientos registrados para esta bodega
+                  {isSearching 
+                    ? 'Buscando...' 
+                    : query.trim() 
+                      ? 'No se encontraron resultados para tu búsqueda' 
+                      : 'No hay movimientos registrados para esta bodega'}
                 </td>
               </tr>
             )}
