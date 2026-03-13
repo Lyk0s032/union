@@ -10,10 +10,10 @@ export default function TransferirItem({ item, itemData, bodegaId, onVolver, onO
     const [loading, setLoading] = useState(false);
 
     const cantidadDisponible = itemData?.stocks?.reduce((sum, s) => sum + (s.cantidad || 0), 0) || 0;
-
+    console.log('itemData',itemData)
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+                
         if (!cantidad || Number(cantidad) <= 0) {
             alert('Por favor ingresa una cantidad válida');
             return;
@@ -42,9 +42,9 @@ export default function TransferirItem({ item, itemData, bodegaId, onVolver, onO
             };
 
             // Agregar identificador del item (productoId o materiaPrimaId)
-            if (item.productoId) {
+            if (item.productoId || item.tipo == 'PR') {
                 console.log('[TRANSFERIR] Es producto, productoId:', item.productoId);
-                basePayload.productoId = item.productoId;
+                basePayload.productoId = item.itemId || item.productoId;
                 // Para productos: siempre incluir medida si existe (especialmente importante para mt2)
                 if (item.medida) {
                     console.log('[TRANSFERIR] Agregando medida:', item.medida);
@@ -54,9 +54,9 @@ export default function TransferirItem({ item, itemData, bodegaId, onVolver, onO
                     console.log('[TRANSFERIR] Agregando unidad:', item.unidad);
                     basePayload.unidad = item.unidad;
                 }
-            } else if (item.materiumId) {
+            } else if (item.materiumId || item.tipo == 'MP') {
                 console.log('[TRANSFERIR] Es materia prima, materiumId:', item.materiumId);
-                basePayload.materiaPrimaId = item.materiumId;
+                basePayload.materiaPrimaId = item?.tipo == 'MP' ?  item.itemId : item.materiumId ;
                 if (item.unidad) basePayload.unidad = item.unidad;
             } else if (item.kitId) {
                 console.log('[TRANSFERIR] Es kit, kitId:', item.kitId);
@@ -68,6 +68,7 @@ export default function TransferirItem({ item, itemData, bodegaId, onVolver, onO
             let response;
             if (tipoOperacion === 'ingresar') {
                 // INGRESO: POST /api/stock/ingreso
+                console.log('ingreso body de este item este es el body',basePayload)
                 response = await axios.post('/api/stock/ingreso', basePayload);
             } else if (tipoOperacion === 'sacar') {
                 // SALIDA: POST /api/stock/salida
@@ -80,6 +81,7 @@ export default function TransferirItem({ item, itemData, bodegaId, onVolver, onO
                     ...basePayload,
                     bodegaDestinoId: Number(bodegaDestino)
                 };
+
                 await axios.post('/api/stock/salida', salidaPayload);
                 
                 // 2. Ingreso en bodega destino
@@ -88,6 +90,8 @@ export default function TransferirItem({ item, itemData, bodegaId, onVolver, onO
                     bodegaId: Number(bodegaDestino),
                     bodegaOrigenId: bodegaId
                 };
+
+                console.log('ingreso body',ingresoPayload)
                 response = await axios.post('/api/stock/ingreso', ingresoPayload);
             }
 
@@ -109,6 +113,7 @@ export default function TransferirItem({ item, itemData, bodegaId, onVolver, onO
             setLoading(false);
         }
     };
+    console.log('itemmmmm',item)
 
     return (
         <div className="transferir-container">

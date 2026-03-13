@@ -52,10 +52,48 @@ export default function ItemModal({ item, bodegaId, onClose, onOperacionExitosa,
             // Llamada a la API real
             try {
                 const response = await axios.get('/api/stock/item', { params });
+                console.log('[ItemModal] Respuesta inicial del backend:', response.data);
+                
                 if (response && response.data) {
-                    setItemData(response.data);
-                    setLoading(false);
-                    return;
+                    const responseData = response.data;
+                    
+                    // Si la respuesta tiene la estructura esperada (con stocks, meta, movimientos)
+                    if (responseData.stocks !== undefined || responseData.meta !== undefined) {
+                        console.log('[ItemModal] Estructura con stock/meta detectada');
+                        setItemData(responseData);
+                        setLoading(false);
+                        return;
+                    } 
+                    // Si la respuesta es diferente (sin stock, estructura alternativa)
+                    else {
+                        console.log('[ItemModal] Estructura alternativa detectada, normalizando...');
+                        // Normalizar a la estructura esperada
+                        const normalizedData = {
+                            ok: true,
+                            meta: {
+                                id: item.itemId || item.productoId || item.materiumId,
+                                item: responseData.item || responseData.nombre || item.nombre,
+                                description: responseData.description || responseData.nombre || item.nombre,
+                                unidad: responseData.unidad || item.unidad || 'unidad',
+                                medida: responseData.medida || item.medida || null,
+                                maker: responseData.maker || item.maker || '',
+                                trademark: responseData.trademark || item.trademark || null
+                            },
+                            stocks: responseData.stocks || responseData.stock || (responseData.cantidad !== undefined ? [{
+                                id: responseData.id || 1,
+                                cantidad: responseData.cantidad || 0,
+                                ubicacionId: bodegaId,
+                                medida: responseData.medida || item.medida || null,
+                                unidad: responseData.unidad || item.unidad || 'unidad',
+                                updatedAt: responseData.updatedAt || new Date().toISOString()
+                            }] : []),
+                            movimientos: responseData.movimientos || responseData.movements || []
+                        };
+                        console.log('[ItemModal] Datos normalizados:', normalizedData);
+                        setItemData(normalizedData);
+                        setLoading(false);
+                        return;
+                    }
                 }
                 console.warn('[ItemModal] API /api/stock/item no retornó data, usando fallback mock');
             } catch (err) {
@@ -147,6 +185,7 @@ export default function ItemModal({ item, bodegaId, onClose, onOperacionExitosa,
                 limit: movimientosLimit
             };
 
+            // Determinar parámetros según el tipo de item (misma lógica que loadItemData)
             if (item.productoId) {
                 params.productoId = item.productoId;
                 if (item.medida) params.medida = item.medida;
@@ -154,14 +193,71 @@ export default function ItemModal({ item, bodegaId, onClose, onOperacionExitosa,
                 params.materiaPrimaId = item.materiumId;
             } else if (item.kitId) {
                 params.kitId = item.kitId;
+            } else if (item.itemId) {
+                // Fallback: si solo tenemos itemId, intentar determinar por tipo
+                if (item.tipo === 'PR' || item.tipo === 'PT') {
+                    params.productoId = item.itemId;
+                    if (item.medida) params.medida = item.medida;
+                } else if (item.tipo === 'MP') {
+                    params.materiaPrimaId = item.itemId;
+                }
             }
 
             const response = await axios.get('/api/stock/item', { params });
-            console.log('[ItemModal] Datos actualizados en segundo plano:', response.data);
-            setItemData(response.data);
+            console.log('[ItemModal] Respuesta completa del backend:', response.data);
+            
+            // Manejar diferentes estructuras de respuesta
+            if (response && response.data) {
+                const responseData = response.data;
+                
+                // Si la respuesta tiene la estructura esperada (con stocks, meta, movimientos)
+                if (responseData.stocks !== undefined || responseData.meta !== undefined) {
+                    console.log('[ItemModal] Estructura con stock/meta detectada');
+                    setItemData(responseData);
+                } 
+                // Si la respuesta es diferente (sin stock, estructura alternativa)
+                else {
+                    console.log('[ItemModal] Estructura alternativa detectada, normalizando...');
+                    // Normalizar a la estructura esperada
+                    const normalizedData = {
+                        ok: true,
+                        meta: {
+                            id: item.itemId || item.productoId || item.materiumId,
+                            item: responseData.item || responseData.nombre || item.nombre,
+                            description: responseData.description || responseData.nombre || item.nombre,
+                            unidad: responseData.unidad || item.unidad || 'unidad',
+                            medida: responseData.medida || item.medida || null,
+                            maker: responseData.maker || item.maker || '',
+                            trademark: responseData.trademark || item.trademark || null
+                        },
+                        stocks: responseData.stocks || responseData.stock || (responseData.cantidad !== undefined ? [{
+                            id: responseData.id || 1,
+                            cantidad: responseData.cantidad || 0,
+                            ubicacionId: bodegaId,
+                            medida: responseData.medida || item.medida || null,
+                            unidad: responseData.unidad || item.unidad || 'unidad',
+                            updatedAt: responseData.updatedAt || new Date().toISOString()
+                        }] : []),
+                        movimientos: responseData.movimientos || responseData.movements || []
+                    };
+                    console.log('[ItemModal] Datos normalizados:', normalizedData);
+                    setItemData(normalizedData);
+                }
+            } else {
+                console.warn('[ItemModal] Respuesta sin data, usando datos actuales');
+                // Si no hay respuesta, mantener los datos actuales pero forzar actualización
+                if (itemData) {
+                    // Forzar re-render manteniendo estructura
+                    setItemData({ ...itemData });
+                }
+            }
         } catch (error) {
             console.error('[ItemModal] Error recargando datos en segundo plano:', error);
+            // Si hay error pero tenemos datos previos, mantenerlos
             // No mostrar error al usuario, es una recarga silenciosa
+            if (itemData) {
+                console.log('[ItemModal] Manteniendo datos anteriores debido a error');
+            }
         }
     };
     
@@ -194,6 +290,7 @@ export default function ItemModal({ item, bodegaId, onClose, onOperacionExitosa,
         // Cambiar a la vista de transferencia (formulario para sacar / transferir materia prima)
         setVistaActual('transferir');
     };
+
 
     return (
         <div className="item-modal-overlay" onClick={onClose}>
@@ -248,7 +345,7 @@ export default function ItemModal({ item, bodegaId, onClose, onOperacionExitosa,
                         {/* Sección de cantidad total */}
                         <div className="item-modal-stats">
                             <div className="item-stat-card">
-                                <h1>{Number(cantidadTotal) === 0 ? '—' : Number(cantidadTotal).toLocaleString('es-ES')}</h1>
+                                <h1>{Number(cantidadTotal) === 0 ? '0' : Number(cantidadTotal).toLocaleString('es-ES')}</h1>
                                 <span>Cantidad Total en Almacén</span>
                             </div>
                             <div className="item-stat-card">

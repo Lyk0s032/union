@@ -242,6 +242,7 @@ export default function GeneralAlmacen() {
     try {
       console.log('[GENERAL] handleOpenItem:', { item });
     } catch (e) {}
+    console.log('item desde el general',item)
     setSelectedItemForModal(item);
     setShowItemModal(true);
     setOpenMenuId(null);
