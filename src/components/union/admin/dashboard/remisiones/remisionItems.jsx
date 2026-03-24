@@ -26,7 +26,7 @@ export default function RemisionItems({ remision, onAbrir }) {
                 fontWeight: '600',
                 color: '#2f8bfd'
             }}>
-                {remision.id}
+                {Number(remision.id + 4890)}
             </td>
             <td style={{ 
                 padding: '15px',
