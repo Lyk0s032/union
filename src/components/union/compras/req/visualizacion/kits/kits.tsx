@@ -132,7 +132,7 @@ export default function KitsRequisicion(){
                         <h1>KITS y Producto terminado</h1>
                         <span>Lista de productos requeridos</span>
                     </div>
-                    <div className="rightHeader">
+                    <div className="rightHeader" >
                         {proyectosSeleccionados.length > 0 && (
                             <div className="proyectosSeleccionados">
                                 <h3>{proyectosSeleccionados.join(', ')}</h3>
@@ -141,6 +141,16 @@ export default function KitsRequisicion(){
                         <button className="btnDescargarPDF" onClick={descargarPDF}>
                             <span>Descargar PDF</span>
                         </button>
+
+                        {
+                            proyectosSeleccionados.length < 2 && (
+                                <button className="btnDescargarPDF" onClick={descargarPDF} 
+                                style={{backgroundColor: '#2ecc71', color: '#fff'}}>
+                                    <span>Ver cotización</span>
+                                </button>
+                            )
+                        }
+                        
                     </div>
                 </div>
                 

@@ -668,8 +668,9 @@ export default function RemisionModal({ remision, onClose }) {
                                     REMISIÓN NO.
                                 </div>
                                 <div style={{ fontSize: '16px', fontWeight: '700' }}>
-                                    {remision.numeroRemision}
+                                    {remision.id}{remision?.requisicion?.cotizacionId}
                                 </div>
+                                {console.log('remision', remision)}
                             </div>
                             <div style={{ fontSize: '12px', color: '#666' }}>
                                 <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>
@@ -1126,7 +1127,7 @@ export default function RemisionModal({ remision, onClose }) {
                                         borderRadius: '6px',
                                         color: '#666'
                                     }}>
-                                        {Number(remision?.requisicionId + 21719)}
+                                        {Number(remision?.requisicion?.cotizacionId + 21719)}
                                     </div>
                                     {console.log('remision', remision)}
                                 </div>

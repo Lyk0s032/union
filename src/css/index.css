@@ -12010,6 +12010,9 @@ body button {
 .ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA .inputUX input:focus {
   color: #046290;
 }
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA .inputUX.InputSearchKits {
+  width: 30%;
+}
 .ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA .LargerUX {
   width: 70%;
 }
@@ -12071,6 +12074,12 @@ body button {
   border-radius: 0px 20px 20px 0px;
   border: 2px solid #046290;
   outline: 0px;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA .Kits {
+  width: 60%;
+}
+.ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA .Kits select {
+  width: 25%;
 }
 .ProductionPanelUX .OpenUX .divide .right .provider .containerProviders .listProviders .containerListProviders .topSearchData .divideSearching .filterOptions .inputDivA .ShortUX {
   width: 40%;

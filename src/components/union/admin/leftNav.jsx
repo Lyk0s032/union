@@ -88,6 +88,18 @@ export default function LeftNav(){
 
                                     </div>
                                 </li>
+                                <li className={location.pathname == '/admin/users' || location.pathname == '/admin/users/' ? 'Active' : null} onClick={() => {
+                                    navigate('/admin/users/')
+                                }}>
+                                    <div className='divideLi'>
+                                        <div className="leftOption">
+                                            <MdPeople className="icon" />
+                                            <span>Usuarios</span>
+                                        </div>
+                                        <FaChevronDown className="icon" />
+
+                                    </div>
+                                </li>
                                 {/* <li className={location.pathname == '/produccion/lineas' || location.pathname == '/produccion/lineas/' ? 'Active' : null} onClick={() => {
                                     navigate('lineas/')
                                 }}>

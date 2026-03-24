@@ -107,8 +107,9 @@ export default function GeneralRemisiones() {
                 }}>
                     Remisiones
                 </h1>
+                {console.log('remisiones', remisiones)}
                 <div style={{ fontSize: '14px', color: '#666' }}>
-                    Total: {remisiones?.total || 0} remisiones
+                    Total: {remisiones?.remisiones?.length || 0} remisiones
                 </div>
             </div>
 

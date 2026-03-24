@@ -2037,3 +2037,162 @@ export function axiosToGetRemision(carga, numeroRemision) {
       });
   };
 }
+
+
+// ============================================
+// USERS - GESTIÓN DE USUARIOS
+// ============================================
+
+export function getUsers(data) {
+    return {
+        type: types.GET_USERS,
+        payload: data
+    };
+}
+
+export function gettingUsers(carga) {
+    return {
+        type: types.GETTING_USERS,
+        payload: carga
+    };
+}
+
+// Helper: obtener el token JWT almacenado en localStorage
+function getAuthHeader() {
+    try {
+        const token = JSON.parse(localStorage.getItem('loggedPeople'));
+        return token ? { authorization: `Bearer ${token}` } : {};
+    } catch {
+        return {};
+    }
+}
+
+/**
+ * Obtener todos los usuarios.
+ * @param {boolean} carga - true muestra spinner, false carga silenciosa
+ */
+export function axiosToGetUsers(carga) {
+    return function(dispatch) {
+        dispatch(gettingUsers(carga));
+        axios.get('/api/users/getAll', { headers: getAuthHeader() })
+        .then(res => res.data)
+        .then(inf => {
+            dispatch(getUsers(inf));
+        })
+        .catch(e => {
+            console.log('[USERS] Error al cargar:', e);
+            if (e.request) {
+                dispatch(getUsers('notrequest'));
+            } else {
+                dispatch(getUsers(404));
+            }
+        });
+    };
+}
+
+/**
+ * Crear un nuevo usuario.
+ * @param {object} datos - { name, lastName, nick, phone, email, password, rango, age, area }
+ * @param {function} onSuccess - callback si el create fue exitoso
+ */
+export function axiosToCreateUser(datos, onSuccess) {
+    return function(dispatch) {
+        axios.post('/api/users/new', datos, { headers: getAuthHeader() })
+        .then(res => res.data)
+        .then(nuevoUser => {
+            // Recargar la lista silenciosamente (false = sin spinner)
+            dispatch(axiosToGetUsers(false));
+            dispatch(HandleAlerta('Usuario creado correctamente', 'positive'));
+            if (onSuccess) onSuccess(nuevoUser);
+        })
+        .catch(e => {
+            const msg = e.response?.data?.msg || 'Error al crear el usuario';
+            dispatch(HandleAlerta(msg, 'mistake'));
+        });
+    };
+}
+
+/**
+ * Actualizar datos de un usuario.
+ * @param {number|string} id
+ * @param {object} datos
+ * @param {function} onSuccess
+ */
+export function axiosToUpdateUser(id, datos, onSuccess) {
+    return function(dispatch) {
+        axios.put(`/api/users/update/${id}`, datos, { headers: getAuthHeader() })
+        .then(res => res.data)
+        .then(() => {
+            dispatch(axiosToGetUsers(false));
+            dispatch(HandleAlerta('Usuario actualizado correctamente', 'positive'));
+            if (onSuccess) onSuccess();
+        })
+        .catch(e => {
+            const msg = e.response?.data?.msg || 'Error al actualizar el usuario';
+            dispatch(HandleAlerta(msg, 'mistake'));
+        });
+    };
+}
+
+/**
+ * Cambiar estado activo/inactivo de un usuario.
+ * @param {number|string} id
+ * @param {function} onSuccess
+ */
+export function axiosToChangeUserState(id, onSuccess) {
+    return function(dispatch) {
+        axios.put(`/api/users/state/${id}`, {}, { headers: getAuthHeader() })
+        .then(res => res.data)
+        .then(() => {
+            dispatch(axiosToGetUsers(false));
+            dispatch(HandleAlerta('Estado del usuario actualizado', 'positive'));
+            if (onSuccess) onSuccess();
+        })
+        .catch(e => {
+            const msg = e.response?.data?.msg || 'Error al cambiar el estado';
+            dispatch(HandleAlerta(msg, 'mistake'));
+        });
+    };
+}
+
+/**
+ * Eliminar un usuario.
+ * @param {number|string} id
+ * @param {function} onSuccess
+ */
+export function axiosToDeleteUser(id, onSuccess) {
+    return function(dispatch) {
+        axios.delete(`/api/users/delete/${id}`, { headers: getAuthHeader() })
+        .then(res => res.data)
+        .then(() => {
+            dispatch(axiosToGetUsers(false));
+            dispatch(HandleAlerta('Usuario eliminado correctamente', 'positive'));
+            if (onSuccess) onSuccess();
+        })
+        .catch(e => {
+            const msg = e.response?.data?.msg || 'Error al eliminar el usuario';
+            dispatch(HandleAlerta(msg, 'mistake'));
+        });
+    };
+}
+
+/**
+ * Cambiar contraseña de un usuario (sin requerir la actual).
+ * @param {number|string} id
+ * @param {string} password - nueva contraseña en texto plano
+ * @param {function} onSuccess
+ */
+export function axiosToChangePassword(id, password, onSuccess) {
+    return function(dispatch) {
+        axios.put(`/api/users/password/${id}`, { password }, { headers: getAuthHeader() })
+        .then(res => res.data)
+        .then(() => {
+            dispatch(HandleAlerta('Contraseña actualizada correctamente', 'positive'));
+            if (onSuccess) onSuccess();
+        })
+        .catch(e => {
+            const msg = e.response?.data?.msg || 'Error al cambiar la contraseña';
+            dispatch(HandleAlerta(msg, 'mistake'));
+        });
+    };
+}

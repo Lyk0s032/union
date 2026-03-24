@@ -17,6 +17,7 @@ import localeData from 'dayjs/plugin/localeData';
 import 'dayjs/locale/es'; // Idioma español
 import Condiciones from './condiciones';
 import EditItemModal from './editItem';
+import SearchKitsSimulacionesComercial from './simulacionesSearch';
 
 
 export default function SelectKits(){
@@ -426,6 +427,11 @@ export default function SelectKits(){
                                     <span>Kit's</span>
                                 </div>
                             </li>
+                            <li onClick={() => setNav('simulaciones')} className={navCoti == 'simulaciones' ? 'Active' : null}>
+                                <div>
+                                    <span>Simulaciones</span>
+                                </div>
+                            </li>
                             <li onClick={() => setNav('terminado')} className={navCoti == 'terminado' ? 'Active' : null}>
                                 <div>
                                     <span>Producto terminado</span>
@@ -441,6 +447,8 @@ export default function SelectKits(){
                     {
                         navCoti == 'terminado' ?
                             <SearchProductoTerminado number={number} />
+                        : navCoti == 'simulaciones' ?
+                            <SearchKitsSimulacionesComercial number={number} />
                         : navCoti == 'superkits' ?
                             <SearchSuperKitsComercial cotizacion={cotizacion} number={number}  />
                         : <SearchKitsComercial  number={number}  /> 

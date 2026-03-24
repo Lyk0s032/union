@@ -10,6 +10,10 @@ import NuevaOrdenCompra from '../ordenCompra/nueva';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import ItemNecesidadMP from './itemNecesidadMP';
+import ItemNecesidadMPKG from './itemNecesidadKg'; 
+import ItemNecesidadMPMT from './itemNecesidadMt';
+import ItemNecesidadMPMT2 from './itemNecesidadMt2';
+import { useSearchParams } from 'react-router-dom';
 
 export default function NecesidadRequisicion(){
     const dispatch = useDispatch();
@@ -128,12 +132,17 @@ export default function NecesidadRequisicion(){
         return categorias;
     }, [lineas, items]);
     
+    const [params, setParams] = useSearchParams();
     // Obtener nombre del proyecto seleccionado
     const proyectoSeleccionado = useMemo(() => {
         if (!realData || !realData.proyectos || realData.proyectos.length === 0) return '';
         const req = realData.proyectos[0];
         const cotizacion = req.cotizacion || {};
-        return cotizacion.name || `Requisición ${req.id}`;
+        return <div onClick={() => {
+            dispatch(actions.axiosToGetCotizacion(true, cotizacion.id))
+            params.set('cotizacion', cotizacion.id);
+            setParams(params);
+        }}> {cotizacion.name }</div>;
     }, [realData]);
 
     const [searchText, setSearchText] = useState('');
@@ -763,26 +772,80 @@ export default function NecesidadRequisicion(){
                             let precioUnitarioReal = item.unidad == 'kg' ? item.precioUnitario / item.medida : item.unidad === 'mt2' && item.tipo == 'producto-terminado' ? Number(item.precioUnitario * item.medida).toFixed(0) : item.precioUnitario;
                             const totalPromedio = precioUnitarioReal * necesidad;
                             const faltaPorComprar = falta > 0 ? precioUnitarioReal * falta : 0;
-                            return (
+                            console.log('item data show', item);
+                            return ( 
                                 item.unidad == 'mt2' && item.tipo == 'materia-prima' ?
-                                <ItemNecesidadMP
-                                    key={getItemKey(item)}
-                                    item={item}
-                                    index={index}
-                                    medConsumo={medConsumo}
-                                    necesidad={necesidad}
-                                    entregado={entregado}
-                                    falta={falta}
-                                    precioUnitario={precioUnitarioReal}
-                                    totalPromedio={totalPromedio}
-                                    faltaPorComprar={faltaPorComprar}
-                                    onClick={() => setItemSeleccionado(item)}
-                                    isSelected={itemsSeleccionados.includes(getItemKey(item))}
-                                    onCtrlClick={() => handleCtrlClick(item)}
-                                    onShiftClick={() => handleShiftClick(item, index)}
-                                />
+                                    <ItemNecesidadMPMT2
+                                        key={getItemKey(item)}
+                                        item={item}
+                                        index={index}
+                                        medConsumo={medConsumo}
+                                        necesidad={necesidad}
+                                        entregado={entregado}
+                                        falta={falta}
+                                        precioUnitario={precioUnitarioReal}
+                                        totalPromedio={totalPromedio}
+                                        faltaPorComprar={faltaPorComprar}
+                                        onClick={() => setItemSeleccionado(item)}
+                                        isSelected={itemsSeleccionados.includes(getItemKey(item))}
+                                        onCtrlClick={() => handleCtrlClick(item)}
+                                        onShiftClick={() => handleShiftClick(item, index)}
+                                    />
+                                
+                                : item.unidad == 'kg' ?
+                                    <ItemNecesidadMPKG
+                                        key={getItemKey(item)}
+                                        item={item}
+                                        index={index}
+                                        medConsumo={medConsumo}
+                                        necesidad={necesidad}
+                                        entregado={entregado}
+                                        falta={falta}
+                                        precioUnitario={precioUnitarioReal}
+                                        totalPromedio={totalPromedio}
+                                        faltaPorComprar={faltaPorComprar}
+                                        onClick={() => setItemSeleccionado(item)}
+                                        isSelected={itemsSeleccionados.includes(getItemKey(item))}
+                                        onCtrlClick={() => handleCtrlClick(item)}
+                                        onShiftClick={() => handleShiftClick(item, index)}
+                                    />
                                 :
-                                <ItemNecesidad
+                                    item.unidad == 'mt' ?
+                                        <ItemNecesidadMPMT
+                                            key={getItemKey(item)}
+                                            item={item}
+                                            index={index}
+                                            medConsumo={medConsumo}
+                                            necesidad={necesidad}
+                                            entregado={entregado}
+                                            falta={falta}
+                                            precioUnitario={precioUnitarioReal}
+                                            totalPromedio={totalPromedio}
+                                            faltaPorComprar={faltaPorComprar}
+                                            onClick={() => setItemSeleccionado(item)}
+                                            isSelected={itemsSeleccionados.includes(getItemKey(item))}
+                                            onCtrlClick={() => handleCtrlClick(item)}
+                                            onShiftClick={() => handleShiftClick(item, index)}
+                                        />
+                                    :  item.unidad == 'unidad' ?
+                                        <ItemNecesidadMP 
+                                            key={getItemKey(item)}
+                                            item={item}
+                                            index={index}
+                                            medConsumo={medConsumo}
+                                            necesidad={necesidad}
+                                            entregado={entregado}
+                                            falta={falta}
+                                            precioUnitario={precioUnitarioReal}
+                                            totalPromedio={totalPromedio}
+                                            faltaPorComprar={faltaPorComprar}
+                                            onClick={() => setItemSeleccionado(item)}
+                                            isSelected={itemsSeleccionados.includes(getItemKey(item))}
+                                            onCtrlClick={() => handleCtrlClick(item)}
+                                            onShiftClick={() => handleShiftClick(item, index)}
+                                        />
+                                    :
+                                <ItemNecesidad 
                                     key={getItemKey(item)}
                                     item={item}
                                     index={index}

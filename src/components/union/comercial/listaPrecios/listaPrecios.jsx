@@ -100,6 +100,7 @@ export default function ListaDePreciosPanel(){
                                                 }}>
                                                     <span>Kit's</span>
                                                 </button>
+                                                
                                                 <button className={type == 'productos' ? 'Active' : null}
                                                 onClick={() => {
                                                     setSearchKit(null)
@@ -108,6 +109,8 @@ export default function ListaDePreciosPanel(){
                                                 }}>
                                                     <span>Productos</span>
                                                 </button>
+
+
                                             </div>
                                         </div>
                                         

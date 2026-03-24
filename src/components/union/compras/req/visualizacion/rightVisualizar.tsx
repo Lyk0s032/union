@@ -5,6 +5,7 @@ import KitsRequisicion from './kits/kits';
 import NecesidadRequisicion from './necesidad/necesidad';
 import OrdenCompra from './ordenCompra';
 import IndexOrden from './openOrden/indexOrden';
+import DocumentCotizacion from '../../../admin/dashboard/production copy/cotizacion/cotizacion';
 
 export default function RightVisualizar() {
     const [params] = useSearchParams();
@@ -28,6 +29,12 @@ export default function RightVisualizar() {
     return (
         <div className="rightVisualizar">
             {renderContent()}
+
+            {
+                params.get('cotizacion') ? 
+                    <DocumentCotizacion />
+                : null
+            }
         </div>
     )
 }

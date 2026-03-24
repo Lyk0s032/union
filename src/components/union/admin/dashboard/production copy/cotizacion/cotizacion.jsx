@@ -88,6 +88,7 @@ export default function DocumentCotizacion(){
         <div className="modal" style={{zIndex:10}}>
             <div className="hiddenModal" onClick={() => {
                 params.delete('watch');
+                params.delete('cotizacion');
                 setParams(params);
             }}></div>
             {

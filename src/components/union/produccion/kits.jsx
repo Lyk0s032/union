@@ -18,6 +18,8 @@ export default function KitsPanel(){
     const [cat, setCat] = useState(null);
     const [li, setLi] = useState(null);
     const [ex, setEx] = useState(null);
+    const [asesor, setAsesor] = useState(null);
+
 
     const system = useSelector(store => store.system);
     const { categorias, lineas, extensiones } = system;
@@ -34,7 +36,8 @@ export default function KitsPanel(){
         word ||
         cat ||
         li ||
-        ex;
+        ex ||
+        asesor;
 
 
 
@@ -49,6 +52,7 @@ export default function KitsPanel(){
                 categoriaId: cat || undefined, 
                 lineaId: li || undefined,
                 extensionId: ex || undefined,
+                asesor: asesor || undefined,
                 state:  state == 'simulation' ? 'simulacion' : state == 'desarrollo' ? 'desarrollo' : state == 'completa' ? 'completa' : undefined
             }
             });
@@ -57,6 +61,7 @@ export default function KitsPanel(){
                 categoriaId: cat || undefined, 
                 lineaId: li || undefined,
                 extensionId: ex || undefined,
+                asesorId: asesor || undefined,
                 state:  state == 'simulation' ? 'simulacion' : state == 'desarrollo' ? 'desarrollo' : state == 'completa' ? 'completa' : undefined
             });
             console.log('data', data);
@@ -94,7 +99,7 @@ export default function KitsPanel(){
         } else {
             setKitsFiltrados(null); // volvemos al store
         }
-    }, [word, cat, li, ex, state]);
+    }, [word, cat, li, ex, asesor, state]);
 
 
 
@@ -184,12 +189,12 @@ export default function KitsPanel(){
                                 </div>
                                 <div className="filterOptions">
                                     <div className="inputDivA">
-                                        <div className="inputUX">
+                                        <div className="inputUX InputSearchKits">
                                             <input type="text" placeholder="Buscar aquí..." onChange={(e) => {
                                                 setWord(e.target.value)
                                             }} />
                                         </div>
-                                        <div className="filtersUX">
+                                        <div className="filtersUX Kits">
                                             <select name="" id="" onChange={(e) => {
                                                 return setCat(e.target.value)
                                             }}>
@@ -240,6 +245,15 @@ export default function KitsPanel(){
                                                 }
 
                                         </select>
+                                        <select name="" id="" onChange={(e) => {
+                                                return setAsesor(e.target.value)
+                                            }}> 
+                                                <option value="">Asesor</option>
+                                                <option value={6}>Diana Patricia</option>
+                                                <option value={7}>Andrés Vidal</option>
+                                                <option value={1}>Kevin Bolaños</option>
+
+                                        </select>
                                         </div>
                                     </div>
                                 </div>
@@ -272,7 +286,11 @@ export default function KitsPanel(){
                                                             )
                                                         })
 
-                                            : <h1>No hay resultados</h1>
+                                            : <div className="loading" style={{height: '30vh', width: '100%', padding: '20px 0px', justifyContent: 'center', alignItems: 'center'}}>
+                                                    <div className="containerLoading">
+                                                        <h1 style={{color: '#02618f', fontWeight: '400', fontSize: '20px'}}>No hay resultados.</h1>
+                                                    </div>
+                                                </div>
                                     }
                                         
                                     </tbody>
@@ -289,7 +307,11 @@ export default function KitsPanel(){
                                                         : null
                                                     )
                                                 })
-                                            : <h1>No hay resultados</h1>
+                                            : <div className="loading" style={{height: '30vh', width: '100%', padding: '20px 0px', justifyContent: 'center', alignItems: 'center'}}>
+                                                    <div className="containerLoading">
+                                                        <h1 style={{color: '#02618f', fontWeight: '400', fontSize: '20px'}}>No hay resultados.</h1>
+                                                    </div>
+                                                </div>
                                         }
                                     </tbody>
                                     : state == 'simulation' ?
@@ -305,7 +327,11 @@ export default function KitsPanel(){
                                                         : null
                                                     )
                                                 })
-                                            : <h1>No hay resultados</h1>
+                                            : <div className="loading" style={{height: '30vh', width: '100%', padding: '20px 0px', justifyContent: 'center', alignItems: 'center'}}>
+                                                    <div className="containerLoading">
+                                                        <h1 style={{color: '#02618f', fontWeight: '400', fontSize: '20px'}}>No hay resultados.</h1>
+                                                    </div>
+                                                </div>
                                         }
                                     </tbody>
                                     :null
