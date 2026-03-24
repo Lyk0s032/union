@@ -28,7 +28,7 @@ export default function RemisionItems({ remision, onAbrir }) {
             }}>
                 {Number(remision.id + 4890)}
             </td>
-            <td style={{ 
+            {/* <td style={{ 
                 padding: '15px',
                 borderBottom: '1px solid #e0e0e0',
                 fontSize: '14px',
@@ -42,7 +42,7 @@ export default function RemisionItems({ remision, onAbrir }) {
                      {` - ${remision.necesidadProyecto.kit.extension.name}`}
                  </span>
                 }
-            </td>
+            </td> */}
             <td style={{ 
                 padding: '15px',
                 borderBottom: '1px solid #e0e0e0',

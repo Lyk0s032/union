@@ -232,7 +232,7 @@ export default function GeneralRemisiones() {
                                     }}>
                                         Número
                                     </th>
-                                    <th style={{ 
+                                    {/* <th style={{ 
                                         padding: '15px',
                                         textAlign: 'left',
                                         fontSize: '14px',
@@ -241,7 +241,7 @@ export default function GeneralRemisiones() {
                                         borderBottom: '2px solid #e0e0e0'
                                     }}>
                                         Nombre
-                                    </th>
+                                    </th> */}
                                     <th style={{ 
                                         padding: '15px',
                                         textAlign: 'left',
