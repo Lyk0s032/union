@@ -43,14 +43,7 @@ export default function RemisionItems({ remision, onAbrir }) {
                  </span>
                 }
             </td> */}
-            <td style={{ 
-                padding: '15px',
-                borderBottom: '1px solid #e0e0e0',
-                fontSize: '14px',
-                color: '#333'
-            }}>
-                {remision.requisicion?.nombre || 'N/A'}
-            </td>
+            
             <td style={{ 
                 padding: '15px',
                 borderBottom: '1px solid #e0e0e0',
@@ -58,6 +51,14 @@ export default function RemisionItems({ remision, onAbrir }) {
                 color: '#333'
             }}>
                 {remision.requisicion?.cotizacion?.client?.nombre || 'N/A'}
+            </td>
+            <td style={{ 
+                padding: '15px',
+                borderBottom: '1px solid #e0e0e0',
+                fontSize: '14px',
+                color: '#333'
+            }}>
+                {remision.requisicion?.nombre || 'N/A'}
             </td>
         </tr>
     );

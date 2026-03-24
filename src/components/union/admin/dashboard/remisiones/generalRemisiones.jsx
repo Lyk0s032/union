@@ -242,16 +242,7 @@ export default function GeneralRemisiones() {
                                     }}>
                                         Nombre
                                     </th> */}
-                                    <th style={{ 
-                                        padding: '15px',
-                                        textAlign: 'left',
-                                        fontSize: '14px',
-                                        fontWeight: '600',
-                                        color: '#666',
-                                        borderBottom: '2px solid #e0e0e0'
-                                    }}>
-                                        Proyecto
-                                    </th>
+                                    
                                     <th style={{ 
                                         padding: '15px',
                                         textAlign: 'left',
@@ -261,6 +252,16 @@ export default function GeneralRemisiones() {
                                         borderBottom: '2px solid #e0e0e0'
                                     }}>
                                         Cliente
+                                    </th>
+                                    <th style={{ 
+                                        padding: '15px',
+                                        textAlign: 'left',
+                                        fontSize: '14px',
+                                        fontWeight: '600',
+                                        color: '#666',
+                                        borderBottom: '2px solid #e0e0e0'
+                                    }}>
+                                        Proyecto
                                     </th>
                                 </tr>
                             </thead>
