@@ -95,6 +95,7 @@ export default function ItemNecesidadMPMT({
     // Calcular el estado del item
     const estadoItem = item.entregado >= item.totalCantidad ? 'comprado' : faltaPorComprar <= 0.09 ? 'comprado' : entregado <= 0 ? 'sin-comprar' : 'parcialmente-comprado';
     const estadoTexto = faltaPorComprar <= 0.09 ? 'Comprado' : entregado <= 0 ? 'Sin comprar' : 'Parcialmente comprado';
+    const nuevoPrecio = item.entregado >= item.totalCantidad ? 0 : faltaPorComprar;
 
     const handleClick = (e: React.MouseEvent) => {
         if (e.ctrlKey || e.metaKey) {
@@ -139,7 +140,7 @@ export default function ItemNecesidadMPMT({
                     <span>$ {new Intl.NumberFormat('es-CO').format(totalPromedio)}</span>
                 </div>
                 <div className="colTotal">
-                    <span>$ {new Intl.NumberFormat('es-CO').format(faltaPorComprar)}</span>
+                    <span>$ {new Intl.NumberFormat('es-CO').format(nuevoPrecio)}</span>
                 </div>
             </div>
 
