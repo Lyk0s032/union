@@ -19,8 +19,8 @@ export default function RemisionModal({ remision, onClose }) {
 
     // Estados para campos editables
     const [placa, setPlaca] = useState(remision.placa || '');
-    const [guia, setGuia] = useState(remision.guia || '');
-    const [cajas, setCajas] = useState(remision.cajas || '');
+    const [nombreConductor, setNombreConductor] = useState(remision.nombreConductor || remision.guia || '');
+    const [numeroDocumento, setNumeroDocumento] = useState(remision.numeroDocumento || remision.cajas || '');
     const [ocNumero, setOcNumero] = useState(remision.ocNumero || remision.oc || '');
     const [ovNumero, setOvNumero] = useState(remision.ovNumero || remision.ov || '');
     const [fechaRemision, setFechaRemision] = useState(
@@ -35,8 +35,8 @@ export default function RemisionModal({ remision, onClose }) {
     
     // Estados para controlar qué campo está en modo edición
     const [editandoPlaca, setEditandoPlaca] = useState(false);
-    const [editandoGuia, setEditandoGuia] = useState(false);
-    const [editandoCajas, setEditandoCajas] = useState(false);
+    const [editandoNombreConductor, setEditandoNombreConductor] = useState(false);
+    const [editandoNumeroDocumento, setEditandoNumeroDocumento] = useState(false);
     const [editandoOcNumero, setEditandoOcNumero] = useState(false);
     const [editandoOvNumero, setEditandoOvNumero] = useState(false);
     const [editandoFechaRemision, setEditandoFechaRemision] = useState(false);
@@ -66,8 +66,8 @@ export default function RemisionModal({ remision, onClose }) {
     useEffect(() => {
         if (remision) {
             setPlaca(remision.placa || '');
-            setGuia(remision.guia || '');
-            setCajas(remision.cajas || '');
+            setNombreConductor(remision.nombreConductor || remision.guia || '');
+            setNumeroDocumento(remision.numeroDocumento || remision.cajas || '');
             setOcNumero(remision.ocNumero || remision.oc || '');
             setOvNumero(remision.ovNumero || remision.ov || '');
             setObservaciones(remision.observaciones || '');
@@ -108,8 +108,8 @@ export default function RemisionModal({ remision, onClose }) {
         try {
             const payload = {
                 placa: placa || null,
-                guia: guia || null,
-                cajas: cajas ? parseInt(cajas) : null,
+                guia: nombreConductor || null,       // backend field: guia → Nombre del conductor
+                cajas: numeroDocumento || null,      // backend field: cajas → Número de documento
                 oc: ocNumero || null,
                 ov: ovNumero || null,
                 fechaRemision: fechaRemision ? new Date(fechaRemision).toISOString() : null,
@@ -175,7 +175,7 @@ export default function RemisionModal({ remision, onClose }) {
             
             doc.setFontSize(12);
             doc.setFont(undefined, 'bold');
-            const numeroRemision = String(remision.numeroRemision || '');
+            const numeroRemision = String(Number(remision.id + 4890));
             const textWidth = doc.getTextWidth(numeroRemision);
             doc.text(numeroRemision, boxX + (boxWidth - textWidth) / 2, boxY + 14);
             
@@ -203,11 +203,16 @@ export default function RemisionModal({ remision, onClose }) {
             doc.setFontSize(9);
             const cliente = remision?.requisicion?.cotizacion?.client;
             const nombreCliente = cliente?.name || cliente?.nombre || 'N/A';
-            doc.text(`Nombre/Razón: ${String(nombreCliente)}`, margin, yPos);
-            yPos += 5;
-            doc.text(`NIT/C.C.: ${String(cliente?.nit || 'N/A')}`, margin, yPos);
-            yPos += 5;
-            doc.text(`Dirección: ${String(cliente?.direccion || 'N/A')}`, margin, yPos);
+            // Ancho máximo de la columna izquierda: hasta envioX menos un gap
+            const colIzqMaxWidth = envioX - margin - 8;
+            const lineasNombreCliente = doc.splitTextToSize(`Nombre/Razón: ${String(nombreCliente)}`, colIzqMaxWidth);
+            doc.text(lineasNombreCliente, margin, yPos);
+            yPos += lineasNombreCliente.length * 5;
+            const lineasNit = doc.splitTextToSize(`NIT/C.C.: ${String(cliente?.nit || 'N/A')}`, colIzqMaxWidth);
+            doc.text(lineasNit, margin, yPos);
+            yPos += lineasNit.length * 5;
+            const lineasDireccion = doc.splitTextToSize(`Dirección: ${String(cliente?.direccion || 'N/A')}`, colIzqMaxWidth);
+            doc.text(lineasDireccion, margin, yPos);
 
             // Detalles del transportador (derecha) - usando envioX ya definido arriba
             yPos = clienteStartY;
@@ -218,11 +223,13 @@ export default function RemisionModal({ remision, onClose }) {
 
             doc.setFont(undefined, 'normal');
             doc.setFontSize(9);
+            const colDerMaxWidth = pageWidth - envioX - margin;
             doc.text(`Placa: ${String(placa || 'N/A')}`, envioX, yPos);
             yPos += 5;
-            doc.text(`Guía: ${String(guia || 'N/A')}`, envioX, yPos);
-            yPos += 5;
-            doc.text(`Cajas: ${String(cajas || 'N/A')}`, envioX, yPos);
+            const lineasConductor = doc.splitTextToSize(`Conductor: ${String(nombreConductor || 'N/A')}`, colDerMaxWidth);
+            doc.text(lineasConductor, envioX, yPos);
+            yPos += lineasConductor.length * 5;
+            doc.text(`Nro. Documento: ${String(numeroDocumento || 'N/A')}`, envioX, yPos);
 
             yPos = clienteStartY + 30;
 
@@ -242,7 +249,7 @@ export default function RemisionModal({ remision, onClose }) {
             yPos += 5;
             doc.text(`OV.Nro: ${String(ovNumero || 'N/A')}`, margin, yPos);
             yPos += 5;
-            const numeroCotizacion = remision?.requisicionId ? Number(remision.requisicionId + 21719) : 'N/A';
+            const numeroCotizacion = remision?.requisicion?.cotizacionId ? Number(remision.requisicion.cotizacionId + 21719) : 'N/A';
             doc.text(`Nro. Cotización: ${String(numeroCotizacion)}`, margin, yPos);
 
             yPos = detallesStartY + 30;
@@ -433,17 +440,17 @@ export default function RemisionModal({ remision, onClose }) {
             doc.setFontSize(8);
             doc.setFont(undefined, 'normal');
             
-            // Calcular posición cerca del final de la página
             // Texto del pie de página
             const textoPiePagina = 'Los materiales con este documento recibido, los aceptamos a satisfacción, acorde a nuestro pedido y con el nivel de calidad requerido. No se aceptan reclamaciones posteriores a la entrega aceptada.';
             // Asegurar que el ancho respete los márgenes izquierdo y derecho
             const anchoTextoPie = pageWidth - (margin * 2);
-            // Calcular líneas para estimar altura (pero usaremos maxWidth al dibujar)
-            const lineasPiePagina = doc.splitTextToSize(textoPiePagina, anchoTextoPie);
-            const alturaPiePagina = lineasPiePagina.length * 4 + 15; // Altura del texto + separador + margen
+            // Pre-calcular líneas del pie para estimar la altura total del bloque de pie
+            const lineasPiePre = doc.splitTextToSize(textoPiePagina, anchoTextoPie);
+            // Altura total del bloque footer: firma(10) + etiqueta(5) + separador(15) + texto pie + "Remisionado por"(10) + margen(5)
+            const alturaBloqueFirmas = 10 + 5 + 15 + lineasPiePre.length * 4 + 10 + 5;
             
-            // Posición de las firmas: aproximadamente 50mm del borde inferior
-            const espacioDesdeAbajo = 50;
+            // Posición de las firmas: necesitamos que todo el bloque quepa hasta el final
+            const espacioDesdeAbajo = alturaBloqueFirmas + margin;
             const firmaY = pageHeight - espacioDesdeAbajo;
             
             // Verificar si hay suficiente espacio en la página actual
@@ -847,24 +854,24 @@ export default function RemisionModal({ remision, onClose }) {
                                 </div>
                                 <div style={{ marginBottom: '12px' }}>
                                     <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>
-                                        Guía:
+                                        Nombre del conductor:
                                     </label>
-                                    {editandoGuia ? (
+                                    {editandoNombreConductor ? (
                                         <input
                                             type="text"
-                                            value={guia}
-                                            onChange={(e) => setGuia(e.target.value)}
+                                            value={nombreConductor}
+                                            onChange={(e) => setNombreConductor(e.target.value)}
                                             onBlur={() => {
-                                                setEditandoGuia(false);
+                                                setEditandoNombreConductor(false);
                                                 handleGuardarCambios();
                                             }}
                                             onKeyDown={(e) => {
                                                 if (e.key === 'Enter') {
-                                                    setEditandoGuia(false);
+                                                    setEditandoNombreConductor(false);
                                                     handleGuardarCambios();
                                                 }
                                             }}
-                                            placeholder="Número de guía"
+                                            placeholder="Nombre completo del conductor"
                                             autoFocus
                                             style={{
                                                 width: '100%',
@@ -878,7 +885,7 @@ export default function RemisionModal({ remision, onClose }) {
                                         />
                                     ) : (
                                         <div
-                                            onClick={() => setEditandoGuia(true)}
+                                            onClick={() => setEditandoNombreConductor(true)}
                                             style={{
                                                 padding: '8px 12px',
                                                 fontSize: '13px',
@@ -888,42 +895,42 @@ export default function RemisionModal({ remision, onClose }) {
                                                 minHeight: '34px',
                                                 display: 'flex',
                                                 alignItems: 'center',
-                                                background: guia ? 'transparent' : '#f5f5f5',
-                                                color: guia ? '#333' : '#999'
+                                                background: nombreConductor ? 'transparent' : '#f5f5f5',
+                                                color: nombreConductor ? '#333' : '#999'
                                             }}
                                             onMouseOver={(e) => {
                                                 e.currentTarget.style.background = '#f0f0f0';
                                                 e.currentTarget.style.border = '1px dashed #ddd';
                                             }}
                                             onMouseOut={(e) => {
-                                                e.currentTarget.style.background = guia ? 'transparent' : '#f5f5f5';
+                                                e.currentTarget.style.background = nombreConductor ? 'transparent' : '#f5f5f5';
                                                 e.currentTarget.style.border = '1px solid transparent';
                                             }}
                                         >
-                                            {guia || 'Click para editar...'}
+                                            {nombreConductor || 'Click para editar...'}
                                         </div>
                                     )}
                                 </div>
                                 <div>
                                     <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>
-                                        Cajas:
+                                        Número de documento:
                                     </label>
-                                    {editandoCajas ? (
+                                    {editandoNumeroDocumento ? (
                                         <input
                                             type="text"
-                                            value={cajas}
-                                            onChange={(e) => setCajas(e.target.value)}
+                                            value={numeroDocumento}
+                                            onChange={(e) => setNumeroDocumento(e.target.value)}
                                             onBlur={() => {
-                                                setEditandoCajas(false);
+                                                setEditandoNumeroDocumento(false);
                                                 handleGuardarCambios();
                                             }}
                                             onKeyDown={(e) => {
                                                 if (e.key === 'Enter') {
-                                                    setEditandoCajas(false);
+                                                    setEditandoNumeroDocumento(false);
                                                     handleGuardarCambios();
                                                 }
                                             }}
-                                            placeholder="Número de cajas"
+                                            placeholder="Cédula / NIT del conductor"
                                             autoFocus
                                             style={{
                                                 width: '100%',
@@ -937,7 +944,7 @@ export default function RemisionModal({ remision, onClose }) {
                                         />
                                     ) : (
                                         <div
-                                            onClick={() => setEditandoCajas(true)}
+                                            onClick={() => setEditandoNumeroDocumento(true)}
                                             style={{
                                                 padding: '8px 12px',
                                                 fontSize: '13px',
@@ -947,19 +954,19 @@ export default function RemisionModal({ remision, onClose }) {
                                                 minHeight: '34px',
                                                 display: 'flex',
                                                 alignItems: 'center',
-                                                background: cajas ? 'transparent' : '#f5f5f5',
-                                                color: cajas ? '#333' : '#999'
+                                                background: numeroDocumento ? 'transparent' : '#f5f5f5',
+                                                color: numeroDocumento ? '#333' : '#999'
                                             }}
                                             onMouseOver={(e) => {
                                                 e.currentTarget.style.background = '#f0f0f0';
                                                 e.currentTarget.style.border = '1px dashed #ddd';
                                             }}
                                             onMouseOut={(e) => {
-                                                e.currentTarget.style.background = cajas ? 'transparent' : '#f5f5f5';
+                                                e.currentTarget.style.background = numeroDocumento ? 'transparent' : '#f5f5f5';
                                                 e.currentTarget.style.border = '1px solid transparent';
                                             }}
                                         >
-                                            {cajas || 'Click para editar...'}
+                                            {numeroDocumento || 'Click para editar...'}
                                         </div>
                                     )}
                                 </div>

@@ -10,6 +10,8 @@ interface ItemKitsProps {
 }
 
 export default function ItemKits({ kit }: ItemKitsProps) {
+
+    console.log('kit', kit);
     return (
         <div className="itemKits">
             <div className="numeroItem">

@@ -36,9 +36,11 @@ export default function KitsRequisicion(){
         
         const kitsArray: Kit[] = [];
         
+        console.log('realData', realData);
         // Agregar kits consolidados
         if (realData.kitsConsolidados && Array.isArray(realData.kitsConsolidados)) {
             realData.kitsConsolidados.forEach((kit: any) => {
+                console.log('kit desde el forEach', kit);
                 kitsArray.push({
                     id: kit.id,
                     nombre: kit.nombre || `Kit ${kit.id}`,
@@ -55,7 +57,7 @@ export default function KitsRequisicion(){
                     id: prod.id,
                     nombre: prod.nombre || `Producto ${prod.id}`,
                     tipo: 'PRODUCTO TERMINADO',
-                    necesidad: prod.totalProductos || 0
+                    necesidad: prod.cantidadTotal || 0
                 });
             });
         }
@@ -123,6 +125,8 @@ export default function KitsRequisicion(){
         // Guardar PDF
         doc.save('kits-y-productos-terminados.pdf');
     };
+
+    console.log('kits', kits);
 
     return (
         <div className="kitsRequisicion">
