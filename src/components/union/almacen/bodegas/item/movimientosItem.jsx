@@ -19,6 +19,7 @@ export default function MovimientosItem({ movimientos, page, limit, onPageChange
         }
     };
 
+    {console.log('movimientos', movimientos)}
     const obtenerTipoMovimiento = (mov) => {
         if (mov.tipoMovimiento === 'ENTRADA') return 'Entrada';
         if (mov.tipoMovimiento === 'SALIDA') return 'Salida';
@@ -66,12 +67,13 @@ export default function MovimientosItem({ movimientos, page, limit, onPageChange
                             <th>Cantidad</th>
                             <th>Tipo</th>
                             <th>Referencia</th>
+                            <th>Notas</th>
                         </tr>
                     </thead>
                     <tbody>
                         {movimientosPaginados.length === 0 ? (
                             <tr>
-                                <td colSpan="4" style={{ textAlign: 'center', padding: '30px', color: '#999' }}>
+                                <td colSpan="5" style={{ textAlign: 'center', padding: '30px', color: '#999' }}>
                                     No hay movimientos registrados
                                 </td>
                             </tr>
@@ -86,6 +88,15 @@ export default function MovimientosItem({ movimientos, page, limit, onPageChange
                                         </span>
                                     </td>
                                     <td className="ref-col">{obtenerReferencia(mov)}</td>
+                                    <td className="notas-col">
+                                        {mov.notas ? (
+                                            <div className="notas-content">
+                                                {mov.notas}
+                                            </div>
+                                        ) : (
+                                            <span className="notas-empty">—</span>
+                                        )}
+                                    </td>
                                 </tr>
                             ))
                         )}

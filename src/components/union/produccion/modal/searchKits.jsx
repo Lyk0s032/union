@@ -50,8 +50,8 @@ export default function SearchKits({ number }) {
                     <div className="containerBoxAll">
                         <div className="containerSearch" style={{width:'100%'}}>
                             <div className="searchInputDiv">
-                                <div className="inputDiv">
-                                    <input type="text" placeholder="Pedestal 2X1" onChange={(e) => {
+                                <div className="inputDiv" style={{width:'60%'}}>
+                                    <input type="text" placeholder="Pedestal 2X1"  onChange={(e) => {
                                         setWord(e.target.value)
                                     }} />
                                 </div>
@@ -62,7 +62,7 @@ export default function SearchKits({ number }) {
                                             <option key={c.id} value={c.id}>{c.name.toUpperCase()}</option>
                                         ))}
                                     </select>
-                                    <select value={li} onChange={(e) => setLi(e.target.value)}>
+                                    <select value={li} style={{width:'30%'}} onChange={(e) => setLi(e.target.value)}>
                                         <option value="">Líneas</option>
                                         {lineas?.filter(l => l.type === 'MP').map((c) => (
                                             <option key={c.id} value={c.id}>{c.name.toUpperCase()}</option>

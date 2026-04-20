@@ -7,6 +7,7 @@ import RouteClient from './clientes/routeClient';
 import CondicionesPanel from './condiciones/condiciones';
 import ListaDePreciosPanel from './listaPrecios/listaPrecios';
 import Solicitudes from './solicitudes/solicitudes';
+import SolicitudesMain from './solicitudes/lastVersionComercial/SolicitudesMain';
 
 export default function RoutesComercial(){
     const [params, setParams] = useSearchParams();
@@ -21,7 +22,8 @@ export default function RoutesComercial(){
                     <div className="right ProduccionUX">
                         <Routes>
                             <Route path="/*" element={<ComercialPanel />} />
-                            <Route path="/solicitudes/*" element={<Solicitudes />} />
+                            {/* <Route path="/solicitudes/*" element={<Solicitudes />} /> */}
+                            <Route path="/solicitudes/*" element={<SolicitudesMain />} />
                             <Route path="/galeria/*" element={<PanelGaleria />} />
                             <Route path="/clients/*" element={<RouteClient />} />
                             <Route path="/condiciones/*" element={<CondicionesPanel />} />

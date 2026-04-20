@@ -8,7 +8,7 @@ import SearchKitsComercial from './searchKits';
 import axios from 'axios';
 import SearchSuperKitsComercial from './superKits';
 import SearchProductoTerminado from './productoTerminado';
-import { BsPencil, BsPlus, BsPlusLg } from 'react-icons/bs';
+import { BsPencil, BsPlus, BsPlusLg, BsThreeDotsVertical } from 'react-icons/bs';
 import { useSearchParams } from 'react-router-dom';
 import MoveArea from './moveArea';
 import AddNotes from './addNotesAndImg';
@@ -18,6 +18,8 @@ import 'dayjs/locale/es'; // Idioma español
 import Condiciones from './condiciones';
 import EditItemModal from './editItem';
 import SearchKitsSimulacionesComercial from './simulacionesSearch';
+import SolicitudDetail from '../../produccion/solicitudes/lastVersion/SolicitudDetail';
+import '../../produccion/solicitudes/lastVersion/styles.less';
 
 
 export default function SelectKits(){
@@ -36,6 +38,7 @@ export default function SelectKits(){
     const [name, setName] = useState(null);
     const [condiciones, setCondiciones] = useState(null)
     const [loading, setLoading] = useState(false);
+    const [acordeonRequerimientos, setAcordeonRequerimientos] = useState(false);
     // const system = useSelector(store => store.system);
 
     dayjs.locale('es') 
@@ -65,6 +68,9 @@ export default function SelectKits(){
 
     // Version
     const [version, setVersion] = useState(null);
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [solicitarKit, setSolicitarKit] = useState(false);
+    const [selectedRequerimiento, setSelectedRequerimiento] = useState(null);
     const selectArea = (zona) => {
         setNumber(zona)
     }
@@ -183,6 +189,20 @@ export default function SelectKits(){
     const closeTheCondicions = () => {
         setCondiciones(false)
     }
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (menuOpen && !event.target.closest('.menuToggle')) {
+                setMenuOpen(false);
+            }
+        };
+
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, [menuOpen]);
+
     return (
         !cotizacion || loadingCotizacion ?
             <div className="loadingLoading">
@@ -273,32 +293,6 @@ export default function SelectKits(){
                                         <div className="containerOptions">
                                             <nav>
                                                 <ul>
-                                                    <li onClick={() => {
-                                                        setCondiciones(true)
-                                                    }}>
-                                                        <div className="" >
-                                                            <BsPlusLg  className="icon" />
-                                                            <span>Condiciones</span>
-                                                        </div>
-                                                    </li>
-                                                    <li onClick={() => {
-                                                        setOpenServices(!openServices)
-                                                    }}>
-                                                        <div className="" >
-                                                            <BsPlusLg  className="icon" />
-                                                            <span>Servicios</span>
-                                                        </div>
-                                                    </li>
-                                                    {
-                                                        !area && (
-                                                            <li onClick={() => setEdit(!edit)}>
-                                                                <div className="">
-                                                                    <BsPencil className="icon" />
-                                                                    <span>{!edit ? 'Editar' : 'Cancelar edición'}</span>
-                                                                </div>
-                                                            </li>
-                                                        ) 
-                                                    }
                                                     {
                                                         !area ?
                                                             !edit && (
@@ -321,15 +315,62 @@ export default function SelectKits(){
                                                                 </div>
                                                             </li>
                                                     }
-                                                    <li onClick={() => setNotes(true)}>
-                                                        <div>
-                                                            <span>Notas</span>
+                                                    <li onClick={() => {
+                                                        setCondiciones(true)
+                                                    }}>
+                                                        <div className="" >
+                                                            <BsPlusLg  className="icon" />
+                                                            <span>Condiciones</span>
                                                         </div>
                                                     </li>
-                                                    <li onClick={() => setVersion(true)}>
-                                                        <div>
-                                                            <span>Versiones</span>
+                                                    {
+                                                        !area && (
+                                                            <li onClick={() => setEdit(!edit)}>
+                                                                <div className="">
+                                                                    <BsPencil className="icon" />
+                                                                    <span>{!edit ? 'Editar' : 'Cancelar edición'}</span>
+                                                                </div>
+                                                            </li>
+                                                        ) 
+                                                    }
+                                                    <li className="menuToggle" onClick={() => setMenuOpen(!menuOpen)}>
+                                                        <div className="">
+                                                            <BsThreeDotsVertical className="icon" />
                                                         </div>
+                                                        {menuOpen && (
+                                                            <div className="dropdownMenu">
+                                                                <ul>
+                                                                    <li onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                        setOpenServices(!openServices);
+                                                                        setMenuOpen(false);
+                                                                    }}>
+                                                                        <span>Servicios</span>
+                                                                    </li>
+                                                                    <li onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                        setNotes(true);
+                                                                        setMenuOpen(false);
+                                                                    }}>
+                                                                        <span>Notas</span>
+                                                                    </li>
+                                                                    <li onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                        setVersion(true);
+                                                                        setMenuOpen(false);
+                                                                    }}>
+                                                                        <span>Versiones</span>
+                                                                    </li>
+                                                                    <li onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                        setSolicitarKit(true);
+                                                                        setMenuOpen(false);
+                                                                    }}>
+                                                                        <span>Solicitar KIT</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        )}
                                                     </li>
                                                     
                                                     {/* <li onClick={() => openCoti()}>
@@ -413,7 +454,80 @@ export default function SelectKits(){
                                         :null
                                     } */ }
                                 </div> 
-                            </div> 
+                            </div>
+                            {cotizacion.requiredKits && cotizacion.requiredKits.length > 0 && (
+                                <div className={`requerimientosAccordion ${acordeonRequerimientos ? 'expanded' : ''}`}>
+                                    {acordeonRequerimientos && (
+                                        <div className="accordionBody">
+                                            {cotizacion.requiredKits.map((req, index) => {
+                                                const getPorcentaje = () => {
+                                                    if (req.state === 'finish') return 100;
+                                                    if (req.leidoProduccion && req.state === 'creando') return 70;
+                                                    if (req.leidoProduccion) return 30;
+                                                    return 0;
+                                                };
+
+                                                const getEstado = () => {
+                                                    if (req.state === 'finish') return 'Completada';
+                                                    if (req.leidoProduccion && req.state === 'creando') return 'En creación';
+                                                    if (req.leidoProduccion) return 'En progreso';
+                                                    return 'Pendiente';
+                                                };
+
+                                                const progreso = getPorcentaje();
+                                                const estadoTexto = getEstado();
+                                                const fechaCreacion = req.createdAt ? dayjs(req.createdAt).format('DD/MM/YYYY') : null;
+                                                
+                                                return (
+                                                    <div 
+                                                        key={index} 
+                                                        className="requerimientoItem"
+                                                        onClick={() => setSelectedRequerimiento(req.id)}
+                                                        style={{ cursor: 'pointer' }}
+                                                    >
+                                                        <div className="reqMainInfo">
+                                                            <div className="reqLeft">
+                                                                <div className="reqNumber">{index + 1}</div>
+                                                                <div className="reqDetails">
+                                                                    <span className="reqNombre">{req.nombre || `Requerimiento ${index + 1}`}</span>
+                                                                    {req.descripcion && (
+                                                                        <p className="reqDescripcion">{req.descripcion}</p>
+                                                                    )}
+                                                                    {fechaCreacion && (
+                                                                        <span className="reqFecha">Creado: {fechaCreacion}</span>
+                                                                    )}
+                                                                </div>
+                                                            </div>
+                                                            <span className={`reqEstado ${estadoTexto.toLowerCase().replace(/\s+/g, '-')}`}>
+                                                                {estadoTexto}
+                                                            </span>
+                                                        </div>
+                                                        <div className="progressBar">
+                                                            <div className="progressFill" style={{ width: `${progreso}%` }}>
+                                                                {progreso > 0 && <span className="progressText">{progreso}%</span>}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    )}
+                                    <div 
+                                        className="accordionHeader" 
+                                        onClick={() => setAcordeonRequerimientos(!acordeonRequerimientos)}
+                                    >
+                                        <div className="accordionTitle">
+                                            <span className="countBadge">{cotizacion.requiredKits.length}</span>
+                                            <span className="titleText">
+                                                {cotizacion.requiredKits.length === 1 ? '1 Requerimiento' : `${cotizacion.requiredKits.length} Requerimientos`}
+                                            </span>
+                                        </div>
+                                        <span className={`accordionIcon ${acordeonRequerimientos ? 'open' : ''}`}>
+                                            ▲
+                                        </span>
+                                    </div>
+                                </div>
+                            )}
                         </div> 
                     }
 
@@ -511,8 +625,165 @@ export default function SelectKits(){
                 </div>
             </div>)
             }
+            {
+                solicitarKit && (
+                    <SolicitarKitPanel 
+                        user={user}
+                        cotizacion={cotizacion}
+                        onClose={() => setSolicitarKit(false)} 
+                    />
+                )
+            }
+            {
+                selectedRequerimiento && (
+                    <div className="modal BIGGEST" style={{ zIndex: 999999 }}>
+                        <div className="hiddenModal" onClick={() => setSelectedRequerimiento(null)}></div>
+                        <div className="containerModal Large solicitud-detail-modal" style={{ zIndex: 1000000, maxWidth: '900px', padding: 0, overflow: 'hidden' }}>
+                            <SolicitudDetail 
+                                solicitudId={selectedRequerimiento}
+                                onClose={() => setSelectedRequerimiento(null)}
+                                readOnly={true}
+                            />
+                        </div>
+                    </div>
+                )
+            }
         </div>
     )
+}
+
+function SolicitarKitPanel({ user, onClose, cotizacion }) {
+    const dispatch = useDispatch();
+    const sistema = useSelector(store => store.system);
+    const { extensiones } = sistema;
+    const [loading, setLoading] = useState(false);
+
+    const [form, setForm] = useState({
+        nombre: '',
+        descripcion: '',
+        extensionId: ''
+    });
+
+    useEffect(() => {
+        if (!extensiones || extensiones.length === 0) {
+            dispatch(actions.axiosToGetFiltros(false));
+        }
+    }, []);
+
+    useEffect(() => {
+        const handleEscape = (e) => {
+            if (e.key === 'Escape') {
+                onClose();
+            }
+        };
+
+        document.addEventListener('keydown', handleEscape);
+        return () => document.removeEventListener('keydown', handleEscape);
+    }, [onClose]);
+
+    const handleSubmit = async () => {
+        if (!form.nombre || !form.descripcion || !form.extensionId) {
+            return dispatch(actions.HandleAlerta('Debes completar todos los campos', 'mistake'));
+        }
+
+        setLoading(true);
+        const body = {
+            nombre: form.nombre,
+            description: form.descripcion,
+            tipo: 'kit',
+            userId: user.user.id,
+            cotizacionId: cotizacion.id,
+            kitId: true,
+            extension: parseInt(form.extensionId)
+        };
+
+        try {
+            await axios.post('/api/kit/requerimientos/post/add/kit/cotizacion', body);
+            dispatch(actions.HandleAlerta('Solicitud creada con éxito', 'positive'));
+            dispatch(actions.axiosToGetCotizacion(false, cotizacion.id));
+            onClose();
+        } catch (err) {
+            dispatch(actions.HandleAlerta('No hemos logrado enviar la solicitud', 'mistake'));
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+        <div className="solicitudKitPanel">
+            <div className="panelOverlay" onClick={onClose}></div>
+            <div className="panelContent">
+                <div className="panelHeader">
+                    <h3>Solicitar nuevo KIT</h3>
+                    <button className="closeButton" onClick={onClose}>
+                        <span>✕</span>
+                    </button>
+                </div>
+
+                <div className="panelBody">
+                    <div className="solicitanteInfo">
+                        <label>Solicitante</label>
+                        <div className="userDisplay">
+                            <span>{user?.user?.name || 'Usuario'}</span>
+                        </div>
+                    </div>
+
+                    <div className="inputDiv">
+                        <label htmlFor="nombreKit">Nombre del KIT</label>
+                        <input
+                            id="nombreKit"
+                            type="text"
+                            placeholder="Ingresa el nombre del KIT"
+                            value={form.nombre}
+                            onChange={(e) => setForm({ ...form, nombre: e.target.value })}
+                        />
+                    </div>
+
+                    <div className="inputDiv">
+                        <label htmlFor="descripcionKit">Descripción</label>
+                        <textarea
+                            id="descripcionKit"
+                            placeholder="Describe las características del KIT"
+                            value={form.descripcion}
+                            onChange={(e) => setForm({ ...form, descripcion: e.target.value })}
+                            rows={4}
+                        />
+                    </div>
+
+                    <div className="inputDiv">
+                        <label htmlFor="extensionKit">Extensión</label>
+                        <select
+                            id="extensionKit"
+                            value={form.extensionId}
+                            onChange={(e) => setForm({ ...form, extensionId: e.target.value })}
+                        >
+                            <option value="">Selecciona una extensión</option>
+                            {extensiones && extensiones.length > 0 && (
+                                extensiones.map((ext, i) => (
+                                    <option key={i} value={ext.id}>
+                                        {ext.name}
+                                    </option>
+                                ))
+                            )}
+                        </select>
+                    </div>
+                </div>
+
+                <div className="panelFooter">
+                    <button className="btnCancelar" onClick={onClose}>
+                        <span>Cancelar</span>
+                    </button>
+                    <button 
+                        className="btnEnviar" 
+                        onClick={handleSubmit}
+                        disabled={loading}
+                    >
+                        <span>{loading ? 'Enviando...' : 'Enviar solicitud'}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
 }
 
 function ModalServices({ number, cotizacion, closeOpen }){

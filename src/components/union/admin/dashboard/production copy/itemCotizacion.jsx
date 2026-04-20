@@ -51,7 +51,7 @@ export default function CotizacionItemGeneral({ item, openMenuId, toggleMenu  })
     } 
     // Devolver cotización a comerciales
     const handleComeBackCotizacion = async() => {
-        setLoading(true)
+        setOtherLoading(true)
         const sendAprobation = await axios.put(`/api/cotizacion/admin/comeBack/${r.id}`)
         .then(res => {
             dispatch(actions.HandleAlerta('Cotización ha regresado a comerciales', 'positive')) 
@@ -64,7 +64,7 @@ export default function CotizacionItemGeneral({ item, openMenuId, toggleMenu  })
             return err;
         })
         .finally(() => {
-            setLoading(false)
+            setOtherLoading(false)
         })
         return sendAprobation;
     } 

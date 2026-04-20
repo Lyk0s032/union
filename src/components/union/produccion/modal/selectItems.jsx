@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { MdCheck, MdOutlineAdd, MdOutlineContentCopy, MdOutlineEditNote, MdOutlineSaveAs } from 'react-icons/md';
+import { MdCheck, MdOutlineAdd, MdOutlineContentCopy, MdOutlineEditNote, MdOutlineExpandCircleDown, MdOutlineSaveAs } from 'react-icons/md';
 import ItemToSelect from './itemToSelect';
 import * as actions from '../../../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,7 +9,7 @@ import { getPromedio } from '../calculo';
 import axios from 'axios';
 import { useSearchParams } from 'react-router-dom';
 import UpdateKit from './updated';
-import { BsShieldCheck } from 'react-icons/bs';
+import { BsExclamation, BsExclamationTriangle, BsShieldCheck } from 'react-icons/bs';
 import ConfigKit from './configKit';
 import ModalChangeCalibre from './changeCalibre';
 
@@ -175,6 +175,13 @@ export default function SelectMP(){
                                                 <MdOutlineSaveAs className="icon" />
                                             </div>
                                         </li>
+                                            :
+                                            kit.state == 'solicitud' ?
+                                            <li>
+                                                <div>
+                                                    <BsExclamationTriangle className="icon" style={{color: '#dc3545'}} /> 
+                                                </div>
+                                            </li>
                                             :
                                         <li>
                                             <div >

@@ -3,7 +3,7 @@ import { Route, Routes, useSearchParams } from 'react-router-dom';
 import LeftNav from './leftNav';
 import KitsPanel from './kits';
 import Lineas from './extension';
-import Solicitudes from './solicitudes/solicitudes';
+import Solicitudes from './solicitudes/lastVersion/SolicitudesMain';
 import RouteProyects from './proyectos/routeProyects';
 import GeneralRemisiones from '../admin/dashboard/remisiones/generalRemisiones';
 

@@ -10,6 +10,8 @@ export default function ModalNewCotizacion(){
  
     const cotizacions = useSelector(store => store.cotizacions);
     const { cotizacion, loadingCotizacion } = cotizacions;
+
+
     const dispatch = useDispatch();
     useEffect(() => {
         // dispatch(actions.getKit(null))

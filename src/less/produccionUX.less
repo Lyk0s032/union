@@ -709,6 +709,33 @@
                                             background-color: transparent;
                                         }
                                     }
+                                    .filtrosEstado{
+                                        display: flex;
+                                        gap: 8px;
+                                        margin-bottom: 15px;
+                                        flex-wrap: wrap;
+                                        
+                                        button{
+                                            padding: 6px 12px;
+                                            border-radius: 5px;
+                                            border: 1px solid #d9e2ec;
+                                            background-color: transparent;
+                                            color: @bgAzulDark;
+                                            font-size: 12px;
+                                            cursor: pointer;
+                                            transition: all .3s;
+                                            
+                                            &:hover{
+                                                background-color: #f0f4f8;
+                                            }
+                                            
+                                            &.active{
+                                                background-color: @bgAzulDark;
+                                                border-color: @bgAzulDark;
+                                                color: @bgDefault;
+                                            }
+                                        }
+                                    }
                                     .resultsNotificationsKits{
                                         .containerResultsNoti{
                                             table{
@@ -1356,3 +1383,6 @@
         }
     }
 }
+
+// Estilos de la nueva versión de Solicitudes
+@import '../components/union/produccion/solicitudes/lastVersion/styles.less';
