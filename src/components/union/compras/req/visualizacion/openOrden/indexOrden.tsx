@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import LeftDataChoose from './leftDataChoose';
 import RightDataOrden from './rightDataOrden';
 import LeftItemOpened from './leftItemOpened';
+import LeftItemChooseSearch from './search/leftItemChooseSearch';
 import { useSearchParams } from 'react-router-dom';
 
 export default function IndexOrden() {
@@ -34,8 +35,13 @@ export default function IndexOrden() {
                 event.stopPropagation();
                 event.stopImmediatePropagation();
                 
-                // Si también hay openItem abierto, cerrarlo primero (última abierta tiene prioridad)
-                if (currentParams.get('openItem')) {
+                // Detalle búsqueda / ítem de lista: cerrar primero el panel izquierdo
+                if (currentParams.get('openSearchItem')) {
+                    const newParams = new URLSearchParams(currentParams);
+                    newParams.delete('openSearchItem');
+                    newParams.delete('openSearchTipo');
+                    setParams(newParams);
+                } else if (currentParams.get('openItem')) {
                     const newParams = new URLSearchParams(currentParams);
                     newParams.delete('openItem');
                     newParams.delete('openItemTipo');
@@ -73,7 +79,13 @@ export default function IndexOrden() {
             <div className="divideContainerOrden">
                 <div className="leftContainerOrden">
                     {
-                        params.get('openItem') ? <LeftItemOpened /> : <LeftDataChoose />  
+                        params.get('openSearchItem') ? (
+                            <LeftItemChooseSearch />
+                        ) : params.get('openItem') ? (
+                            <LeftItemOpened />
+                        ) : (
+                            <LeftDataChoose />
+                        )
                     }
                 </div>
                 <div className="rightContainerOrden">

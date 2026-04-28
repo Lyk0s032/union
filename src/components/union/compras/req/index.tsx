@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useMemo, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
 import TopReq from './home/top'
@@ -21,6 +21,19 @@ export default function RequisicionDashboard() {
     useEffect(() => {
         (dispatch as any)(actions.axiosToGetRequisicions(true));
     }, [dispatch]);
+
+    const prevOpenParam = useRef<string | null>(null);
+    const openParam = params.get('open');
+
+    // Al cerrar la vista de visualización (p. ej. Escape), limpiar selección en Redux y modo múltiple
+    // para no mezclar el ID "abierto" con selecciones posteriores (Ctrl+clic, etc.)
+    useEffect(() => {
+        if (prevOpenParam.current === 'projects' && openParam !== 'projects') {
+            dispatch({ type: 'CLEAR_REQUISICIONES_SELECTION' });
+            setModoSeleccionMultiple(false);
+        }
+        prevOpenParam.current = openParam;
+    }, [openParam, dispatch]);
     
     // Mapear datos del backend a la estructura esperada por la tabla
     const allRequisiciones = useMemo(() => {

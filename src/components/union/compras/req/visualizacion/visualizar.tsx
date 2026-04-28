@@ -84,6 +84,7 @@ export default function VisualizarRequisicion() {
         };
     }, [params, setParams]);
 
+    console.log('Requisiciones seleccionadas',requisicionesSeleccionadas);	
     return (
         <div className="visualizarRequisicion">
             <div className="containerVisualizar">

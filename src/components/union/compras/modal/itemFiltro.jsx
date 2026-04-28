@@ -25,14 +25,16 @@ export default function ItemFiltro(props){
     const updateFiltro = async() => {
         if(!form.name) return dispatch(actions.HandleAlerta('Debes ingresar un nombre valido.', 'mistake'))
         
-        // Avanzamos...
+        const esCategoria = params.get('add') === 'categoria';
         const body = {
-            lineaId: filtro.id,
+            ...(esCategoria
+                ? { categoriaId: filtro.id }
+                : { lineaId: filtro.id }),
             name: form.name,
             description: form.description,
             type: form.type
         }
-        const url = params.get('add') == 'categoria' ? 'api/categorias/new' : 'api/lineas/new';
+        const url = esCategoria ? 'api/categorias/new' : 'api/lineas/new';
         const addExt = await axios.put(url, body)
 
         .then(res => {

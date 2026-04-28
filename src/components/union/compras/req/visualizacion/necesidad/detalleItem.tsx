@@ -12,13 +12,17 @@ interface Proveedor {
 }
 
 interface ProyectoItem {
+    /** Id único por fila (comprasCotizacionItem); keys React y modo edición */
     id: number;
+    /** Cotización / proyecto para mostrar (puede repetirse si hay varias líneas mismo proyecto) */
+    cotizacionId: number | null;
+    requisicionId?: number;
     nombre: string;
     estado: string;
     actual: number;
     total: number;
     faltante: number;
-    comprasCotizacionItemId: number; // ID del item de comprasCotizacionItem
+    comprasCotizacionItemId: number; // mismo que id cuando existe; backend update
 }
 
 interface DetalleItemProps {
@@ -71,13 +75,15 @@ export default function DetalleItem({ item, onClose, onProveedorClick }: Detalle
             setCantidadEditada('');
             return;
         }
+        if (!item) return;
 
         setGuardando(true);
         try {
             const body = {
                 cantidadEntrega: Number(how),
                 comprasItemCotizacion: comprasCotizacionItemId,
-                requisicionId: proyecto.requisicionId,
+                requisicionId: proyecto.requisicionId, 
+                cantidadIgualar: Number(proyecto.total).toFixed(2),
                 materiaId: item.tipo === 'materia-prima' ? item.id : null,
                 productoId: item.tipo === 'producto-terminado' ? item.id : null,
             };
@@ -153,16 +159,37 @@ export default function DetalleItem({ item, onClose, onProveedorClick }: Detalle
         precio: pr.precio || pr.price || pr.valor || 0
     })) || [];
 
-    const proyectos: ProyectoItem[] = data?.itemRequisicions?.map((proj: any) => ({
-        id: proj?.requisicion?.cotizacionId || proj.cotizacionId,
-        requisicionId: proj?.requisicion?.id || proj.requisicionId,
-        nombre: proj?.requisicion?.nombre || proj?.name,
-        estado: proj.estado || proj.state || 'Pendiente',
-        actual: proj?.cantidadEntrega || proj.entregado || 0,
-        total: proj?.cantidad || proj.totalCantidad || 0,
-        faltante: (proj?.cantidad || proj.totalCantidad || 0) - (proj?.cantidadEntrega || proj.entregado || 0),
-        comprasCotizacionItemId: proj.id || proj.comprasCotizacionItemId || proj.comprasItemCotizacionId || 0
-    })) || [];
+    const proyectos: ProyectoItem[] = data?.itemRequisicions?.map((proj: any, index: number) => {
+        const rawItemId =
+            proj.id ??
+            proj.comprasCotizacionItemId ??
+            proj.comprasItemCotizacionId;
+        const numItem =
+            rawItemId !== undefined && rawItemId !== null && rawItemId !== ''
+                ? Number(rawItemId)
+                : NaN;
+        /** Una fila = un comprasCotizacionItem: id estable para key y editandoProyectoId */
+        const idFila = !Number.isNaN(numItem) ? numItem : -(index + 1);
+        const cotRaw = proj?.requisicion?.cotizacionId ?? proj.cotizacionId;
+        const cotizacionId =
+            cotRaw !== undefined && cotRaw !== null && cotRaw !== ''
+                ? Number(cotRaw)
+                : null;
+
+        return {
+            id: idFila,
+            cotizacionId,
+            requisicionId: proj?.requisicion?.id || proj.requisicionId,
+            nombre: proj?.requisicion?.nombre || proj?.name,
+            estado: proj.estado || proj.state || 'Pendiente',
+            actual: proj?.cantidadEntrega || proj.entregado || 0,
+            total: proj?.cantidad || proj.totalCantidad || 0,
+            faltante:
+                (proj?.cantidad || proj.totalCantidad || 0) -
+                (proj?.cantidadEntrega || proj.entregado || 0),
+            comprasCotizacionItemId: !Number.isNaN(numItem) ? numItem : 0,
+        };
+    }) || [];
 
     console.log('itemRequisicion', itemRequisicion);
     console.log('item', item);
@@ -224,7 +251,10 @@ export default function DetalleItem({ item, onClose, onProveedorClick }: Detalle
                                 
                                 return (
                                     <div key={proyecto.id} className="proyectoItem">
-                                        <div className="proyectoNumero">{proyecto.id}</div>
+                                        {console.log('proyecto', proyecto)}
+                                        <div className="proyectoNumero">
+                                            {proyecto.cotizacionId ?? proyecto.id}
+                                        </div>
                                         <div className="proyectoInfo">
                                             <div className="proyectoNombreEstado">
                                                 <span className="proyectoNombre">{proyecto.nombre}</span>
@@ -241,7 +271,7 @@ export default function DetalleItem({ item, onClose, onProveedorClick }: Detalle
                                                         style={{ cursor: 'pointer' }}
                                                         title="Click para editar"
                                                     >
-                                                        Actualmente {valorMostrado} / {proyecto.total}
+                                                        Actualmente {valorMostrado} / {Number(proyecto.total).toFixed(2)}
                                                     </span>
                                                 ) : (
                                                     <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
@@ -275,7 +305,7 @@ export default function DetalleItem({ item, onClose, onProveedorClick }: Detalle
                                                                 fontSize: '14px'
                                                             }}
                                                         />
-                                                        <span>/ {proyecto.total}</span>
+                                                        <span>/ {Number(proyecto.total).toFixed(2)}</span>
                                                         {guardando && <span style={{ fontSize: '12px', color: '#666' }}>Guardando...</span>}
                                                     </div>
                                                 )}

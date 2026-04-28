@@ -140,7 +140,7 @@ export default function TableReq({ searchText, activeFilter, requisiciones: init
         }
     };
 
-    // Función para buscar por código o nombre del proyecto
+    // Función para buscar por código, nombre del proyecto o nombre del cliente
     const searchFilter = (req) => {
         if (!searchText || !searchText.trim()) return true;
     
@@ -154,8 +154,9 @@ export default function TableReq({ searchText, activeFilter, requisiciones: init
         // 2. Verificamos coincidencias
         const codigoMatch = codigoCalculado ? codigoCalculado.includes(searchLower) : false;
         const proyectoMatch = req.proyecto?.toLowerCase().includes(searchLower);
+        const clienteMatch = req.cliente?.toLowerCase().includes(searchLower);
         
-        return codigoMatch || proyectoMatch;
+        return codigoMatch || proyectoMatch || clienteMatch;
     };
 
     // Aplicar filtros

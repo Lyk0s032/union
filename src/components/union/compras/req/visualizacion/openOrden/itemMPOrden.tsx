@@ -7,6 +7,7 @@ import * as actions from '../../../../../store/action/action';
 interface ItemMPOrdenProps {
     codigo?: string | number;
     nombre?: string;
+    medida?: string | number;
     cantidadTotal?: string | number;
     unidad?: string;
     tipo?: string; // "Materia prima" | "Producto terminado" (u otros)

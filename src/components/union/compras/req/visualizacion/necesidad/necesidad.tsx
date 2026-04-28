@@ -381,6 +381,42 @@ export default function NecesidadRequisicion(){
         return 'Parcialmente comprado';
     };
 
+    /**
+     * Falta por comprar en dinero para columnas y totales (footer, selección).
+     * Alineado con lo que la UI trata como cubierto: residual en cantidad/moneda
+     * despreciable (≤ 0.09) y consumo total cubierto en láminas/mt/kg (entregado >= totalCantidad).
+     */
+    const calcularFaltaPorComprarParaTotales = (item: ItemNecesidadType): number => {
+        const { necesidad } = calcularMedidas(item);
+        const entregado = item.entregado || 0;
+        const faltaQty = Math.max(0, necesidad - entregado);
+        const precioUnitarioReal =
+            item.unidad == 'kg'
+                ? item.precioUnitario / item.medida
+                : item.unidad === 'mt2' && item.tipo == 'producto-terminado'
+                  ? Number(item.precioUnitario * item.medida).toFixed(0)
+                  : item.precioUnitario;
+        const precioNum = Number(precioUnitarioReal);
+        const base = faltaQty > 0 ? precioNum * faltaQty : 0;
+
+        if (faltaQty <= 0.09) return 0;
+        if (base <= 0.09) return 0;
+
+        const totalCantidad = item.totalCantidad ?? 0;
+        const entregadoNum = Number(entregado);
+        if (
+            totalCantidad > 0 &&
+            entregadoNum >= totalCantidad &&
+            ((item.unidad === 'mt2' && item.tipo === 'materia-prima') ||
+                item.unidad === ('mt' as any) ||
+                item.unidad === 'kg')
+        ) {
+            return 0;
+        }
+
+        return base;
+    };
+
     // Filtrar items
     const itemsFiltrados = useMemo(() => {
         return items.filter(item => {
@@ -407,25 +443,21 @@ export default function NecesidadRequisicion(){
 
     // Calcular total de inversión faltante (solo lo que falta por comprar)
     const totalInversion = useMemo(() => {
-        return itemsFiltrados.reduce((total, item) => {
-            const { necesidad } = calcularMedidas(item);
-            const entregado = item.entregado || 0;
-            const falta = Math.max(0, necesidad - entregado); // Solo lo que falta
-            const precioUnitarioReal = item.unidad == 'kg' ? item.precioUnitario / item.medida : item.unidad === 'mt2' && item.tipo == 'producto-terminado' ? Number(item.precioUnitario * item.medida).toFixed(0) : item.precioUnitario;
-            return total + (precioUnitarioReal * falta);
-        }, 0); 
+        return itemsFiltrados.reduce(
+            (total, item) => total + calcularFaltaPorComprarParaTotales(item),
+            0
+        );
     }, [itemsFiltrados]);
 
     // Calcular total de inversión faltante solo para items seleccionados
     const totalInversionSeleccionados = useMemo(() => {
-        const itemsSeleccionadosData = itemsFiltrados.filter(item => itemsSeleccionados.includes(getItemKey(item)));
-        return itemsSeleccionadosData.reduce((total, item) => {
-            const { necesidad } = calcularMedidas(item);
-            const entregado = item.entregado || 0;
-            const falta = Math.max(0, necesidad - entregado);
-            let precioUnitarioReal = item.unidad == 'kg' ? item.precioUnitario / item.medida : item.unidad === 'mt2' && item.tipo == 'producto-terminado' ? Number(item.precioUnitario * item.medida).toFixed(0) : item.precioUnitario;
-            return total + (Number(precioUnitarioReal) * falta);
-        }, 0);
+        const itemsSeleccionadosData = itemsFiltrados.filter(item =>
+            itemsSeleccionados.includes(getItemKey(item))
+        );
+        return itemsSeleccionadosData.reduce(
+            (total, item) => total + calcularFaltaPorComprarParaTotales(item),
+            0
+        );
     }, [itemsSeleccionados, itemsFiltrados]);
 
 
@@ -616,23 +648,24 @@ export default function NecesidadRequisicion(){
         const body = itemsSeleccionadosData.map(item => {
             const { necesidad } = calcularMedidas(item);
             const entregado = item.entregado || 0;
-            const falta = Math.max(0, necesidad);
-            let precioUnitarioReal = item.unidad == 'kg' ? item.precioUnitario / item.medida : item.unidad === 'mt2' && item.tipo == 'producto-terminado' ? Number(item.precioUnitario * item.medida).toFixed(0) : item.precioUnitario;
-            const total = Number(precioUnitarioReal) * Number(necesidad - item.entregado);
+            const precioUnitarioReal =
+                item.unidad == 'kg'
+                    ? item.precioUnitario / item.medida
+                    : item.unidad === 'mt2' && item.tipo == 'producto-terminado'
+                      ? Number(item.precioUnitario * item.medida).toFixed(0)
+                      : item.precioUnitario;
+            const faltaPorComprar = calcularFaltaPorComprarParaTotales(item);
 
+            const fmt = (v: number) =>
+                new Intl.NumberFormat('es-CO', { maximumFractionDigits: 0 }).format(v);
 
-            const diferencia = falta - entregado;
-            const faltaPorComprar = diferencia > 0.09 ? precioUnitarioReal * diferencia : 0;
-            
-            const fmt = (v: number) => new Intl.NumberFormat('es-CO', { maximumFractionDigits: 0 }).format(v);
-            
             return [
                 item.id.toString(),
                 item.nombre,
                 item.unidad == 'kg' ? item.medidaOriginal / item.medida : item.medidaOriginal,
                 item.unidad,
                 entregado.toString(),
-                falta.toString(),
+                necesidad.toString(),
                 `$${fmt(Number(precioUnitarioReal))}`,
                 `$${fmt(faltaPorComprar)}`
             ];
@@ -771,8 +804,7 @@ export default function NecesidadRequisicion(){
                             const falta = Math.max(0, necesidad - entregado);
                             let precioUnitarioReal = item.unidad == 'kg' ? item.precioUnitario / item.medida : item.unidad === 'mt2' && item.tipo == 'producto-terminado' ? Number(item.precioUnitario * item.medida).toFixed(0) : item.precioUnitario;
                             const totalPromedio = precioUnitarioReal * necesidad;
-                            const faltaPorComprar = falta > 0 ? precioUnitarioReal * falta : 0;
-                            console.log('item data show', item);
+                            const faltaPorComprar = calcularFaltaPorComprarParaTotales(item);
                             return ( 
                                 item.unidad == 'mt2' && item.tipo == 'materia-prima' ?
                                     <ItemNecesidadMPMT2

@@ -297,21 +297,21 @@ export default function DocumentCotizacion(){
                                                                             return acumulador + calcularPrecioTotal(itemActual);
                                                                         }, 0); // El '0' es el valor inicial del acumulador
                                                                                         
-                                                                                    
+                                                                                 {console.log('item desde cotizacion', it)}   
                                                                             return (
                                                                                 <tr key={i+1}>
                                                                                     
                                                                                     
                                                                                     { // ID
                                                                                         it.kitCotizacion ?
-                                                                                            <td className='left Small'>0{it.id}</td>
+                                                                                            <td className='left Small'>{it.id}</td>
                                                                 
                                                                                         :
                                                                                         it.cantidad && it.service ?
-                                                                                            <td className='left Small'>SV{it.id}</td>
+                                                                                            <td className='left Small'>SV{it?.service?.id}</td>
                                                                                         :
                                                                                         it.cantidad && it.producto ?
-                                                                                            <td className='left Small'>PT{it.id}</td>
+                                                                                            <td className='left Small'>PT{it?.producto?.id}</td>
                                                                                         :
                                                                                         <td className='left Small'>SP{it.id}</td>
                                                                                     }

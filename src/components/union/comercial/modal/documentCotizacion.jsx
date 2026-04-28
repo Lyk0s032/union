@@ -442,12 +442,12 @@ export default function DocumentCotizacion(){
                                                                             return acumulador + calcularPrecioTotal(itemActual);
                                                                         }, 0); // El '0' es el valor inicial del acumulador
                                                                                         
-                                                                                    
+                                                                             {console.log('item de cotizacion', it)}       
                                                                             return (
                                                                                 <tr key={i+1}>
                                                                                     { // ID
                                                                                         it.kitCotizacion ?
-                                                                                            <td className='left Small'>0{it.id}</td>
+                                                                                            <td className='left Small'>{it.id}</td>
                                                                 
                                                                                         :
                                                                                         it.cantidad && it.service ?
