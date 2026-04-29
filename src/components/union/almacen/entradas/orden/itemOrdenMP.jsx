@@ -30,7 +30,7 @@ export default function ItemOrdenMP({ item, ordenId, comprasCotizacionId }) {
 
             const response = await axios.post('/api/stock/ingreso', payload);
 
-
+            console.log('response', response.data);
             // Recargar la orden de compra silenciosamente (false = sin loading)
             dispatch(actions.axiosToGetOrdenAlmacen(false, ordenId));
             dispatch(actions.HandleAlerta('Ingreso exitoso', 'positive'));
@@ -43,6 +43,8 @@ export default function ItemOrdenMP({ item, ordenId, comprasCotizacionId }) {
         }
     };
 
+
+    console.log('item de orden de compra', item);
     const handleEnviarProduccion = async () => {
         if (loadingProduccion) return;
 

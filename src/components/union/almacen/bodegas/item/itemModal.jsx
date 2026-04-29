@@ -325,7 +325,6 @@ export default function ItemModal({ item, bodegaId, onClose, onOperacionExitosa,
                         ✕
                     </button>
                 </div>
-
                 {/* Contenido */}
                 {loading ? (
                     <div className="item-modal-loading">
@@ -345,11 +344,12 @@ export default function ItemModal({ item, bodegaId, onClose, onOperacionExitosa,
                         {/* Sección de cantidad total */}
                         <div className="item-modal-stats">
                             <div className="item-stat-card">
+                                {console.log('itemData', item)} 
                                 <h1>{Number(cantidadTotal) === 0 ? '0' : Number(cantidadTotal).toLocaleString('es-ES')}</h1>
                                 <span>Cantidad Total en Almacén</span>
                             </div>
                             <div className="item-stat-card">
-                                <h1>
+                                <h1> 
                                     {obtenerMedidaVisible()}
                                     <span className="stat-unit">{itemData?.meta?.unidad || 'unidad'}</span>
                                 </h1>

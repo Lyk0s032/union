@@ -19,6 +19,43 @@ type ProductItem = {
 
 // NOTE: removed hard-coded/mock product generation to rely exclusively on backend data.
 
+/** Suma cantidades de item.stocks / item.stock (búsqueda MP o PT); null si no hay datos. */
+function cantidadDesdeStocks(item: any): number | null {
+  const raw = item?.stocks ?? item?.stock;
+  if (raw == null) return null;
+  const arr = Array.isArray(raw) ? raw : [raw];
+  if (arr.length === 0) return null;
+  const sum = arr.reduce((acc, s) => acc + (Number(s?.cantidad) || 0), 0);
+  return sum;
+}
+
+/** Shape que espera ItemModal para /api/stock/item (materiumId / productoId). */
+function itemPayloadForStockModal(row: any, bodega: 'MP' | 'PT'): any {
+  const baseId =
+    row?.itemId ??
+    row?.id ??
+    row?.materiaId ??
+    row?.materiumId ??
+    row?.materiaPrimaId ??
+    row?.productoId;
+  if (bodega === 'MP') {
+    return {
+      ...row,
+      itemId: baseId,
+      materiumId:
+        row?.materiumId ??
+        row?.materiaPrimaId ??
+        row?.materiaId ??
+        baseId,
+    };
+  }
+  return {
+    ...row,
+    itemId: baseId,
+    productoId: row?.productoId ?? baseId,
+  };
+}
+
 export default function GeneralAlmacen() {
   function formatearFechaEspañol(fecha) {
     try {
@@ -71,6 +108,8 @@ export default function GeneralAlmacen() {
   // Función para normalizar resultados de búsqueda a la estructura esperada
   const normalizeSearchResults = (searchResults: any[], currentSourceData: any[]): any[] => {
     return searchResults.map((item: any) => {
+      const cantidadDesdeApi = cantidadDesdeStocks(item);
+
       // Buscar si el item existe en sourceData (por itemId y medida si es PT)
       const existingItem = currentSourceData.find((existing: any) => {
         const itemId = item.id || item.materiaId || item.productoId;
@@ -84,8 +123,11 @@ export default function GeneralAlmacen() {
         return sameId;
       });
 
-      // Si existe en sourceData, usar esos datos (incluyendo cantidad)
+      // Si existe en sourceData, mantener fila; sustituir cantidad si el API de búsqueda trae stocks
       if (existingItem) {
+        if (cantidadDesdeApi !== null) {
+          return { ...existingItem, cantidad: cantidadDesdeApi };
+        }
         return existingItem;
       }
 
@@ -94,7 +136,7 @@ export default function GeneralAlmacen() {
         id: item.id || item.materiaId || item.productoId,
         itemId: item.id || item.materiaId || item.productoId,
         nombre: item.nombre || item.name || item.description || item.item || '',
-        cantidad: 0, // Por defecto 0 si no está en la lista
+        cantidad: cantidadDesdeApi !== null ? cantidadDesdeApi : 0,
         medida: item.medida || null,
         unidad: item.unidad || null,
         estado: item.estado || 'Activo',
@@ -237,13 +279,11 @@ export default function GeneralAlmacen() {
   }, []);
 
   function handleOpenItem(item: ProductItem) {
-    // Abrir modal con información del item
-    // Log para depuración (ver en consola del navegador)
     try {
       console.log('[GENERAL] handleOpenItem:', { item });
     } catch (e) {}
-    console.log('item desde el general',item)
-    setSelectedItemForModal(item);
+    // Mismo criterio que ItemModal.loadItemData: materiumId / productoId para /api/stock/item
+    setSelectedItemForModal(itemPayloadForStockModal(item, selectedBodega));
     setShowItemModal(true);
     setOpenMenuId(null);
   }
