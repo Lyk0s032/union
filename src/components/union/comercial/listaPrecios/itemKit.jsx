@@ -1,28 +1,47 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
-import { BsPencil, BsThreeDots, BsThreeDotsVertical } from "react-icons/bs";
-import * as actions from '../../../store/action/action';
-import { MdDeleteOutline, MdOutlineFlag, MdOutlineRemoveRedEye, MdOutlineScreenShare } from "react-icons/md";
-import axios from "axios";
-import dayjs from "dayjs";
-import localeData from 'dayjs/plugin/localeData';
-import 'dayjs/locale/es'; // Idioma español 
-import { getPromedio } from "../../produccion/calculo";
+import React, { useEffect, useState } from "react";
+import { useCotizacionRapida } from "./cotizacionRapidaContext";
+import { preciosKit } from "./calcPreciosLista";
 
 export default function ItemKitLista({ kit }){
 
     const [valorProduccion, setValorProduccion] = useState(0);
-    const { cotizacion } = useSelector(store => store.cotizacions);
-    const dispatch = useDispatch();
+    const { openAddItemModal } = useCotizacionRapida();
     
     const distribuidor = kit?.linea?.percentages?.length ? kit.linea.percentages[0].distribuidor : 0;
     const final = kit?.linea?.percentages?.length ? kit.linea.percentages[0].final : 0;
 
+    const handleClickFila = () => {
+        const { precioDistribuidor, precioFinal } = preciosKit(kit);
+        const detalle = [kit.extension?.name, kit.description].filter(Boolean).join(" · ");
+        openAddItemModal({
+            tipo: "kit",
+            refId: kit.id,
+            codigo: String(kit.id),
+            nombre: kit.name,
+            detalle,
+            extensionNombre: kit.extension?.name ?? "",
+            precioFinal,
+            precioDistribuidor,
+        });
+    };
+
 
     return (
-        <div className="long" style={{width:'100%'}}>
-            <tr  > 
+        <div
+            className="long"
+            style={{ width: "100%", cursor: "pointer" }}
+            role="button"
+            tabIndex={0}
+            onClick={handleClickFila}
+            onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleClickFila();
+                }
+            }}
+            title="Clic para agregar a cotización rápida"
+        >
+            <tr >
                 <td style={{width:'7%'}}>
                     <div className="code">
                         <h3>{kit.id}</h3>

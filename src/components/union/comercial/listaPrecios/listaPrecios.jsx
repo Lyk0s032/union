@@ -1,16 +1,12 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import * as actions from '../../../store/action/action';
-import { AiOutlinePlus } from "react-icons/ai";
-import axiosToGetCotizacion from "axios";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import ItemKitLista from "./itemKit";
 import axios from "axios";
 import ItemProductoLista from "./itemProducto";
+import { CotizacionRapidaProvider } from "./cotizacionRapidaContext";
+import CotizacionRapidaFlotante from "./CotizacionRapidaFlotante";
 
 export default function ListaDePreciosPanel(){
-    const [params, setParams] = useSearchParams();
-
 
     const usuario = useSelector(store => store.usuario);
     
@@ -43,7 +39,7 @@ export default function ListaDePreciosPanel(){
             })
             return search
         }else{
-            if(!query || query == '') return kitSearch(null);
+            if(!query || query == '') return setSearchKit(null);
             setLoading(true);
             setSearchKit(null);
 
@@ -70,6 +66,7 @@ export default function ListaDePreciosPanel(){
         
     }
     return (
+        <CotizacionRapidaProvider>
         <div className="provider">
             <div className="containerProviders Dashboard-grid"> 
                 <div className="topSection">
@@ -180,6 +177,8 @@ export default function ListaDePreciosPanel(){
             </div>
 
         </div>
+        <CotizacionRapidaFlotante />
+        </CotizacionRapidaProvider>
     )
 }
 

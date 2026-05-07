@@ -1,26 +1,42 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
-import { BsPencil, BsThreeDots, BsThreeDotsVertical } from "react-icons/bs";
-import * as actions from '../../../store/action/action';
-import { MdDeleteOutline, MdOutlineFlag, MdOutlineRemoveRedEye, MdOutlineScreenShare } from "react-icons/md";
-import axios from "axios";
-import dayjs from "dayjs";
-import localeData from 'dayjs/plugin/localeData';
-import 'dayjs/locale/es'; // Idioma español
-import { getPromedio } from "../../produccion/calculo";
+import React, { useEffect } from "react";
+import { useCotizacionRapida } from "./cotizacionRapidaContext";
+import { preciosProductoTerminado } from "./calcPreciosLista";
 
 export default function ItemProductoLista({ terminado }){
 
-    const [valorProduccion, setValorProduccion] = useState(0);
-    const { cotizacion } = useSelector(store => store.cotizacions);
-    const dispatch = useDispatch();
+    const { openAddItemModal } = useCotizacionRapida();
     
     const distribuidor = terminado?.linea?.percentages?.length ? terminado.linea.percentages[0].distribuidor : 0;
     const final = terminado?.linea?.percentages?.length ? terminado.linea.percentages[0].final : 0;
 
+    const handleClickFila = () => {
+        const { precioDistribuidor, precioFinal } = preciosProductoTerminado(terminado);
+        openAddItemModal({
+            tipo: "producto",
+            refId: terminado.id,
+            codigo: String(terminado.id),
+            nombre: terminado.item,
+            detalle: terminado.description || "",
+            precioFinal,
+            precioDistribuidor,
+        });
+    };
+
     return (
-        <div className="long" >
+        <div
+            className="long"
+            role="button"
+            tabIndex={0}
+            onClick={handleClickFila}
+            onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleClickFila();
+                }
+            }}
+            style={{ cursor: "pointer" }}
+            title="Clic para agregar a cotización rápida"
+        >
             <tr > 
                 <td className="coding">
                     <div className="code">
