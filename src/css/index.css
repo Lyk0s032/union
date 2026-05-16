@@ -17733,6 +17733,56 @@ body button {
   font-size: 12px;
   padding: 0;
 }
+.modal.cotizacionRapidaOverlay .cotizacionRapidaTable .cotizacionRapidaFilaSimulacion {
+  background: #fffbf0;
+}
+.modal.cotizacionRapidaOverlay .cotizacionRapidaTable .cotizacionRapidaFilaSimulacion:hover {
+  background: #fff7e0;
+}
+.modal.cotizacionRapidaOverlay .cotizacionRapidaSimNombre {
+  cursor: default;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.modal.cotizacionRapidaOverlay .cotizacionRapidaSimNombre:hover .cotizacionRapidaSimTag {
+  opacity: 1;
+}
+.modal.cotizacionRapidaOverlay .cotizacionRapidaSimTag {
+  font-size: 10px;
+  font-weight: 600;
+  color: #b07800;
+  background: #fff0b3;
+  border: 1px solid #ffd666;
+  border-radius: 4px;
+  padding: 1px 5px;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.modal.cotizacionRapidaOverlay .cotizacionRapidaSimPrecio {
+  cursor: pointer;
+  font-weight: 500;
+  border-bottom: 1px dashed #ccc;
+  padding-bottom: 1px;
+}
+.modal.cotizacionRapidaOverlay .cotizacionRapidaSimPrecio:hover {
+  border-bottom-color: #046290;
+  color: #046290;
+}
+.modal.cotizacionRapidaOverlay .cotizacionRapidaInlineInput {
+  width: 100%;
+  padding: 4px 6px;
+  font-size: 12px;
+  border: 1px solid #046290;
+  border-radius: 4px;
+  outline: none;
+  box-sizing: border-box;
+}
+.modal.cotizacionRapidaOverlay .cotizacionRapidaInlineInput--precio {
+  width: 110px;
+}
 .modal.cotizacionRapidaOverlay .cotizacionRapidaTotal {
   text-align: right;
   margin-bottom: 18px;
@@ -17838,6 +17888,18 @@ body button {
 }
 .modal.cotizacionRapidaOverlay .cotizacionRapidaBtnDanger:hover {
   background: #fff5f5;
+}
+.modal.cotizacionRapidaOverlay .cotizacionRapidaBtnCRM {
+  border: 1px solid #16a34a;
+  background: #16a34a;
+  color: #fff;
+}
+.modal.cotizacionRapidaOverlay .cotizacionRapidaBtnCRM:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+.modal.cotizacionRapidaOverlay .cotizacionRapidaBtnCRM:disabled {
+  opacity: 0.65;
+  cursor: default;
 }
 /* Botón flotante (también en portal) */
 .cotizacionRapidaFab {

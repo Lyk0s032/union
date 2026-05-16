@@ -34,6 +34,7 @@ export default function AddItemCotizacionModal() {
     extensionNombre,
     precioFinal,
     precioDistribuidor,
+    isSimulacion,
   } = addModalPayload;
 
   const unit =
@@ -58,6 +59,7 @@ export default function AddItemCotizacionModal() {
       priceType,
       unitPrice: unit,
       cantidad: n,
+      isSimulacion: isSimulacion ?? false,
     });
     closeAddItemModal();
   };

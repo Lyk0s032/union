@@ -1,45 +1,77 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { useSelector } from "react-redux";
+import axios from "axios";
 import { useCotizacionRapida } from "./cotizacionRapidaContext";
 import { preciosKit } from "./calcPreciosLista";
 
 export default function ItemKitLista({ kit }){
 
     const [valorProduccion, setValorProduccion] = useState(0);
+    const [showSimulacion, setShowSimulacion] = useState(false);
+    const clickTimerRef = useRef(null);
+
     const { openAddItemModal } = useCotizacionRapida();
-    
+    const usuario = useSelector((s) => s.usuario);
+    const userId = usuario?.user?.user?.id;
+
     const distribuidor = kit?.linea?.percentages?.length ? kit.linea.percentages[0].distribuidor : 0;
     const final = kit?.linea?.percentages?.length ? kit.linea.percentages[0].final : 0;
 
-    const handleClickFila = () => {
+    useEffect(() => {
+        return () => {
+            if (clickTimerRef.current) clearTimeout(clickTimerRef.current);
+        };
+    }, []);
+
+    const buildPayload = (kitData, simulacion = false) => {
         const { precioDistribuidor, precioFinal } = preciosKit(kit);
         const detalle = [kit.extension?.name, kit.description].filter(Boolean).join(" · ");
-        openAddItemModal({
+        return {
             tipo: "kit",
-            refId: kit.id,
-            codigo: String(kit.id),
-            nombre: kit.name,
+            refId: kitData.id,
+            codigo: String(kitData.id),
+            nombre: kitData.name,
             detalle,
             extensionNombre: kit.extension?.name ?? "",
             precioFinal,
             precioDistribuidor,
-        });
+            isSimulacion: simulacion,
+        };
     };
 
+    const handleClick = () => {
+        if (clickTimerRef.current) return;
+        clickTimerRef.current = setTimeout(() => {
+            clickTimerRef.current = null;
+            openAddItemModal(buildPayload(kit));
+        }, 260);
+    };
+
+    const handleDoubleClick = () => {
+        if (clickTimerRef.current) {
+            clearTimeout(clickTimerRef.current);
+            clickTimerRef.current = null;
+        }
+        setShowSimulacion(true);
+    };
 
     return (
+        <>
         <div
             className="long"
             style={{ width: "100%", cursor: "pointer" }}
             role="button"
             tabIndex={0}
-            onClick={handleClickFila}
+            onClick={handleClick}
+            onDoubleClick={handleDoubleClick}
             onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
-                    handleClickFila();
+                    openAddItemModal(buildPayload(kit));
                 }
             }}
-            title="Clic para agregar a cotización rápida"
+            title="Clic para agregar · Doble clic para crear simulación"
         >
             <tr >
                 <td style={{width:'7%'}}>
@@ -84,7 +116,78 @@ export default function ItemKitLista({ kit }){
                 
             </tr>
         </div>
+        {showSimulacion && createPortal(
+            <SimulacionConfirm
+                kit={kit}
+                userId={userId}
+                onClose={() => setShowSimulacion(false)}
+                onCreated={(nuevoKit) => {
+                    setShowSimulacion(false);
+                    openAddItemModal(buildPayload(nuevoKit, true));
+                }}
+            />,
+            document.body
+        )}
+        </>
     )
+}
+
+function SimulacionConfirm({ kit, userId, onClose, onCreated }) {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const createSimulation = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const res = await axios.get(`/api/kit/clone/simulation/${kit.id}/${userId}`);
+            onCreated(res.data.nuevoKit);
+        } catch (err) {
+            console.error(err);
+            setError("No fue posible crear la simulación. Intenta de nuevo.");
+            setLoading(false);
+        }
+    };
+
+    return (
+        <div className="modal cotizacionRapidaOverlay">
+            <div className="hiddenModal" onClick={onClose} role="presentation" />
+            <div className="containerModal cotizacionRapidaSheet cotizacionRapidaSheet--sm">
+                <div className="cotizacionRapidaSheetHeader">
+                    <div>
+                        <h2>Crear simulación</h2>
+                    </div>
+                    <button type="button" className="cotizacionRapidaBtnIcon" onClick={onClose}>✕</button>
+                </div>
+                <div className="cotizacionRapidaBody">
+                    <p className="cotizacionRapidaIntro">
+                        <strong>{kit.name}</strong>
+                        {kit.id ? <span className="cotizacionRapidaMuted"> · Ref. {kit.id}</span> : null}
+                    </p>
+                    <p>¿Deseas crear una simulación de este kit?</p>
+                    {error && <p style={{ color: "red", fontSize: 13 }}>{error}</p>}
+                </div>
+                <div className="cotizacionRapidaActions">
+                    {loading ? (
+                        <span style={{ padding: "8px 0" }}>Creando simulación...</span>
+                    ) : (
+                        <>
+                            <button type="button" className="cotizacionRapidaBtn" onClick={onClose}>
+                                No
+                            </button>
+                            <button
+                                type="button"
+                                className="cotizacionRapidaBtn cotizacionRapidaBtnPrimary"
+                                onClick={createSimulation}
+                            >
+                                Sí, crear
+                            </button>
+                        </>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
 }
 
 function PrecioCalculado({ kit, setValorProduccion, distribuidor, final, precio }) {

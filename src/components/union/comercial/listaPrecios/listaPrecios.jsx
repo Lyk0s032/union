@@ -5,6 +5,7 @@ import axios from "axios";
 import ItemProductoLista from "./itemProducto";
 import { CotizacionRapidaProvider } from "./cotizacionRapidaContext";
 import CotizacionRapidaFlotante from "./CotizacionRapidaFlotante";
+import ItemKitListaSimulaciones from "./itemSimulaciones";
 
 export default function ListaDePreciosPanel(){
 
@@ -23,6 +24,27 @@ export default function ListaDePreciosPanel(){
             setSearchKit(null);
 
             const search = await axios.get('/api/kit/get/cotizar/search', {
+                params: { query: query },
+            })
+            .then((res) => {
+                setSearchKit(res.data)
+            })
+            .catch(err => {
+                console.log(err);
+                setSearchKit(null)
+                return null
+            })
+            .finally(e => {
+                setLoading(false)
+                return e;
+            })
+            return search
+        }else if(type == 'simulaciones') {
+            if(!query || query == '') return setSearchKit(null);
+            setLoading(true);
+            setSearchKit(null);
+
+            const search = await axios.get('/api/kit/get/cotizar/search/simulation', {
                 params: { query: query },
             })
             .then((res) => {
@@ -106,6 +128,14 @@ export default function ListaDePreciosPanel(){
                                                 }}>
                                                     <span>Productos</span>
                                                 </button>
+                                                <button className={type == 'simulaciones' ? 'Active' : null}
+                                                onClick={() => {
+                                                    setSearchKit(null)
+                                                    setType('simulaciones')
+
+                                                }}>
+                                                    <span>Simulaciones</span>
+                                                </button>
 
 
                                             </div>
@@ -143,6 +173,32 @@ export default function ListaDePreciosPanel(){
                                     </tbody>
                                 </table>
                             </div>
+                            : type == 'simulaciones' ?
+                                <div className="table TableUX">
+                                    <table>
+                                        <tbody>
+                                            {
+                                                !kitSearch && loading ?
+                                                    <h1>Cargando</h1>
+                                                : !kitSearch ?
+                                                    <div className="boxMess">
+                                                        <h3>¡Hola {user.user.name}! ¿Qué {type == 'kits' ? 'Kits' : 'Productos'} deseas buscar?</h3>
+                                                    </div>
+                                                : kitSearch == 404 || kitSearch == 'notrequest' ? null
+                                                :
+                                                kitSearch && kitSearch.length ?
+                                                    kitSearch.map((pv, i) => {
+                                                        return (
+                                                            <ItemKitListaSimulaciones kit={pv} key={i+1} />
+                                                        )
+                                                    })
+                                                : <div className="boxMessage">
+                                                    <h3>Hemos encontrado resultados</h3>
+                                                </div>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
                             : type == 'productos' ?
                                 <div className="table TableUX">
                                     <table>
