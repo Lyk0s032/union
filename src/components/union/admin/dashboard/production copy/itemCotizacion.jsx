@@ -13,12 +13,67 @@ export default function CotizacionItemGeneral({ item, openMenuId, toggleMenu  })
     const { user } = usuario; 
     const [loading, setLoading] = useState(false);
     const [otherLoading, setOtherLoading] = useState(false)
+    const [showSimulacionModal, setShowSimulacionModal] = useState(false);
     const dispatch = useDispatch();
     const [params, setParams] = useSearchParams();
     
+    // Verificar si hay kits con simulación
+    const verificarSimulacion = async() => {
+        try {
+            const response = await axios.get(`/api/cotizacion/get/${r.id}`);
+            const cotizacion = response.data;
+            
+            // Verificar si hay kits con estado 'simulacion' en las áreas
+            if (cotizacion.areaCotizacions && cotizacion.areaCotizacions.length > 0) {
+                for (const area of cotizacion.areaCotizacions) {
+                    if (area.kits && area.kits.length > 0) {
+                        const tieneSimulacion = area.kits.some(kit => kit.state === 'simulacion');
+                        if (tieneSimulacion) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            
+            return false;
+        } catch (error) {
+            console.error('Error al verificar simulación:', error);
+            return false;
+        }
+    };
+
+    // Enviar notificación al usuario id = 3
+    const enviarNotificacionSimulacion = async() => {
+        try {
+            await axios.post('/api/notifications', {
+                userId: 1,
+                title: 'Cotización aprobada contiene simulación',
+                body: `${r.id + 21719} - ${r.name}, revisar los items con simulación`,
+                category: 'cotizacion',
+                targetId: r.id,
+                actionUrl: `?simulationsCotizacion=${r.id}`
+            });
+            console.log('Notificación enviada al usuario id = 3');
+        } catch (error) {
+            console.error('Error al enviar notificación:', error);
+        }
+    };
+
     // Aprobar 
     const handleAprobar = async() => {
-        setLoading(true)
+        setLoading(true);
+        
+        // Primero verificar si hay simulaciones
+        const haySimulacion = await verificarSimulacion();
+        
+        if (haySimulacion) {
+            setLoading(false);
+            setShowSimulacionModal(true);
+            // Enviar notificación al usuario id = 3
+            await enviarNotificacionSimulacion();
+            return;
+        }
+
         const sendAprobation = await axios.put(`/api/cotizacion/admin/accept/${r.id}`)
         .then(res => {
             return res
@@ -82,6 +137,7 @@ export default function CotizacionItemGeneral({ item, openMenuId, toggleMenu  })
     }
 
     return (
+    <>
     <tr>
         <td className="coding">
             <div className="code" onClick={() => openCoti()}>
@@ -112,18 +168,17 @@ export default function CotizacionItemGeneral({ item, openMenuId, toggleMenu  })
             <div className="menu-container">
                             <button className="btnOptions"
                               onClick={() => toggleMenu(item.id)}
-                              aria-haspopup="true" // Indica que es un botón que abre un menú
-                              aria-expanded={openMenuId === item.id} // Indica si el menú está abierto
+                              aria-haspopup="true"
+                              aria-expanded={openMenuId === item.id}
                               aria-label="Opciones del elemento"
                             >
-                              {/* Icono de tres puntos */}
                                 {openMenuId === item.id ?
                                 <span>Abierto</span>
                                 :<BsThreeDots className="icon" />}
                             </button>
             
              
-                            {openMenuId === item.id && ( // Renderizado condicional para mostrar/ocultar
+                            {openMenuId === item.id && (
                                 <div
                                 className="
                                  menu-dropdown"
@@ -187,5 +242,96 @@ export default function CotizacionItemGeneral({ item, openMenuId, toggleMenu  })
                             </div>
         </td>
     </tr>
+
+    {/* Modal de advertencia de simulación */}
+    {showSimulacionModal && (
+        <div className="modal" style={{ zIndex: 20 }}>
+            <div className="hiddenModal" onClick={() => setShowSimulacionModal(false)} />
+            <div
+                className="containerModal"
+                style={{
+                    maxWidth: '440px',
+                    width: '100%',
+                    padding: '0',
+                    borderRadius: '14px',
+                    background: '#fff',
+                    overflow: 'hidden',
+                }}
+            >
+                <div style={{ height: '5px', background: '#f59e0b' }} />
+
+                <div style={{ padding: '32px 28px 28px' }}>
+                    <div
+                        style={{
+                            width: '60px',
+                            height: '60px',
+                            borderRadius: '50%',
+                            background: '#fef3c7',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: '28px',
+                            marginBottom: '20px',
+                        }}
+                    >
+                        ⚠️
+                    </div>
+
+                    <h2
+                        style={{
+                            margin: '0 0 8px',
+                            fontSize: '20px',
+                            fontWeight: '700',
+                            color: '#111827',
+                        }}
+                    >
+                        No se puede aprobar esta cotización
+                    </h2>
+
+                    <p
+                        style={{
+                            margin: '0',
+                            fontSize: '14px',
+                            lineHeight: '1.5',
+                            color: '#6b7280',
+                        }}
+                    >
+                        Esta cotización contiene uno o más KITs que son simulaciones. 
+                        Por favor, convierte las simulaciones en KITs definitivos antes de aprobar.
+                    </p>
+                </div>
+
+                <div
+                    style={{
+                        padding: '16px 28px',
+                        background: '#f9fafb',
+                        display: 'flex',
+                        gap: '12px',
+                        justifyContent: 'flex-end',
+                    }}
+                >
+                    <button
+                        onClick={() => setShowSimulacionModal(false)}
+                        style={{
+                            padding: '10px 20px',
+                            fontSize: '14px',
+                            fontWeight: '600',
+                            borderRadius: '8px',
+                            border: 'none',
+                            background: '#f59e0b',
+                            color: '#fff',
+                            cursor: 'pointer',
+                            transition: 'background 0.2s',
+                        }}
+                        onMouseEnter={(e) => e.target.style.background = '#d97706'}
+                        onMouseLeave={(e) => e.target.style.background = '#f59e0b'}
+                    >
+                        Entendido
+                    </button>
+                </div>
+            </div>
+        </div>
+    )}
+    </>
     )
 }

@@ -89,7 +89,8 @@ export default function SolicitudDetail({ solicitudId, onClose, readOnly = false
         if (!requerimiento.leidoProduccion) {
             try {
                 await axios.put('/api/kit/requerimiento/put/read', {
-                    reqId: requerimiento.id
+                    reqId: requerimiento.id,
+                    userId: requerimiento.user.id
                 });
                 dispatch(actions.axiosToGetRequerimientos(false));
             } catch (err) {
@@ -129,6 +130,12 @@ export default function SolicitudDetail({ solicitudId, onClose, readOnly = false
             formData.append('message', data.message);
             formData.append('reqId', requerimiento.id);
             formData.append('userId', user.user.id);
+            
+            // 🔔 ENVIAR USUARIOS A NOTIFICAR (menciones + dueño del requerimiento)
+            if (data.userToNotify && Array.isArray(data.userToNotify)) {
+                formData.append('userToNotify', JSON.stringify(data.userToNotify));
+                console.log('📤 Enviando userToNotify:', data.userToNotify);
+            }
             
             if (data.attachments && data.attachments.length > 0) {
                 data.attachments.forEach((file) => {

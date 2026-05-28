@@ -4,6 +4,7 @@ import * as actions from '../../../../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
 import CotizacionItemGeneral from './itemCotizacion';
 import DocumentCotizacion from './cotizacion/cotizacion';
+import OrdenCompraCotizacion from '../../../comercial/modal/ordenCompraCotizacion';
 import { useSearchParams } from 'react-router-dom';
 import RemisionSection from './remision/remision';
 
@@ -89,6 +90,11 @@ export default function GeneralComercial(){
                                             <DocumentCotizacion />
                                         : params.get('watch') == 'remision' ?
                                             <RemisionSection />
+                                        : null
+                                    }
+                                    {
+                                        params.get('ordenCompra') ?
+                                            <OrdenCompraCotizacion />
                                         : null
                                     }
                                 </div>

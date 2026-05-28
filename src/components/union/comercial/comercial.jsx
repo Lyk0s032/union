@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as actions from '../../store/action/action';
 import ModalNewCotizacion from "./modal/newCotizacion";
 import DocumentCotizacion from "./modal/documentCotizacion";
+import OrdenCompraCotizacion from "./modal/ordenCompraCotizacion";
 import { AiOutlinePlus } from "react-icons/ai";
 import axios from "axios";
 import SendToCRM from "./modal/sendToCRM";
@@ -260,6 +261,12 @@ export default function ComercialPanel(){
                 //     <ModaUpdateMp />    
                 : params.get('watch') == 'cotizacion' ?
                     <DocumentCotizacion />
+                : null
+            }
+
+            {
+                params.get('ordenCompra') ?
+                    <OrdenCompraCotizacion />
                 : null
             }
 

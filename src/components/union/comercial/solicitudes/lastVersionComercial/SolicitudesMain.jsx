@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from '../../../../store/action/action';
 import { BiSearch } from "react-icons/bi";
@@ -10,6 +11,7 @@ import NewReq from "../new/newReq";
 import "./styles.less";
 
 export default function SolicitudesMain() {
+    const [searchParams, setSearchParams] = useSearchParams();
     const dispatch = useDispatch();
     const noti = useSelector(store => store.noti);
     const { requerimientos, loadingRequerimientos } = noti;
@@ -20,9 +22,34 @@ export default function SolicitudesMain() {
     const [filtroEstado, setFiltroEstado] = useState('todos');
     const [addReq, setAddReq] = useState(false);
 
+    // Cargar lista de requerimientos
     useEffect(() => {
         dispatch(actions.axiosToGetRequerimientos(true));
-    }, []);
+    }, [dispatch]);
+
+    // Detectar parámetro openReq desde notificación y abrir automáticamente
+    useEffect(() => {
+        const openReqParam = searchParams.get('id');
+        
+        if (openReqParam && requerimientos && requerimientos.length > 0) {
+            console.log('🔔 ABRIR REQUERIMIENTO:', openReqParam);
+            
+            // Buscar la solicitud en la lista
+            const solicitud = requerimientos.find(r => String(r.id) === String(openReqParam));
+            
+            if (solicitud) {
+                console.log('✅ Solicitud encontrada, abriendo:', solicitud);
+                handleSelectSolicitud(solicitud);
+            } else {
+                console.log('⚠️ Solicitud no encontrada en la lista');
+            }
+            
+            // Limpiar parámetro
+            const newParams = new URLSearchParams(searchParams);
+            newParams.delete('openReq');
+            setSearchParams(newParams, { replace: true });
+        }
+    }, [searchParams, requerimientos]);
 
     useEffect(() => {
         if (requerimientos && requerimientos.length) {

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from '../../../store/action/action';
@@ -9,7 +9,7 @@ import { MdFormatColorText, MdOutlineFilePresent, MdOutlineImage, MdOutlineTextF
 import Solicitud from "./new/solicitud";
 import NewReq from "./new/newReq";
 export default function Solicitudes(){
-
+    const [searchParams, setSearchParams] = useSearchParams();
     const dispatch = useDispatch();
     const noti = useSelector(store => store.noti);
     const { requerimientos , loadingRequerimientos } = noti;
@@ -44,9 +44,39 @@ export default function Solicitudes(){
         });
     }
 
+    const [params, setParams] = useSearchParams(null);
+    // Cargar lista de requerimientos una sola vez
     useEffect(() => {
         dispatch(actions.axiosToGetRequerimientos(true))
-    }, [])
+    }, [dispatch])
+
+    // Detectar parámetro openReq y abrir inmediatamente
+    useEffect(() => {
+        console.log('lee el requerimiento')
+        const openReqParam = searchParams.get('id');
+        
+        if(params.get('id')){
+
+            console.log('🔔 ABRIR REQUERIMIENTO:', params.get('id'));
+            changeOpen(params.get('id'));
+            dispatch(actions.axiosToGetRequerimiento(true, params.get('id')));
+        }else{
+            console.log('🔔 NO ABRIR REQUERIMIENTO:', params.get('id'));
+        }
+        // if (openReqParam) {
+        //     console.log('🔔 ABRIR REQUERIMIENTO:', openReqParam);
+            
+        //     // Igual que itemProgress: dispatch + setOpen
+        //     dispatch(actions.axiosToGetRequerimiento(true, openReqParam));
+        //     setOpen(openReqParam);
+            
+        //     // Limpiar parámetro creando nuevo URLSearchParams
+        //     const newParams = new URLSearchParams(searchParams);
+        //     newParams.delete('openReq');
+        //     setSearchParams(newParams, { replace: true });
+        // }
+    }, [params])
+    
     return ( 
         <div className="provider"> 
             <div className="containerProviders Dashboard-grid"> 
@@ -54,7 +84,7 @@ export default function Solicitudes(){
                     <div className="divideNotifications">
                         <div className="leftNoti">
                             <div className="title">
-                                <h3>Solicitudes</h3>
+                                <h3>Solicitudessss</h3>
                             </div>
                             <div className="filtrosEstado">
                                 <button 

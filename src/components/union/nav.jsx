@@ -1,17 +1,20 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import * as actions from '../store/action/action';
 import { hasPermission } from './acciones';
 import { MdNetworkPing } from 'react-icons/md';
+import NotificationBell from './notifications/NotificationBell';
+import CotizacionSimulaciones from './universales/cotizacion/cotizacionSimulaciones';
 
 export default function Nav(){
     const navigate = useNavigate();
     const [params, setParams] = useSearchParams();
     const usuario = useSelector(store => store.usuario);
-    
     const { user } = usuario;
     const dispatch = useDispatch();
+
+
     const logged = () => {
         localStorage.removeItem('loggedPeople');
         dispatch(actions.GET_USER(null))
@@ -82,7 +85,12 @@ export default function Nav(){
                 <div className="user">
                     <div className="containerUser">
                         <nav>
-                            <ul> 
+                            <ul>
+                                {/* Campana de notificaciones premium tipo WhatsApp */}
+                                <li>
+                                    <NotificationBell className="nav-notification-bell" />
+                                </li>
+
                                 <li onClick={() => {
                                     params.set('connect', 'CRM')
                                     setParams(params);
@@ -90,7 +98,6 @@ export default function Nav(){
                                     <div className="toCRM">
                                         <span>CRM</span>
                                         <MdNetworkPing className="icon" />
-
                                     </div>
                                 </li>
                                 <li>
@@ -108,6 +115,9 @@ export default function Nav(){
                     </div>
                 </div>
             </div>
+            
+            {/* Drawer de cotizaciones con simulaciones */}
+            <CotizacionSimulaciones />
         </div>
     )
 }

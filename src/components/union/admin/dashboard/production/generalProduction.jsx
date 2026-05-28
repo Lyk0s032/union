@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import CotizacionItemProduccion from './itemCotizacion';
 import { useSearchParams } from 'react-router-dom';
 import DocumentCotizacion from '../production copy/cotizacion/cotizacion';
+import OrdenCompraCotizacion from '../../../comercial/modal/ordenCompraCotizacion';
 export default function GeneralProduction(){
     
     const dispatch = useDispatch();
@@ -217,6 +218,11 @@ export default function GeneralProduction(){
                                 {
                                     params.get('watch') == 'cotizacion' ?
                                         <DocumentCotizacion />
+                                    : null
+                                }
+                                {
+                                    params.get('ordenCompra') ?
+                                        <OrdenCompraCotizacion />
                                     : null
                                 }
                             </div>

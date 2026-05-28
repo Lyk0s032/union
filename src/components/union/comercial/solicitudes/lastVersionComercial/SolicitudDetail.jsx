@@ -82,6 +82,12 @@ export default function SolicitudDetail({ solicitudId, onClose }) {
             formData.append('reqId', requerimiento.id);
             formData.append('userId', user.user.id);
             
+            // 🔔 ENVIAR USUARIOS A NOTIFICAR (menciones + dueño del requerimiento)
+            if (data.userToNotify && Array.isArray(data.userToNotify)) {
+                formData.append('userToNotify', JSON.stringify(data.userToNotify));
+                console.log('📤 Enviando userToNotify:', data.userToNotify);
+            }
+            
             if (data.attachments && data.attachments.length > 0) {
                 data.attachments.forEach((file) => {
                     formData.append('images', file);

@@ -1,0 +1,123 @@
+@import '../../../less/variables.less';
+
+// Contenedor del toggle de sonido
+.wa-sound-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+// Botón de toggle
+.wa-sound-toggle__button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  position: relative;
+  
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  
+  // Estado habilitado (con sonido)
+  &--enabled {
+    color: @bgVerde;
+    
+    &:hover:not(:disabled) {
+      background: rgba(37, 211, 102, 0.1);
+      color: darken(@bgVerde, 10%);
+    }
+    
+    &:active:not(:disabled) {
+      transform: scale(0.95);
+    }
+  }
+  
+  // Estado deshabilitado (sin sonido)
+  &--disabled {
+    color: @bgTextOpacity;
+    
+    &:hover:not(:disabled) {
+      background: rgba(145, 158, 171, 0.1);
+      color: darken(@bgTextOpacity, 15%);
+    }
+    
+    &:active:not(:disabled) {
+      transform: scale(0.95);
+    }
+  }
+  
+  svg {
+    width: 16px;
+    height: 16px;
+    transition: all 0.15s ease;
+  }
+}
+
+// Label opcional
+.wa-sound-toggle__label {
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+  font-size: 12px;
+  color: @colorLetraOscuro;
+  user-select: none;
+  white-space: nowrap;
+}
+
+// Indicador de error
+.wa-sound-toggle__error {
+  font-size: 14px;
+  filter: grayscale(0.7);
+}
+
+// Integración con NotificationBell
+.wa-bell-dropdown__header .wa-sound-toggle {
+  .wa-sound-toggle__button {
+    padding: 4px;
+    
+    &--enabled:hover {
+      background: rgba(37, 211, 102, 0.15);
+    }
+    
+    &--disabled:hover {
+      background: rgba(145, 158, 171, 0.15);
+    }
+  }
+}
+
+// Responsividad
+@media (max-width: 480px) {
+  .wa-sound-toggle__label {
+    display: none; // Ocultar label en móviles para ahorrar espacio
+  }
+}
+
+// Modo oscuro
+@media (prefers-color-scheme: dark) {
+  .wa-sound-toggle__button {
+    &--enabled {
+      color: @bgVerde;
+      
+      &:hover:not(:disabled) {
+        background: rgba(37, 211, 102, 0.2);
+      }
+    }
+    
+    &--disabled {
+      color: #8696a0;
+      
+      &:hover:not(:disabled) {
+        background: rgba(134, 150, 160, 0.15);
+      }
+    }
+  }
+  
+  .wa-sound-toggle__label {
+    color: #aebac1;
+  }
+}

@@ -614,17 +614,20 @@ export default function DocumentCotizacion(){
                         </div>
                         
                     </div>
-                    <div className="optionDownload">
-                        {/* <button onClick={exportToPDF}>
-                            <span>Descargar</span>
-                        </button> */}
-
+                    <div className="optionDownload" style={{display:'flex', justifyContent:'space-between', width:'100%'}}>
                         <button onClick={() => {
                             if(!loading){
                                 getPDF()
                             }
                         }}>
                             <span>{loading ? 'Generando pdf' : 'Descargar'}</span>
+                        </button>
+
+                        <button onClick={() => {
+                            params.set('ordenCompra', cotizacion.id);
+                            setParams(params);
+                        }}>
+                            <span>Hacer orden de compra</span>
                         </button>
                     </div>
                     

@@ -4,6 +4,7 @@ import * as actions from '../../../../../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import DocumentCotizacion from '../cotizacion/cotizacion';
+import OrdenCompraCotizacion from '../../../../comercial/modal/ordenCompraCotizacion';
 import CotizacionItemGeneral from '../itemCotizacion';
 import CotizacionItemProceso from './itemProceso';
 import ComprarAdmin from './comprar/routeComprar'
@@ -72,6 +73,11 @@ export default function EnProcesoComercial(){
                                     {
                                         params.get('watch') == 'cotizacion' ?
                                             <DocumentCotizacion />
+                                        : null
+                                    }
+                                    {
+                                        params.get('ordenCompra') ?
+                                            <OrdenCompraCotizacion />
                                         : null
                                     }
                                 </div>
