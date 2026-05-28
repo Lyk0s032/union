@@ -130,6 +130,7 @@ export default function SolicitudDetail({ solicitudId, onClose, readOnly = false
             formData.append('message', data.message);
             formData.append('reqId', requerimiento.id);
             formData.append('userId', user.user.id);
+            formData.append('para', 'cliente'); // Producción notifica a cliente
             
             // 🔔 ENVIAR USUARIOS A NOTIFICAR (menciones + dueño del requerimiento)
             if (data.userToNotify && Array.isArray(data.userToNotify)) {

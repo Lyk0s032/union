@@ -81,6 +81,7 @@ export default function SolicitudDetail({ solicitudId, onClose }) {
             formData.append('message', data.message);
             formData.append('reqId', requerimiento.id);
             formData.append('userId', user.user.id);
+            formData.append('para', 'produccion'); // Comercial notifica a producción
             
             // 🔔 ENVIAR USUARIOS A NOTIFICAR (menciones + dueño del requerimiento)
             if (data.userToNotify && Array.isArray(data.userToNotify)) {
