@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import KitItem from "./kitItem";
 import ModalNewKit from "./modal/newKit";
@@ -31,6 +31,12 @@ export default function KitsPanel(){
         
     const [loadingFilter, setLoadingFilter] = useState(false);
     const [kitsFiltrados, setKitsFiltrados] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [hasMore, setHasMore] = useState(false);
+    const [loadingMore, setLoadingMore] = useState(false);
+
+    // Ref para el observador de scroll infinito
+    const observerTarget = useRef(null);
 
     const hayFiltros =
         word ||
@@ -42,9 +48,13 @@ export default function KitsPanel(){
 
 
 
-    const getKitsFiltrados = async () => {
+    const getKitsFiltrados = useCallback(async (page = 1, append = false) => {
         try {
-            setLoadingFilter(true);
+            if (!append) {
+                setLoadingFilter(true);
+            } else {
+                setLoadingMore(true);
+            }
 
             const { data } = await axios.get('/api/kit/get/filter/querys/kits', {
             params: {
@@ -53,27 +63,34 @@ export default function KitsPanel(){
                 lineaId: li || undefined,
                 extensionId: ex || undefined,
                 asesor: asesor || undefined,
-                state:  state == 'simulation' ? 'simulacion' : state == 'desarrollo' ? 'desarrollo' : state == 'completa' ? 'completa' : undefined
+                state:  state == 'simulation' ? 'simulacion' : state == 'desarrollo' ? 'desarrollo' : state == 'completa' ? 'completa' : undefined,
+                page: page,
+                limit: 50
             }
             });
-            console.log('params', {
-                name: word || undefined,
-                categoriaId: cat || undefined, 
-                lineaId: li || undefined,
-                extensionId: ex || undefined,
-                asesorId: asesor || undefined,
-                state:  state == 'simulation' ? 'simulacion' : state == 'desarrollo' ? 'desarrollo' : state == 'completa' ? 'completa' : undefined
-            });
-            console.log('data', data);
+            console.log('🔍 Búsqueda página:', page, 'append:', append);
+            console.log('📦 Data recibida:', data);
 
-            setKitsFiltrados(data);
+            if (append) {
+                setKitsFiltrados(prev => [...prev, ...data.kits]);
+            } else {
+                setKitsFiltrados(data.kits);
+            }
+            
+            setHasMore(data.pagination.hasMore);
+            setCurrentPage(page);
+            
+            console.log('✅ HasMore:', data.pagination.hasMore, 'Página actual:', page);
         } catch (err) {
-            console.error(err);
-            setKitsFiltrados([]);
+            console.error('❌ Error al cargar kits:', err);
+            if (!append) {
+                setKitsFiltrados([]);
+            }
         } finally {
             setLoadingFilter(false);
+            setLoadingMore(false);
         }
-    };
+    }, [word, cat, li, ex, asesor, state]);
 
     const handleUpdatePrices = async() => {
         setLoading(true)
@@ -95,11 +112,54 @@ export default function KitsPanel(){
 
     useEffect(() => {
         if (hayFiltros) {
-            getKitsFiltrados();
+            setCurrentPage(1);
+            getKitsFiltrados(1, false);
         } else {
-            setKitsFiltrados(null); // volvemos al store
+            setKitsFiltrados(null);
+            setCurrentPage(1);
+            setHasMore(false);
         }
     }, [word, cat, li, ex, asesor, state]);
+
+
+    // Scroll infinito con Intersection Observer
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                const target = entries[0];
+                console.log('👀 Observador - visible:', target.isIntersecting);
+                console.log('🔄 Estado - hasMore:', hasMore, 'loadingMore:', loadingMore, 'loadingFilter:', loadingFilter, 'hayFiltros:', hayFiltros);
+                
+                if (target.isIntersecting && hasMore && !loadingMore && !loadingFilter && hayFiltros) {
+                    console.log('🚀 Cargando más resultados... Página:', currentPage + 1);
+                    getKitsFiltrados(currentPage + 1, true);
+                }
+            },
+            {
+                root: null, // viewport
+                rootMargin: '200px', // Detecta 200px antes de llegar
+                threshold: 0.1
+            }
+        );
+
+        if (observerTarget.current) {
+            observer.observe(observerTarget.current);
+            console.log('✅ Observador activado');
+        }
+
+        return () => {
+            if (observerTarget.current) {
+                observer.unobserve(observerTarget.current);
+                console.log('🛑 Observador desactivado');
+            }
+        };
+    }, [hasMore, loadingMore, loadingFilter, currentPage, hayFiltros, getKitsFiltrados]);
+
+    
+    // Debug: monitorear cambios en hasMore
+    useEffect(() => {
+        console.log('🎯 Estado actualizado - hasMore:', hasMore, 'currentPage:', currentPage, 'kitsFiltrados:', kitsFiltrados?.length);
+    }, [hasMore, currentPage, kitsFiltrados]);
 
 
 
@@ -338,6 +398,21 @@ export default function KitsPanel(){
                                 }
                                     
                             </table>
+                            {/* Elemento observador para scroll infinito */}
+                            {hayFiltros && (
+                                <div 
+                                    ref={observerTarget} 
+                                    style={{height: '20px', margin: '10px 0'}}
+                                >
+                                    {loadingMore && (
+                                        <div className="loading" style={{padding: '20px 0px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                            <div className="containerLoading">
+                                                <h1 style={{color: '#02618f', fontWeight: '400', fontSize: '16px'}}>Cargando más resultados...</h1>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

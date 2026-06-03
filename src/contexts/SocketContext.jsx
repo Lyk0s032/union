@@ -12,6 +12,7 @@ const SocketContext = createContext(null);
 // const SOCKET_URL = 'http://192.168.1.22:3000/';
 const SOCKET_URL = 'https://unionapi-production.up.railway.app/';
 
+
 export function SocketProvider({ children }) {
   const { user } = useSelector((store) => store.usuario);
   const socketRef = useRef(null);

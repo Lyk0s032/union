@@ -46,7 +46,7 @@ export default function CotizacionItemGeneral({ item, openMenuId, toggleMenu  })
     const enviarNotificacionSimulacion = async() => {
         try {
             await axios.post('/api/notifications', {
-                userId: 1,
+                userId: 3,
                 title: 'Cotización aprobada contiene simulación',
                 body: `${r.id + 21719} - ${r.name}, revisar los items con simulación`,
                 category: 'cotizacion',

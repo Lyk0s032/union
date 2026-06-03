@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { MdCheck, MdOutlineAdd, MdOutlineContentCopy, MdOutlineEditNote, MdOutlineExpandCircleDown, MdOutlineSaveAs } from 'react-icons/md';
+import { MdCheck, MdCloudDone, MdOutlineAdd, MdOutlineCloudDone, MdOutlineContentCopy, MdOutlineEditNote, MdOutlineExpandCircleDown, MdOutlineSaveAs } from 'react-icons/md';
 import ItemToSelect from './itemToSelect';
 import * as actions from '../../../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,6 +12,8 @@ import UpdateKit from './updated';
 import { BsExclamation, BsExclamationTriangle, BsShieldCheck } from 'react-icons/bs';
 import ConfigKit from './configKit';
 import ModalChangeCalibre from './changeCalibre';
+import SearchKitToCopy from './SearchKitToCopy';
+import ConfirmCopyRecipe from './ConfirmCopyRecipe';
 
 export default function SelectMP(){
 
@@ -26,7 +28,13 @@ export default function SelectMP(){
     const segmentoRef = useRef(null);
     const [nameAdd, setNameAdd] = useState('');
     const [adding, setAdding] = useState(false);
-    const [number, setNumber] = useState(null)
+    const [number, setNumber] = useState(null);
+    
+    // Estados para la funcionalidad de copiar receta
+    const [showSearchKitModal, setShowSearchKitModal] = useState(false);
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const [selectedSourceKit, setSelectedSourceKit] = useState(null);
+    const [copyingRecipe, setCopyingRecipe] = useState(false);
     const sendPeticion = async () => {
         const body = {
             kitId: kit.id,
@@ -74,11 +82,6 @@ export default function SelectMP(){
         setNumber(zona)
     }
 
-    const [openMenuId, setOpenMenuId] = useState(null);
-    
-    const toggleMenu = (id) => {
-        setOpenMenuId(openMenuId === id ? null : id); // Si ya está abierto, ciérralo; si no, ábrelo
-    };
 
     const copyName = () => {
         let copiedName = `${kit.id} - ${kit.name}`
@@ -94,20 +97,6 @@ export default function SelectMP(){
         });
     }
 
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-          // Si hay un menú abierto y el clic no fue dentro de ningún menú (o su botón)
-          // Usamos event.target.closest('.menu-container') para verificar si el clic fue dentro del menú o su botón
-          if (openMenuId !== null && !event.target.closest('.menu-containerSelected')) {
-            setOpenMenuId(null); // Cierra el menú
-          }
-        };
-
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-          document.removeEventListener('mousedown', handleClickOutside);
-        };
-      }, [openMenuId]);  
 
 
       useEffect(() => {
@@ -115,6 +104,48 @@ export default function SelectMP(){
             segmentoRef.current.focus()
         }
       }, [add])
+
+      // Función para manejar la selección del KIT de referencia
+      const handleSelectSourceKit = (sourceKit) => {
+        setSelectedSourceKit(sourceKit);
+        setShowSearchKitModal(false);
+        setShowConfirmModal(true);
+      };
+
+      // Función para copiar la receta
+      const handleCopyRecipe = async () => {
+        if (!selectedSourceKit) return;
+        
+        setCopyingRecipe(true);
+        
+        try {
+            const response = await axios.put('/api/kit/copy-recipe', {
+                sourceKitId: selectedSourceKit.id,
+                targetKitId: kit.id,
+                userId: user.user.id
+            });
+
+            if (response.status === 200) {
+                dispatch(actions.HandleAlerta('¡Receta copiada exitosamente!', 'positive'));
+                dispatch(actions.axiosToGetKit(false, kit.id));
+                setShowConfirmModal(false);
+                setSelectedSourceKit(null);
+            }
+        } catch (error) {
+            console.error('Error copiando receta:', error);
+            dispatch(actions.HandleAlerta('No hemos logrado copiar la receta, inténtalo más tarde', 'mistake'));
+        } finally {
+            setCopyingRecipe(false);
+        }
+      };
+
+      // Función para cancelar el proceso
+      const handleCancelCopy = () => {
+        if (!copyingRecipe) {
+            setShowConfirmModal(false);
+            setSelectedSourceKit(null);
+        }
+      };
     return (
         <div className="page">
             {
@@ -160,6 +191,13 @@ export default function SelectMP(){
                                         }}>
                                             <div>
                                                 <MdOutlineAdd className="icon" />
+                                            </div>
+                                        </li>
+                                        <li onClick={() => {
+                                            setShowSearchKitModal(true);
+                                        }}>
+                                            <div>
+                                                <MdOutlineCloudDone className="icon" />
                                             </div>
                                         </li>
                                     </ul>
@@ -216,7 +254,7 @@ export default function SelectMP(){
                                 : null
                             }
                             
-                            <Selected kit={kit} selectArea={selectArea} number={number} toggleMenu={toggleMenu} openMenuId={openMenuId}/>
+                            <Selected kit={kit} selectArea={selectArea} number={number}/>
                         </div>
                     </div>
                     <div className="bottomData">
@@ -248,6 +286,23 @@ export default function SelectMP(){
                     : null
                 }
             </div>
+
+            {/* Modales para copiar receta */}
+            <SearchKitToCopy 
+                isOpen={showSearchKitModal}
+                onClose={() => setShowSearchKitModal(false)}
+                onSelectKit={handleSelectSourceKit}
+                currentKitId={kit.id}
+            />
+
+            <ConfirmCopyRecipe 
+                isOpen={showConfirmModal}
+                onClose={handleCancelCopy}
+                onConfirm={handleCopyRecipe}
+                sourceKit={selectedSourceKit}
+                targetKit={kit}
+                loading={copyingRecipe}
+            />
         </div>
     )
 } 

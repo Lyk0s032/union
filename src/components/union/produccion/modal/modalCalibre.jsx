@@ -28,7 +28,7 @@ export default function ModalCalibre({ onEnviarValor }){
         return setParams(params);
     }
     return (
-        <div className="modal" style={{zIndex:8}}>
+        <div className="modal" style={{zIndex:10000}}>
             <div className="hiddenModal"  onClick={() => {
                 params.delete('almacen');
                 setParams(params);
