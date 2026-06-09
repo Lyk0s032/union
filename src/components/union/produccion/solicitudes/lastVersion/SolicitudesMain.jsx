@@ -114,13 +114,7 @@ export default function SolicitudesMain() {
                 <div className="header-top">
                     <h1>Solicitudes de Producción</h1>
                     <div className="stats-chips">
-                        <button 
-                            className={`stat-chip all ${filtroEstado === 'todos' ? 'active' : ''}`}
-                            onClick={() => setFiltroEstado('todos')}
-                        >
-                            <span className="label">Todos</span>
-                            <span className="value">{requerimientos?.length || 0}</span>
-                        </button>
+                        
                         <button 
                             className={`stat-chip pending ${filtroEstado === 'pendientes' ? 'active' : ''}`}
                             onClick={() => setFiltroEstado('pendientes')}
@@ -141,6 +135,13 @@ export default function SolicitudesMain() {
                         >
                             <span className="label">Completadas</span>
                             <span className="value">{getEstadoCount('finish')}</span>
+                        </button>
+                        <button 
+                            className={`stat-chip all ${filtroEstado === 'todos' ? 'active' : ''}`}
+                            onClick={() => setFiltroEstado('todos')}
+                        >
+                            <span className="label">Todos</span>
+                            <span className="value">{requerimientos?.length || 0}</span>
                         </button>
                     </div>
                 </div>

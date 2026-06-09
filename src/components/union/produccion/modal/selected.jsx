@@ -184,7 +184,7 @@ export default function Selected({ kit, number, selectArea }) {
                                             if (e.code === 'Enter') changeNameSegmento(e.target.value, ar.id);
                                         }}
                                     />
-                                    : <h3>{ar.name}</h3>
+                                    : <h3>{ar.name} </h3>
                                 }
                             </div>
                             <div className="optionsTitleThis">
@@ -213,7 +213,7 @@ export default function Selected({ kit, number, selectArea }) {
                                                                 <h3><span>{item.materium.id}</span> - {item.materium.description}</h3>
                                                             </div>
                                                         </td>
-                                                        <td className="edit">
+                                                        <td className="edit"  onDoubleClick={() => setFast(item.id)}>
                                                             <div className="howMany">
                                                                 <strong>{item.medida} <span>{item.materium.unidad}</span></strong>
                                                             </div>
@@ -259,11 +259,11 @@ export default function Selected({ kit, number, selectArea }) {
                                 <tr key={i + 1}>
                                     <td className="larger">
                                         <div className="codeAndName">
-                                            <h3><span>{item.materium.id}</span> - {item.materium.description}</h3>
+                                            <h3><span>{item.materium.id}</span> - {item.materium.description} </h3>
                                             <span>Calibre: {item.calibre}</span>
                                         </div>
                                     </td>
-                                    <td className="edit">
+                                    <td className="edit" onDoubleClick={() => setFast(item.id)}>
                                         <div className="howMany">
                                             <strong>{item.medida} <span>{item.materium.unidad}</span></strong>
                                         </div>
