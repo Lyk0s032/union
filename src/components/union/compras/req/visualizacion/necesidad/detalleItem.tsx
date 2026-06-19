@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ItemNecesidad as ItemNecesidadType } from '../types';
 import * as actions from '../../../../../store/action/action';
@@ -11,13 +11,17 @@ interface Proveedor {
     precio: number;
 }
 
+const COTIZACION_OFFSET = 21719;
+
 interface ProyectoItem {
     /** Id único por fila (comprasCotizacionItem); keys React y modo edición */
     id: number;
     /** Cotización / proyecto para mostrar (puede repetirse si hay varias líneas mismo proyecto) */
     cotizacionId: number | null;
+    numeroCotizacion: number | null;
     requisicionId?: number;
     nombre: string;
+    cliente: string;
     estado: string;
     actual: number;
     total: number;
@@ -38,6 +42,32 @@ export default function DetalleItem({ item, onClose, onProveedorClick }: Detalle
     const ids = req.requisicionesSeleccionadas || req.ids || [];
     const itemRequisicion = req.itemRequisicion;
     const loadingItemRequisicion = req.loadingItemRequisicion;
+
+    const proyectosMetaPorRequisicion = useMemo(() => {
+        const map = new Map<number, { cliente: string; cotizacionId: number | null }>();
+        const lista = req.realProyectosRequisicion?.proyectos;
+        if (!Array.isArray(lista)) return map;
+
+        lista.forEach((reqProyecto: any) => {
+            const requisicionId = Number(reqProyecto?.id);
+            if (!requisicionId) return;
+
+            const cotizacion = reqProyecto.cotizacion || {};
+            const cliente = cotizacion.client || {};
+            const cotRaw = cotizacion.id ?? reqProyecto.cotizacionId;
+            const cotizacionId =
+                cotRaw !== undefined && cotRaw !== null && cotRaw !== ''
+                    ? Number(cotRaw)
+                    : null;
+
+            map.set(requisicionId, {
+                cliente: cliente.name || cliente.nombre || '',
+                cotizacionId: Number.isNaN(cotizacionId as number) ? null : cotizacionId,
+            });
+        });
+
+        return map;
+    }, [req.realProyectosRequisicion]);
 
     // Estados para edición de cantidad
     const [editandoProyectoId, setEditandoProyectoId] = useState<number | null>(null);
@@ -170,17 +200,34 @@ export default function DetalleItem({ item, onClose, onProveedorClick }: Detalle
                 : NaN;
         /** Una fila = un comprasCotizacionItem: id estable para key y editandoProyectoId */
         const idFila = !Number.isNaN(numItem) ? numItem : -(index + 1);
-        const cotRaw = proj?.requisicion?.cotizacionId ?? proj.cotizacionId;
+        const requisicionId = Number(proj?.requisicion?.id || proj.requisicionId || 0) || undefined;
+        const metaRequisicion = requisicionId ? proyectosMetaPorRequisicion.get(requisicionId) : undefined;
+        const cotRaw =
+            proj?.requisicion?.cotizacionId ??
+            proj.cotizacionId ??
+            metaRequisicion?.cotizacionId;
         const cotizacionId =
             cotRaw !== undefined && cotRaw !== null && cotRaw !== ''
                 ? Number(cotRaw)
                 : null;
+        const numeroCotizacion =
+            cotizacionId !== null && !Number.isNaN(cotizacionId)
+                ? COTIZACION_OFFSET + cotizacionId
+                : null;
+        const clienteApi = proj?.requisicion?.cotizacion?.client;
+        const cliente =
+            metaRequisicion?.cliente ||
+            clienteApi?.name ||
+            clienteApi?.nombre ||
+            '';
 
         return {
             id: idFila,
             cotizacionId,
-            requisicionId: proj?.requisicion?.id || proj.requisicionId,
+            numeroCotizacion,
+            requisicionId,
             nombre: proj?.requisicion?.nombre || proj?.name,
+            cliente,
             estado: proj.estado || proj.state || 'Pendiente',
             actual: proj?.cantidadEntrega || proj.entregado || 0,
             total: proj?.cantidad || proj.totalCantidad || 0,
@@ -249,15 +296,34 @@ export default function DetalleItem({ item, onClose, onProveedorClick }: Detalle
                                     ? (proyecto.actual * (item.medida || 1) > proyecto.total ? proyecto.total : proyecto.actual * (item.medida || 1))
                                     : proyecto.actual;
                                 
+                                const etiquetaCirculo =
+                                    proyecto.numeroCotizacion ??
+                                    proyecto.cotizacionId ??
+                                    proyecto.id;
+
                                 return (
                                     <div key={proyecto.id} className="proyectoItem">
-                                        {console.log('proyecto', proyecto)}
-                                        <div className="proyectoNumero">
-                                            {proyecto.cotizacionId ?? proyecto.id}
+                                        <div
+                                            className="proyectoNumero"
+                                            style={
+                                                String(etiquetaCirculo).length > 4
+                                                    ? { fontSize: 10 }
+                                                    : undefined
+                                            }
+                                        >
+                                            {etiquetaCirculo}
                                         </div>
                                         <div className="proyectoInfo">
                                             <div className="proyectoNombreEstado">
                                                 <span className="proyectoNombre">{proyecto.nombre}</span>
+                                                {proyecto.cliente ? (
+                                                    <span className="proyectoEstado">{proyecto.cliente}</span>
+                                                ) : null}
+                                                {proyecto.numeroCotizacion != null ? (
+                                                    <span className="proyectoEstado">
+                                                        Cotización: {proyecto.numeroCotizacion}
+                                                    </span>
+                                                ) : null}
                                                 <span className="proyectoEstado">{proyecto.estado}</span>
                                             </div>
                                             <div className="proyectoCantidades">

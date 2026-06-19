@@ -28,7 +28,12 @@ export default function MovimientosItem({ movimientos, page, limit, onPageChange
     };
 
     const obtenerReferencia = (mov) => {
+        const ocId = mov.comprasCotizacionId;
+        if (ocId != null && ocId !== '' && Number(ocId) > 0) {
+            return `Orden de compra #${ocId}`;
+        }
         if (mov.refDoc) return mov.refDoc;
+        if (mov.referenciaDeDocumento) return mov.referenciaDeDocumento;
         if (mov.cotizacionId) return `Proyecto #${mov.cotizacionId}`;
         return 'Manual';
     };

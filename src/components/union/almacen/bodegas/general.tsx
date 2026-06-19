@@ -1,6 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
+import * as XLSX from 'xlsx';
 import * as actions from '../../../store/action/action';
 import ItemModal from './item/itemModal';
 
@@ -303,6 +304,34 @@ export default function GeneralAlmacen() {
     console.log('[GENERAL] Recargando tabla silenciosamente después de operación');
   };
 
+  function handleDescargarPlantilla() {
+    if (filtered.length === 0) {
+      (dispatch as any)(actions.HandleAlerta('No hay items para exportar', 'mistake'));
+      return;
+    }
+
+    const rows = filtered.map((item: any) => ({
+      Código: item?.itemId ?? item?.id ?? '',
+      Item: item?.nombre ?? item?.name ?? '',
+      Tipo: item?.tipo === 'MP' ? 'Materia Prima' : 'Producto Terminado',
+      Medida: item?.isMt2 && item?.medida ? `${item.medida} mt2` : (item?.medida ?? ''),
+      Cantidad: item?.cantidad ?? 0,
+      'Última actualización': item?.updatedAt
+        ? new Date(item.updatedAt).toLocaleString('es-ES')
+        : '',
+      Estado: !item?.cantidad || item?.cantidad <= 0 ? 'Agotado' : 'Disponible',
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(rows);
+    const workbook = XLSX.utils.book_new();
+    const sheetName = selectedBodega === 'MP' ? 'Materia Prima' : 'Producto Terminado';
+    XLSX.utils.book_append_sheet(workbook, worksheet, sheetName);
+
+    const bodegaLabel = selectedBodega === 'MP' ? 'MP' : 'PT';
+    const fecha = new Date().toISOString().slice(0, 10);
+    XLSX.writeFile(workbook, `plantilla_bodega_${bodegaLabel}_${fecha}.xlsx`);
+  }
+
   function handleDownload(item: ProductItem) {
     const content = `ID: ${item.id}\nSKU: ${item.sku}\nNombre: ${item.name}\nMaker: ${item.maker}\nEstado: ${item.estado}`;
     const blob = new Blob([content], { type: 'application/pdf' });
@@ -449,7 +478,18 @@ export default function GeneralAlmacen() {
           )}
         </div>
         <div style={{ marginLeft: 'auto', display: 'flex', gap: 8 }} className="controls">
-          <button style={{ padding: '8px 12px', borderRadius: 6, background: '#2f8bfd', color: '#fff', border: 'none' }}>
+          <button
+            onClick={handleDescargarPlantilla}
+            disabled={filtered.length === 0}
+            style={{
+              padding: '8px 12px',
+              borderRadius: 6,
+              background: filtered.length === 0 ? '#b0c4de' : '#2f8bfd',
+              color: '#fff',
+              border: 'none',
+              cursor: filtered.length === 0 ? 'not-allowed' : 'pointer',
+            }}
+          >
             Descargar Plantilla
           </button>
           <button style={{ padding: '8px 12px', borderRadius: 6, background: '#2f8bfd', color: '#fff', border: 'none' }}>

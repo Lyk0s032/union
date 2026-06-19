@@ -6,6 +6,17 @@ import TableReq from './home/table'
 import VisualizarRequisicion from './visualizacion/visualizar'
 import * as actions from './../../../store/action/action';
 import dayjs from 'dayjs'
+import 'dayjs/locale/es'
+
+dayjs.locale('es')
+
+const formatearFechaCalendario = (value: unknown, format: string) => {
+    if (value == null || value === '') return 'Sin fecha';
+    const raw = String(value);
+    const datePart = raw.includes('T') ? raw.split('T')[0] : raw;
+    const d = dayjs(datePart);
+    return d.isValid() ? d.format(format) : 'Sin fecha';
+};
 
 export default function RequisicionDashboard() {
     const dispatch = useDispatch();
@@ -49,14 +60,15 @@ export default function RequisicionDashboard() {
             const cotizacion = req.cotizacion || {};
             const cliente = cotizacion.client || {};
             
-            // Formatear fechas
-            const fechaCreacion = req.fecha || req.createdAt 
-                ? dayjs(req.fecha || req.createdAt).format('D [de] MMMM [de] YYYY')
-                : 'Sin fecha';
-            
-            const fechaNecesaria = req.fechaNecesaria || req.fecha_necesaria
-                ? dayjs(req.fechaNecesaria || req.fecha_necesaria).format('D [de] MMMM [del] YYYY')
-                : 'Sin fecha';
+            // Formatear fechas (solo día calendario; evita desfase UTC en Colombia)
+            const fechaCreacion = formatearFechaCalendario(
+                req.fecha || req.createdAt,
+                'D [de] MMMM [de] YYYY'
+            );
+            const fechaNecesaria = formatearFechaCalendario(
+                req.fechaNecesaria || req.fecha_necesaria,
+                'D [de] MMMM [del] YYYY'
+            );
             
             // Mapear estado
             let estado = 'Pendiente';

@@ -13,6 +13,7 @@ import ItemNecesidadMP from './itemNecesidadMP';
 import ItemNecesidadMPKG from './itemNecesidadKg'; 
 import ItemNecesidadMPMT from './itemNecesidadMt';
 import ItemNecesidadMPMT2 from './itemNecesidadMt2';
+import { calcularMt2MateriaPrima } from './calcularMt2MateriaPrima';
 import { useSearchParams } from 'react-router-dom';
 
 export default function NecesidadRequisicion(){
@@ -337,9 +338,8 @@ export default function NecesidadRequisicion(){
         if (item.unidad === 'mt2') {
             // Para mt2: Med. Consumo es el totalCantidad, Necesidad es la cantidad de piezas
             if(item.tipo == 'materia-prima'){
-                medConsumo = item.totalCantidad; 
-                const medidaMt2 = item.medida
-                necesidad = Math.ceil(item.totalCantidad / medidaMt2);
+                const mt2 = calcularMt2MateriaPrima(item, realData?.proyectos);
+                return { medConsumo: mt2.medConsumo, necesidad: mt2.necesidad };
             }
             else if(item.tipo == 'producto-terminado'){
                 // const medidaMt2 = item.medida.split('X').map(v => parseFloat(v)).reduce((a, b) => a * b, 1);
@@ -371,6 +371,13 @@ export default function NecesidadRequisicion(){
 
     // Función helper para calcular el estado de un item
     const calcularEstadoItem = (item: ItemNecesidadType): 'Comprado' | 'Parcialmente comprado' | 'Sin comprar' => {
+        if (item.unidad === 'mt2' && item.tipo === 'materia-prima') {
+            const mt2 = calcularMt2MateriaPrima(item, realData?.proyectos);
+            if (mt2.falta <= 0.09) return 'Comprado';
+            if (mt2.entregado <= 0) return 'Sin comprar';
+            return 'Parcialmente comprado';
+        }
+
         const { necesidad } = calcularMedidas(item);
         const entregado = item.entregado || 0;
         const falta = Math.max(0, necesidad - entregado);
@@ -387,9 +394,6 @@ export default function NecesidadRequisicion(){
      * despreciable (≤ 0.09) y consumo total cubierto en láminas/mt/kg (entregado >= totalCantidad).
      */
     const calcularFaltaPorComprarParaTotales = (item: ItemNecesidadType): number => {
-        const { necesidad } = calcularMedidas(item);
-        const entregado = item.entregado || 0;
-        const faltaQty = Math.max(0, necesidad - entregado);
         const precioUnitarioReal =
             item.unidad == 'kg'
                 ? item.precioUnitario / item.medida
@@ -397,19 +401,27 @@ export default function NecesidadRequisicion(){
                   ? Number(item.precioUnitario * item.medida).toFixed(0)
                   : item.precioUnitario;
         const precioNum = Number(precioUnitarioReal);
+
+        let faltaQty: number;
+        if (item.unidad === 'mt2' && item.tipo === 'materia-prima') {
+            faltaQty = calcularMt2MateriaPrima(item, realData?.proyectos).falta;
+        } else {
+            const { necesidad } = calcularMedidas(item);
+            const entregado = item.entregado || 0;
+            faltaQty = Math.max(0, necesidad - entregado);
+        }
+
         const base = faltaQty > 0 ? precioNum * faltaQty : 0;
 
         if (faltaQty <= 0.09) return 0;
         if (base <= 0.09) return 0;
 
         const totalCantidad = item.totalCantidad ?? 0;
-        const entregadoNum = Number(entregado);
+        const entregadoNum = Number(item.entregado || 0);
         if (
             totalCantidad > 0 &&
             entregadoNum >= totalCantidad &&
-            ((item.unidad === 'mt2' && item.tipo === 'materia-prima') ||
-                item.unidad === ('mt' as any) ||
-                item.unidad === 'kg')
+            (item.unidad === ('mt' as any) || item.unidad === 'kg')
         ) {
             return 0;
         }
@@ -799,9 +811,13 @@ export default function NecesidadRequisicion(){
                     </div>
                     <div className="itemsTabla">
                         {itemsFiltrados.map((item, index) => {
+                            const mt2MateriaPrima =
+                                item.unidad === 'mt2' && item.tipo === 'materia-prima'
+                                    ? calcularMt2MateriaPrima(item, realData?.proyectos)
+                                    : null;
                             const { medConsumo, necesidad } = calcularMedidas(item);
-                            const entregado = item.entregado || 0;
-                            const falta = Math.max(0, necesidad - entregado);
+                            const entregado = mt2MateriaPrima?.entregado ?? (item.entregado || 0);
+                            const falta = mt2MateriaPrima?.falta ?? Math.max(0, necesidad - entregado);
                             let precioUnitarioReal = item.unidad == 'kg' ? item.precioUnitario / item.medida : item.unidad === 'mt2' && item.tipo == 'producto-terminado' ? Number(item.precioUnitario * item.medida).toFixed(0) : item.precioUnitario;
                             const totalPromedio = precioUnitarioReal * necesidad;
                             const faltaPorComprar = calcularFaltaPorComprarParaTotales(item);

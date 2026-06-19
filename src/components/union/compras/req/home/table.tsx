@@ -753,12 +753,16 @@ function ModalEditarFecha({ requisicionId, fechaBaseDefault, fechaNecesariaDefau
         if (!raw) return '';
         if (raw.toLowerCase() === 'sin fecha') return '';
 
-        // 1) Intenta parseo directo (ISO normalmente)
-        let d = dayjs(raw);
-        if (d.isValid()) return d.format('YYYY-MM-DD');
+        // ISO UTC: usar solo la parte de día (evita desfase UTC-5)
+        if (raw.includes('T')) {
+            const datePart = raw.split('T')[0];
+            if (/^\d{4}-\d{2}-\d{2}$/.test(datePart)) return datePart;
+        }
 
-        // 2) Intenta formatos comunes del sistema
+        // Intenta formatos comunes del sistema (incl. texto ya formateado en la tabla)
         const formatos = [
+            'D [de] MMMM [de] YYYY',
+            'D [de] MMMM [del] YYYY',
             'YYYY-MM-DD',
             'YYYY/MM/DD',
             'DD/MM/YYYY',
@@ -769,6 +773,9 @@ function ModalEditarFecha({ requisicionId, fechaBaseDefault, fechaNecesariaDefau
             'YYYY-MM-DDTHH:mm:ss',
             'YYYY-MM-DD HH:mm:ss',
         ];
+
+        let d = dayjs(raw);
+        if (d.isValid()) return d.format('YYYY-MM-DD');
 
         for (const fmt of formatos) {
             d = dayjs(raw, fmt, 'es', true);

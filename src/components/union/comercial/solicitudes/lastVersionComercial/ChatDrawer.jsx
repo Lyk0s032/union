@@ -400,7 +400,8 @@ export default function ChatDrawer({ isOpen, onClose, requerimiento, onSendMessa
     const downloadFile = (url, fileName) => {
         if (!url) return;
         const finalName = resolveFileName(fileName, url);
-        const proxyUrl = `/api/download?url=${encodeURIComponent(url)}&name=${encodeURIComponent(finalName)}`;
+        const apiBase = (axios.defaults.baseURL || '').replace(/\/$/, '');
+        const proxyUrl = `${apiBase}/api/download?url=${encodeURIComponent(url)}&name=${encodeURIComponent(finalName)}`;
         const a = document.createElement('a');
         a.href = proxyUrl;
         a.download = finalName;

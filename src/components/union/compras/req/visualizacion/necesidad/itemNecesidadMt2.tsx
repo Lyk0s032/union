@@ -8,6 +8,8 @@ interface ItemNecesidadProps {
         unidad: string;
         medidaOriginal: string;
         medida?: number;
+        totalCantidad?: number;
+        entregado?: number;
     };
     medConsumo: number;
     necesidad: number;
@@ -54,42 +56,31 @@ export default function ItemNecesidadMPMT2({
                         
     // Formatear Med. Consumo con unidad
     const medConsumoFormato = item.unidad == 'mt2' && item.tipo == 'producto-terminado' ? `${medConsumo.toFixed(2)}` : `${medConsumo.toFixed(2)} ${item.unidad}`;
-    // Conocer la cantidad que se necesita en mt2
-    const cantidadNecesaria2 =  necesidad;
-    // Formatear necesidad
-    //
-    // Para materia-prima con mt2/mt: convertir entregado (mt2) a piezas entregadas
+    // Conocer la cantidad que se necesita en piezas (láminas)
+    const cantidadNecesaria2 = necesidad;
+
+    // entregado llega en piezas (cantidadEntrega consolidada)
     let formatoNecesidad: string | number = entregado;
     if (item.tipo == 'materia-prima' && (item.unidad == 'mt2' || item.unidad == 'mt')) {
-        if (item.medida && item.medida > 0) {
-            const piezasEntregadas = Number(entregado) / Number(item.medida);
-            // Si ya está comprado (faltaPorComprar <= 0.09), mostrar 1 pieza
-            // Convertir a número para asegurar comparación correcta
-            const faltaPorComprarNum = Number(faltaPorComprar);
-            if (Number(faltaPorComprarNum) <= 0.09) {
-                formatoNecesidad = cantidadNecesaria2;
-            } else if (entregado >= item.medida) {
-                // Si entregado es mayor o igual a medida, mostrar 1 pieza completa
-                formatoNecesidad = 1;
-            } else if (entregado > 0) {
-                // Si hay entregado pero es menor a medida, mostrar la fracción (mínimo 2 decimales)
-                formatoNecesidad = Number(piezasEntregadas.toFixed(2));
-            } else {
-                // Si no hay entregado, mostrar 0
-                formatoNecesidad = 0;
-            }
+        if (falta <= 0.09) {
+            formatoNecesidad = cantidadNecesaria2;
+        } else if (entregado > 0) {
+            formatoNecesidad = Number(entregado);
+        } else {
+            formatoNecesidad = 0;
         }
     }
-    // Formatear Necesidad con formato (entregado) - falta / necesidad
-    const necesidadFormato = falta > 0 ? `(${item.entregado >= item.totalCantidad ? 0 : Number(falta).toFixed(2)}) - ${Math.ceil(formatoNecesidad)} / ${item.unidad == 'mt2' ? cantidadNecesaria2 :necesidad}` : `(0) - ${formatoNecesidad} / ${ cantidadNecesaria2 }`;
 
-    // FORMATEO PARA DATOS PRODUCTO TERMINADO
+    const estaComprado = falta <= 0.09 && faltaPorComprar <= 0.09;
+    const necesidadFormato = falta > 0.09
+        ? `(${Number(falta).toFixed(2)}) - ${formatoNecesidad} / ${cantidadNecesaria2}`
+        : `(0) - ${formatoNecesidad} / ${cantidadNecesaria2}`;
 
-    // Calcular el estado del item
-    const estadoItem = item.entregado >= item.totalCantidad ? 'comprado' : faltaPorComprar <= 0.09 ? 'comprado' : entregado <= 0 ? 'sin-comprar' : 'parcialmente-comprado';
-    const estadoTexto = faltaPorComprar <= 0.09 ? 'Comprado' : entregado <= 0 ? 'Sin comprar' : 'Parcialmente comprado';
+    // Calcular el estado del item (piezas vs piezas; alineado con detalle por proyecto)
+    const estadoItem = estaComprado ? 'comprado' : entregado <= 0 ? 'sin-comprar' : 'parcialmente-comprado';
+    const estadoTexto = estaComprado ? 'Comprado' : entregado <= 0 ? 'Sin comprar' : 'Parcialmente comprado';
 
-    const nuevoPrecio = item.entregado >= item.totalCantidad ? 0 : faltaPorComprar;
+    const nuevoPrecio = estaComprado ? 0 : faltaPorComprar;
     
     const handleClick = (e: React.MouseEvent) => {
         if (e.ctrlKey || e.metaKey) {
