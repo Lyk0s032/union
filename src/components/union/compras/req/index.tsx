@@ -34,15 +34,27 @@ export default function RequisicionDashboard() {
     }, [dispatch]);
 
     const prevOpenParam = useRef<string | null>(null);
+    const modoSeleccionMultipleRef = useRef(modoSeleccionMultiple);
+    const abiertoDesdeSeleccionMultipleRef = useRef(false);
     const openParam = params.get('open');
 
-    // Al cerrar la vista de visualización (p. ej. Escape), limpiar selección en Redux y modo múltiple
-    // para no mezclar el ID "abierto" con selecciones posteriores (Ctrl+clic, etc.)
+    modoSeleccionMultipleRef.current = modoSeleccionMultiple;
+
+    // Al cerrar la vista (p. ej. Escape): conservar selección si entró por Analizar/Ctrl+clic;
+    // limpiar solo cuando se abrió un solo proyecto con clic normal o menú "Ver".
     useEffect(() => {
-        if (prevOpenParam.current === 'projects' && openParam !== 'projects') {
+        const estabaAbierto = prevOpenParam.current === 'projects';
+        const estaAbierto = openParam === 'projects';
+
+        if (!estabaAbierto && estaAbierto) {
+            abiertoDesdeSeleccionMultipleRef.current = modoSeleccionMultipleRef.current;
+        }
+
+        if (estabaAbierto && !estaAbierto && !abiertoDesdeSeleccionMultipleRef.current) {
             dispatch({ type: 'CLEAR_REQUISICIONES_SELECTION' });
             setModoSeleccionMultiple(false);
         }
+
         prevOpenParam.current = openParam;
     }, [openParam, dispatch]);
     
