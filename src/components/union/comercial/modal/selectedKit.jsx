@@ -154,6 +154,8 @@ export default function SelectedKit({ kt, cotizacion, area }){
 export function DoYouWannaDuplicar({ user, cotizacion, kit }){
     const [params, setParams] = useSearchParams();
     const [loading, setLoading] = useState(false);
+    const [step, setStep] = useState('confirm');
+    const [name, setName] = useState(kit.name);
 
     const dispatch = useDispatch();
 
@@ -182,38 +184,61 @@ export function DoYouWannaDuplicar({ user, cotizacion, kit }){
     };
 
     const createSimulation = async () => {
+        const trimmedName = name.trim();
+        if (!trimmedName) {
+            return dispatch(actions.HandleAlerta('Debes ingresar un nombre para la simulación', 'mistake'));
+        }
+        if (trimmedName === kit.name.trim()) {
+            return dispatch(actions.HandleAlerta('Debes cambiar el nombre de la simulación', 'mistake'));
+        }
 
-        setLoading(true)
+        setLoading(true);
 
-        const duplicarKit = await axios.get(`/api/kit/clone/simulation/${kit.id}/${user.user.id}`)
-        .then( async (res) => {
-           
-            return res.data;
-        })
-        .then(async (res) => {
-            await addItem(res)
-        })
-        .finally(() => {
-            setLoading(false)
+        try {
+            const res = await axios.get(`/api/kit/clone/simulation/${kit.id}/${user.user.id}`);
+            await axios.put('/api/kit/new', { nombre: trimmedName, kitId: res.data.nuevoKit.id });
+            await addItem(res.data);
+        } catch (err) {
+            console.log(err);
+            dispatch(actions.HandleAlerta('No hemos logrado crear la simulación', 'mistake'));
+        } finally {
+            setLoading(false);
             closeParams();
-        })
-        return duplicarKit;
+        }
     }
 
     return (
         <div className="ask" style={{zIndex:5}}>
-            <h3>¿Deseas crear una simulación?</h3>
             {
-                loading? 
+                loading ?
                 <div>
                     <span>Creando simulación...</span>
                 </div>
+                : step === 'confirm' ?
+                <div>
+                    <h3>¿Deseas crear una simulación?</h3>
+                    <div>
+                        <button style={{marginRight:20, padding:5}} onClick={() => setStep('naming')}>Si</button>
+                        <button onClick={() => closeParams()}>No</button>
+                    </div>
+                </div>
                 :
                 <div>
-                    <button style={{marginRight:20, padding:5}} onClick={() => {
-                        createSimulation()
-                    }}>Si</button>
-                    <button onClick={() => closeParams()}>No</button>
+                    <h3>Nombre de la simulación</h3>
+                    <input
+                        type="text"
+                        value={name}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Escape') closeParams();
+                            if (e.key === 'Enter') createSimulation();
+                        }}
+                        onChange={(e) => setName(e.target.value)}
+                        style={{zIndex:5, width:'100%', marginBottom:10}}
+                    />
+                    <div>
+                        <button style={{marginRight:20, padding:5}} onClick={() => createSimulation()}>Confirmar</button>
+                        <button onClick={() => closeParams()}>Cancelar</button>
+                    </div>
                 </div>
             }
 

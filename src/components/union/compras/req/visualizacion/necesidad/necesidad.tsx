@@ -14,6 +14,7 @@ import ItemNecesidadMPKG from './itemNecesidadKg';
 import ItemNecesidadMPMT from './itemNecesidadMt';
 import ItemNecesidadMPMT2 from './itemNecesidadMt2';
 import { calcularMt2MateriaPrima } from './calcularMt2MateriaPrima';
+import { descargarExcelDesglosado } from './exportarExcelDesglosado';
 import { useSearchParams } from 'react-router-dom';
 
 export default function NecesidadRequisicion(){
@@ -722,6 +723,13 @@ export default function NecesidadRequisicion(){
         doc.save(`Consolidado_General_${new Date().getTime()}.pdf`);
     };
 
+    const generarExcelDesglosado = () => {
+        const itemsSeleccionadosData = itemsFiltrados.filter((item) =>
+            itemsSeleccionados.includes(getItemKey(item))
+        );
+        descargarExcelDesglosado(itemsSeleccionadosData, realData?.proyectos);
+    };
+
     return (
         <div className={`necesidadRequisicion ${itemSeleccionado ? 'panelAbierto' : ''} ${proveedorSeleccionado ? 'panelProveedorAbierto' : ''}`}>
             <div className="containerNecesidad">
@@ -823,6 +831,10 @@ export default function NecesidadRequisicion(){
                             const faltaPorComprar = calcularFaltaPorComprarParaTotales(item);
                             return ( 
                                 item.unidad == 'mt2' && item.tipo == 'materia-prima' ?
+                                ( 
+                                    console.log('itemmmmm', item),
+                                    console.log('entregado', entregado),
+                                    console.log('necesidad', necesidad),
                                     <ItemNecesidadMPMT2
                                         key={getItemKey(item)}
                                         item={item}
@@ -839,7 +851,7 @@ export default function NecesidadRequisicion(){
                                         onCtrlClick={() => handleCtrlClick(item)}
                                         onShiftClick={() => handleShiftClick(item, index)}
                                     />
-                                
+                                )
                                 : item.unidad == 'kg' ?
                                     <ItemNecesidadMPKG
                                         key={getItemKey(item)}
@@ -1251,6 +1263,23 @@ export default function NecesidadRequisicion(){
                         onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
                     >
                         PDF General
+                    </button>
+                    <button 
+                        onClick={generarExcelDesglosado}
+                        style={{
+                            background: 'white',
+                            color: '#2980b9',
+                            border: 'none',
+                            padding: '8px 20px',
+                            borderRadius: '6px',
+                            cursor: 'pointer',
+                            fontWeight: '600',
+                            transition: 'all 0.2s'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.opacity = '0.9'}
+                        onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
+                    >
+                        Excel desglosado
                     </button>
                     {itemsSeleccionados.length === 1 && (
                         <button

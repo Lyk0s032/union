@@ -58,7 +58,7 @@ export default function ItemNecesidadMPMT2({
     const medConsumoFormato = item.unidad == 'mt2' && item.tipo == 'producto-terminado' ? `${medConsumo.toFixed(2)}` : `${medConsumo.toFixed(2)} ${item.unidad}`;
     // Conocer la cantidad que se necesita en piezas (láminas)
     const cantidadNecesaria2 = necesidad;
-
+ 
     // entregado llega en piezas (cantidadEntrega consolidada)
     let formatoNecesidad: string | number = entregado;
     if (item.tipo == 'materia-prima' && (item.unidad == 'mt2' || item.unidad == 'mt')) {
@@ -72,8 +72,9 @@ export default function ItemNecesidadMPMT2({
     }
 
     const estaComprado = falta <= 0.09 && faltaPorComprar <= 0.09;
+    const faltaEntera = Math.ceil(Math.max(0, falta - 0.09));
     const necesidadFormato = falta > 0.09
-        ? `(${Number(falta).toFixed(2)}) - ${formatoNecesidad} / ${cantidadNecesaria2}`
+        ? `(${faltaEntera}) - ${Number(formatoNecesidad).toFixed(0)} / ${cantidadNecesaria2}`
         : `(0) - ${formatoNecesidad} / ${cantidadNecesaria2}`;
 
     // Calcular el estado del item (piezas vs piezas; alineado con detalle por proyecto)
