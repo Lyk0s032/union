@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as actions from '../../../../store/action/action';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
@@ -19,13 +19,25 @@ export default function NewKit({ requerimiento }){
     const [loading, setLoading] = useState(null);
     const [form, setForm] = useState({
         code: kit ? kit.code : null,
-        nombre: kit ? kit.nombre : null,
-        description: kit ? kit.description : null,
-        extension: kit ? kit.extensionId  : null,
+        nombre: requerimiento?.nombre || (kit ? kit.nombre : null),
+        description: requerimiento?.description || (kit ? kit.description : null),
+        extension: requerimiento?.extensionId || (kit ? kit.extensionId : null),
         linea: kit ? kit.lineaId : null,
-        categoria: kit ?  kit.categorium  : null,
+        categoria: kit ? kit.categorium : null,
         userId: user.user.id
     });
+
+    useEffect(() => {
+        if (requerimiento?.extensionId && !form.extension) {
+            setForm((prev) => ({ ...prev, extension: requerimiento.extensionId }));
+        }
+        if (requerimiento?.nombre && !form.nombre) {
+            setForm((prev) => ({ ...prev, nombre: requerimiento.nombre }));
+        }
+        if (requerimiento?.description && !form.description) {
+            setForm((prev) => ({ ...prev, description: requerimiento.description }));
+        }
+    }, [requerimiento]);
 
 
     const createKit = async () => { 
@@ -41,7 +53,7 @@ export default function NewKit({ requerimiento }){
             }
             const sendTwo = await axios.put('/api/kit/requerimiento/put/give/kit', body)
             dispatch(actions.HandleAlerta('Kit creado con exito', 'positive'))
-            dispatch(actions.axiosToGetRequerimientos(false))
+            dispatch(actions.axiosToGetRequerimientos(false, 'produccion'))
             dispatch(actions.axiosToGetRequerimiento(false, requerimiento.id))
             return dispatch(actions.axiosToGetKit(false, res.data.id))
              

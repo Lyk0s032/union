@@ -6,35 +6,32 @@ import { BiSearch } from "react-icons/bi";
 import { MdClose } from "react-icons/md";
 import SolicitudCard from "./SolicitudCard";
 import SolicitudDetail from "./SolicitudDetail";
-import "./styles.less";
+import { isHijoLeido } from "../../../comercial/solicitudes/utils/requerimientoProgress";
+import "../../../produccion/solicitudes/lastVersion/styles.less";
 
 export default function SolicitudesMain() {
     const [searchParams, setSearchParams] = useSearchParams();
     const dispatch = useDispatch();
     const noti = useSelector(store => store.noti);
     const { requerimientos, loadingRequerimientos } = noti;
-    
+
     const [selectedSolicitud, setSelectedSolicitud] = useState(null);
     const [selectedChild, setSelectedChild] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
     const [filteredSolicitudes, setFilteredSolicitudes] = useState([]);
     const [filtroEstado, setFiltroEstado] = useState('todos');
 
-    // Cargar lista de requerimientos
     useEffect(() => {
-        dispatch(actions.axiosToGetRequerimientos(true, 'produccion'));
+        dispatch(actions.axiosToGetRequerimientos(true, 'compras'));
     }, [dispatch]);
 
-    // Detectar parámetro id desde notificación y abrir automáticamente
     useEffect(() => {
         const openReqParam = searchParams.get('id') || searchParams.get('openReq');
-        
         if (!openReqParam || !requerimientos?.length) return;
 
         const findInList = (id) => {
             const direct = requerimientos.find(r => String(r.id) === String(id));
             if (direct) return { solicitud: direct, child: null };
-
             for (const grupo of requerimientos) {
                 const hijo = grupo.hijos?.find(h => String(h.id) === String(id));
                 if (hijo) return { solicitud: grupo, child: hijo };
@@ -43,7 +40,6 @@ export default function SolicitudesMain() {
         };
 
         const found = findInList(openReqParam);
-
         if (found) {
             setSelectedSolicitud(found.solicitud);
             if (found.child) {
@@ -61,39 +57,47 @@ export default function SolicitudesMain() {
         setSearchParams(newParams, { replace: true });
     }, [searchParams, requerimientos, dispatch, setSearchParams]);
 
+    useEffect(() => {
+        if (!requerimientos?.length) return;
+        if (selectedSolicitud) {
+            const fresh = requerimientos.find(r => r.id === selectedSolicitud.id);
+            if (fresh) {
+                setSelectedSolicitud(fresh);
+                if (selectedChild) {
+                    const freshHijo = fresh.hijos?.find(h => h.id === selectedChild.id);
+                    if (freshHijo) setSelectedChild(freshHijo);
+                }
+            }
+        }
+    }, [requerimientos]);
 
     useEffect(() => {
-        if (requerimientos && requerimientos.length) {
+        if (requerimientos?.length) {
             let filtered = requerimientos;
-            
-            // Primero filtrar por estado
+
             if (filtroEstado !== 'todos') {
                 filtered = filtered.filter(solicitud => {
                     if (solicitud.esContenedor) {
                         const hijos = solicitud.hijos || [];
+                        const tipo = solicitud.tipo || 'producto';
                         if (filtroEstado === 'pendientes') {
-                            return hijos.length === 0 || hijos.some(h => !h.leidoProduccion && h.state !== 'finish');
+                            return hijos.length === 0 || hijos.some(h => !isHijoLeido(h, tipo) && h.state !== 'finish');
                         }
                         if (filtroEstado === 'progreso') {
-                            return hijos.some(h => (h.leidoProduccion || h.state === 'creando') && h.state !== 'finish');
+                            return hijos.some(h => (isHijoLeido(h, tipo) || h.state === 'creando') && h.state !== 'finish');
                         }
                         if (filtroEstado === 'completadas') {
                             return hijos.length > 0 && hijos.every(h => h.state === 'finish');
                         }
                         return true;
                     }
-                    if (filtroEstado === 'pendientes') {
-                        return !solicitud.leidoProduccion && solicitud.state !== 'finish';
-                    } else if (filtroEstado === 'progreso') {
-                        return solicitud.leidoProduccion && solicitud.state !== 'finish';
-                    } else if (filtroEstado === 'completadas') {
-                        return solicitud.state === 'finish';
-                    }
+                    if (filtroEstado === 'pendientes') return !solicitud.leidoCompras && solicitud.state !== 'finish';
+                    if (filtroEstado === 'progreso') return solicitud.leidoCompras && solicitud.state !== 'finish';
+                    if (filtroEstado === 'completadas') return solicitud.state === 'finish';
                     return true;
                 });
             }
-            
-            // Luego filtrar por búsqueda
+
             if (searchTerm) {
                 const searchLower = searchTerm.toLowerCase();
                 filtered = filtered.filter(solicitud => (
@@ -104,7 +108,7 @@ export default function SolicitudesMain() {
                     solicitud.id?.toString().includes(searchLower)
                 ));
             }
-            
+
             setFilteredSolicitudes(filtered);
         } else {
             setFilteredSolicitudes([]);
@@ -139,14 +143,15 @@ export default function SolicitudesMain() {
         return requerimientos.filter(s => {
             if (s.esContenedor) {
                 const hijos = s.hijos || [];
+                const tipo = s.tipo || 'producto';
                 if (estado === 'finish') return hijos.length > 0 && hijos.every(h => h.state === 'finish');
-                if (estado === 'leido') return hijos.some(h => (h.leidoProduccion || h.state === 'creando') && h.state !== 'finish');
-                if (estado === 'espera') return hijos.length === 0 || hijos.some(h => !h.leidoProduccion && h.state !== 'finish');
+                if (estado === 'leido') return hijos.some(h => (isHijoLeido(h, tipo) || h.state === 'creando') && h.state !== 'finish');
+                if (estado === 'espera') return hijos.length === 0 || hijos.some(h => !isHijoLeido(h, tipo) && h.state !== 'finish');
                 return false;
             }
             if (estado === 'finish') return s.state === 'finish';
-            if (estado === 'leido') return s.leidoProduccion && s.state !== 'finish';
-            if (estado === 'espera') return !s.leidoProduccion && s.state !== 'finish';
+            if (estado === 'leido') return s.leidoCompras && s.state !== 'finish';
+            if (estado === 'espera') return !s.leidoCompras && s.state !== 'finish';
             return false;
         }).length;
     };
@@ -155,31 +160,30 @@ export default function SolicitudesMain() {
         <div className="solicitudes-main-container">
             <div className="solicitudes-header">
                 <div className="header-top">
-                    <h1>Solicitudes de Producción</h1>
+                    <h1>Solicitudes de Producto Terminado</h1>
                     <div className="stats-chips">
-                        
-                        <button 
+                        <button
                             className={`stat-chip pending ${filtroEstado === 'pendientes' ? 'active' : ''}`}
                             onClick={() => setFiltroEstado('pendientes')}
                         >
                             <span className="label">Pendientes</span>
                             <span className="value">{getEstadoCount('espera')}</span>
                         </button>
-                        <button 
+                        <button
                             className={`stat-chip progress ${filtroEstado === 'progreso' ? 'active' : ''}`}
                             onClick={() => setFiltroEstado('progreso')}
                         >
                             <span className="label">En progreso</span>
                             <span className="value">{getEstadoCount('leido')}</span>
                         </button>
-                        <button 
+                        <button
                             className={`stat-chip completed ${filtroEstado === 'completadas' ? 'active' : ''}`}
                             onClick={() => setFiltroEstado('completadas')}
                         >
                             <span className="label">Completadas</span>
                             <span className="value">{getEstadoCount('finish')}</span>
                         </button>
-                        <button 
+                        <button
                             className={`stat-chip all ${filtroEstado === 'todos' ? 'active' : ''}`}
                             onClick={() => setFiltroEstado('todos')}
                         >
@@ -198,10 +202,7 @@ export default function SolicitudesMain() {
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                     {searchTerm && (
-                        <button 
-                            className="clear-search"
-                            onClick={() => setSearchTerm("")}
-                        >
+                        <button className="clear-search" onClick={() => setSearchTerm("")}>
                             <MdClose />
                         </button>
                     )}
@@ -226,7 +227,7 @@ export default function SolicitudesMain() {
                             ) : (
                                 <>
                                     <h3>No hay solicitudes disponibles</h3>
-                                    <p>Las solicitudes aparecerán aquí cuando se creen</p>
+                                    <p>Las solicitudes de producto terminado aparecerán aquí</p>
                                 </>
                             )}
                         </div>

@@ -1307,10 +1307,10 @@ export function gettingRequerimiento(carga){
     }
 }
 
-export function axiosToGetRequerimientos(carga){
+export function axiosToGetRequerimientos(carga, vista = 'comercial'){
     return function(dispatch){ 
         dispatch(gettingRequerimiento(carga))
-        axios.get(`/api/kit/requerimientos/get/all`)
+        axios.get(`/api/kit/requerimientos/get/all?vista=${vista}`)
         .then((info) => info.data) 
         .then(inf => {
             return dispatch(getRequerimientos(inf))

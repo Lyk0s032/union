@@ -25,7 +25,7 @@ export default function NewReq({ close }){
         const sendPetion = await axios.post('/api/kit/requerimientos/post/add', body)
         .then(res => {
             dispatch(actions.HandleAlerta('Perfecto', 'positive'));
-            dispatch(actions.axiosToGetRequerimientos(false))
+            dispatch(actions.axiosToGetRequerimientos(false, 'produccion'))
             close()
             dispatch(actions.axiosToGetRequerimiento(true, res.data.id));
         })

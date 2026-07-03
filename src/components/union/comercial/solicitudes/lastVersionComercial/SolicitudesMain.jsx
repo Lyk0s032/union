@@ -9,6 +9,7 @@ import SolicitudCard from "./SolicitudCard";
 import SolicitudDetail from "./SolicitudDetail";
 import NewReq from "../new/newReq";
 import "./styles.less";
+import { isHijoLeido } from "../utils/requerimientoProgress";
 
 export default function SolicitudesMain() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -17,6 +18,7 @@ export default function SolicitudesMain() {
     const { requerimientos, loadingRequerimientos } = noti;
     
     const [selectedSolicitud, setSelectedSolicitud] = useState(null);
+    const [selectedChild, setSelectedChild] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
     const [filteredSolicitudes, setFilteredSolicitudes] = useState([]);
     const [filtroEstado, setFiltroEstado] = useState('todos');
@@ -24,32 +26,58 @@ export default function SolicitudesMain() {
 
     // Cargar lista de requerimientos
     useEffect(() => {
-        dispatch(actions.axiosToGetRequerimientos(true));
+        dispatch(actions.axiosToGetRequerimientos(true, 'comercial'));
     }, [dispatch]);
 
-    // Detectar parámetro openReq desde notificación y abrir automáticamente
+    // Detectar parámetro id desde notificación y abrir automáticamente
     useEffect(() => {
-        const openReqParam = searchParams.get('id');
+        const openReqParam = searchParams.get('id') || searchParams.get('openReq');
         
-        if (openReqParam && requerimientos && requerimientos.length > 0) {
-            console.log('🔔 ABRIR REQUERIMIENTO:', openReqParam);
-            
-            // Buscar la solicitud en la lista
-            const solicitud = requerimientos.find(r => String(r.id) === String(openReqParam));
-            
-            if (solicitud) {
-                console.log('✅ Solicitud encontrada, abriendo:', solicitud);
-                handleSelectSolicitud(solicitud);
-            } else {
-                console.log('⚠️ Solicitud no encontrada en la lista');
+        if (!openReqParam || !requerimientos?.length) return;
+
+        const findInList = (id) => {
+            const direct = requerimientos.find(r => String(r.id) === String(id));
+            if (direct) return { solicitud: direct, child: null };
+
+            for (const grupo of requerimientos) {
+                const hijo = grupo.hijos?.find(h => String(h.id) === String(id));
+                if (hijo) return { solicitud: grupo, child: hijo };
             }
-            
-            // Limpiar parámetro
-            const newParams = new URLSearchParams(searchParams);
-            newParams.delete('openReq');
-            setSearchParams(newParams, { replace: true });
+            return null;
+        };
+
+        const found = findInList(openReqParam);
+
+        if (found) {
+            setSelectedSolicitud(found.solicitud);
+            if (found.child) {
+                setSelectedChild(found.child);
+                dispatch(actions.axiosToGetRequerimiento(true, found.child.id));
+            } else {
+                setSelectedChild(null);
+                dispatch(actions.axiosToGetRequerimiento(true, found.solicitud.id));
+            }
         }
-    }, [searchParams, requerimientos]);
+
+        const newParams = new URLSearchParams(searchParams);
+        newParams.delete('id');
+        newParams.delete('openReq');
+        setSearchParams(newParams, { replace: true });
+    }, [searchParams, requerimientos, dispatch, setSearchParams]);
+
+    useEffect(() => {
+        if (!requerimientos?.length) return;
+        if (selectedSolicitud) {
+            const fresh = requerimientos.find(r => r.id === selectedSolicitud.id);
+            if (fresh) {
+                setSelectedSolicitud(fresh);
+                if (selectedChild) {
+                    const freshHijo = fresh.hijos?.find(h => h.id === selectedChild.id);
+                    if (freshHijo) setSelectedChild(freshHijo);
+                }
+            }
+        }
+    }, [requerimientos]);
 
     useEffect(() => {
         if (requerimientos && requerimientos.length) {
@@ -58,6 +86,20 @@ export default function SolicitudesMain() {
             // Primero filtrar por estado
             if (filtroEstado !== 'todos') {
                 filtered = filtered.filter(solicitud => {
+                    if (solicitud.esContenedor) {
+                        const hijos = solicitud.hijos || [];
+                        const tipo = solicitud.tipo || 'kit';
+                        if (filtroEstado === 'pendientes') {
+                            return hijos.length === 0 || hijos.some(h => !isHijoLeido(h, tipo) && h.state !== 'finish');
+                        }
+                        if (filtroEstado === 'progreso') {
+                            return hijos.some(h => (isHijoLeido(h, tipo) || h.state === 'creando') && h.state !== 'finish');
+                        }
+                        if (filtroEstado === 'completadas') {
+                            return hijos.length > 0 && hijos.every(h => h.state === 'finish');
+                        }
+                        return true;
+                    }
                     if (filtroEstado === 'pendientes') {
                         return !solicitud.leidoProduccion && solicitud.state !== 'finish';
                     } else if (filtroEstado === 'progreso') {
@@ -87,12 +129,26 @@ export default function SolicitudesMain() {
 
     const handleSelectSolicitud = (solicitud) => {
         setSelectedSolicitud(solicitud);
+        setSelectedChild(null);
         dispatch(actions.axiosToGetRequerimiento(true, solicitud.id));
         setAddReq(false);
     };
 
     const handleCloseDetail = () => {
         setSelectedSolicitud(null);
+        setSelectedChild(null);
+    };
+
+    const handleOpenChild = (child) => {
+        setSelectedChild(child);
+        dispatch(actions.axiosToGetRequerimiento(true, child.id));
+    };
+
+    const handleBackFromChild = () => {
+        setSelectedChild(null);
+        if (selectedSolicitud) {
+            dispatch(actions.axiosToGetRequerimiento(true, selectedSolicitud.id));
+        }
     };
 
     const handleNewRequest = () => {
@@ -111,9 +167,18 @@ export default function SolicitudesMain() {
     const getEstadoCount = (estado) => {
         if (!requerimientos) return 0;
         return requerimientos.filter(s => {
+            if (s.esContenedor) {
+                const hijos = s.hijos || [];
+                const tipo = s.tipo || 'kit';
+                if (estado === 'finish') return hijos.length > 0 && hijos.every(h => h.state === 'finish');
+                if (estado === 'leido') return hijos.some(h => (isHijoLeido(h, tipo) || h.state === 'creando') && h.state !== 'finish');
+                if (estado === 'espera') return hijos.length === 0 || hijos.some(h => !isHijoLeido(h, tipo) && h.state !== 'finish');
+                return false;
+            }
+            const leido = s.tipo === 'producto' ? s.leidoCompras : s.leidoProduccion;
             if (estado === 'finish') return s.state === 'finish';
-            if (estado === 'leido') return s.leidoProduccion && s.state !== 'finish';
-            if (estado === 'espera') return !s.leidoProduccion && s.state !== 'finish';
+            if (estado === 'leido') return leido && s.state !== 'finish';
+            if (estado === 'espera') return !leido && s.state !== 'finish';
             return false;
         }).length;
     };
@@ -216,10 +281,18 @@ export default function SolicitudesMain() {
                     )}
                 </div>
 
-                {selectedSolicitud && (
+                {selectedChild ? (
+                    <SolicitudDetail
+                        solicitudId={selectedChild.id}
+                        onClose={handleCloseDetail}
+                        onBack={handleBackFromChild}
+                        isChild
+                    />
+                ) : selectedSolicitud && (
                     <SolicitudDetail
                         solicitudId={selectedSolicitud.id}
                         onClose={handleCloseDetail}
+                        onOpenChild={handleOpenChild}
                     />
                 )}
 

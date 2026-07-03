@@ -193,20 +193,23 @@ export function construirFilasExcelDesglosado(
     return filas;
 }
 
-export function descargarExcelDesglosado(
-    items: ItemNecesidad[],
-    proyectos: any[] | null | undefined,
-    nombreArchivo?: string
-): void {
-    const filas = construirFilasExcelDesglosado(items, proyectos);
-    if (!filas.length) return;
+const HOJAS_POR_UNIDAD: { nombre: string; unidades: string[] }[] = [
+    { nombre: 'Laminas', unidades: ['mt2'] },
+    { nombre: 'Tuberia', unidades: ['mt'] },
+    { nombre: 'Pintura', unidades: ['kg'] },
+    { nombre: 'Tornilleria', unidades: ['unidad'] },
+];
 
-    const totalInversion = filas.reduce(
-        (acc, f) => acc + (typeof f['inversión faltante'] === 'number' ? f['inversión faltante'] : 0),
+function totalInversionFilas(filas: FilaExcelDesglosado[]): number {
+    return filas.reduce(
+        (acc, f) =>
+            acc + (typeof f['inversión faltante'] === 'number' ? f['inversión faltante'] : 0),
         0
     );
+}
 
-    const filasConTotal: FilaExcelDesglosado[] = [
+function filasConFilaTotal(filas: FilaExcelDesglosado[]): FilaExcelDesglosado[] {
+    return [
         ...filas,
         {
             INGRESO: '',
@@ -216,16 +219,47 @@ export function descargarExcelDesglosado(
             Nombre: '',
             Necesidad: '',
             'Precio Unitario': '',
-            'inversión faltante': totalInversion,
+            'inversión faltante': totalInversionFilas(filas),
             Proveedor: '',
             'FECHA DE COMPRA': '',
             PLANTA: '',
         },
     ];
+}
 
-    const worksheet = XLSX.utils.json_to_sheet(filasConTotal);
+function agregarHojaAlLibro(
+    workbook: XLSX.WorkBook,
+    filas: FilaExcelDesglosado[],
+    nombreHoja: string
+): void {
+    const worksheet = XLSX.utils.json_to_sheet(filasConFilaTotal(filas));
+    XLSX.utils.book_append_sheet(workbook, worksheet, nombreHoja);
+}
+
+function filtrarItemsPorUnidad(items: ItemNecesidad[], unidades: string[]): ItemNecesidad[] {
+    return items.filter((item) => unidades.includes(String(item.unidad)));
+}
+
+export function descargarExcelDesglosado(
+    items: ItemNecesidad[],
+    proyectos: any[] | null | undefined,
+    nombreArchivo?: string
+): void {
+    const filasPrincipal = construirFilasExcelDesglosado(items, proyectos);
+    if (!filasPrincipal.length) return;
+
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Necesidad desglosada');
+    agregarHojaAlLibro(workbook, filasPrincipal, 'Necesidad desglosada');
+
+    HOJAS_POR_UNIDAD.forEach(({ nombre, unidades }) => {
+        const itemsFiltrados = filtrarItemsPorUnidad(items, unidades);
+        if (!itemsFiltrados.length) return;
+
+        const filas = construirFilasExcelDesglosado(itemsFiltrados, proyectos);
+        if (!filas.length) return;
+
+        agregarHojaAlLibro(workbook, filas, nombre);
+    });
 
     const archivo =
         nombreArchivo || `Consolidado_Desglosado_${new Date().getTime()}.xlsx`;

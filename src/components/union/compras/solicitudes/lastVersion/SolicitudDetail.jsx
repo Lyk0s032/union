@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../../../store/action/action";
 import dayjs from "dayjs";
 import "dayjs/locale/es";
-import { 
-    MdClose, 
-    MdCheckCircle, 
-    MdAccessTime, 
+import {
+    MdClose,
+    MdCheckCircle,
+    MdAccessTime,
     MdVisibility,
+    MdPerson,
     MdCalendarToday,
     MdDescription,
     MdChat,
     MdArrowBack,
-    MdAdd,
     MdList
 } from "react-icons/md";
-import ChatDrawer from "./ChatDrawer";
-import NewChildReq from "../new/newChildReq";
+import NewProducto from "../new/NewProducto";
+import ChatDrawer from "../../../produccion/solicitudes/lastVersion/ChatDrawer";
 import axios from "axios";
 import {
     getContenedorProgreso,
@@ -27,7 +27,7 @@ import {
     getItemLabel,
     isHijoLeido,
     isProductoTipo,
-} from "../utils/requerimientoProgress";
+} from "../../../comercial/solicitudes/utils/requerimientoProgress";
 
 dayjs.locale("es");
 
@@ -43,9 +43,14 @@ export default function SolicitudDetail({ solicitudId, onClose, onOpenChild, onB
     const usuario = useSelector(store => store.usuario);
     const { requerimiento, loadingRequerimiento } = noti;
     const { user } = usuario;
-    
+
+    const [create, setCreate] = useState(null);
     const [chatOpen, setChatOpen] = useState(false);
-    const [showAddChild, setShowAddChild] = useState(false);
+    const markedAsReadRef = useRef(null);
+
+    useEffect(() => {
+        markedAsReadRef.current = null;
+    }, [solicitudId]);
 
     useEffect(() => {
         if (solicitudId) {
@@ -53,10 +58,40 @@ export default function SolicitudDetail({ solicitudId, onClose, onOpenChild, onB
         }
     }, [solicitudId, dispatch]);
 
+    const markAsRead = useCallback(async () => {
+        if (!solicitudId) return;
+        if (Number(requerimiento?.id) !== Number(solicitudId)) return;
+        if (requerimiento.esContenedor || isHijoLeido(requerimiento, requerimiento.tipo || 'producto')) return;
+        if (markedAsReadRef.current === solicitudId) return;
+
+        const ownerId = requerimiento.userId || requerimiento.user?.id;
+        if (!ownerId) return;
+
+        markedAsReadRef.current = solicitudId;
+
+        try {
+            await axios.put('/api/kit/requerimiento/put/read', {
+                reqId: solicitudId,
+                userId: ownerId,
+            });
+            dispatch(actions.axiosToGetRequerimiento(false, solicitudId));
+            dispatch(actions.axiosToGetRequerimientos(false, 'compras'));
+            dispatch(actions.axiosToGetRequerimientos(false, 'comercial'));
+        } catch (err) {
+            console.error(err);
+            markedAsReadRef.current = null;
+        }
+    }, [solicitudId, requerimiento, dispatch]);
+
+    useEffect(() => {
+        if (loadingRequerimiento) return;
+        if (!requerimiento || requerimiento === 404 || requerimiento === 'notrequest') return;
+        markAsRead();
+    }, [requerimiento, loadingRequerimiento, markAsRead]);
+
     const isContenedor = requerimiento?.esContenedor;
     const hijos = requerimiento?.hijos || [];
-    const tipoGrupo = requerimiento?.tipo || 'kit';
-    const esProducto = isProductoTipo(tipoGrupo);
+    const tipoGrupo = requerimiento?.tipo || 'producto';
 
     const getEstado = () => {
         if (!requerimiento) return { label: '', class: '', icon: null };
@@ -64,11 +99,10 @@ export default function SolicitudDetail({ solicitudId, onClose, onOpenChild, onB
             const e = getContenedorEstadoLabel(hijos, tipoGrupo);
             return { ...e, icon: estadoIcon(e.class) };
         }
-
-        const leido = esProducto ? isHijoLeido(requerimiento, tipoGrupo) : requerimiento.leidoProduccion;
         if (requerimiento.state === 'finish') {
             return { label: 'Completada', class: 'completed', icon: <MdCheckCircle /> };
         }
+        const leido = isHijoLeido(requerimiento, tipoGrupo);
         if (leido && requerimiento.state === 'creando') {
             return { label: 'En creación', class: 'creating', icon: <MdVisibility /> };
         }
@@ -84,9 +118,9 @@ export default function SolicitudDetail({ solicitudId, onClose, onOpenChild, onB
         return getHijoProgreso(requerimiento, tipoGrupo);
     };
 
-    const formatDate = (dateString) => {
-        return dayjs(dateString).format('DD [de] MMMM [de] YYYY, HH:mm');
-    };
+    const formatDate = (dateString) => dayjs(dateString).format('DD [de] MMMM [de] YYYY, HH:mm');
+
+    const closeNewProducto = () => setCreate(null);
 
     const handleSendMessage = async (data) => {
         try {
@@ -94,20 +128,18 @@ export default function SolicitudDetail({ solicitudId, onClose, onOpenChild, onB
             formData.append('message', data.message);
             formData.append('reqId', requerimiento.id);
             formData.append('userId', user.user.id);
-            formData.append('para', requerimiento.tipo === 'producto' ? 'compras' : 'produccion');
+            formData.append('para', 'cliente');
 
             if (data.userToNotify && Array.isArray(data.userToNotify)) {
                 formData.append('userToNotify', JSON.stringify(data.userToNotify));
             }
-            
-            if (data.attachments && data.attachments.length > 0) {
-                data.attachments.forEach((file) => {
-                    formData.append('images', file);
-                });
+
+            if (data.attachments?.length > 0) {
+                data.attachments.forEach((file) => formData.append('images', file));
             }
 
             await axios.post('/api/kit/requerimientos/post/add/message', formData, {
-                headers: { 'Content-Type': 'multipart/form-data' }
+                headers: { 'Content-Type': 'multipart/form-data' },
             });
 
             dispatch(actions.axiosToGetRequerimiento(false, requerimiento.id));
@@ -154,26 +186,30 @@ export default function SolicitudDetail({ solicitudId, onClose, onOpenChild, onB
                         <MdClose />
                     </button>
                 )}
-                
+
                 <div className="header-content">
                     <div className={`status-badge-large ${estado.class}`}>
                         {estado.icon}
                         <span>{estado.label}</span>
                     </div>
-                    
+
                     <h2>{requerimiento.nombre}</h2>
 
-                    {isChild && requerimiento.padre && (
-                        <p className="parent-ref">Parte de: {requerimiento.padre.nombre}</p>
+                    {requerimiento.padre && (
+                        <p className="parent-ref">Grupo: {requerimiento.padre.nombre}</p>
                     )}
-                    
+
                     <div className="header-meta">
+                        <div className="meta-chip">
+                            <MdPerson />
+                            <span>{requerimiento.user?.name} {requerimiento.user?.lastName}</span>
+                        </div>
                         <div className="meta-chip">
                             <MdCalendarToday />
                             <span>{formatDate(requerimiento.createdAt)}</span>
                         </div>
                         <div className="meta-chip type">
-                            {isContenedor ? getGrupoLabel(tipoGrupo, hijos.length) : getItemLabel(requerimiento.tipo)}
+                            {isContenedor ? getGrupoLabel(tipoGrupo, hijos.length) : getItemLabel(requerimiento.tipo || 'producto')}
                         </div>
                         {isContenedor && (
                             <div className="meta-chip">
@@ -189,7 +225,7 @@ export default function SolicitudDetail({ solicitudId, onClose, onOpenChild, onB
                             <span className="progress-percentage">{porcentaje}%</span>
                         </div>
                         <div className="progress-bar-large">
-                            <div 
+                            <div
                                 className={`progress-fill ${estado.class}`}
                                 style={{ width: `${porcentaje}%` }}
                             />
@@ -213,34 +249,11 @@ export default function SolicitudDetail({ solicitudId, onClose, onOpenChild, onB
                     <div className="detail-section children-section">
                         <div className="section-title">
                             <MdList />
-                            <h3>Requerimientos incluidos</h3>
-                            <button
-                                className="action-button secondary small"
-                                onClick={() => setShowAddChild(!showAddChild)}
-                            >
-                                <MdAdd />
-                                <span>{showAddChild ? 'Cancelar' : (esProducto ? 'Agregar producto' : 'Agregar kit')}</span>
-                            </button>
+                            <h3>Productos solicitados en este grupo</h3>
                         </div>
-
-                        {showAddChild && (
-                            <div className="section-content">
-                                <NewChildReq
-                                    parentId={requerimiento.id}
-                                    parentTipo={tipoGrupo}
-                                    onCreated={() => setShowAddChild(false)}
-                                    onCancel={() => setShowAddChild(false)}
-                                />
-                            </div>
-                        )}
-
                         <div className="section-content children-list">
                             {hijos.length === 0 ? (
-                                <p className="empty-children">
-                                    {esProducto
-                                        ? 'Aún no hay productos. Agrega el primer producto solicitado.'
-                                        : 'Aún no hay requerimientos. Agrega el primer kit solicitado.'}
-                                </p>
+                                <p className="empty-children">Comercial aún no ha agregado productos a este grupo.</p>
                             ) : (
                                 hijos.map((hijo) => {
                                     const hijoEstado = getHijoEstadoLabel(hijo, tipoGrupo);
@@ -278,25 +291,43 @@ export default function SolicitudDetail({ solicitudId, onClose, onOpenChild, onB
                             <h3>Acciones</h3>
                         </div>
                         <div className="section-content actions-grid">
-                            <button 
-                                className="action-button primary"
-                                onClick={() => setChatOpen(true)}
-                            >
+                            <button className="action-button primary" onClick={() => setChatOpen(true)}>
                                 <MdChat />
                                 <span>Abrir Chat</span>
                                 {requerimiento.adjuntRequireds?.length > 0 && (
                                     <span className="badge">{requerimiento.adjuntRequireds.length}</span>
                                 )}
                             </button>
+
+                            {!isContenedor && !requerimiento.productoId && requerimiento.state !== 'finish' && (
+                                <button
+                                    className={`action-button ${create ? 'danger' : 'secondary'}`}
+                                    onClick={() => setCreate(create ? null : 'producto')}
+                                >
+                                    {create ? 'Cancelar creación' : 'Crear Producto'}
+                                </button>
+                            )}
                         </div>
                     </div>
                 )}
 
-                {!isContenedor && requerimiento.producto && requerimiento.state === 'finish' && (
+                {!isContenedor && create === 'producto' && !requerimiento.productoId && (
+                    <div className="detail-section">
+                        <NewProducto close={closeNewProducto} requerimiento={requerimiento} />
+                    </div>
+                )}
+
+                {!isContenedor && requerimiento.productoId && requerimiento.state !== 'finish' && (
+                    <div className="detail-section">
+                        <NewProducto requerimiento={requerimiento} />
+                    </div>
+                )}
+
+                {requerimiento.producto && requerimiento.state === 'finish' && (
                     <div className="detail-section kit-created">
                         <div className="kit-created-content">
                             <MdCheckCircle className="success-icon" />
-                            <h3>¡Producto registrado exitosamente!</h3>
+                            <h3>¡Producto completado!</h3>
                             <div className="kit-info">
                                 <div className="kit-info-item">
                                     <span className="label">Código</span>
@@ -311,26 +342,7 @@ export default function SolicitudDetail({ solicitudId, onClose, onOpenChild, onB
                     </div>
                 )}
 
-                {!isContenedor && requerimiento.kit && requerimiento.state === 'finish' && (
-                    <div className="detail-section kit-created">
-                        <div className="kit-created-content">
-                            <MdCheckCircle className="success-icon" />
-                            <h3>¡Kit creado exitosamente!</h3>
-                            <div className="kit-info">
-                                <div className="kit-info-item">
-                                    <span className="label">Código</span>
-                                    <span className="value">{requerimiento.kit.id}</span>
-                                </div>
-                                <div className="kit-info-item">
-                                    <span className="label">Nombre</span>
-                                    <span className="value">{requerimiento.kit.name}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                )}
-
-                {!isContenedor && requerimiento.state === 'finish' && (
+                {requerimiento.state === 'finish' && (
                     <div className="detail-section status-message finish">
                         <p>Esta solicitud ha sido completada</p>
                     </div>
@@ -343,7 +355,7 @@ export default function SolicitudDetail({ solicitudId, onClose, onOpenChild, onB
                 )}
             </div>
 
-            <ChatDrawer 
+            <ChatDrawer
                 isOpen={chatOpen}
                 onClose={() => setChatOpen(false)}
                 requerimiento={requerimiento}

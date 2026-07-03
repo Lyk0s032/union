@@ -31,7 +31,7 @@ export default function Solicitud(open){
 
         const sendPetion = await axios.put('/api/kit/requerimiento/put/read', body)
         .then(res => {
-            dispatch(actions.axiosToGetRequerimientos(false))
+            dispatch(actions.axiosToGetRequerimientos(false, 'produccion'))
             close()
         })
         .catch(err => {

@@ -735,6 +735,10 @@
                     margin: 0;
                 }
 
+                .solicitud-inline-form {
+                    margin-top: 0;
+                }
+
                 &.messages {
                     display: flex;
                     flex-direction: column;
@@ -1498,6 +1502,94 @@
         transform: translateY(0);
     }
 }
+
+.children-section {
+    .section-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        h3 { flex: 1; }
+    }
+
+    .section-content .solicitud-inline-form {
+        margin-top: @spacing-sm;
+    }
+}
+
+.children-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.empty-children {
+    color: #888;
+    font-size: 14px;
+    font-style: italic;
+}
+
+.child-req-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+    &:hover {
+        border-color: #4a90d9;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .child-req-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+
+        h4 {
+            margin: 0;
+            font-size: 14px;
+        }
+    }
+
+    .child-req-progress {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .progress-bar {
+            flex: 1;
+            height: 4px;
+            background: #eee;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        span {
+            font-size: 12px;
+            color: #666;
+            min-width: 32px;
+        }
+    }
+}
+
+.parent-ref {
+    font-size: 13px;
+    color: #666;
+    margin: 4px 0 8px;
+}
+
+.container-icon {
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+.back-button {
+    background: transparent;
+}
+
+@import '../../../comercial/solicitudes/shared/forms.less';
 
 @media (max-width: 768px) {
     .chat-drawer {

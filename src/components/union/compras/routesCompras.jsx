@@ -12,6 +12,7 @@ import ProductoTerminado from './productoTerminado/productoTerminado';
 import RouteRequisiciones from './requisiciones/routeRequisiciones';
 import DashboardCompras from './dashboard/dashboard';
 import RequisicionDashboard from './req';
+import SolicitudesCompras from './solicitudes/lastVersion/SolicitudesMain';
 
 export default function RoutesCompras(){
     const [params, setParams] = useSearchParams();
@@ -38,6 +39,7 @@ export default function RoutesCompras(){
                             <Route path="pv/*" element={<Providers />} />
                             <Route path="mp/*" element={<MateriaPrima />} />
                             <Route path="pt/*" element={<ProductoTerminado />} />
+                            <Route path="solicitudes/*" element={<SolicitudesCompras />} />
                         </Routes>
                     </div>
                 </div>

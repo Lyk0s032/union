@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../../../store/action/action";
 import dayjs from "dayjs";
@@ -12,7 +12,9 @@ import {
     MdCalendarToday,
     MdDescription,
     MdChat,
-    MdEdit
+    MdEdit,
+    MdArrowBack,
+    MdList
 } from "react-icons/md";
 import NewKit from "../new/newKit";
 import ChatDrawer from "./ChatDrawer";
@@ -22,7 +24,36 @@ import SelectItems from "../../modal/selectItems";
 
 dayjs.locale("es");
 
-export default function SolicitudDetail({ solicitudId, onClose, readOnly = false }) {
+const getHijoProgreso = (hijo) => {
+    if (hijo.state === 'finish') return 100;
+    if (hijo.leidoProduccion && hijo.state === 'creando') return 70;
+    if (hijo.leidoProduccion) return 30;
+    return 0;
+};
+
+const getHijoEstado = (hijo) => {
+    if (hijo.state === 'finish') return { label: 'Completada', class: 'completed', icon: <MdCheckCircle /> };
+    if (hijo.leidoProduccion && hijo.state === 'creando') return { label: 'En creación', class: 'creating', icon: <MdVisibility /> };
+    if (hijo.leidoProduccion) return { label: 'En progreso', class: 'progress', icon: <MdVisibility /> };
+    return { label: 'Pendiente', class: 'pending', icon: <MdAccessTime /> };
+};
+
+const getContenedorEstado = (hijos = []) => {
+    if (!hijos.length) return { label: 'Sin requerimientos', class: 'pending', icon: <MdAccessTime /> };
+    if (hijos.every((h) => h.state === 'finish')) return { label: 'Completada', class: 'completed', icon: <MdCheckCircle /> };
+    if (hijos.some((h) => h.leidoProduccion || h.state === 'creando')) {
+        return { label: 'En progreso', class: 'progress', icon: <MdVisibility /> };
+    }
+    return { label: 'Pendiente', class: 'pending', icon: <MdAccessTime /> };
+};
+
+const getContenedorProgreso = (hijos = []) => {
+    if (!hijos.length) return 0;
+    const total = hijos.reduce((sum, hijo) => sum + getHijoProgreso(hijo), 0);
+    return Math.round(total / hijos.length);
+};
+
+export default function SolicitudDetail({ solicitudId, onClose, onOpenChild, onBack, isChild = false, readOnly = false }) {
     const dispatch = useDispatch();
     const noti = useSelector(store => store.noti);
     const usuario = useSelector(store => store.usuario);
@@ -32,18 +63,57 @@ export default function SolicitudDetail({ solicitudId, onClose, readOnly = false
     const { kit, loadingKit } = kits;
     
     const [create, setCreate] = useState(null);
-    const [permiso, setPermiso] = useState(null);
     const [chatOpen, setChatOpen] = useState(false);
     const [editMode, setEditMode] = useState(false);
+    const markedAsReadRef = useRef(null);
+
+    useEffect(() => {
+        markedAsReadRef.current = null;
+    }, [solicitudId]);
 
     useEffect(() => {
         if (solicitudId) {
             dispatch(actions.axiosToGetRequerimiento(true, solicitudId));
         }
-    }, [solicitudId]);
+    }, [solicitudId, dispatch]);
+
+    const markAsRead = useCallback(async () => {
+        if (!solicitudId) return;
+        if (Number(requerimiento?.id) !== Number(solicitudId)) return;
+        if (requerimiento.esContenedor || requerimiento.leidoProduccion) return;
+        if (markedAsReadRef.current === solicitudId) return;
+
+        const ownerId = requerimiento.userId || requerimiento.user?.id;
+        if (!ownerId) return;
+
+        markedAsReadRef.current = solicitudId;
+
+        try {
+            await axios.put('/api/kit/requerimiento/put/read', {
+                reqId: solicitudId,
+                userId: ownerId,
+            });
+            dispatch(actions.axiosToGetRequerimiento(false, solicitudId));
+            dispatch(actions.axiosToGetRequerimientos(false, 'produccion'));
+            dispatch(actions.axiosToGetRequerimientos(false, 'comercial'));
+        } catch (err) {
+            console.error(err);
+            markedAsReadRef.current = null;
+        }
+    }, [solicitudId, requerimiento, dispatch]);
+
+    useEffect(() => {
+        if (readOnly || loadingRequerimiento) return;
+        if (!requerimiento || requerimiento === 404 || requerimiento === 'notrequest') return;
+        markAsRead();
+    }, [requerimiento, loadingRequerimiento, readOnly, markAsRead]);
+
+    const isContenedor = requerimiento?.esContenedor;
+    const hijos = requerimiento?.hijos || [];
 
     const getEstado = () => {
         if (!requerimiento) return { label: '', class: '', icon: null };
+        if (isContenedor) return getContenedorEstado(hijos);
         
         if (requerimiento.state === 'finish') {
             return { 
@@ -75,6 +145,7 @@ export default function SolicitudDetail({ solicitudId, onClose, readOnly = false
 
     const getPorcentaje = () => {
         if (!requerimiento) return 0;
+        if (isContenedor) return getContenedorProgreso(hijos);
         if (requerimiento.state === 'finish') return 100;
         if (requerimiento.leidoProduccion && requerimiento.state === 'creando') return 70;
         if (requerimiento.leidoProduccion) return 30;
@@ -83,30 +154,6 @@ export default function SolicitudDetail({ solicitudId, onClose, readOnly = false
 
     const formatDate = (dateString) => {
         return dayjs(dateString).format('DD [de] MMMM [de] YYYY, HH:mm');
-    };
-
-    const markAsRead = async () => {
-        if (!requerimiento.leidoProduccion) {
-            try {
-                await axios.put('/api/kit/requerimiento/put/read', {
-                    reqId: requerimiento.id,
-                    userId: requerimiento.user.id
-                });
-                dispatch(actions.axiosToGetRequerimientos(false));
-            } catch (err) {
-                console.error(err);
-            }
-        }
-    };
-
-    useEffect(() => {
-        if (permiso && requerimiento && !requerimiento.leidoProduccion) {
-            markAsRead();
-        }
-    }, [permiso]);
-
-    const changePermiso = () => {
-        if (!permiso) setPermiso(true);
     };
 
     const closeNewKit = () => setCreate(null);
@@ -184,12 +231,16 @@ export default function SolicitudDetail({ solicitudId, onClose, readOnly = false
 
     return (
         <div className="solicitud-detail-panel">
-            {changePermiso()}
-            
             <div className="detail-header">
-                <button className="close-button" onClick={onClose}>
-                    <MdClose />
-                </button>
+                {isChild && onBack ? (
+                    <button className="close-button back-button" onClick={onBack}>
+                        <MdArrowBack />
+                    </button>
+                ) : (
+                    <button className="close-button" onClick={onClose}>
+                        <MdClose />
+                    </button>
+                )}
                 
                 <div className="header-content">
                     <div className={`status-badge-large ${estado.class}`}>
@@ -198,6 +249,10 @@ export default function SolicitudDetail({ solicitudId, onClose, readOnly = false
                     </div>
                     
                     <h2>{requerimiento.nombre}</h2>
+
+                    {requerimiento.padre && (
+                        <p className="parent-ref">Grupo: {requerimiento.padre.nombre}</p>
+                    )}
                     
                     <div className="header-meta">
                         <div className="meta-chip">
@@ -209,8 +264,14 @@ export default function SolicitudDetail({ solicitudId, onClose, readOnly = false
                             <span>{formatDate(requerimiento.createdAt)}</span>
                         </div>
                         <div className="meta-chip type">
-                            {requerimiento.type === 'producto' ? 'Producto Terminado' : 'Kit'}
+                            {isContenedor ? 'Grupo de Kits' : 'Kit'}
                         </div>
+                        {isContenedor && (
+                            <div className="meta-chip">
+                                <MdList />
+                                <span>{hijos.length} requerimiento{hijos.length !== 1 ? 's' : ''}</span>
+                            </div>
+                        )}
                     </div>
 
                     <div className="progress-section-detail">
@@ -239,6 +300,46 @@ export default function SolicitudDetail({ solicitudId, onClose, readOnly = false
                     </div>
                 </div>
 
+                {isContenedor && (
+                    <div className="detail-section children-section">
+                        <div className="section-title">
+                            <MdList />
+                            <h3>Kits solicitados en este grupo</h3>
+                        </div>
+                        <div className="section-content children-list">
+                            {hijos.length === 0 ? (
+                                <p className="empty-children">Comercial aún no ha agregado kits a este grupo.</p>
+                            ) : (
+                                hijos.map((hijo) => {
+                                    const hijoEstado = getHijoEstado(hijo);
+                                    const hijoProgreso = getHijoProgreso(hijo);
+                                    return (
+                                        <div
+                                            key={hijo.id}
+                                            className={`child-req-card ${hijoEstado.class}`}
+                                            onClick={() => onOpenChild && onOpenChild(hijo)}
+                                        >
+                                            <div className="child-req-header">
+                                                <h4>{hijo.nombre}</h4>
+                                                <span className={`status-badge ${hijoEstado.class}`}>{hijoEstado.label}</span>
+                                            </div>
+                                            <div className="child-req-progress">
+                                                <div className="progress-bar">
+                                                    <div
+                                                        className={`progress-fill ${hijoEstado.class}`}
+                                                        style={{ width: `${hijoProgreso}%` }}
+                                                    />
+                                                </div>
+                                                <span>{hijoProgreso}%</span>
+                                            </div>
+                                        </div>
+                                    );
+                                })
+                            )}
+                        </div>
+                    </div>
+                )}
+
                 {requerimiento.state !== 'cancel' && (
                     <div className="detail-section actions-section">
                         <div className="section-title">
@@ -256,7 +357,7 @@ export default function SolicitudDetail({ solicitudId, onClose, readOnly = false
                                 )}
                             </button>
                             
-                            {!readOnly && requerimiento.tipo === 'kit' && !requerimiento.kit && requerimiento.state !== 'finish' && (
+                            {!readOnly && !isContenedor && requerimiento.tipo === 'kit' && !requerimiento.kit && requerimiento.state !== 'finish' && (
                                 <button 
                                     className={`action-button ${create ? 'danger' : 'secondary'}`}
                                     onClick={() => {
@@ -271,7 +372,7 @@ export default function SolicitudDetail({ solicitudId, onClose, readOnly = false
                                 </button>
                             )}
 
-                            {!readOnly && requerimiento.tipo === 'kit' && requerimiento.kit && (
+                            {!readOnly && !isContenedor && requerimiento.tipo === 'kit' && requerimiento.kit && (
                                 <button 
                                     className="action-button secondary"
                                     onClick={handleEditKit}
@@ -284,7 +385,7 @@ export default function SolicitudDetail({ solicitudId, onClose, readOnly = false
                     </div>
                 )}
 
-                {!readOnly && create === 'kit' && (
+                {!readOnly && !isContenedor && create === 'kit' && (
                     <div className="detail-section">
                         <NewKit close={closeNewKit} requerimiento={requerimiento} />
                     </div>

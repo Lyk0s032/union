@@ -1,6 +1,8 @@
 // Estilos para la nueva versión de Solicitudes Comerciales
 // UI moderna con mejor UX - Adaptado de producción
 
+@import '../shared/forms.less';
+
 @primary-color: #3b82f6;
 @success-color: #10b981;
 @warning-color: #f59e0b;
@@ -1779,4 +1781,110 @@
             }
         }
     }
+}
+
+// Requerimientos padre-hijo
+.subtitle-hint {
+    font-size: 13px;
+    color: #666;
+    margin-top: 4px;
+}
+
+.children-section {
+    .section-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        h3 { flex: 1; }
+    }
+
+    .section-content .solicitud-inline-form {
+        margin-top: @spacing-sm;
+    }
+
+    .action-button.small {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+}
+
+.children-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.empty-children {
+    color: #888;
+    font-size: 14px;
+    font-style: italic;
+}
+
+.child-req-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+    &:hover {
+        border-color: #4a90d9;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .child-req-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+
+        h4 {
+            margin: 0;
+            font-size: 14px;
+        }
+    }
+
+    .child-req-progress {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .progress-bar {
+            flex: 1;
+            height: 4px;
+            background: #eee;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        span {
+            font-size: 12px;
+            color: #666;
+            min-width: 32px;
+        }
+    }
+}
+
+.parent-ref {
+    font-size: 13px;
+    color: #666;
+    margin: 4px 0 8px;
+}
+
+.new-child-req-form {
+    .child-req-actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 12px;
+    }
+}
+
+.container-icon {
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+.back-button {
+    background: transparent;
 }

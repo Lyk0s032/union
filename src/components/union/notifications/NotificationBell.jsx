@@ -129,7 +129,7 @@ const NotificationBell = ({ className = '' }) => {
 
       // Rutas que usan ?openReq= para que el componente destino
       // dispache y abra el item vía Redux (misma lógica que un clic manual)
-      const OPEN_REQ_ROUTES = ['/produccion/solicitudes', '/comercial/solicitudes'];
+      const OPEN_REQ_ROUTES = ['/produccion/solicitudes', '/comercial/solicitudes', '/compras/solicitudes'];
 
       if (OPEN_REQ_ROUTES.includes(normalUrl) && targetId) {
         console.log('[NotificationBell] 🎯 Navegando con openReq:', normalUrl, targetId);

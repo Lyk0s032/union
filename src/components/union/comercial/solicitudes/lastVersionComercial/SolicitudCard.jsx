@@ -2,24 +2,37 @@ import React from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/es";
-import { MdCheckCircle, MdAccessTime, MdVisibility } from "react-icons/md";
+import { MdCheckCircle, MdAccessTime, MdVisibility, MdFolder } from "react-icons/md";
+import {
+    getContenedorProgreso,
+    getContenedorEstadoLabel,
+    getHijoProgreso,
+    getHijoEstadoLabel,
+    getGrupoLabel,
+    getItemLabel,
+    isProductoTipo,
+} from "../utils/requerimientoProgress";
 
 dayjs.extend(relativeTime);
 dayjs.locale("es");
 
 export default function SolicitudCard({ solicitud, isSelected, onClick }) {
+    const hijos = solicitud.hijos || [];
+    const isContenedor = solicitud.esContenedor;
+    const tipoGrupo = solicitud.tipo || 'kit';
+
     const getEstado = () => {
+        if (isContenedor) return getContenedorEstadoLabel(hijos, tipoGrupo);
+        const leido = isProductoTipo(solicitud.tipo) ? solicitud.leidoCompras : solicitud.leidoProduccion;
         if (solicitud.state === 'finish') return { label: 'Completada', class: 'completed' };
-        if (solicitud.leidoProduccion && solicitud.state === 'creando') return { label: 'En creación', class: 'creating' };
-        if (solicitud.leidoProduccion) return { label: 'En progreso', class: 'progress' };
+        if (leido && solicitud.state === 'creando') return { label: 'En creación', class: 'creating' };
+        if (leido) return { label: 'En progreso', class: 'progress' };
         return { label: 'Pendiente', class: 'pending' };
     };
 
     const getPorcentaje = () => {
-        if (solicitud.state === 'finish') return 100;
-        if (solicitud.leidoProduccion && solicitud.state === 'creando') return 70;
-        if (solicitud.leidoProduccion) return 30;
-        return 0;
+        if (isContenedor) return getContenedorProgreso(hijos, tipoGrupo);
+        return getHijoProgreso(solicitud, solicitud.tipo);
     };
 
     const getEstadoIcon = () => {
@@ -33,7 +46,6 @@ export default function SolicitudCard({ solicitud, isSelected, onClick }) {
         const date = dayjs(dateString);
         const today = dayjs();
         const diffDays = today.diff(date, 'day');
-        
         if (diffDays === 0) return 'Hoy';
         if (diffDays === 1) return 'Ayer';
         if (diffDays < 7) return date.fromNow();
@@ -51,17 +63,18 @@ export default function SolicitudCard({ solicitud, isSelected, onClick }) {
             <div className="card-header">
                 <div className="card-title-section">
                     <span className="card-type">
-                        {solicitud.type === 'producto' ? 'Producto Terminado' : 'Kit'}
+                        {isContenedor ? getGrupoLabel(tipoGrupo, hijos.length) : getItemLabel(solicitud.tipo)}
                     </span>
-                    <h3 className="card-title">{solicitud.nombre}</h3>
+                    <h3 className="card-title">
+                        {isContenedor && <MdFolder className="container-icon" />}
+                        {solicitud.nombre}
+                    </h3>
                 </div>
-                
                 <div className={`status-badge ${estado.class}`}>
                     {getEstadoIcon()}
                     <span>{estado.label}</span>
                 </div>
             </div>
-
             <div className="card-body">
                 {solicitud.description && (
                     <p className="card-description">
@@ -70,7 +83,6 @@ export default function SolicitudCard({ solicitud, isSelected, onClick }) {
                             : solicitud.description}
                     </p>
                 )}
-
                 <div className="card-meta">
                     <div className="meta-item">
                         <span className="meta-label">Fecha:</span>
@@ -78,7 +90,6 @@ export default function SolicitudCard({ solicitud, isSelected, onClick }) {
                     </div>
                 </div>
             </div>
-
             <div className="card-footer">
                 <div className="progress-section">
                     <div className="progress-info">
@@ -93,7 +104,6 @@ export default function SolicitudCard({ solicitud, isSelected, onClick }) {
                     </div>
                 </div>
             </div>
-
             {isSelected && <div className="selection-indicator" />}
         </div>
     );

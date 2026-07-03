@@ -3,47 +3,34 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/es";
 import { MdCheckCircle, MdAccessTime, MdVisibility, MdFolder } from "react-icons/md";
+import {
+    getContenedorProgreso,
+    getContenedorEstadoLabel,
+    getHijoProgreso,
+    getGrupoLabel,
+    getItemLabel,
+} from "../../../comercial/solicitudes/utils/requerimientoProgress";
 
 dayjs.extend(relativeTime);
 dayjs.locale("es");
 
-const getHijoProgreso = (hijo) => {
-    if (hijo.state === 'finish') return 100;
-    if (hijo.leidoProduccion && hijo.state === 'creando') return 70;
-    if (hijo.leidoProduccion) return 30;
-    return 0;
-};
-
-const getContenedorProgreso = (hijos = []) => {
-    if (!hijos.length) return 0;
-    const total = hijos.reduce((sum, hijo) => sum + getHijoProgreso(hijo), 0);
-    return Math.round(total / hijos.length);
-};
-
 export default function SolicitudCard({ solicitud, isSelected, onClick }) {
     const hijos = solicitud.hijos || [];
     const isContenedor = solicitud.esContenedor;
+    const tipoGrupo = solicitud.tipo || 'producto';
 
     const getEstado = () => {
-        if (isContenedor) {
-            if (!hijos.length) return { label: 'Sin requerimientos', class: 'pending' };
-            if (hijos.every((h) => h.state === 'finish')) return { label: 'Completada', class: 'completed' };
-            if (hijos.some((h) => h.leidoProduccion || h.state === 'creando')) return { label: 'En progreso', class: 'progress' };
-            return { label: 'Pendiente', class: 'pending' };
-        }
-
+        if (isContenedor) return getContenedorEstadoLabel(hijos, tipoGrupo);
+        const leido = solicitud.leidoCompras;
         if (solicitud.state === 'finish') return { label: 'Completada', class: 'completed' };
-        if (solicitud.leidoProduccion && solicitud.state === 'creando') return { label: 'En creación', class: 'creating' };
-        if (solicitud.leidoProduccion) return { label: 'En progreso', class: 'progress' };
+        if (leido && solicitud.state === 'creando') return { label: 'En creación', class: 'creating' };
+        if (leido) return { label: 'En progreso', class: 'progress' };
         return { label: 'Pendiente', class: 'pending' };
     };
 
     const getPorcentaje = () => {
-        if (isContenedor) return getContenedorProgreso(hijos);
-        if (solicitud.state === 'finish') return 100;
-        if (solicitud.leidoProduccion && solicitud.state === 'creando') return 70;
-        if (solicitud.leidoProduccion) return 30;
-        return 0;
+        if (isContenedor) return getContenedorProgreso(hijos, tipoGrupo);
+        return getHijoProgreso(solicitud, tipoGrupo);
     };
 
     const getEstadoIcon = () => {
@@ -57,7 +44,6 @@ export default function SolicitudCard({ solicitud, isSelected, onClick }) {
         const date = dayjs(dateString);
         const today = dayjs();
         const diffDays = today.diff(date, 'day');
-        
         if (diffDays === 0) return 'Hoy';
         if (diffDays === 1) return 'Ayer';
         if (diffDays < 7) return date.fromNow();
@@ -68,56 +54,40 @@ export default function SolicitudCard({ solicitud, isSelected, onClick }) {
     const porcentaje = getPorcentaje();
 
     return (
-        <div 
+        <div
             className={`solicitud-card ${isSelected ? 'selected' : ''} ${estado.class}`}
             onClick={onClick}
         >
             <div className="card-header">
                 <div className="card-title-section">
                     <span className="card-type">
-                        {isContenedor ? `Grupo de Kits (${hijos.length})` : 'Kit'}
+                        {isContenedor ? getGrupoLabel(tipoGrupo, hijos.length) : getItemLabel(solicitud.tipo || 'producto')}
                     </span>
                     <h3 className="card-title">
                         {isContenedor && <MdFolder className="container-icon" />}
                         {solicitud.nombre}
                     </h3>
                 </div>
-                
                 <div className={`status-badge ${estado.class}`}>
                     {getEstadoIcon()}
                     <span>{estado.label}</span>
                 </div>
             </div>
-
             <div className="card-body">
                 {solicitud.description && (
                     <p className="card-description">
-                        {solicitud.description.length > 80 
-                            ? `${solicitud.description.substring(0, 80)}...` 
+                        {solicitud.description.length > 80
+                            ? `${solicitud.description.substring(0, 80)}...`
                             : solicitud.description}
                     </p>
                 )}
-
-                {solicitud.padre && (
-                    <p className="card-parent-ref">
-                        Grupo: {solicitud.padre.nombre}
-                    </p>
-                )}
-
                 <div className="card-meta">
-                    <div className="meta-item">
-                        <span className="meta-label">Solicitado por:</span>
-                        <span className="meta-value">
-                            {solicitud.user?.name} {solicitud.user?.lastName}
-                        </span>
-                    </div>
                     <div className="meta-item">
                         <span className="meta-label">Fecha:</span>
                         <span className="meta-value">{formatDate(solicitud.createdAt)}</span>
                     </div>
                 </div>
             </div>
-
             <div className="card-footer">
                 <div className="progress-section">
                     <div className="progress-info">
@@ -125,14 +95,13 @@ export default function SolicitudCard({ solicitud, isSelected, onClick }) {
                         <span className="progress-percentage">{porcentaje}%</span>
                     </div>
                     <div className="progress-bar">
-                        <div 
+                        <div
                             className={`progress-fill ${estado.class}`}
                             style={{ width: `${porcentaje}%` }}
                         />
                     </div>
                 </div>
             </div>
-
             {isSelected && <div className="selection-indicator" />}
         </div>
     );

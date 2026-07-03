@@ -1,0 +1,416 @@
+@primary-color: #3b82f6;
+@success-color: #10b981;
+@danger-color: #ef4444;
+@gray-50: #f9fafb;
+@gray-100: #f3f4f6;
+@gray-200: #e5e7eb;
+@gray-300: #d1d5db;
+@gray-400: #9ca3af;
+@gray-500: #6b7280;
+@gray-600: #4b5563;
+@gray-700: #374151;
+@gray-900: #111827;
+@border-radius: 12px;
+@spacing-xs: 8px;
+@spacing-sm: 12px;
+@spacing-md: 16px;
+@spacing-lg: 24px;
+
+.solicitud-inline-form {
+    background: white;
+    border: 1px solid @gray-200;
+    border-radius: @border-radius;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+
+    .form-header {
+        padding: @spacing-md @spacing-lg;
+        background: linear-gradient(135deg, fade(@primary-color, 8%) 0%, fade(@primary-color, 3%) 100%);
+        border-bottom: 1px solid @gray-200;
+
+        .form-header-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: @primary-color;
+            color: white;
+            font-size: 18px;
+            margin-bottom: @spacing-xs;
+        }
+
+        h4 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 700;
+            color: @gray-900;
+        }
+
+        p {
+            margin: 4px 0 0;
+            font-size: 13px;
+            color: @gray-500;
+            line-height: 1.4;
+        }
+    }
+
+    .form-steps {
+        display: flex;
+        gap: @spacing-xs;
+        padding: @spacing-sm @spacing-lg;
+        background: @gray-50;
+        border-bottom: 1px solid @gray-200;
+
+        .step-chip {
+            flex: 1;
+            text-align: center;
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: @gray-500;
+            background: white;
+            border: 1px solid @gray-200;
+
+            &.active {
+                color: @primary-color;
+                border-color: fade(@primary-color, 40%);
+                background: fade(@primary-color, 8%);
+            }
+
+            &.done {
+                color: @success-color;
+                border-color: fade(@success-color, 40%);
+                background: fade(@success-color, 8%);
+            }
+        }
+    }
+
+    .form-body {
+        padding: @spacing-lg;
+        display: flex;
+        flex-direction: column;
+        gap: @spacing-md;
+    }
+
+    .form-field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        label {
+            font-size: 13px;
+            font-weight: 600;
+            color: @gray-700;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid @gray-200;
+            border-radius: @border-radius;
+            font-size: 14px;
+            color: @gray-900;
+            background: white;
+            font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            box-sizing: border-box;
+
+            &:focus {
+                outline: none;
+                border-color: @primary-color;
+                box-shadow: 0 0 0 3px fade(@primary-color, 12%);
+            }
+
+            &::placeholder {
+                color: @gray-400;
+            }
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        select {
+            cursor: pointer;
+        }
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: @spacing-md;
+
+        @media (max-width: 600px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .form-actions {
+        display: flex;
+        gap: @spacing-sm;
+        padding: @spacing-md @spacing-lg;
+        background: @gray-50;
+        border-top: 1px solid @gray-200;
+
+        .btn-primary,
+        .btn-secondary {
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 11px 18px;
+            border: none;
+            border-radius: @border-radius;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+
+            &:disabled {
+                opacity: 0.6;
+                cursor: not-allowed;
+                transform: none;
+            }
+        }
+
+        .btn-primary {
+            background: @primary-color;
+            color: white;
+
+            &:hover:not(:disabled) {
+                background: darken(@primary-color, 8%);
+                transform: translateY(-1px);
+                box-shadow: 0 4px 12px fade(@primary-color, 35%);
+            }
+        }
+
+        .btn-secondary {
+            background: white;
+            color: @gray-700;
+            border: 2px solid @gray-200;
+
+            &:hover:not(:disabled) {
+                background: @gray-100;
+                border-color: @gray-300;
+            }
+        }
+    }
+
+    &.success-banner {
+        .form-success {
+            padding: @spacing-lg;
+            text-align: center;
+
+            .success-icon {
+                font-size: 40px;
+                color: @success-color;
+                margin-bottom: @spacing-sm;
+            }
+
+            h4 {
+                margin: 0 0 6px;
+                font-size: 17px;
+                font-weight: 700;
+                color: @gray-900;
+            }
+
+            .product-ref {
+                font-size: 15px;
+                color: @primary-color;
+                font-weight: 600;
+                margin: 0 0 @spacing-sm;
+            }
+
+            p {
+                font-size: 13px;
+                color: @gray-500;
+                margin: 0 0 @spacing-md;
+            }
+        }
+    }
+}
+
+.solicitud-provider-form {
+    .provider-search-wrap {
+        position: relative;
+    }
+
+    .search-input-wrap {
+        display: flex;
+        align-items: center;
+        gap: @spacing-xs;
+        padding: 4px 14px;
+        border: 2px solid @gray-200;
+        border-radius: 999px;
+        background: white;
+        transition: border-color 0.2s, box-shadow 0.2s;
+
+        &:focus-within {
+            border-color: @primary-color;
+            box-shadow: 0 0 0 3px fade(@primary-color, 12%);
+        }
+
+        svg {
+            color: @gray-400;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 10px 0;
+            font-size: 14px;
+            background: transparent;
+        }
+    }
+
+    .provider-results {
+        margin-top: @spacing-sm;
+        max-height: 220px;
+        overflow-y: auto;
+        border: 1px solid @gray-200;
+        border-radius: @border-radius;
+        background: white;
+
+        &.empty {
+            padding: @spacing-lg;
+            text-align: center;
+            color: @gray-400;
+            font-size: 13px;
+        }
+    }
+
+    .provider-card {
+        display: flex;
+        align-items: center;
+        gap: @spacing-sm;
+        padding: @spacing-sm @spacing-md;
+        cursor: pointer;
+        border-bottom: 1px solid @gray-100;
+        transition: background 0.15s;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        &:hover {
+            background: fade(@primary-color, 6%);
+        }
+
+        .provider-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: fade(@primary-color, 12%);
+            color: @primary-color;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .provider-info {
+            flex: 1;
+            min-width: 0;
+
+            .provider-nit {
+                font-size: 11px;
+                color: @gray-500;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.03em;
+            }
+
+            .provider-name {
+                font-size: 14px;
+                font-weight: 600;
+                color: @gray-900;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+
+        .provider-arrow {
+            color: @gray-300;
+            font-size: 18px;
+        }
+    }
+
+    .provider-selected {
+        display: flex;
+        align-items: center;
+        gap: @spacing-sm;
+        padding: @spacing-md;
+        background: fade(@primary-color, 6%);
+        border: 1px solid fade(@primary-color, 20%);
+        border-radius: @border-radius;
+        margin-bottom: @spacing-md;
+
+        .provider-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: @primary-color;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .provider-info {
+            flex: 1;
+
+            .provider-nit {
+                font-size: 11px;
+                color: @gray-500;
+            }
+
+            .provider-name {
+                font-size: 15px;
+                font-weight: 700;
+                color: @gray-900;
+            }
+        }
+
+        .btn-change {
+            padding: 6px 12px;
+            border: 1px solid @gray-300;
+            border-radius: 8px;
+            background: white;
+            font-size: 12px;
+            font-weight: 600;
+            color: @gray-600;
+            cursor: pointer;
+
+            &:hover {
+                background: @gray-50;
+            }
+        }
+    }
+
+    .price-summary {
+        padding: @spacing-sm @spacing-md;
+        background: @gray-50;
+        border-radius: @border-radius;
+        margin-top: @spacing-sm;
+        font-size: 13px;
+        color: @gray-600;
+
+        strong {
+            color: @gray-900;
+        }
+    }
+}
