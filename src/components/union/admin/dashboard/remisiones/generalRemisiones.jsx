@@ -10,6 +10,7 @@ export default function GeneralRemisiones() {
     const { remisiones, loadingRemisiones, remision, loadingRemision } = remisionesState;
 
     const [busqueda, setBusqueda] = useState('');
+    const [filtroEstado, setFiltroEstado] = useState('todos');
     const [remisionSeleccionada, setRemisionSeleccionada] = useState(null);
     const [paginaActual, setPaginaActual] = useState(1);
     const [cargaInicial, setCargaInicial] = useState(false);
@@ -75,18 +76,56 @@ export default function GeneralRemisiones() {
         setRemisionSeleccionada(null);
     };
 
-    // Filtrar remisiones por búsqueda
+    // Calcula el estado efectivo combinando el campo real del backend
+    // con un cálculo de cantidades como fallback
+    const getEstadoEfectivo = (r) => {
+        // Si el backend ya marcó la remisión como Remisionada, usamos ese valor directo
+        if (r.estado === 'Remisionada') return 'remisionado';
+        if (r.estado === 'Cancelada') return 'cancelada';
+
+        // Para remisiones Activas, calculamos el estado por cantidades de sus items
+        const items = r.itemRemisions || [];
+        if (items.length === 0) return 'pendiente';
+
+        const totalComprometido = items.reduce((sum, item) =>
+            sum + Number(item?.necesidadProyecto?.cantidadComprometida || 0), 0);
+        const totalDespachado = items.reduce((sum, item) =>
+            sum + Number(item?.cantidad || 0), 0);
+
+        if (totalDespachado === 0) return 'pendiente';
+        if (totalComprometido > 0 && totalDespachado >= totalComprometido) return 'remisionado';
+        return 'parcial';
+    };
+
+    // Filtrar remisiones por búsqueda y estado
     const remisionesFiltradas = remisiones?.remisiones?.filter(r => {
-        if (!busqueda) return true;
-        const searchLower = busqueda.toLowerCase();
-        return (
-            r.numeroRemision?.toLowerCase().includes(searchLower) ||
-            r.necesidadProyecto?.kit?.name?.toLowerCase().includes(searchLower) ||
-            r.necesidadProyecto?.producto?.item?.toLowerCase().includes(searchLower) ||
-            r.necesidadProyecto?.requisicion?.nombre?.toLowerCase().includes(searchLower) ||
-            r.necesidadProyecto?.requisicion?.cotizacion?.client?.name?.toLowerCase().includes(searchLower)
-        );
+        // Filtro por búsqueda
+        if (busqueda) {
+            const searchLower = busqueda.toLowerCase();
+            const coincideBusqueda = (
+                r.numeroRemision?.toLowerCase().includes(searchLower) ||
+                r.necesidadProyecto?.kit?.name?.toLowerCase().includes(searchLower) ||
+                r.necesidadProyecto?.producto?.item?.toLowerCase().includes(searchLower) ||
+                r.necesidadProyecto?.requisicion?.nombre?.toLowerCase().includes(searchLower) ||
+                r.necesidadProyecto?.requisicion?.cotizacion?.client?.name?.toLowerCase().includes(searchLower)
+            );
+            if (!coincideBusqueda) return false;
+        }
+
+        // Filtro por estado
+        if (filtroEstado !== 'todos') {
+            return getEstadoEfectivo(r) === filtroEstado;
+        }
+
+        return true;
     }) || [];
+
+    // Contadores por estado para los badges de los botones
+    const contadores = (remisiones?.remisiones || []).reduce((acc, r) => {
+        const estado = getEstadoEfectivo(r);
+        acc[estado] = (acc[estado] || 0) + 1;
+        return acc;
+    }, {});
 
     const totalPaginas = remisiones?.totalPages || 1;
 
@@ -107,7 +146,6 @@ export default function GeneralRemisiones() {
                 }}>
                     Remisiones
                 </h1>
-                {console.log('remisiones', remisiones)}
                 <div style={{ fontSize: '14px', color: '#666' }}>
                     Total: {remisiones?.remisiones?.length || 0} remisiones
                 </div>
@@ -153,6 +191,51 @@ export default function GeneralRemisiones() {
                 >
                     📥 Descargar lista
                 </button>
+            </div>
+
+            {/* Filtros por estado */}
+            <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', flexWrap: 'wrap' }}>
+                {[
+                    { key: 'todos', label: 'Todos', color: '#666', bg: '#f0f0f0', activeBg: '#333', activeColor: '#fff' },
+                    { key: 'pendiente', label: 'Pendiente', color: '#856404', bg: '#fff3cd', activeBg: '#ffc107', activeColor: '#fff' },
+                    { key: 'parcial', label: 'Parcial', color: '#fd7e14', bg: '#fff0e6', activeBg: '#fd7e14', activeColor: '#fff' },
+                    { key: 'remisionado', label: 'Remisionado', color: '#155724', bg: '#d4edda', activeBg: '#28a745', activeColor: '#fff' },
+                ].map(({ key, label, color, bg, activeBg, activeColor }) => {
+                    const activo = filtroEstado === key;
+                    const count = key === 'todos'
+                        ? (remisiones?.remisiones?.length || 0)
+                        : (contadores[key] || 0);
+                    return (
+                        <button
+                            key={key}
+                            onClick={() => setFiltroEstado(key)}
+                            style={{
+                                padding: '8px 16px',
+                                fontSize: '13px',
+                                fontWeight: '600',
+                                border: `1px solid ${activo ? activeBg : color}`,
+                                borderRadius: '20px',
+                                background: activo ? activeBg : bg,
+                                color: activo ? activeColor : color,
+                                cursor: 'pointer',
+                                transition: 'all 0.2s',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '6px'
+                            }}
+                        >
+                            {label}
+                            <span style={{
+                                background: activo ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.1)',
+                                borderRadius: '10px',
+                                padding: '1px 7px',
+                                fontSize: '11px'
+                            }}>
+                                {count}
+                            </span>
+                        </button>
+                    );
+                })}
             </div>
 
             {/* Tabla de remisiones */}
@@ -205,9 +288,11 @@ export default function GeneralRemisiones() {
                     borderRadius: '8px'
                 }}>
                     <div style={{ fontSize: '18px', color: '#666' }}>
-                        {busqueda 
+                        {busqueda
                             ? `No se encontraron remisiones con "${busqueda}"`
-                            : 'No hay remisiones registradas'
+                            : filtroEstado !== 'todos'
+                                ? `No hay remisiones en estado "${filtroEstado}"`
+                                : 'No hay remisiones registradas'
                         }
                     </div>
                 </div>
@@ -262,6 +347,16 @@ export default function GeneralRemisiones() {
                                         borderBottom: '2px solid #e0e0e0'
                                     }}>
                                         Proyecto
+                                    </th>
+                                    <th style={{ 
+                                        padding: '15px',
+                                        textAlign: 'left',
+                                        fontSize: '14px',
+                                        fontWeight: '600',
+                                        color: '#666',
+                                        borderBottom: '2px solid #e0e0e0'
+                                    }}>
+                                        Estado
                                     </th>
                                 </tr>
                             </thead>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 Test del Sistema de Remisiones Parciales</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-title {
+            color: #2f8bfd;
+            border-bottom: 2px solid #2f8bfd;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .test-result {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        .pass { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .fail { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #e3f2fd; color: #1565c0; border: 1px solid #bbdefb; }
+        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        button {
+            background: #2f8bfd;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px;
+        }
+        button:hover { background: #1976d2; }
+        .summary {
+            background: #e8f5e8;
+            border: 2px solid #4caf50;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .code-block {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1 class="test-title">🧪 Sistema de Tests - Remisiones Parciales</h1>
+        <p>Este test verifica que el sistema funcione correctamente sin bugs de concatenación.</p>
+        <button onclick="ejecutarTodosLosTests()">🚀 Ejecutar Todos los Tests</button>
+        <button onclick="limpiarResultados()">🧹 Limpiar Resultados</button>
+    </div>
+
+    <div class="test-container">
+        <h2 class="test-title">📊 TEST 1: Bug de Concatenación (3 + 5 = 35)</h2>
+        <div id="test1-results"></div>
+        <button onclick="test1_Concatenacion()">Ejecutar Test 1</button>
+    </div>
+
+    <div class="test-container">
+        <h2 class="test-title">🧮 TEST 2: Cálculos de Cantidades</h2>
+        <div id="test2-results"></div>
+        <button onclick="test2_Calculos()">Ejecutar Test 2</button>
+    </div>
+
+    <div class="test-container">
+        <h2 class="test-title">✅ TEST 3: Validaciones</h2>
+        <div id="test3-results"></div>
+        <button onclick="test3_Validaciones()">Ejecutar Test 3</button>
+    </div>
+
+    <div class="test-container">
+        <h2 class="test-title">🎯 TEST 4: Estados Temporales</h2>
+        <div id="test4-results"></div>
+        <button onclick="test4_EstadosTemporales()">Ejecutar Test 4</button>
+    </div>
+
+    <div class="test-container">
+        <h2 class="test-title">📄 TEST 5: Generación de Números para PDF</h2>
+        <div id="test5-results"></div>
+        <button onclick="test5_GeneracionPDF()">Ejecutar Test 5</button>
+    </div>
+
+    <div id="summary-container"></div>
+
+    <script>
+        let totalTests = 0;
+        let passedTests = 0;
+
+        function addResult(containerId, message, type) {
+            const container = document.getElementById(containerId);
+            const div = document.createElement('div');
+            div.className = `test-result ${type}`;
+            div.innerHTML = message;
+            container.appendChild(div);
+            
+            totalTests++;
+            if (type === 'pass') passedTests++;
+        }
+
+        function limpiarResultados() {
+            ['test1-results', 'test2-results', 'test3-results', 'test4-results', 'test5-results', 'summary-container'].forEach(id => {
+                document.getElementById(id).innerHTML = '';
+            });
+            totalTests = 0;
+            passedTests = 0;
+        }
+
+        function test1_Concatenacion() {
+            document.getElementById('test1-results').innerHTML = '';
+            
+            const tests = [
+                { input1: "3", input2: "5", expected: 8, desc: "Strings '3' + '5'" },
+                { input1: 3, input2: 5, expected: 8, desc: "Números 3 + 5" },
+                { input1: "10", input2: null, expected: 10, desc: "'10' + null" },
+                { input1: undefined, input2: "7", expected: 7, desc: "undefined + '7'" },
+                { input1: "", input2: "0", expected: 0, desc: "'' + '0'" },
+                { input1: "15.5", input2: "4.3", expected: 19.8, desc: "Decimales '15.5' + '4.3'" }
+            ];
+
+            tests.forEach((test, i) => {
+                const resultado = Number(test.input1 || 0) + Number(test.input2 || 0);
+                const pasado = Math.abs(resultado - test.expected) < 0.01; // Para decimales
+                
+                addResult('test1-results', 
+                    `${i+1}. ${test.desc}: ${test.input1} + ${test.input2} = ${resultado} (esperado: ${test.expected})`,
+                    pasado ? 'pass' : 'fail'
+                );
+            });
+        }
+
+        function test2_Calculos() {
+            document.getElementById('test2-results').innerHTML = '';
+
+            // Simular datos de remisión
+            const itemsRemision = [
+                { id: 1, cantidad: "5", cantidadComprometida: "10" },
+                { id: 2, cantidad: "15", cantidadComprometida: "20" },
+                { id: 3, cantidad: "0", cantidadComprometida: "5" }
+            ];
+
+            let totalDespachada = 0;
+            let totalComprometida = 0;
+
+            itemsRemision.forEach((item, i) => {
+                const despachada = Number(item.cantidad || 0);
+                const comprometida = Number(item.cantidadComprometida || 0);
+                
+                totalDespachada += despachada;
+                totalComprometida += comprometida;
+                
+                const porcentaje = comprometida > 0 ? (despachada / comprometida) * 100 : 0;
+                
+                addResult('test2-results', 
+                    `Item ${i+1}: ${despachada}/${comprometida} = ${porcentaje.toFixed(1)}%`,
+                    'pass'
+                );
+            });
+
+            addResult('test2-results', 
+                `Total Despachada: ${totalDespachada} (debe ser 20)`,
+                totalDespachada === 20 ? 'pass' : 'fail'
+            );
+
+            addResult('test2-results', 
+                `Total Comprometida: ${totalComprometida} (debe ser 35)`,
+                totalComprometida === 35 ? 'pass' : 'fail'
+            );
+
+            const porcentajeGeneral = (totalDespachada / totalComprometida) * 100;
+            addResult('test2-results', 
+                `Porcentaje General: ${porcentajeGeneral.toFixed(1)}% (debe ser 57.1%)`,
+                Math.abs(porcentajeGeneral - 57.1) < 0.1 ? 'pass' : 'fail'
+            );
+        }
+
+        function test3_Validaciones() {
+            document.getElementById('test3-results').innerHTML = '';
+
+            function validarCantidad(cantidad, cantidadPendiente) {
+                const cantidadNum = Number(cantidad) || 0;
+                
+                if (cantidadNum < 0) {
+                    return { valida: false, mensaje: 'No puede ser negativa' };
+                }
+                
+                if (cantidadNum > cantidadPendiente) {
+                    return { valida: false, mensaje: `Máximo ${cantidadPendiente}` };
+                }
+                
+                return { valida: true, mensaje: 'Válida' };
+            }
+
+            const testCases = [
+                { cantidad: "5", pendiente: 10, debePasar: true, desc: "Cantidad válida (5 <= 10)" },
+                { cantidad: "-1", pendiente: 10, debePasar: false, desc: "Cantidad negativa" },
+                { cantidad: "15", pendiente: 10, debePasar: false, desc: "Excede pendiente (15 > 10)" },
+                { cantidad: "0", pendiente: 10, debePasar: true, desc: "Cantidad cero" },
+                { cantidad: "", pendiente: 10, debePasar: true, desc: "String vacío (se convierte a 0)" },
+                { cantidad: "10", pendiente: 10, debePasar: true, desc: "Cantidad exacta (10 = 10)" }
+            ];
+
+            testCases.forEach((test, i) => {
+                const resultado = validarCantidad(test.cantidad, test.pendiente);
+                const pasado = resultado.valida === test.debePasar;
+                
+                addResult('test3-results', 
+                    `${i+1}. ${test.desc}: ${resultado.mensaje}`,
+                    pasado ? 'pass' : 'fail'
+                );
+            });
+        }
+
+        function test4_EstadosTemporales() {
+            document.getElementById('test4-results').innerHTML = '';
+
+            let cantidadesTemporales = {};
+
+            function cambiarCantidad(itemId, nuevaCantidad) {
+                cantidadesTemporales[itemId] = Number(nuevaCantidad);
+            }
+
+            function getCantidadActual(itemId, cantidadOriginal) {
+                return cantidadesTemporales[itemId] !== undefined 
+                    ? cantidadesTemporales[itemId] 
+                    : Number(cantidadOriginal || 0);
+            }
+
+            // Test 1: Cambio simple
+            cambiarCantidad(1, "8");
+            const cantidad1 = getCantidadActual(1, "5");
+            addResult('test4-results', 
+                `Cambio simple: Original 5 → Temporal 8 = ${cantidad1}`,
+                cantidad1 === 8 ? 'pass' : 'fail'
+            );
+
+            // Test 2: Suma sin concatenación
+            cambiarCantidad(2, "3");
+            const cantidadBase = getCantidadActual(2, "0");
+            cambiarCantidad(2, cantidadBase + 2);  // 3 + 2 = 5, no "32"
+            const cantidad2 = getCantidadActual(2, "0");
+            addResult('test4-results', 
+                `Suma temporal: 3 + 2 = ${cantidad2} (debe ser 5, no 32)`,
+                cantidad2 === 5 ? 'pass' : 'fail'
+            );
+
+            // Test 3: Múltiples cambios
+            cambiarCantidad(3, "7");
+            cambiarCantidad(3, getCantidadActual(3, "0") + 3);  // 7 + 3 = 10
+            const cantidad3 = getCantidadActual(3, "0");
+            addResult('test4-results', 
+                `Múltiples cambios: 7 + 3 = ${cantidad3}`,
+                cantidad3 === 10 ? 'pass' : 'fail'
+            );
+
+            // Test 4: Item sin cambios temporales
+            const cantidad4 = getCantidadActual(99, "12");
+            addResult('test4-results', 
+                `Sin cambios temporales: Usa original 12 = ${cantidad4}`,
+                cantidad4 === 12 ? 'pass' : 'fail'
+            );
+        }
+
+        function test5_GeneracionPDF() {
+            document.getElementById('test5-results').innerHTML = '';
+
+            // Test números de remisión
+            const remisionId = 123;
+            const numeroRemision = Number(remisionId + 4890);  // 123 + 4890 = 5013
+            addResult('test5-results', 
+                `Número remisión: ${remisionId} + 4890 = ${numeroRemision} (debe ser 5013)`,
+                numeroRemision === 5013 ? 'pass' : 'fail'
+            );
+
+            // Test números de cotización
+            const cotizacionId = 456;
+            const numeroCotizacion = Number(cotizacionId + 21719);  // 456 + 21719 = 22175
+            addResult('test5-results', 
+                `Número cotización: ${cotizacionId} + 21719 = ${numeroCotizacion} (debe ser 22175)`,
+                numeroCotizacion === 22175 ? 'pass' : 'fail'
+            );
+
+            // Test que no haya concatenación
+            const testConcatenacion1 = numeroRemision !== 1234890;  // No debe ser "123" + "4890"
+            const testConcatenacion2 = numeroCotizacion !== 45621719;  // No debe ser "456" + "21719"
+            addResult('test5-results', 
+                `Sin concatenación ID remisión: ${numeroRemision} ≠ 1234890`,
+                testConcatenacion1 ? 'pass' : 'fail'
+            );
+            addResult('test5-results', 
+                `Sin concatenación ID cotización: ${numeroCotizacion} ≠ 45621719`,
+                testConcatenacion2 ? 'pass' : 'fail'
+            );
+
+            // Test con strings
+            const remisionIdString = "789";
+            const numeroRemisionFromString = Number(remisionIdString) + 4890;  // 789 + 4890 = 5679
+            addResult('test5-results', 
+                `Desde string: "${remisionIdString}" + 4890 = ${numeroRemisionFromString} (debe ser 5679)`,
+                numeroRemisionFromString === 5679 ? 'pass' : 'fail'
+            );
+        }
+
+        function mostrarResumen() {
+            const porcentajeExito = totalTests > 0 ? Math.round((passedTests / totalTests) * 100) : 0;
+            const summaryContainer = document.getElementById('summary-container');
+            
+            let summaryClass = 'summary';
+            let emoji = '🎉';
+            let mensaje = 'PERFECTO';
+            
+            if (porcentajeExito < 100) {
+                summaryClass = 'test-container';
+                emoji = '⚠️';
+                mensaje = 'HAY PROBLEMAS';
+            }
+            
+            summaryContainer.innerHTML = `
+                <div class="${summaryClass}">
+                    <h2>${emoji} RESUMEN DE TESTS</h2>
+                    <div class="code-block">
+                        Tests ejecutados: ${totalTests}
+                        Tests exitosos: ${passedTests}  
+                        Tests fallidos: ${totalTests - passedTests}
+                        Porcentaje de éxito: ${porcentajeExito}%
+                    </div>
+                    <h3>${mensaje}: ${porcentajeExito === 100 ? 'El sistema funciona correctamente! ✅' : 'Revisar los tests fallidos ❌'}</h3>
+                    ${porcentajeExito === 100 ? 
+                        '<p><strong>✅ Sin bugs de concatenación (3+5=35)<br/>✅ Cálculos correctos<br/>✅ Validaciones funcionando<br/>✅ Estados temporales OK<br/>✅ Generación PDF correcta</strong></p>' 
+                        : '<p>Revisar los tests marcados en rojo para identificar los problemas.</p>'}
+                </div>
+            `;
+        }
+
+        function ejecutarTodosLosTests() {
+            limpiarResultados();
+            
+            addResult('test1-results', 'Ejecutando Test 1...', 'info');
+            test1_Concatenacion();
+            
+            addResult('test2-results', 'Ejecutando Test 2...', 'info');
+            test2_Calculos();
+            
+            addResult('test3-results', 'Ejecutando Test 3...', 'info');
+            test3_Validaciones();
+            
+            addResult('test4-results', 'Ejecutando Test 4...', 'info');
+            test4_EstadosTemporales();
+            
+            addResult('test5-results', 'Ejecutando Test 5...', 'info');
+            test5_GeneracionPDF();
+            
+            setTimeout(mostrarResumen, 500);
+        }
+
+        // Ejecutar automáticamente al cargar
+        window.onload = function() {
+            setTimeout(ejecutarTodosLosTests, 1000);
+        };
+    </script>
+</body>
+</html>

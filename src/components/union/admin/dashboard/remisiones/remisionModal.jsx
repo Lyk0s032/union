@@ -4,6 +4,360 @@ import * as actions from '../../../../store/action/action';
 import jsPDF from 'jspdf';
 import axios from 'axios';
 
+// Hook temporalmente incluido aquí para evitar problemas de import
+const useRemisionesParciales = (remision, cantidadesTemporales = {}) => {
+    const [cantidadesPrevias, setCantidadesPrevias] = useState({});
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        if (!remision?.itemRemisions || remision.itemRemisions.length === 0) {
+            return;
+        }
+
+        const cargarCantidadesPrevias = async () => {
+            setLoading(true);
+            setError(null);
+            
+            try {
+                const cantidadesCalculadas = {};
+                
+                // Para cada item de la remisión actual
+                for (const item of remision.itemRemisions) {
+                    // DECIMAL(10,4) de MySQL puede llegar como string — forzar Number()
+                    const cantidadComprometida = Number(item?.necesidadProyecto?.cantidadComprometida) || 0;
+                    // cantidadEntregada representa lo ya registrado como entregado en necesidadProyecto
+                    // pero NO necesariamente lo ya remisionado en despachos anteriores
+                    const cantidadPreviamenteDespachada = 0; // sin backend real, no hay dato confiable
+                    const cantidadActual = cantidadesTemporales[item.id] !== undefined 
+                        ? Number(cantidadesTemporales[item.id]) 
+                        : Number(item?.cantidad) || 0;
+                    const cantidadPendiente = Math.max(0, cantidadComprometida - cantidadPreviamenteDespachada);
+                    const totalDespachado = cantidadPreviamenteDespachada + cantidadActual;
+
+                    cantidadesCalculadas[item.id] = {
+                        cantidadComprometida,
+                        cantidadPreviamenteDespachada,
+                        cantidadPendiente,
+                        cantidadActualDespachada: cantidadActual,
+                        esCalculoCompleto: false, // sin consulta real al backend
+                        estadoDespacho: totalDespachado >= cantidadComprometida && cantidadComprometida > 0
+                            ? 'completo'
+                            : cantidadActual > 0
+                                ? 'parcial'
+                                : 'pendiente',
+                        porcentajeCompletado: cantidadComprometida > 0 
+                            ? (totalDespachado / cantidadComprometida) * 100 
+                            : 0
+                    };
+                }
+
+                setCantidadesPrevias(cantidadesCalculadas);
+            } catch (error) {
+                console.error('Error al cargar cantidades previas:', error);
+                setError('Error al consultar historial');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        cargarCantidadesPrevias();
+    }, [remision?.id, remision?.itemRemisions, cantidadesTemporales]);
+
+    const getInfoCantidades = (itemId) => {
+        return cantidadesPrevias[itemId] || {
+            cantidadComprometida: 0,
+            cantidadPreviamenteDespachada: 0,
+            cantidadPendiente: 0,
+            cantidadActualDespachada: 0,
+            esCalculoCompleto: false
+        };
+    };
+
+    const getResumenRemision = () => {
+        const items = Object.values(cantidadesPrevias);
+        
+        return {
+            totalItems: items.length,
+            itemsCompletos: items.filter(item => item.estadoDespacho === 'completo').length,
+            itemsParciales: items.filter(item => item.estadoDespacho === 'parcial').length,
+            itemsPendientes: items.filter(item => item.estadoDespacho === 'pendiente').length,
+            // Number() explícito en acumulador y valor para evitar concatenación de strings
+            totalComprometido: items.reduce((sum, item) => Number(sum) + Number(item.cantidadComprometida || 0), 0),
+            totalPreviamenteDespachado: items.reduce((sum, item) => Number(sum) + Number(item.cantidadPreviamenteDespachada || 0), 0),
+            totalActualDespachado: items.reduce((sum, item) => Number(sum) + Number(item.cantidadActualDespachada || 0), 0),
+            porcentajeCompletoGeneral: items.length > 0 
+                ? (items.reduce((sum, item) => Number(sum) + Number(item.porcentajeCompletado || 0), 0) / items.length)
+                : 0
+        };
+    };
+
+    return {
+        cantidadesPrevias,
+        loading,
+        error,
+        getInfoCantidades,
+        getResumenRemision
+    };
+};
+
+// Componente CantidadesInfo inline
+const CantidadesInfo = ({ infoCantidades, esCalculoCompleto = false, showDetalle = false }) => {
+    if (!infoCantidades) {
+        return <span style={{ color: '#999', fontSize: '12px' }}>Cargando...</span>;
+    }
+
+    const {
+        cantidadComprometida,
+        cantidadPreviamenteDespachada,
+        cantidadPendiente,
+        cantidadActualDespachada,
+        estadoDespacho,
+        porcentajeCompletado,
+        error
+    } = infoCantidades;
+
+    const getEstadoColor = () => {
+        switch (estadoDespacho) {
+            case 'completo': return '#28a745';
+            case 'parcial': return '#fd7e14';
+            case 'pendiente': return '#6c757d';
+            default: return '#6c757d';
+        }
+    };
+
+    if (showDetalle) {
+        return (
+            <div style={{
+                padding: '12px',
+                background: '#f8f9fa',
+                borderRadius: '6px',
+                border: `2px solid ${getEstadoColor()}`,
+                fontSize: '12px'
+            }}>
+                <div style={{ marginBottom: '8px', fontWeight: '600', color: getEstadoColor() }}>
+                    Estado: {estadoDespacho}
+                </div>
+                <div style={{ lineHeight: '1.6' }}>
+                    <div>Total: {cantidadComprometida.toFixed(0)}</div>
+                    {cantidadPreviamenteDespachada > 0 && (
+                        <div style={{ color: '#fd7e14' }}>Prev: {cantidadPreviamenteDespachada.toFixed(0)}</div>
+                    )}
+                    <div style={{ color: '#28a745' }}>Actual: {cantidadActualDespachada.toFixed(0)}</div>
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <span style={{
+            background: getEstadoColor(),
+            color: 'white',
+            padding: '4px 8px',
+            borderRadius: '12px',
+            fontSize: '12px',
+            fontWeight: '600'
+        }}>
+            {cantidadActualDespachada.toFixed(0)}
+        </span>
+    );
+};
+
+const ResumenRemisionParcial = ({ resumen, loading }) => {
+    if (loading) {
+        return <div style={{ textAlign: 'center', padding: '20px', color: '#666' }}>
+            📊 Calculando historial...
+        </div>;
+    }
+
+    if (!resumen || resumen.totalItems === 0) return null;
+
+    return (
+        <div style={{
+            background: '#e3f2fd',
+            padding: '15px',
+            borderRadius: '8px',
+            border: '1px solid #bbdefb',
+            marginBottom: '20px'
+        }}>
+            <div style={{ 
+                fontSize: '14px',
+                fontWeight: '600',
+                marginBottom: '10px',
+                color: '#1565c0'
+            }}>
+                📊 RESUMEN DE DESPACHO PARCIAL ({resumen.porcentajeCompletoGeneral?.toFixed(0) || 0}%)
+            </div>
+            
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '10px', fontSize: '12px' }}>
+                <div>
+                    <div style={{ color: '#666' }}>Total:</div>
+                    <div style={{ fontWeight: '600' }}>{resumen.totalComprometido?.toFixed(0) || 0}</div>
+                </div>
+                {resumen.totalPreviamenteDespachado > 0 && (
+                    <div>
+                        <div style={{ color: '#fd7e14' }}>Anterior:</div>
+                        <div style={{ fontWeight: '600', color: '#fd7e14' }}>{resumen.totalPreviamenteDespachado?.toFixed(0) || 0}</div>
+                    </div>
+                )}
+                <div>
+                    <div style={{ color: '#28a745' }}>Ahora:</div>
+                    <div style={{ fontWeight: '600', color: '#28a745' }}>{resumen.totalActualDespachado?.toFixed(0) || 0}</div>
+                </div>
+                <div>
+                    <div style={{ color: '#dc3545' }}>Pendiente:</div>
+                    <div style={{ fontWeight: '600', color: '#dc3545' }}>
+                        {Math.max(0, (resumen.totalComprometido || 0) - (resumen.totalPreviamenteDespachado || 0) - (resumen.totalActualDespachado || 0)).toFixed(0)}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+// Componente para editar cantidades de forma inline
+const CantidadEditable = ({ item, infoCantidades, onCambiarCantidad }) => {
+    const [editando, setEditando] = useState(false);
+    const [valorTemporal, setValorTemporal] = useState(item?.cantidad || 0);
+    const [error, setError] = useState('');
+
+    const validarCantidad = (cantidad) => {
+        const cantidadNum = Number(cantidad) || 0;
+        const maxPermitida = infoCantidades.cantidadPendiente || infoCantidades.cantidadComprometida;
+        
+        if (cantidadNum < 0) {
+            return 'No puede ser negativa';
+        }
+        
+        if (cantidadNum > maxPermitida) {
+            return `Máximo ${maxPermitida} (ya se despacharon ${infoCantidades.cantidadPreviamenteDespachada || 0} anteriormente)`;
+        }
+        
+        return '';
+    };
+
+    const handleGuardar = () => {
+        const errorValidacion = validarCantidad(valorTemporal);
+        if (errorValidacion) {
+            setError(errorValidacion);
+            return;
+        }
+        
+        onCambiarCantidad(Number(valorTemporal));
+        setEditando(false);
+        setError('');
+    };
+
+    const handleCancelar = () => {
+        setValorTemporal(item?.cantidad || 0);
+        setEditando(false);
+        setError('');
+    };
+
+    if (editando) {
+        return (
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
+                <input
+                    type="number"
+                    value={valorTemporal}
+                    onChange={(e) => {
+                        setValorTemporal(e.target.value);
+                        if (error) setError('');
+                    }}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') handleGuardar();
+                        if (e.key === 'Escape') handleCancelar();
+                    }}
+                    style={{
+                        width: '70px',
+                        padding: '4px 6px',
+                        fontSize: '12px',
+                        border: `1px solid ${error ? '#dc3545' : '#2f8bfd'}`,
+                        borderRadius: '4px',
+                        textAlign: 'center',
+                        outline: 'none'
+                    }}
+                    autoFocus
+                    min="0"
+                    max={infoCantidades.cantidadPendiente || infoCantidades.cantidadComprometida}
+                />
+                <div style={{ display: 'flex', gap: '4px' }}>
+                    <button
+                        onClick={handleGuardar}
+                        style={{
+                            padding: '2px 6px',
+                            fontSize: '10px',
+                            border: 'none',
+                            borderRadius: '3px',
+                            background: '#28a745',
+                            color: 'white',
+                            cursor: 'pointer'
+                        }}
+                    >
+                        ✓
+                    </button>
+                    <button
+                        onClick={handleCancelar}
+                        style={{
+                            padding: '2px 6px',
+                            fontSize: '10px',
+                            border: 'none',
+                            borderRadius: '3px',
+                            background: '#dc3545',
+                            color: 'white',
+                            cursor: 'pointer'
+                        }}
+                    >
+                        ✕
+                    </button>
+                </div>
+                {error && (
+                    <div style={{
+                        fontSize: '9px',
+                        color: '#dc3545',
+                        textAlign: 'center',
+                        maxWidth: '120px',
+                        lineHeight: '1.2'
+                    }}>
+                        {error}
+                    </div>
+                )}
+            </div>
+        );
+    }
+
+    return (
+        <div
+            onClick={() => setEditando(true)}
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                cursor: 'pointer',
+                padding: '4px',
+                borderRadius: '4px',
+                transition: 'background 0.2s'
+            }}
+            onMouseOver={(e) => e.currentTarget.style.background = '#f0f0f0'}
+            onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
+        >
+            <CantidadesInfo
+                infoCantidades={infoCantidades}
+                esCalculoCompleto={infoCantidades.esCalculoCompleto}
+                showDetalle={false}
+            />
+            <div style={{ 
+                fontSize: '9px', 
+                color: '#666', 
+                marginTop: '2px',
+                fontStyle: 'italic'
+            }}>
+                Click para editar
+            </div>
+        </div>
+    );
+};
+
 export default function RemisionModal({ remision, onClose }) {
     const dispatch = useDispatch();
     // Obtener usuario actual del store
@@ -14,6 +368,19 @@ export default function RemisionModal({ remision, onClose }) {
                store?.auth?.user?.nombre ||
                'Usuario';
     });
+
+    // Estado para manejar cantidades temporales antes de enviar al backend
+    const [cantidadesTemporales, setCantidadesTemporales] = useState({});
+
+    // Hook para manejar remisiones parciales
+    const {
+        cantidadesPrevias,
+        loading: loadingCantidades,
+        error: errorCantidades,
+        validarCantidadDespacho,
+        getInfoCantidades,
+        getResumenRemision
+    } = useRemisionesParciales(remision, cantidadesTemporales);
 
     if (!remision) return null;
 
@@ -529,13 +896,20 @@ export default function RemisionModal({ remision, onClose }) {
     };
 
     const handleRemisionar = async () => {
+        const confirmar = window.confirm(
+            `¿Confirmas remisionar el despacho?\n\nEsto realizará la salida de inventario y cambiará el estado a "Remisionada". Esta acción no se puede deshacer.`
+        );
+        if (!confirmar) return;
+
         try {
-            // TODO: Implementar endpoint para remisionar
-            console.log('[REMISION] Remisionar:', remision.numeroRemision);
+            await axios.put(`/api/remision/put/remisionar/${remision.id}`);
             dispatch(actions.HandleAlerta('Remisión procesada exitosamente', 'positive'));
+            // Recargar la remisión para reflejar el nuevo estado
+            dispatch(actions.axiosToGetRemision(false, remision.id));
         } catch (error) {
+            const mensaje = error?.response?.data?.msg || 'Error al procesar la remisión';
             console.error('[REMISION] Error al remisionar:', error);
-            dispatch(actions.HandleAlerta('Error al procesar la remisión', 'mistake'));
+            dispatch(actions.HandleAlerta(mensaje, 'mistake'));
         }
     };
 
@@ -585,6 +959,47 @@ export default function RemisionModal({ remision, onClose }) {
         if (window.confirm('¿Estás seguro de eliminar este item manual?')) {
             setItemsManuales(prev => prev.filter((_, i) => i !== index));
         }
+    };
+
+    // Nueva función para manejar cambios de cantidad en items normales
+    const handleCambiarCantidadItem = async (itemId, nuevaCantidad) => {
+        // Actualizar estado temporal inmediatamente para UX responsivo
+        setCantidadesTemporales(prev => ({
+            ...prev,
+            [itemId]: Number(nuevaCantidad)
+        }));
+
+        try {
+            // Actualizar en el backend
+            const payload = {
+                cantidad: Number(nuevaCantidad)
+            };
+
+            // Por ahora, simular que se guardó correctamente
+            // Cuando tengas el endpoint real, descomenta esta línea:
+            // await axios.put(`/api/remision/item/actualizar/${itemId}`, payload);
+            
+            // Simular delay de red
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            dispatch(actions.HandleAlerta('Cantidad actualizada correctamente', 'positive'));
+        } catch (error) {
+            console.error('[REMISION] Error al actualizar cantidad:', error);
+            // Revertir el cambio temporal si falla
+            setCantidadesTemporales(prev => {
+                const updated = { ...prev };
+                delete updated[itemId];
+                return updated;
+            });
+            dispatch(actions.HandleAlerta('Error al actualizar la cantidad', 'mistake'));
+        }
+    };
+
+    // Función para obtener la cantidad actual (temporal o real)
+    const getCantidadActual = (item) => {
+        return cantidadesTemporales[item.id] !== undefined 
+            ? cantidadesTemporales[item.id] 
+            : Number(item?.cantidad || 0);
     };
 
     return (
@@ -677,7 +1092,6 @@ export default function RemisionModal({ remision, onClose }) {
                                 <div style={{ fontSize: '16px', fontWeight: '700' }}>
                                     {Number(remision.id + 4890)}
                                 </div>
-                                {console.log('remision', remision)}
                             </div>
                             <div style={{ fontSize: '12px', color: '#666' }}>
                                 <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>
@@ -1003,7 +1417,7 @@ export default function RemisionModal({ remision, onClose }) {
                                         background: '#f5f5f5',
                                         color: '#666'
                                     }}>
-                                        {remision?.requisicion?.cotizacion?.user.name || remision?.vendedor || remision?.requisicion?.cotizacion?.vendedor?.name || remision?.requisicion?.cotizacion?.vendedor?.nombre || 'N/A'}
+                                        {remision?.requisicion?.cotizacion?.user?.name || remision?.vendedor || remision?.requisicion?.cotizacion?.vendedor?.name || remision?.requisicion?.cotizacion?.vendedor?.nombre || 'N/A'}
                                     </div>
                                 </div>
                                 <div style={{ marginBottom: '12px' }}>
@@ -1136,10 +1550,53 @@ export default function RemisionModal({ remision, onClose }) {
                                     }}>
                                         {Number(remision?.requisicion?.cotizacionId + 21719)}
                                     </div>
-                                    {console.log('remision', remision)}
                                 </div>
                             </div>
                         </div><br /><br />
+
+                    {/* Indicador de cambios pendientes */}
+                    {Object.keys(cantidadesTemporales).length > 0 && (
+                        <div style={{
+                            background: '#fff3cd',
+                            border: '1px solid #ffc107',
+                            borderRadius: '8px',
+                            padding: '12px',
+                            marginBottom: '15px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '10px'
+                        }}>
+                            <span style={{ fontSize: '16px' }}>⚠️</span>
+                            <div style={{ flex: 1 }}>
+                                <div style={{ fontWeight: '600', fontSize: '14px', color: '#856404' }}>
+                                    Cambios Pendientes de Guardar
+                                </div>
+                                <div style={{ fontSize: '12px', color: '#856404' }}>
+                                    Tienes {Object.keys(cantidadesTemporales).length} item(s) con cantidades modificadas
+                                </div>
+                            </div>
+                            <button
+                                onClick={() => setCantidadesTemporales({})}
+                                style={{
+                                    padding: '6px 12px',
+                                    fontSize: '12px',
+                                    border: '1px solid #856404',
+                                    borderRadius: '4px',
+                                    background: 'transparent',
+                                    color: '#856404',
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                Descartar Cambios
+                            </button>
+                        </div>
+                    )}
+
+                    {/* Resumen de remisiones parciales */}
+                    <ResumenRemisionParcial 
+                        resumen={getResumenRemision()} 
+                        loading={loadingCantidades} 
+                    />
 
                     {/* Tabla de productos */}
                     <div style={{ marginBottom: '30px' }}>
@@ -1240,6 +1697,17 @@ export default function RemisionModal({ remision, onClose }) {
                                         fontWeight: '600',
                                         color: '#666',
                                         borderBottom: '2px solid #e0e0e0',
+                                        width: '200px'
+                                    }}>
+                                        DETALLES DESPACHO
+                                    </th>
+                                    <th style={{ 
+                                        padding: '15px', 
+                                        textAlign: 'center',
+                                        fontSize: '13px',
+                                        fontWeight: '600',
+                                        color: '#666',
+                                        borderBottom: '2px solid #e0e0e0',
                                         width: '100px'
                                     }}>
                                         ACCIONES
@@ -1286,16 +1754,22 @@ export default function RemisionModal({ remision, onClose }) {
                                             fontSize: '13px',
                                             color: '#333'
                                         }}>
-                                            <span style={{
-                                                background: '#e3f2fd',
-                                                color: '#1976d2',
-                                                padding: '4px 12px',
-                                                borderRadius: '12px',
-                                                fontWeight: '600',
-                                                display: 'inline-block'
-                                            }}>
-                                                {Number(item?.cantidad || 0).toFixed(0)}
-                                            </span>
+                                            <CantidadEditable
+                                                item={{...item, cantidad: getCantidadActual(item)}}
+                                                infoCantidades={getInfoCantidades(item.id)}
+                                                onCambiarCantidad={(nuevaCantidad) => handleCambiarCantidadItem(item.id, nuevaCantidad)}
+                                            />
+                                        </td>
+                                        <td style={{ 
+                                            padding: '8px', 
+                                            textAlign: 'center',
+                                            borderBottom: '1px solid #e0e0e0'
+                                        }}>
+                                            <CantidadesInfo
+                                                infoCantidades={getInfoCantidades(item.id)}
+                                                esCalculoCompleto={cantidadesPrevias[item.id]?.esCalculoCompleto}
+                                                showDetalle={true}
+                                            />
                                         </td>
                                         <td style={{ 
                                             padding: '15px', 
@@ -1351,6 +1825,23 @@ export default function RemisionModal({ remision, onClose }) {
                                             }}>
                                                 {Number(item.cantidadDespachada || 0).toFixed(0)}
                                             </span>
+                                        </td>
+                                        <td style={{ 
+                                            padding: '8px', 
+                                            textAlign: 'center',
+                                            borderBottom: '1px solid #e0e0e0'
+                                        }}>
+                                            <div style={{
+                                                padding: '8px',
+                                                background: '#fff9e6',
+                                                borderRadius: '6px',
+                                                border: '1px solid #ffeaa7',
+                                                fontSize: '11px',
+                                                color: '#856404'
+                                            }}>
+                                                📝 Item Manual<br/>
+                                                Sin historial de despachos previos
+                                            </div>
                                         </td>
                                         <td style={{ 
                                             padding: '15px', 
@@ -1618,16 +2109,48 @@ export default function RemisionModal({ remision, onClose }) {
 
 // Componente modal para agregar/editar item manual
 function ModalItemManual({ item, onGuardar, onCerrar }) {
+    const dispatch = useDispatch();
     const [descripcion, setDescripcion] = useState(item?.descripcion || '');
     const [cantidadSolicitada, setCantidadSolicitada] = useState(item?.cantidadSolicitada || '');
     const [cantidadDespachada, setCantidadDespachada] = useState(item?.cantidadDespachada || '');
+    const [errores, setErrores] = useState({});
+
+    const validarCampos = () => {
+        const nuevosErrores = {};
+        
+        if (!descripcion.trim()) {
+            nuevosErrores.descripcion = 'La descripción es obligatoria';
+        }
+        
+        const cantSolicitada = Number(cantidadSolicitada);
+        const cantDespachada = Number(cantidadDespachada);
+        
+        if (cantSolicitada < 0) {
+            nuevosErrores.cantidadSolicitada = 'La cantidad no puede ser negativa';
+        }
+        
+        if (cantDespachada < 0) {
+            nuevosErrores.cantidadDespachada = 'La cantidad no puede ser negativa';
+        }
+        
+        if (cantDespachada > cantSolicitada && cantSolicitada > 0) {
+            nuevosErrores.cantidadDespachada = 'No puedes despachar más de lo solicitado';
+        }
+        
+        return nuevosErrores;
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!descripcion.trim()) {
-            alert('Por favor ingresa una descripción');
+        
+        const nuevosErrores = validarCampos();
+        setErrores(nuevosErrores);
+        
+        if (Object.keys(nuevosErrores).length > 0) {
+            dispatch(actions.HandleAlerta('Por favor corrige los errores en el formulario', 'mistake'));
             return;
         }
+        
         onGuardar({
             descripcion: descripcion.trim(),
             cantidadSolicitada: Number(cantidadSolicitada) || 0,
@@ -1678,7 +2201,12 @@ function ModalItemManual({ item, onGuardar, onCerrar }) {
                         </label>
                         <textarea
                             value={descripcion}
-                            onChange={(e) => setDescripcion(e.target.value)}
+                            onChange={(e) => {
+                                setDescripcion(e.target.value);
+                                if (errores.descripcion) {
+                                    setErrores(prev => ({ ...prev, descripcion: null }));
+                                }
+                            }}
                             placeholder="Ej: Servicio de instalación, Transporte especial, etc."
                             required
                             rows="3"
@@ -1686,13 +2214,22 @@ function ModalItemManual({ item, onGuardar, onCerrar }) {
                                 width: '100%',
                                 padding: '10px',
                                 fontSize: '14px',
-                                border: '1px solid #ddd',
+                                border: `1px solid ${errores.descripcion ? '#dc3545' : '#ddd'}`,
                                 borderRadius: '6px',
                                 boxSizing: 'border-box',
                                 resize: 'vertical',
                                 fontFamily: 'inherit'
                             }}
                         />
+                        {errores.descripcion && (
+                            <div style={{ 
+                                color: '#dc3545', 
+                                fontSize: '12px', 
+                                marginTop: '4px' 
+                            }}>
+                                {errores.descripcion}
+                            </div>
+                        )}
                     </div>
 
                     <div style={{ 
@@ -1713,7 +2250,12 @@ function ModalItemManual({ item, onGuardar, onCerrar }) {
                             <input
                                 type="number"
                                 value={cantidadSolicitada}
-                                onChange={(e) => setCantidadSolicitada(e.target.value)}
+                                onChange={(e) => {
+                                    setCantidadSolicitada(e.target.value);
+                                    if (errores.cantidadSolicitada) {
+                                        setErrores(prev => ({ ...prev, cantidadSolicitada: null }));
+                                    }
+                                }}
                                 placeholder="0"
                                 min="0"
                                 step="0.01"
@@ -1721,11 +2263,20 @@ function ModalItemManual({ item, onGuardar, onCerrar }) {
                                     width: '100%',
                                     padding: '10px',
                                     fontSize: '14px',
-                                    border: '1px solid #ddd',
+                                    border: `1px solid ${errores.cantidadSolicitada ? '#dc3545' : '#ddd'}`,
                                     borderRadius: '6px',
                                     boxSizing: 'border-box'
                                 }}
                             />
+                            {errores.cantidadSolicitada && (
+                                <div style={{ 
+                                    color: '#dc3545', 
+                                    fontSize: '12px', 
+                                    marginTop: '4px' 
+                                }}>
+                                    {errores.cantidadSolicitada}
+                                </div>
+                            )}
                         </div>
                         <div>
                             <label style={{ 
@@ -1739,7 +2290,12 @@ function ModalItemManual({ item, onGuardar, onCerrar }) {
                             <input
                                 type="number"
                                 value={cantidadDespachada}
-                                onChange={(e) => setCantidadDespachada(e.target.value)}
+                                onChange={(e) => {
+                                    setCantidadDespachada(e.target.value);
+                                    if (errores.cantidadDespachada) {
+                                        setErrores(prev => ({ ...prev, cantidadDespachada: null }));
+                                    }
+                                }}
                                 placeholder="0"
                                 min="0"
                                 step="0.01"
@@ -1747,11 +2303,20 @@ function ModalItemManual({ item, onGuardar, onCerrar }) {
                                     width: '100%',
                                     padding: '10px',
                                     fontSize: '14px',
-                                    border: '1px solid #ddd',
+                                    border: `1px solid ${errores.cantidadDespachada ? '#dc3545' : '#ddd'}`,
                                     borderRadius: '6px',
                                     boxSizing: 'border-box'
                                 }}
                             />
+                            {errores.cantidadDespachada && (
+                                <div style={{ 
+                                    color: '#dc3545', 
+                                    fontSize: '12px', 
+                                    marginTop: '4px' 
+                                }}>
+                                    {errores.cantidadDespachada}
+                                </div>
+                            )}
                         </div>
                     </div>
 

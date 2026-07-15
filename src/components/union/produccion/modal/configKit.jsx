@@ -92,20 +92,39 @@ export default function ConfigKit({ kit }){
                                     <MdCheckCircle className="icon" />
                                     {
                                         !focus ?
-                                            <h3 onClick={() => setFocus(true)}>{kit.name}</h3>
+                                            <div className="kitNameContainer" onClick={() => setFocus(true)}>
+                                                <h3 className="kitNameDisplay">
+                                                    {kit.name || "Sin nombre - Haz clic para agregar"}
+                                                </h3>
+                                                <span className="editHint">
+                                                    {kit.name ? "Haz clic para editar" : "Haz clic para agregar nombre"}
+                                                </span>
+                                            </div>
                                         :
-                                        <div className="inputDiv">
-                                            <input type="text" ref={nameRef} onChange={(e) => {
-                                                setForm({
-                                                    ...form,
-                                                    nombre: e.target.value
-                                                })
-                                            }} value={form.nombre} onBlur={() => setFocus(null)} 
-                                            onKeyDown={(e) => {
-                                                if(e.key == 'Enter'){
-                                                    handleUpdateKit()
-                                                }
-                                            }} />
+                                        <div className="kitNameEditContainer">
+                                            <textarea 
+                                                ref={nameRef} 
+                                                className="kitNameTextarea"
+                                                placeholder="Ingresa el nombre del kit..."
+                                                onChange={(e) => {
+                                                    setForm({
+                                                        ...form,
+                                                        nombre: e.target.value
+                                                    })
+                                                }} 
+                                                value={form.nombre} 
+                                                onBlur={() => setFocus(null)} 
+                                                onKeyDown={(e) => {
+                                                    if(e.key == 'Enter' && !e.shiftKey){
+                                                        e.preventDefault();
+                                                        handleUpdateKit()
+                                                    }
+                                                }}
+                                                rows="2"
+                                            />
+                                            <div className="editInstructions">
+                                                <span>Enter para guardar • Shift+Enter para nueva línea</span>
+                                            </div>
                                         </div>
                                     }
                                 </div>
