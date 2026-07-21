@@ -20,12 +20,21 @@ export default function ResultsSearch({ proveedorId, onCloseSearch, excludeMater
     const sistema = useSelector((store) => store.system);
     const lineas = sistema?.lineas;
 
-    const [tipo, setTipo] = useState('materia'); // materia | producto
+    const [tipo, setTipo] = useState('materia'); // materia | producto | consumible
     const [q, setQ] = useState('');
     const [lineaId, setLineaId] = useState('');
+    // Categoría para consumibles — configurable vía localStorage, por defecto 15 ("Consumibles")
+    const [catConsumibleId, setCatConsumibleId] = useState(() => {
+        try { return localStorage.getItem('catConsumibleId') || '15'; } catch { return '15'; }
+    });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [rows, setRows] = useState([]);
+
+    const guardarLineaConsumible = (val) => {
+        setLineaConsumibleId(val);
+        try { localStorage.setItem('lineaConsumibleId', val); } catch {}
+    };
 
     const debounceRef = useRef(null);
 
@@ -52,6 +61,7 @@ export default function ResultsSearch({ proveedorId, onCloseSearch, excludeMater
         setLoading(true);
         setError(null);
         try {
+            const isConsumible = tipo === 'consumible';
             const base =
                 tipo === 'producto'
                     ? '/api/materia/producto/searching/provider'
@@ -60,6 +70,8 @@ export default function ResultsSearch({ proveedorId, onCloseSearch, excludeMater
             const trimmed = String(q).trim();
             if (trimmed) params.q = trimmed;
             if (tipo === 'producto' && lineaIdNum) params.lineaId = lineaIdNum;
+            // Para consumibles: filtrar por categoriumId (id 15 = "Consumibles")
+            if (isConsumible && catConsumibleId) params.categoriumId = Number(catConsumibleId);
 
             const res = await axios.get(base, { params });
             const raw = res.data;
@@ -72,7 +84,7 @@ export default function ResultsSearch({ proveedorId, onCloseSearch, excludeMater
         } finally {
             setLoading(false);
         }
-    }, [proveedorId, tipo, q, lineaIdNum]);
+    }, [proveedorId, tipo, q, lineaIdNum, catConsumibleId]);
 
     useEffect(() => {
         if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -84,8 +96,12 @@ export default function ResultsSearch({ proveedorId, onCloseSearch, excludeMater
         };
     }, [fetchData]);
 
-    const labelForRow = (r) => {
+    const labelForRow = (r, tipoRow) => {
         if (!r) return '';
+        // Consumibles muestran el nombre (item) primero, no la descripción
+        if (tipoRow === 'consumible') {
+            return r.item || r.description || r.name || r.nombre || (r.id != null ? `Ítem ${r.id}` : '');
+        }
         return (
             r.description ||
             r.item ||
@@ -146,6 +162,17 @@ export default function ResultsSearch({ proveedorId, onCloseSearch, excludeMater
                         />
                         Producto terminado
                     </label>
+                    <label style={{ display: 'inline-flex', alignItems: 'center', gap: 6, cursor: 'pointer' }}>
+                        <input
+                            type="radio"
+                            name="tipoBusquedaOrden"
+                            checked={tipo === 'consumible'}
+                            onChange={() => setTipo('consumible')}
+                        />
+                        <span style={{ color: '#7c3aed', fontWeight: tipo === 'consumible' ? 600 : 400 }}>
+                            Consumibles
+                        </span>
+                    </label>
                 </div>
             </div>
 
@@ -173,6 +200,21 @@ export default function ResultsSearch({ proveedorId, onCloseSearch, excludeMater
                                 </option>
                             ))}
                     </select>
+                </div>
+            )}
+
+            {/* Selector de línea para consumibles */}
+            {tipo === 'consumible' && (
+                <div style={{
+                    marginBottom: 12,
+                    padding: '8px 12px',
+                    background: '#faf5ff',
+                    border: '1px solid #e9d5ff',
+                    borderRadius: 8,
+                    fontSize: 12,
+                    color: '#6b21a8',
+                }}>
+                    Filtrando por categoría <strong>Consumibles</strong> (id {catConsumibleId})
                 </div>
             )}
 
@@ -213,7 +255,7 @@ export default function ResultsSearch({ proveedorId, onCloseSearch, excludeMater
                         </p>
                     ) : (
                         rowsFiltered.map((r) => (
-                            <ResultRow key={`${tipo}-${r.id}`} row={r} tipo={tipo} labelForRow={labelForRow} />
+                            <ResultRow key={`${tipo}-${r.id}`} row={r} tipo={tipo} labelForRow={(row) => labelForRow(row, tipo)} />
                         ))
                     )}
                 </div>
@@ -229,12 +271,17 @@ function ResultRow({ row, tipo, labelForRow }) {
         if (row?.id == null) return;
         const next = new URLSearchParams(params);
         next.set('openSearchItem', String(row.id));
+        // consumible se trata internamente como materia
         next.set('openSearchTipo', tipo === 'producto' ? 'producto' : 'materia');
         setParams(next);
     };
 
     const title = labelForRow(row);
-    const secondary = row?.item && row?.description && row.item !== row.description ? row.item : null;
+    const secondary = tipo === 'consumible'
+        ? (row?.description && row.description !== row.item ? row.description : null)
+        : (row?.item && row?.description && row.item !== row.description ? row.item : null);
+    const badgeLabel = tipo === 'producto' ? 'Producto terminado' : tipo === 'consumible' ? 'Consumible' : 'Materia prima';
+    const badgeColor = tipo === 'consumible' ? '#7c3aed' : undefined;
 
     return (
         <div
@@ -250,11 +297,11 @@ function ResultRow({ row, tipo, labelForRow }) {
                 }
             }}
         >
-            <div className="itemMPOrdenContent">
+                <div className="itemMPOrdenContent">
                 <div className="itemMPOrdenHeader">
                     <div className="itemMPOrdenBadge">
-                        <span className="badgeText">
-                            {tipo === 'producto' ? 'Producto terminado' : 'Materia prima'}
+                        <span className="badgeText" style={badgeColor ? { color: badgeColor } : undefined}>
+                            {badgeLabel}
                         </span>
                     </div>
                     <div className="itemMPOrdenCodigo">

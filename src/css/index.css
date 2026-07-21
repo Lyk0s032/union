@@ -18801,3 +18801,279 @@ body button {
 .cotizacionRapidaFab:hover {
   filter: brightness(1.06);
 }
+
+/* =========================================================
+   NUEVA OC INDEPENDIENTE — Modal y botón del dashboard
+   ========================================================= */
+
+/* Botón en el header del dashboard */
+.btnNuevaOC {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  background: linear-gradient(135deg, #2f8bfd, #1a6bd8);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(47, 139, 253, 0.25);
+  margin-top: 10px;
+}
+.btnNuevaOC:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(47, 139, 253, 0.38);
+}
+.btnNuevaOC:active {
+  transform: translateY(0);
+}
+
+/* Overlay de fondo */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 20, 40, 0.52);
+  backdrop-filter: blur(4px);
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: ocFadeIn 0.18s ease-out;
+}
+@keyframes ocFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Contenedor del modal */
+.modalOCConsumibles {
+  width: 100%;
+  max-width: 480px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(11, 22, 60, 0.18);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: ocSlideUp 0.22s ease-out;
+}
+@keyframes ocSlideUp {
+  from { transform: translateY(24px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* Header del modal */
+.modalOCConsumibles .modalHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 22px 24px 18px;
+  border-bottom: 1px solid #eef1f6;
+  background: linear-gradient(to bottom, #fafbfc, #fff);
+}
+.modalOCConsumibles .modalHeader h3 {
+  margin: 0 0 3px;
+  font-size: 17px;
+  font-weight: 700;
+  color: #1a2332;
+}
+.modalOCConsumibles .modalHeader span {
+  font-size: 12px;
+  color: #6b7280;
+}
+.modalOCConsumibles .btnClose {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  border-radius: 7px;
+  font-size: 18px;
+  color: #6b7280;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.modalOCConsumibles .btnClose:hover {
+  background: #f3f4f6;
+  color: #1a2332;
+}
+
+/* Cuerpo del modal */
+.modalOCConsumibles .modalBody {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Cada sección / paso */
+.modalOCConsumibles .stepSection {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.modalOCConsumibles .stepSection label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+.modalOCConsumibles .stepSection input {
+  width: 100%;
+  padding: 10px 13px;
+  border: 1px solid #e6e9ef;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #1a2332;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  box-sizing: border-box;
+  background: #fff;
+}
+.modalOCConsumibles .stepSection input:focus {
+  outline: none;
+  border-color: #2f8bfd;
+  box-shadow: 0 0 0 3px rgba(47, 139, 253, 0.1);
+}
+
+/* Wrapper relativo para el dropdown de proveedor */
+.modalOCConsumibles .searchRelative {
+  position: relative;
+}
+
+/* Dropdown de resultados */
+.modalOCConsumibles .dropdownResults {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #e6e9ef;
+  border-radius: 9px;
+  box-shadow: 0 8px 24px rgba(11, 22, 60, 0.12);
+  z-index: 100;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.modalOCConsumibles .dropdownItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background 0.12s;
+  border-bottom: 1px solid #f3f4f6;
+}
+.modalOCConsumibles .dropdownItem:last-child {
+  border-bottom: none;
+}
+.modalOCConsumibles .dropdownItem:hover {
+  background: #f0f6ff;
+}
+.modalOCConsumibles .dropdownItem strong {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a2332;
+}
+.modalOCConsumibles .dropdownItem span {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* Hints (texto pequeño debajo del input) */
+.modalOCConsumibles .hint {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 2px;
+}
+.modalOCConsumibles .hint.selected {
+  color: #059669;
+  font-weight: 500;
+}
+
+/* Párrafo informativo */
+.modalOCConsumibles .modalInfo {
+  font-size: 12px;
+  color: #6b7280;
+  background: #f0f6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  padding: 10px 13px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Footer del modal */
+.modalOCConsumibles .modalFooter {
+  padding: 16px 24px 20px;
+  border-top: 1px solid #eef1f6;
+  background: #fafbfc;
+}
+.modalOCConsumibles .footerBtns {
+  display: flex;
+  gap: 10px;
+}
+
+/* Botón cancelar */
+.modalOCConsumibles .btnCancel {
+  flex: 1;
+  padding: 10px 16px;
+  border: 1px solid #e6e9ef;
+  border-radius: 8px;
+  background: #fff;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.modalOCConsumibles .btnCancel:hover:not(:disabled) {
+  background: #f3f4f6;
+  color: #1a2332;
+}
+
+/* Botón crear */
+.modalOCConsumibles .btnCreate {
+  flex: 2;
+  padding: 10px 18px;
+  background: linear-gradient(135deg, #2f8bfd, #1a6bd8);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 3px 10px rgba(47, 139, 253, 0.28);
+}
+.modalOCConsumibles .btnCreate:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 14px rgba(47, 139, 253, 0.4);
+}
+.modalOCConsumibles .btnCreate:disabled,
+.modalOCConsumibles .btnCancel:disabled {
+  opacity: 0.48;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Responsive */
+@media (max-width: 540px) {
+  .modalOCConsumibles {
+    max-width: 100%;
+    border-radius: 10px 10px 0 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  .modalOverlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+}

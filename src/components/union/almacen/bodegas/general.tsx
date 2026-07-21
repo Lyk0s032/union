@@ -1,9 +1,11 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import * as XLSX from 'xlsx';
 import * as actions from '../../../store/action/action';
 import ItemModal from './item/itemModal';
+import NuevoConsumibleModal from './NuevoConsumibleModal';
 
 type ProductItem = {
   id: number;
@@ -15,7 +17,7 @@ type ProductItem = {
   estado: 'Activo' | 'Inactivo';
   unidad?: string;
   medida?: string;
-  bodega: 'MP' | 'PT';
+  bodega: 'MP' | 'PT' | 'CO';
 };
 
 // NOTE: removed hard-coded/mock product generation to rely exclusively on backend data.
@@ -58,6 +60,8 @@ function itemPayloadForStockModal(row: any, bodega: 'MP' | 'PT'): any {
 }
 
 export default function GeneralAlmacen() {
+  const navigate = useNavigate();
+
   function formatearFechaEspañol(fecha) {
     try {
       if (!fecha) return '';
@@ -72,7 +76,7 @@ export default function GeneralAlmacen() {
       return String(fecha);
     }
   }
-  const [selectedBodega, setSelectedBodega] = useState<'MP' | 'PT'>('MP');
+  const [selectedBodega, setSelectedBodega] = useState<'MP' | 'PT' | 'CO'>('MP');
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
   const pageSize = 50; // when API is connected it will return 50 per page
@@ -88,7 +92,7 @@ export default function GeneralAlmacen() {
   const [searchTimeout, setSearchTimeout] = useState<ReturnType<typeof setTimeout> | null>(null);
 
   // track initial load per bodega to show skeleton only first time
-  const [firstLoadDone, setFirstLoadDone] = useState<{ MP?: boolean; PT?: boolean }>({});
+  const [firstLoadDone, setFirstLoadDone] = useState<{ MP?: boolean; PT?: boolean; CO?: boolean }>({});
   const [initialLoading, setInitialLoading] = useState(true);
 
   // local deleted ids (optimistic client-side removal)
@@ -141,7 +145,7 @@ export default function GeneralAlmacen() {
         medida: item.medida || null,
         unidad: item.unidad || null,
         estado: item.estado || 'Activo',
-        tipo: selectedBodega === 'MP' ? 'MP' : 'PR',
+        tipo: selectedBodega === 'PT' ? 'PR' : 'MP',
         updatedAt: item.updatedAt || null,
         isMt2: item.unidad === 'mt2' || item.unidad === 'mt²',
         maker: item.maker || '',
@@ -164,9 +168,9 @@ export default function GeneralAlmacen() {
 
     setIsSearching(true);
     try {
-      const endpoint = selectedBodega === 'MP' 
-        ? '/api/materia/searchByQuery'
-        : '/api/materia/producto/searching';
+      const endpoint = selectedBodega === 'PT'
+        ? '/api/materia/producto/searching'
+        : '/api/materia/searchByQuery';
       
       const response = await axios.get(endpoint, {
         params: { q: searchQuery.trim() }
@@ -250,6 +254,9 @@ export default function GeneralAlmacen() {
   const [showItemModal, setShowItemModal] = useState(false);
   const [selectedItemForModal, setSelectedItemForModal] = useState<any>(null);
 
+  // Nuevo consumible modal
+  const [showNuevoConsumible, setShowNuevoConsumible] = useState(false);
+
   function openMenuFor(item: any) {
     const base = String(item?.itemId ?? item?.id ?? '');
     const medidaPart = (selectedBodega === 'PT' && item?.medida) ? `::${String(item.medida)}` : '';
@@ -284,7 +291,7 @@ export default function GeneralAlmacen() {
       console.log('[GENERAL] handleOpenItem:', { item });
     } catch (e) {}
     // Mismo criterio que ItemModal.loadItemData: materiumId / productoId para /api/stock/item
-    setSelectedItemForModal(itemPayloadForStockModal(item, selectedBodega));
+    setSelectedItemForModal(itemPayloadForStockModal(item, selectedBodega === 'CO' ? 'MP' : selectedBodega));
     setShowItemModal(true);
     setOpenMenuId(null);
   }
@@ -296,10 +303,9 @@ export default function GeneralAlmacen() {
 
   // Función para recargar silenciosamente la tabla después de operaciones
   const recargarTablaSilencioso = () => {
-    const ubicacionId = selectedBodega === 'MP' ? 1 : 4;
-    const tipo = selectedBodega === 'MP' ? 'MP' : 'PR';
+    const ubicacionId = selectedBodega === 'MP' ? 1 : selectedBodega === 'CO' ? 3 : 2;
+    const tipo = selectedBodega === 'PT' ? 'PR' : 'MP';
     const fn: any = actions.axiosToGetStockBodega;
-    // Pasar false para que no muestre loading (recarga en segundo plano)
     (dispatch as any)(fn(false, ubicacionId, page, pageSize, tipo));
     console.log('[GENERAL] Recargando tabla silenciosamente después de operación');
   };
@@ -313,7 +319,7 @@ export default function GeneralAlmacen() {
     const rows = filtered.map((item: any) => ({
       Código: item?.itemId ?? item?.id ?? '',
       Item: item?.nombre ?? item?.name ?? '',
-      Tipo: item?.tipo === 'MP' ? 'Materia Prima' : 'Producto Terminado',
+      Tipo: item?.tipo === 'MP' && selectedBodega === 'CO' ? 'Consumible' : item?.tipo === 'MP' ? 'Materia Prima' : 'Producto Terminado',
       Medida: item?.isMt2 && item?.medida ? `${item.medida} mt2` : (item?.medida ?? ''),
       Cantidad: item?.cantidad ?? 0,
       'Última actualización': item?.updatedAt
@@ -324,10 +330,10 @@ export default function GeneralAlmacen() {
 
     const worksheet = XLSX.utils.json_to_sheet(rows);
     const workbook = XLSX.utils.book_new();
-    const sheetName = selectedBodega === 'MP' ? 'Materia Prima' : 'Producto Terminado';
+    const sheetName = selectedBodega === 'MP' ? 'Materia Prima' : selectedBodega === 'CO' ? 'Consumibles' : 'Producto Terminado';
     XLSX.utils.book_append_sheet(workbook, worksheet, sheetName);
 
-    const bodegaLabel = selectedBodega === 'MP' ? 'MP' : 'PT';
+    const bodegaLabel = selectedBodega === 'MP' ? 'MP' : selectedBodega === 'CO' ? 'CO' : 'PT';
     const fecha = new Date().toISOString().slice(0, 10);
     XLSX.writeFile(workbook, `plantilla_bodega_${bodegaLabel}_${fecha}.xlsx`);
   }
@@ -371,7 +377,7 @@ export default function GeneralAlmacen() {
     setDeleteTarget(null);
   }
 
-  function handleSelectBodega(b: 'MP' | 'PT') {
+  function handleSelectBodega(b: 'MP' | 'PT' | 'CO') {
     setSelectedBodega(b);
     setPage(1);
     setQuery('');
@@ -379,9 +385,11 @@ export default function GeneralAlmacen() {
 
   // fetch from backend via action -> reducer
   useEffect(() => {
-    const ubicacionId = selectedBodega === 'MP' ? 1 : 2;
-    const tipo = selectedBodega === 'MP' ? 'MP' : 'PR';
+    const ubicacionId = selectedBodega === 'MP' ? 1 : selectedBodega === 'CO' ? 3 : 2;
+    const tipo = selectedBodega === 'PT' ? 'PR' : 'MP';
     const fn: any = actions.axiosToGetStockBodega;
+    // Limpiar datos de la bodega anterior antes de cargar la nueva
+    (dispatch as any)(actions.getProductosBodega(null));
     (dispatch as any)(fn(true, ubicacionId, page, pageSize, tipo));
   }, [selectedBodega, page, dispatch]);
 
@@ -393,13 +401,15 @@ export default function GeneralAlmacen() {
       try {
         const res1 = await axios.get('/api/stock/bodega/1', { params: { page: 1, limit: 1, tipo: 'MP' }});
         const res2 = await axios.get('/api/stock/bodega/2', { params: { page: 1, limit: 1, tipo: 'PR' }});
+        const res3 = await axios.get('/api/stock/bodega/3', { params: { page: 1, limit: 1, tipo: 'MP' }});
         if (cancelled) return;
         const c1 = res1.data?.total ?? 0;
         const c2 = res2.data?.total ?? 0;
-        setCountsByBodega({ 1: c1, 2: c2 });
+        const c3 = res3.data?.total ?? 0;
+        setCountsByBodega({ 1: c1, 2: c2, 3: c3 });
       } catch (err) {
         console.error('Error fetching bodega counts:', err);
-        if (!cancelled) setCountsByBodega({ 1: 0, 2: 0 });
+        if (!cancelled) setCountsByBodega({ 1: 0, 2: 0, 3: 0 });
       }
     }
     fetchCounts();
@@ -447,6 +457,20 @@ export default function GeneralAlmacen() {
           >
             Bodega Producto Terminado ({countsByBodega[2] ?? 0})
           </button>
+          <button
+            onClick={() => handleSelectBodega('CO')}
+            aria-pressed={selectedBodega === 'CO'}
+            style={{
+              padding: '8px 12px',
+              background: selectedBodega === 'CO' ? '#7c3aed' : 'transparent',
+              color: selectedBodega === 'CO' ? '#fff' : '#7c3aed',
+              border: '1px solid #7c3aed',
+              borderRadius: 6,
+              cursor: 'pointer'
+            }}
+          >
+            Bodega Consumibles ({countsByBodega[3] ?? 0})
+          </button>
         </div>
       </div>
 
@@ -478,6 +502,23 @@ export default function GeneralAlmacen() {
           )}
         </div>
         <div style={{ marginLeft: 'auto', display: 'flex', gap: 8 }} className="controls">
+          {selectedBodega === 'CO' && (
+            <button
+              onClick={() => setShowNuevoConsumible(true)}
+              style={{
+                padding: '8px 14px',
+                borderRadius: 6,
+                background: '#7c3aed',
+                color: '#fff',
+                border: 'none',
+                cursor: 'pointer',
+                fontWeight: 600,
+                fontSize: 13,
+              }}
+            >
+              + Nuevo consumible
+            </button>
+          )}
           <button
             onClick={handleDescargarPlantilla}
             disabled={filtered.length === 0}
@@ -519,7 +560,7 @@ export default function GeneralAlmacen() {
                 <td style={{ padding: 12, fontSize: 12 }} onClick={() => handleOpenItem(p)}>{p?.itemId}</td>
                 <td style={{ padding: 12, fontSize: 11, color: '#666'}} onClick={() => handleOpenItem(p)}>
                     {p.nombre} <span style={{ fontSize: 12, color: '#666' }} onClick={() => handleOpenItem(p)}>{p.isMt2 ? `| ${p.medida} mt2` : ''}</span> <br />
-                    <span style={{ fontSize: 12, color: '#666' }} onClick={() => handleOpenItem(p)}>{p?.tipo == 'MP' ? 'Materia' : 'Producto'}</span>
+                    <span style={{ fontSize: 12, color: '#666' }} onClick={() => handleOpenItem(p)}>{p?.tipo == 'MP' && selectedBodega === 'CO' ? 'Consumible' : p?.tipo == 'MP' ? 'Materia Prima' : 'Producto Terminado'}</span>
                 </td>
                 <td style={{ padding: 12, fontSize: 12 }} onClick={() => handleOpenItem(p)}>{p.cantidad}</td>
                  <td style={{ padding: 12, fontSize: 12, color: '#666' }} onClick={() => handleOpenItem(p)}>{formatearFechaEspañol(p?.updatedAt)}</td>
@@ -563,6 +604,18 @@ export default function GeneralAlmacen() {
                     }}>
                       <button onClick={() => handleOpenItem(p)} style={{ display: 'block', width: '100%', padding: 10, background: 'transparent', border: 'none', textAlign: 'left', cursor: 'pointer' }}>Abrir item</button>
                       <button onClick={() => handleDownload(p)} style={{ display: 'block', width: '100%', padding: 10, background: 'transparent', border: 'none', textAlign: 'left', cursor: 'pointer' }}>Descargar</button>
+                      {selectedBodega === 'CO' && (
+                        <button
+                          onClick={() => {
+                            const id = p?.itemId ?? p?.id;
+                            navigate(`/compras/mp?prima=${id}`);
+                            setOpenMenuId(null);
+                          }}
+                          style={{ display: 'block', width: '100%', padding: 10, background: 'transparent', border: 'none', textAlign: 'left', cursor: 'pointer', color: '#7c3aed' }}
+                        >
+                          Gestionar proveedores
+                        </button>
+                      )}
                       <button onClick={() => confirmDelete(p)} style={{ display: 'block', width: '100%', padding: 10, background: 'transparent', border: 'none', textAlign: 'left', color: '#e25555', cursor: 'pointer' }}>Eliminar item</button>
                     </div>
                   )}
@@ -626,9 +679,17 @@ export default function GeneralAlmacen() {
       {showItemModal && selectedItemForModal && (
         <ItemModal
           item={selectedItemForModal}
-          bodegaId={selectedBodega === 'MP' ? 1 : 4}
+          bodegaId={selectedBodega === 'MP' ? 1 : selectedBodega === 'CO' ? 3 : 4}
           onClose={handleCloseItemModal}
           onOperacionExitosa={recargarTablaSilencioso}
+        />
+      )}
+
+      {/* Modal nuevo consumible */}
+      {showNuevoConsumible && (
+        <NuevoConsumibleModal
+          onClose={() => setShowNuevoConsumible(false)}
+          onCreado={recargarTablaSilencioso}
         />
       )}
     </div>

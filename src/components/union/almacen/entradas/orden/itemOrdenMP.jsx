@@ -8,6 +8,13 @@ export default function ItemOrdenMP({ item, ordenId, comprasCotizacionId }) {
     const [loadingIngreso, setLoadingIngreso] = useState(false);
     const [loadingProduccion, setLoadingProduccion] = useState(false);
 
+    // Detectar si es consumible por categoriumId = 15
+    const esConsumible = item?.materium?.categoriumId === 15;
+    const bodegaDestino = esConsumible ? 3 : 1;
+    const nombreItem = esConsumible
+        ? (item?.materium?.item || item?.materium?.description)
+        : (item?.materium?.description || item?.materium?.item);
+
     const handleIngresarAlmacen = async () => {
         if (loadingIngreso) return;
 
@@ -19,10 +26,10 @@ export default function ItemOrdenMP({ item, ordenId, comprasCotizacionId }) {
                 materiumId: item.materiumId,
                 medida: item.materium?.medida || '',
                 unidad: item.materium?.unidad || '',
-                bodegaId: 1, // Materia Prima = bodega 1
+                bodegaId: bodegaDestino,
                 tipoMovimiento: 'ENTRADA',
                 referenciaDeDocumento: `OC-${ordenId}`,
-                notas: 'Ingreso desde orden de compra',
+                notas: esConsumible ? 'Ingreso consumible desde orden de compra' : 'Ingreso desde orden de compra',
                 bodegaOrigenId: null,
                 comprasCotizacionId: comprasCotizacionId,
                 comprasCotizacionItemId: item.id
@@ -73,52 +80,57 @@ export default function ItemOrdenMP({ item, ordenId, comprasCotizacionId }) {
         <tr>
             <td className="productCode">{item?.materiumId}</td>
             <td className="productName">
-                {item?.materium?.description} <br />
-                <span>Material</span>
-
-                </td>
+                {nombreItem} <br />
+                <span style={esConsumible ? { color: '#7c3aed', fontWeight: 600 } : {}}>
+                    {esConsumible ? 'Consumible' : 'Material'}
+                </span>
+            </td>
             <td className="productQuantity">{item?.cantidad}</td>
             <td className="productMeasure">{item?.materium?.medida} {item?.materium?.unidad}</td>
             <td className="productActions">
                 {
                     item?.estado == 'entregado' || item?.estado == 'Produccion' ? (
-                        <span style={{ color: '#2ecc71' }}>Ingresado</span>
+                        <span style={{ color: '#2ecc71' }}>
+                            {esConsumible ? `Ingresado → Bodega Consumibles` : 'Ingresado'}
+                        </span>
                     ) : (
                         <button 
                             onClick={handleIngresarAlmacen}
                             disabled={loadingIngreso}
                             style={{ 
                                 opacity: loadingIngreso ? 0.6 : 1,
-                                cursor: loadingIngreso ? 'not-allowed' : 'pointer'
+                                cursor: loadingIngreso ? 'not-allowed' : 'pointer',
+                                ...(esConsumible ? { borderColor: '#7c3aed', color: '#7c3aed' } : {})
                             }}
                         >
-                            <span>{loadingIngreso ? 'Ingresando...' : 'Ingresar al almacén'}</span>
+                            <span>{loadingIngreso ? 'Ingresando...' : esConsumible ? 'Ingresar a consumibles' : 'Ingresar al almacén'}</span>
                         </button>
                     )
                 }
             </td>
             <td className="productActions">
-                {
-                    item?.materium?.unidad == 'mt2' || item.materium?.unidad == 'mt' ? 
-                    ( <span>—</span> ) : (
-                        item?.estado == 'entregado' || item?.estado == 'Entregado' ? (
-                            <button
-                                onClick={handleEnviarProduccion}
-                                disabled={loadingProduccion}
-                                style={{ 
-                                    opacity: loadingProduccion ? 0.6 : 1,
-                                    cursor: loadingProduccion ? 'not-allowed' : 'pointer'
-                                }}
-                            >
-                                <span>{loadingProduccion ? 'Enviando...' : 'Enviar a producción'}</span>
-                            </button>
-                        ) : item?.estado == 'Produccion' ? (
-                            <span style={{ color: '#2ecc71' }}>Entregado</span>
-                        ) : (
-                            <span></span>
-                        )
+                {/* Consumibles no van a producción */}
+                {esConsumible ? (
+                    <span style={{ color: '#aaa', fontSize: 12 }}>—</span>
+                ) : item?.materium?.unidad == 'mt2' || item.materium?.unidad == 'mt' ? 
+                ( <span>—</span> ) : (
+                    item?.estado == 'entregado' || item?.estado == 'Entregado' ? (
+                        <button
+                            onClick={handleEnviarProduccion}
+                            disabled={loadingProduccion}
+                            style={{ 
+                                opacity: loadingProduccion ? 0.6 : 1,
+                                cursor: loadingProduccion ? 'not-allowed' : 'pointer'
+                            }}
+                        >
+                            <span>{loadingProduccion ? 'Enviando...' : 'Enviar a producción'}</span>
+                        </button>
+                    ) : item?.estado == 'Produccion' ? (
+                        <span style={{ color: '#2ecc71' }}>Entregado</span>
+                    ) : (
+                        <span></span>
                     )
-                }
+                )}
             </td>
         </tr>
     )

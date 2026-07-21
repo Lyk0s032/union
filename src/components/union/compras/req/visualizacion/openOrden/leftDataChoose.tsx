@@ -72,7 +72,7 @@ export default function LeftDataChoose() {
                         <h1 style={{ marginTop: 0 }}>
                             {itemSearchActivo
                                 ? 'Buscar ítems del proveedor'
-                                : 'Materia prima necesidad que el proveedor puede suministrar'}
+                                : 'Materia prima necesidad que el proveedor puede suministrarrr'}
                         </h1>
                         <span>
                             {itemSearchActivo

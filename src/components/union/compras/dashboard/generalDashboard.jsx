@@ -9,7 +9,8 @@ import MateriaFiltro from './filtros/materia';
 import RequisicionFiltro from './filtros/requisicion';
 import ProveedorFiltro from './filtros/proveedor';
 import OrdenFiltro from './filtros/orden';
-import RangosFilterTime from './filtros/rangos'; // Importación existente
+import RangosFilterTime from './filtros/rangos';
+import NuevaOCConsumibles from './nuevaOCConsumibles';
 
 export default function GeneralDashboard(){
   const req = useSelector(store => store.requisicion);
@@ -147,17 +148,25 @@ export default function GeneralDashboard(){
   );
 
   const [time, setTime] = useState(null)
+  const [showOCConsumibles, setShowOCConsumibles] = useState(false)
 
   const close = () => {
     setTime(false)
   }
   return (
+    <>
     <div className="dashboard">
       <div className="containerDashboard">
         <div className="containerDashboardCompras">
           <div className="titleDashboard">
             <h3>Hola, {user.user.name}</h3>
             <h4>Gestiona toda la información de tus proveedores, productos, órdenes de compra y más.</h4>
+            <button
+              className="btnNuevaOC"
+              onClick={() => setShowOCConsumibles(true)}
+            >
+              + Nueva OC sin pedido
+            </button>
           </div>
 
           <div className="filterOptions">
@@ -239,5 +248,9 @@ export default function GeneralDashboard(){
       </div>
     </div>
 
+      {showOCConsumibles && (
+        <NuevaOCConsumibles onClose={() => setShowOCConsumibles(false)} />
+      )}
+    </>
   );
 }
