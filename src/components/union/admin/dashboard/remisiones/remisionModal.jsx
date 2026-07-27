@@ -4,6 +4,32 @@ import * as actions from '../../../../store/action/action';
 import jsPDF from 'jspdf';
 import axios from 'axios';
 
+const formatearMonedaCOP = (valor) => {
+    if (valor == null || Number.isNaN(Number(valor))) return '---';
+    return new Intl.NumberFormat('es-CO', { maximumFractionDigits: 0 }).format(Math.round(Number(valor)));
+};
+
+const obtenerPrecioBrutoLinea = (item, cantidadDespachada) => {
+    const esKit = Boolean(item?.kitId || item?.kit?.id);
+    if (!esKit) {
+        return { unitText: '---', subtotalText: '---', subtotalNum: 0 };
+    }
+
+    const bruto = Number(item?.kit?.priceKits?.[0]?.bruto);
+    if (!bruto || Number.isNaN(bruto)) {
+        return { unitText: '---', subtotalText: '---', subtotalNum: 0 };
+    }
+
+    const cantidad = Number(cantidadDespachada) || 0;
+    const subtotal = bruto * cantidad;
+
+    return {
+        unitText: formatearMonedaCOP(bruto),
+        subtotalText: formatearMonedaCOP(subtotal),
+        subtotalNum: subtotal
+    };
+};
+
 // Hook temporalmente incluido aquí para evitar problemas de import
 const useRemisionesParciales = (remision, cantidadesTemporales = {}) => {
     const [cantidadesPrevias, setCantidadesPrevias] = useState({});
@@ -892,6 +918,256 @@ export default function RemisionModal({ remision, onClose }) {
         } catch (error) {
             console.error('[REMISION] Error al generar PDF:', error);
             dispatch(actions.HandleAlerta('Error al generar el PDF', 'mistake'));
+        }
+    };
+
+    const handleDescargarPDFBruto = () => {
+        try {
+            const doc = new jsPDF('p', 'mm', 'a4');
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const pageHeight = doc.internal.pageSize.getHeight();
+            const margin = 15;
+            let yPos = margin;
+
+            const colorAzul = [47, 139, 253];
+            const colorGris = [128, 128, 128];
+            const colorGrisClaro = [240, 240, 240];
+
+            const colRef = margin;
+            const colDesc = margin + 18;
+            const colDespachada = pageWidth - margin - 72;
+            const colUnitBruto = pageWidth - margin - 48;
+            const colSubtotal = pageWidth - margin;
+            const tableWidth = pageWidth - (margin * 2);
+
+            const dibujarHeaderTablaBruto = () => {
+                doc.setFillColor(...colorGrisClaro);
+                doc.rect(margin, yPos - 5, tableWidth, 8, 'F');
+                doc.setFontSize(8);
+                doc.setFont(undefined, 'bold');
+                doc.setTextColor(0, 0, 0);
+                doc.text('Ref', colRef, yPos);
+                doc.text('Producto', colDesc, yPos);
+                doc.text('Desp.', colDespachada, yPos);
+                doc.text('P. Unit.', colUnitBruto, yPos);
+                doc.text('Subtotal', colSubtotal, yPos, { align: 'right' });
+                yPos += 10;
+                doc.setDrawColor(200, 200, 200);
+                doc.line(margin, yPos, pageWidth - margin, yPos);
+                yPos += 5;
+                doc.setFont(undefined, 'normal');
+            };
+
+            const verificarNuevaPagina = () => {
+                if (yPos > pageHeight - 60) {
+                    doc.addPage();
+                    yPos = margin;
+                    dibujarHeaderTablaBruto();
+                }
+            };
+
+            const escribirTextoDerecha = (texto, x, y) => {
+                doc.text(String(texto), x, y, { align: 'right' });
+            };
+
+            // ========== HEADER ==========
+            doc.setFontSize(14);
+            doc.setTextColor(...colorAzul);
+            doc.setFont(undefined, 'bold');
+            doc.text('Modulares Costa Gomez SAS', margin, yPos);
+            yPos += 6;
+
+            doc.setFontSize(9);
+            doc.setTextColor(...colorGris);
+            doc.setFont(undefined, 'normal');
+            doc.text('NIT: 901165150-3', margin, yPos);
+            yPos += 4;
+            doc.text('CL 11 13 15, Cali - Valle del Cauca', margin, yPos);
+            yPos += 4;
+            doc.text('PBX: 3739940', margin, yPos);
+
+            const boxWidth = 70;
+            const boxHeight = 25;
+            const envioX = pageWidth / 2 + 10;
+            const boxX = envioX;
+            const boxY = margin;
+
+            doc.setFillColor(...colorAzul);
+            doc.roundedRect(boxX, boxY, boxWidth, boxHeight, 3, 3, 'F');
+
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(8);
+            doc.setFont(undefined, 'normal');
+            doc.text('REMISIÓN NO.', boxX + 5, boxY + 7);
+
+            doc.setFontSize(12);
+            doc.setFont(undefined, 'bold');
+            const numeroRemision = String(Number(remision.id + 4890));
+            const textWidth = doc.getTextWidth(numeroRemision);
+            doc.text(numeroRemision, boxX + (boxWidth - textWidth) / 2, boxY + 14);
+
+            doc.setFontSize(9);
+            doc.setFont(undefined, 'normal');
+            doc.setTextColor(...colorGris);
+            const fechaParaPDF = fechaRemision || remision.createdAt;
+            doc.text(`FECHA DE EMISIÓN: ${String(formatearFecha(fechaParaPDF))}`, envioX, boxY + boxHeight + 5);
+            doc.text('VALORES BRUTO (KITS)', envioX, boxY + boxHeight + 10);
+
+            yPos = boxY + boxHeight + 20;
+
+            // ========== CLIENTE Y TRANSPORTADOR ==========
+            const clienteStartY = yPos;
+
+            doc.setFontSize(9);
+            doc.setTextColor(0, 0, 0);
+            doc.setFont(undefined, 'bold');
+            doc.text('INFORMACIÓN DEL CLIENTE', margin, yPos);
+            yPos += 6;
+
+            doc.setFont(undefined, 'normal');
+            const cliente = remision?.requisicion?.cotizacion?.client;
+            const nombreCliente = cliente?.name || cliente?.nombre || 'N/A';
+            const colIzqMaxWidth = envioX - margin - 8;
+            const lineasNombreCliente = doc.splitTextToSize(`Nombre/Razón: ${String(nombreCliente)}`, colIzqMaxWidth);
+            doc.text(lineasNombreCliente, margin, yPos);
+            yPos += lineasNombreCliente.length * 5;
+            doc.text(`NIT/C.C.: ${String(cliente?.nit || 'N/A')}`, margin, yPos);
+
+            yPos = clienteStartY;
+            doc.setFont(undefined, 'bold');
+            doc.text('Detalles del TRANSPORTADOR', envioX, yPos);
+            yPos += 6;
+            doc.setFont(undefined, 'normal');
+            doc.text(`Placa: ${String(placa || 'N/A')}`, envioX, yPos);
+            yPos += 5;
+            doc.text(`Conductor: ${String(nombreConductor || 'N/A')}`, envioX, yPos);
+
+            yPos = clienteStartY + 28;
+
+            // ========== DETALLES ==========
+            const detallesStartY = yPos;
+            doc.setFont(undefined, 'bold');
+            doc.text('DETALLES', margin, yPos);
+            yPos += 6;
+            doc.setFont(undefined, 'normal');
+            const vendedor = remision?.requisicion?.cotizacion?.user?.name || remision?.vendedor || 'N/A';
+            doc.text(`Vendedor: ${String(vendedor)}`, margin, yPos);
+            yPos += 5;
+            doc.text(`OC.Nro: ${String(ocNumero || 'N/A')}`, margin, yPos);
+            yPos += 5;
+            doc.text(`OV.Nro: ${String(ovNumero || 'N/A')}`, margin, yPos);
+
+            yPos = detallesStartY + 25;
+
+            // ========== TABLA BRUTO ==========
+            doc.setFontSize(9);
+            dibujarHeaderTablaBruto();
+
+            let totalBruto = 0;
+
+            remision?.itemRemisions?.forEach((item, index) => {
+                verificarNuevaPagina();
+
+                const ref = String(item?.kitId || item?.productoId || item.id || `REF-${index + 1}`);
+                const descripcion = `${String(item?.kit?.name || item?.producto?.item || 'N/A')}${item?.kit?.extension?.name ? ` - ${String(item.kit.extension.name)}` : ''}${item?.medida ? ` (${String(item.medida)})` : ''}`;
+                const despachada = getCantidadActual(item);
+                const precioLinea = obtenerPrecioBrutoLinea(item, despachada);
+                totalBruto += precioLinea.subtotalNum;
+
+                doc.text(ref, colRef, yPos);
+                const descripcionWidth = colDespachada - colDesc - 4;
+                const descripcionLines = doc.splitTextToSize(String(descripcion), descripcionWidth);
+                doc.text(descripcionLines, colDesc, yPos);
+                escribirTextoDerecha(String(Number(despachada).toFixed(0)), colDespachada + 8, yPos);
+                escribirTextoDerecha(precioLinea.unitText, colUnitBruto + 14, yPos);
+                escribirTextoDerecha(precioLinea.subtotalText, colSubtotal, yPos);
+
+                yPos += Math.max(7, descripcionLines.length * 5);
+            });
+
+            itemsManuales.forEach((item, index) => {
+                verificarNuevaPagina();
+
+                const ref = `MANUAL-${index + 1}`;
+                const descripcion = String(item.descripcion || 'Item manual');
+                const despachada = Number(item.cantidadDespachada || 0);
+
+                doc.text(ref, colRef, yPos);
+                const descripcionWidth = colDespachada - colDesc - 4;
+                const descripcionLines = doc.splitTextToSize(descripcion, descripcionWidth);
+                doc.text(descripcionLines, colDesc, yPos);
+                escribirTextoDerecha(String(Number(despachada).toFixed(0)), colDespachada + 8, yPos);
+                escribirTextoDerecha('---', colUnitBruto + 14, yPos);
+                escribirTextoDerecha('---', colSubtotal, yPos);
+
+                yPos += Math.max(7, descripcionLines.length * 5);
+            });
+
+            yPos += 8;
+
+            if (yPos > pageHeight - 80) {
+                doc.addPage();
+                yPos = margin;
+            }
+
+            const resumenX = pageWidth / 2 + 10;
+            doc.setFont(undefined, 'bold');
+            doc.setFontSize(10);
+            doc.setTextColor(...colorAzul);
+            doc.text('TOTAL BRUTO (KITS):', resumenX, yPos);
+            doc.text(formatearMonedaCOP(totalBruto), colSubtotal, yPos, { align: 'right' });
+            yPos += 8;
+            doc.setFontSize(8);
+            doc.setFont(undefined, 'normal');
+            doc.setTextColor(...colorGris);
+            doc.text('* Valores bruto de materia prima (priceKit). Productos terminados y servicios manuales: ---', margin, yPos);
+
+            // ========== FIRMAS Y PIE ==========
+            const textoPiePagina = 'Los materiales con este documento recibido, los aceptamos a satisfacción, acorde a nuestro pedido y con el nivel de calidad requerido. No se aceptan reclamaciones posteriores a la entrega aceptada.';
+            const anchoTextoPie = pageWidth - (margin * 2);
+            doc.setFontSize(8);
+            const lineasPiePre = doc.splitTextToSize(textoPiePagina, anchoTextoPie);
+            const alturaBloqueFirmas = 10 + 5 + 15 + lineasPiePre.length * 4 + 10 + 5;
+            const firmaY = pageHeight - alturaBloqueFirmas - margin;
+
+            const firmaLineWidth = 60;
+            const espacioEntreFirmas = pageWidth - (margin * 2) - (firmaLineWidth * 2);
+            const firmaIzquierdaX = margin;
+            const firmaDerechaX = margin + firmaLineWidth + espacioEntreFirmas;
+
+            doc.setDrawColor(0, 0, 0);
+            doc.setLineWidth(0.5);
+            doc.line(firmaIzquierdaX, firmaY, firmaIzquierdaX + firmaLineWidth, firmaY);
+            doc.setFontSize(9);
+            doc.setTextColor(0, 0, 0);
+            doc.text('Despachado', firmaIzquierdaX + 18, firmaY + 5);
+
+            doc.line(firmaDerechaX, firmaY, firmaDerechaX + firmaLineWidth, firmaY);
+            doc.text('Recibido', firmaDerechaX + 22, firmaY + 5);
+
+            const piePaginaY = firmaY + 15;
+            doc.setDrawColor(200, 200, 200);
+            doc.setLineWidth(0.3);
+            doc.line(margin, piePaginaY, pageWidth - margin, piePaginaY);
+
+            doc.setTextColor(...colorGris);
+            doc.setFontSize(8);
+            const textoPieY = piePaginaY + 8;
+            doc.text(textoPiePagina, margin, textoPieY, { maxWidth: anchoTextoPie, align: 'left' });
+
+            const lineasPie = doc.splitTextToSize(textoPiePagina, anchoTextoPie);
+            doc.setFontSize(9);
+            doc.setTextColor(0, 0, 0);
+            doc.text(`Remisionado por ${usuarioActual}`, margin, textoPieY + lineasPie.length * 4 + 6, {
+                maxWidth: anchoTextoPie,
+                align: 'left'
+            });
+
+            doc.save(`${remision.numeroRemision || numeroRemision}-bruto.pdf`);
+            dispatch(actions.HandleAlerta('PDF bruto generado y descargado exitosamente', 'positive'));
+        } catch (error) {
+            console.error('[REMISION] Error al generar PDF bruto:', error);
+            dispatch(actions.HandleAlerta('Error al generar el PDF bruto', 'mistake'));
         }
     };
 
@@ -2058,6 +2334,32 @@ export default function RemisionModal({ remision, onClose }) {
                                 }}
                             >
                                 📥 Descargar PDF
+                            </button>
+
+                            <button
+                                onClick={handleDescargarPDFBruto}
+                                style={{
+                                    padding: '12px 24px',
+                                    fontSize: '14px',
+                                    fontWeight: '600',
+                                    border: '1px solid #856404',
+                                    borderRadius: '6px',
+                                    background: '#fff9e6',
+                                    color: '#856404',
+                                    cursor: 'pointer',
+                                    transition: 'all 0.2s',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px'
+                                }}
+                                onMouseOver={(e) => {
+                                    e.currentTarget.style.background = '#fff3cd';
+                                }}
+                                onMouseOut={(e) => {
+                                    e.currentTarget.style.background = '#fff9e6';
+                                }}
+                            >
+                                📥 PDF Bruto
                             </button>
 
                             {remision.estado === 'Activa' && (
