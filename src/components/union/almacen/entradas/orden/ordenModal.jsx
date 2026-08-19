@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../../../store/action/action';
 import ItemOrdenMP from './itemOrdenMP';
 import ItemOrdenPT from './itemOrdenPT';
+import { isServicioLibreItem } from '../../../compras/utils/comprasCotizacionItemUtils';
 
 export default function OrdenModal() {
     const [params, setParams] = useSearchParams();
@@ -168,6 +169,7 @@ export default function OrdenModal() {
                             <tbody>
                                 {
                                     ordenCompras.comprasCotizacionItems?.map((item, i)  => {
+                                        if (isServicioLibreItem(item)) return null;
                                         return (
                                             item?.productoId ? (
                                                 <ItemOrdenPT 

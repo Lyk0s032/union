@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import * as actions from '../../../../../../store/action/action';
+import { getPrecioBaseSinIva } from '../../../../utils/proveedorPriceUtils';
 
 /**
  * Detalle de un ítem elegido desde la búsqueda por proveedor (fuera del consolidado).
@@ -85,19 +86,20 @@ export default function LeftItemChooseSearch() {
             if (isProducto) {
                 const priceFound = data.productPrices?.find((p) => p.proveedorId == proveedorId);
                 if (priceFound) {
+                    const baseUnit = getPrecioBaseSinIva(priceFound);
                     if (unidad === 'mt2') {
                         precioActual = Number(
-                            (Number(priceFound.valor || priceFound.precio || priceFound.price || 0) * medida).toFixed(0)
+                            (baseUnit * medida).toFixed(0)
                         );
                     } else {
-                        precioActual = Number(priceFound.valor || priceFound.precio || priceFound.price || 0);
+                        precioActual = baseUnit;
                     }
                     fechaPrecio = priceFound.updatedAt || priceFound.createdAt || '';
                 }
             } else {
                 const priceFound = data.prices?.find((p) => p.proveedorId == proveedorId);
                 if (priceFound) {
-                    const precioCaja = Number(priceFound.valor || priceFound.precio || priceFound.price || 0);
+                    const precioCaja = getPrecioBaseSinIva(priceFound);
                     if (unidad === 'kg') {
                         const medidaKg = medida > 0 ? medida : 1;
                         precioActual = precioCaja / medidaKg;
@@ -308,7 +310,7 @@ export default function LeftItemChooseSearch() {
                                 </div>
                             </div>
                             <div className="productoPrecio">
-                                <span className="precioLabel">Precio actual (proveedor)</span>
+                                <span className="precioLabel">Precio actual (sin IVA)</span>
                                 <span className="precioValor">$ {producto.precioActual.toLocaleString('es-CO')}</span>
                             </div>
                             <div className="productoFecha">{producto.fechaPrecio}</div>

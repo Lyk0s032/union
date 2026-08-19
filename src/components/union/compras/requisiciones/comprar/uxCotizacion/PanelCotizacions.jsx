@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import * as actions from "../../../../../store/action/action";
+import { getComprasItemDisplayName } from "../../../utils/comprasCotizacionItemUtils";
 
 export default function UxCotizadorPanel({ ref }) {
   const [params, setParams] = useSearchParams();
@@ -116,7 +117,8 @@ export default function UxCotizadorPanel({ ref }) {
       const productoId = item.productoId ?? item.productoCotizacionId ?? item.productoCotizacion_id ?? null;
 
       let key;
-      if (materiaId != null) key = `M-${materiaId}`;
+      if (item.tipo === 'servicio_libre') key = `S-${item.id}`;
+      else if (materiaId != null) key = `M-${materiaId}`;
       else if (productoId != null) key = `P-${productoId}`;
       else key = `I-${item.id}`; // fallback único por item
 
@@ -239,9 +241,7 @@ useEffect(() => {
                         const sample = grupo.items[0] || {};
                         
                         const nombre =
-                          sample.materium?.description ||
-                          sample.materium?.description ||
-                          sample.producto?.nombre ||
+                          getComprasItemDisplayName(sample) ||
                           (grupo.materiaId
                             ? `Materia -  ${grupo} ${console.log(grupo)}`
                             : grupo.productoId
@@ -277,9 +277,7 @@ useEffect(() => {
                     : data.comprasCotizacionItems.map((item, i) => (
                         <tr key={i + 1}>
                           <td className="large">{console.log(item)}
-                            {item.materium?.id} - {item.materium?.description} 
-                            {item.producto?.id} - {item.producto?.description} 
-
+                            {getComprasItemDisplayName(item)}
                           </td>
                           <td className="short">{item.cantidad}</td>
                           <td className="short">{fmt(item.precioUnidad || 0)}</td>

@@ -3,6 +3,7 @@ import LeftDataChoose from './leftDataChoose';
 import RightDataOrden from './rightDataOrden';
 import LeftItemOpened from './leftItemOpened';
 import LeftItemChooseSearch from './search/leftItemChooseSearch';
+import LeftServicioLibreForm from './leftServicioLibreForm';
 import { useSearchParams } from 'react-router-dom';
 
 export default function IndexOrden() {
@@ -40,6 +41,10 @@ export default function IndexOrden() {
                     const newParams = new URLSearchParams(currentParams);
                     newParams.delete('openSearchItem');
                     newParams.delete('openSearchTipo');
+                    setParams(newParams);
+                } else if (currentParams.get('openServicio')) {
+                    const newParams = new URLSearchParams(currentParams);
+                    newParams.delete('openServicio');
                     setParams(newParams);
                 } else if (currentParams.get('openItem')) {
                     const newParams = new URLSearchParams(currentParams);
@@ -81,6 +86,8 @@ export default function IndexOrden() {
                     {
                         params.get('openSearchItem') ? (
                             <LeftItemChooseSearch />
+                        ) : params.get('openServicio') ? (
+                            <LeftServicioLibreForm />
                         ) : params.get('openItem') ? (
                             <LeftItemOpened />
                         ) : (

@@ -3,6 +3,10 @@ import * as actions from './../../../../../../store/action/action';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { useSearchParams } from 'react-router-dom';
+import {
+    buildRemoveComprasItemBody,
+    getComprasItemDisplayName,
+} from '../../../../utils/comprasCotizacionItemUtils';
 
 export default function ItemOrden({ item }){
     const [open, setOpen] = useState(false);
@@ -17,12 +21,7 @@ export default function ItemOrden({ item }){
     const [loading, setLoading] = useState(false);
 
     const eliminarItemComprasCotizacion = async () => {
-        // 1 Construimos el body
-        const body = {
-            itemId: item.materiumId ? item.materiumId : item.productoId,
-            tipo: !item.materiumId ? 'producto' : 'materia' ,
-            comprasId: item.comprasCotizacionId
-        };
+        const body = buildRemoveComprasItemBody(item);
 
         try {
             // 2 Enviamos el DELETE con body
@@ -77,7 +76,7 @@ export default function ItemOrden({ item }){
                             <h3>{item.materium?.id} {item.producto?.id}</h3>
                         </div>
                         <div className="dataItemOrden">
-                            <h3>{item.materium?.description} {item.producto?.item}</h3>
+                            <h3>{getComprasItemDisplayName(item)}</h3>
                             <span>{item.createdAt.split('T')[0]}</span>
                             <br />
                             <span>Precio</span>
@@ -130,7 +129,7 @@ export default function ItemOrden({ item }){
                             <h3>{item.materium?.id} {item.producto?.id}</h3>
                         </div>
                         <div className="dataItemOrden">
-                            <h3>{item.materium?.description} {item.producto?.item}</h3>
+                            <h3>{getComprasItemDisplayName(item)}</h3>
                         </div>
                     </div>
                     <div className="price">
@@ -164,7 +163,7 @@ export default function ItemOrden({ item }){
                             <h3>{item.materium?.id} {item.producto?.id}</h3>
                         </div>
                         <div className="dataItemOrden">
-                            <h3>{item.materium?.description} {item.producto?.item}</h3>
+                            <h3>{getComprasItemDisplayName(item)}</h3>
                             
                         </div>
                     </div>

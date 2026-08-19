@@ -4,6 +4,12 @@ import { useSearchParams } from 'react-router-dom';
 import { PDFDownloadLink, Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 import * as actions from '../../../../../store/action/action';
 import axios from 'axios';
+import {
+    buildRemoveComprasItemBody,
+    getComprasItemDisplayName,
+    isServicioLibreItem,
+} from '../../../utils/comprasCotizacionItemUtils';
+import PedidosOrdenCompraList from '../../../utils/PedidosOrdenCompraList';
 
 // Componente PDF para la orden de compra (definido antes de su uso)
 const pdfStyles = StyleSheet.create({
@@ -488,12 +494,7 @@ export default function RightDataOrden() {
 
     // Función para eliminar un item de la orden de compra
     const eliminarItemComprasCotizacion = async (item: any) => {
-        // 1 Construimos el body
-        const body = {
-            itemId: item.materiumId ? item.materiumId : item.productoId,
-            tipo: !item.materiumId ? 'producto' : 'materia',
-            comprasId: item.comprasCotizacionId
-        };
+        const body = buildRemoveComprasItemBody(item);
 
         setEliminandoItem(item.id);
         try {
@@ -572,6 +573,7 @@ export default function RightDataOrden() {
                             {header.nit ? <div className="metaMuted">{header.nit}</div> : null}
                             {header.proveedor ? <div className="metaProveedor">{header.proveedor}</div> : null}
                         </div>
+                        <PedidosOrdenCompraList orden={ordenCompras} />
                     </div>
 
                     <div className="rightOrdenBody">
@@ -584,9 +586,10 @@ export default function RightDataOrden() {
                                 {itemsOrdenados.map((item: any, index: number) => {
                                     const materia = item.materium || {};
                                     const producto = item.producto || {};
+                                    const esServicio = isServicioLibreItem(item);
                                     const esProducto = !!item.productoId;
-                                    const itemId = esProducto ? producto.id : materia.id;
-                                    const itemNombre = esProducto ? producto.item : materia.description;
+                                    const itemId = esServicio ? item.id : (esProducto ? producto.id : materia.id);
+                                    const itemNombre = getComprasItemDisplayName(item);
                                     const cantidad = item.cantidad || 0;
                                     const precio = item.precio || 0;
                                     const descuento = item.descuento || 0;

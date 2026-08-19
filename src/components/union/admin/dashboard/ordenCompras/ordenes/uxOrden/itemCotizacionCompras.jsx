@@ -1,4 +1,5 @@
 import React from 'react';
+import { getComprasItemDisplayName } from '../../../../../compras/utils/comprasCotizacionItemUtils';
 
 export default function ItemCotizacionCompras({ item, proyectos }){
     return (
@@ -9,7 +10,7 @@ export default function ItemCotizacionCompras({ item, proyectos }){
                         <h3>{item.materiaId ? item.materiaId : null} {item.producto ? item.productoId : null} </h3>
                     </div> 
                     <div className="name">{console.log(item)}
-                        <h3>{item.materium?.description} {item.producto?.item}</h3>
+                        <h3>{getComprasItemDisplayName(item)}</h3>
                         <span>{item.materium?.item} {item.producto?.procedencia}</span><br />
                     </div> 
                 </div>

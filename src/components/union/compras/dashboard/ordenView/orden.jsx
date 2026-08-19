@@ -12,6 +12,8 @@ import "dayjs/locale/es"; // para español
 import axios from 'axios';
 import PdfDocument from './documentPdf';
 import { PDFDownloadLink } from '@react-pdf/renderer';
+import { getComprasItemDisplayName } from '../../utils/comprasCotizacionItemUtils';
+import PedidosOrdenCompraList from '../../utils/PedidosOrdenCompraList';
 
 dayjs.extend(localizedFormat);
 dayjs.locale("es");
@@ -224,6 +226,9 @@ export default function Orden(){
                                     <strong>NIT: </strong> <span>{ordenCompras.proveedor.nit}</span><br /><br />
                                     <span>{ordenCompras.fecha.split('T')[0]}</span>
                                 </div>
+                                <div style={{ marginBottom: 20 }}>
+                                    <PedidosOrdenCompraList orden={ordenCompras} />
+                                </div>
                                 {
                                     ordenCompras.comprasCotizacionItems && ordenCompras.comprasCotizacionItems.length ?
                                         <div className="itemsOrden">
@@ -250,9 +255,7 @@ export default function Orden(){
                                                                             </div>
                                                                             <div className="data">
                                                                                 <h3>
-                                                                                    {item.materium?.description}
-                                                                                    {item.producto?.item}
-                                                                                
+                                                                                    {getComprasItemDisplayName(item)}
                                                                                 </h3>
                                                                                 <span>
                                                                                     {item.materium?.item}

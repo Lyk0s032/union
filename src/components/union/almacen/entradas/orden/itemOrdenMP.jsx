@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import * as actions from '../../../../store/action/action';
+import { isServicioLibreItem } from '../../../compras/utils/comprasCotizacionItemUtils';
 
 export default function ItemOrdenMP({ item, ordenId, comprasCotizacionId }) {
     const dispatch = useDispatch();
     const [loadingIngreso, setLoadingIngreso] = useState(false);
     const [loadingProduccion, setLoadingProduccion] = useState(false);
+
+    if (isServicioLibreItem(item)) return null;
 
     // Detectar si es consumible por categoriumId = 15
     const esConsumible = item?.materium?.categoriumId === 15;

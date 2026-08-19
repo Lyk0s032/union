@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import * as actions from '../../../../../store/action/action';
+import { getPrecioBaseSinIva } from '../../../utils/proveedorPriceUtils';
 
 export default function LeftItemOpened() {
     const [params, setParams] = useSearchParams();
@@ -96,12 +97,12 @@ export default function LeftItemOpened() {
                 if (isProducto) {
                     const priceFound = data.productPrices?.find((p: any) => p.proveedorId == proveedorId);
                     if (priceFound) {
+                        const baseUnit = getPrecioBaseSinIva(priceFound);
                         if(unidad == 'mt2'){
-
-                            precioActual = Number((Number(priceFound.valor || priceFound.precio || priceFound.price || 0) * data?.itemRequisicions[0]?.medida).toFixed(0));
+                            precioActual = Number((baseUnit * data?.itemRequisicions[0]?.medida).toFixed(0));
                             fechaPrecio = priceFound.updatedAt || priceFound.createdAt || '';
                         }else{
-                            precioActual = Number(priceFound.valor || priceFound.precio || priceFound.price || 0);
+                            precioActual = baseUnit;
                             fechaPrecio = priceFound.updatedAt || priceFound.createdAt || '';
                         }
                         
@@ -109,7 +110,7 @@ export default function LeftItemOpened() {
                 } else {
                     const priceFound = data.prices?.find((p: any) => p.proveedorId == proveedorId);
                     if (priceFound) {
-                        const precioCaja = Number(priceFound.valor || priceFound.precio || priceFound.price || 0);
+                        const precioCaja = getPrecioBaseSinIva(priceFound);
                         // Para kg: dividir precio de la caja por cantidad de kilos para obtener precio por kilo
                         if (unidad === 'kg') {
                             const medidaKg = Number(data.itemRequisicions[0]?.medida || 1);
@@ -670,7 +671,7 @@ export default function LeftItemOpened() {
                                     </div>
                                 </div>
                                 <div className="productoPrecio">
-                                    <span className="precioLabel">Precio actual</span>
+                                    <span className="precioLabel">Precio actual (sin IVA)</span>
                                     <span className="precioValor">$ {producto.precioActual.toLocaleString('es-CO')}</span>
                                 </div>
                                 <div className="productoFecha">
@@ -858,7 +859,7 @@ export default function LeftItemOpened() {
                                 </div>
                             </div>
                             <div className="productoPrecio">
-                                <span className="precioLabel">Precio actual</span>
+                                <span className="precioLabel">Precio actual (sin IVA)</span>
                                 <span className="precioValor">$ {producto.precioActual.toLocaleString('es-CO')}</span>
                             </div>
                             <div className="productoFecha">

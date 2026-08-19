@@ -72,7 +72,7 @@ export default function LeftDataChoose() {
                         <h1 style={{ marginTop: 0 }}>
                             {itemSearchActivo
                                 ? 'Buscar ítems del proveedor'
-                                : 'Materia prima necesidad que el proveedor puede suministrarrr'}
+                                : 'Materia prima necesidad que el proveedor puede suministrar'}
                         </h1>
                         <span>
                             {itemSearchActivo
@@ -80,25 +80,56 @@ export default function LeftDataChoose() {
                                 : 'Esta lista se filtra por el proveedor asociado a la orden de compra.'}
                         </span>
                     </div>
-                    <button
-                        type="button"
-                        onClick={toggleBuscar}
-                        title={itemSearchActivo ? 'Ver lista de necesidad' : 'Buscar otros ítems'}
-                        style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            width: 42,
-                            height: 42,
-                            borderRadius: 8,
-                            border: '1px solid #ccc',
-                            background: itemSearchActivo ? '#e8f4ff' : '#fff',
-                            cursor: 'pointer',
-                            flexShrink: 0,
-                        }}
-                    >
-                        <MdSearch size={22} color="#1890ff" />
-                    </button>
+                    <div style={{ display: 'flex', gap: 8, flexShrink: 0 }}>
+                        <button
+                            type="button"
+                            onClick={() => {
+                                const next = new URLSearchParams(params);
+                                next.set('openServicio', '1');
+                                next.delete('openItem');
+                                next.delete('openItemTipo');
+                                next.delete('openSearchItem');
+                                next.delete('openSearchTipo');
+                                next.delete('itemSearch');
+                                setParams(next);
+                            }}
+                            title="Agregar servicio manual"
+                            style={{
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                padding: '0 12px',
+                                height: 42,
+                                borderRadius: 8,
+                                border: '1px solid #1890ff',
+                                background: '#fff',
+                                color: '#1890ff',
+                                cursor: 'pointer',
+                                fontSize: 13,
+                                fontWeight: 600,
+                            }}
+                        >
+                            Agregar servicio
+                        </button>
+                        <button
+                            type="button"
+                            onClick={toggleBuscar}
+                            title={itemSearchActivo ? 'Ver lista de necesidad' : 'Buscar otros ítems'}
+                            style={{
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                width: 42,
+                                height: 42,
+                                borderRadius: 8,
+                                border: '1px solid #ccc',
+                                background: itemSearchActivo ? '#e8f4ff' : '#fff',
+                                cursor: 'pointer',
+                            }}
+                        >
+                            <MdSearch size={22} color="#1890ff" />
+                        </button>
+                    </div>
                 </div>
             </div>
 

@@ -3,6 +3,7 @@ import * as actions from '../../../../store/action/action';
 import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
+import { isServicioLibreItem } from '../../../compras/utils/comprasCotizacionItemUtils';
 
 export default function PedidoItemAlmacen({ item }){
 
@@ -327,6 +328,8 @@ export default function PedidoItemAlmacen({ item }){
             setLoadingEnviarProduccion(false);
         }
     }
+    if (isServicioLibreItem(item)) return null;
+
     return (
         <tr>
             <td className="longer"> 

@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import * as actions from '../../../../store/action/action';
+import { isServicioLibreItem } from '../../../compras/utils/comprasCotizacionItemUtils';
 
 export default function ItemOrdenPT({ item, ordenId, comprasCotizacionId }) {
     const dispatch = useDispatch();
     const [loadingIngreso, setLoadingIngreso] = useState(false);
     const [loadingProduccion, setLoadingProduccion] = useState(false);
+
+    if (isServicioLibreItem(item)) return null;
 
     const handleIngresarAlmacen = async () => {
         if (loadingIngreso) return;

@@ -8,6 +8,7 @@ import "dayjs/locale/es"; // para español
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import PedidoItemAlmacen from './pedidoItem';
+import { isServicioLibreItem } from '../../../compras/utils/comprasCotizacionItemUtils';
 
 dayjs.extend(localizedFormat);
 dayjs.locale("es");
@@ -121,7 +122,9 @@ export default function DataCotizacion({ orden }){
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {orden?.comprasCotizacionItems?.map((item, i) => (
+                                        {orden?.comprasCotizacionItems
+                                            ?.filter((item) => !isServicioLibreItem(item))
+                                            ?.map((item, i) => (
                                             <PedidoItemAlmacen item={item} key={i+1}/>
                                         ))}
                                     </tbody>
