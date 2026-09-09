@@ -1,8 +1,6 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 import axios from 'axios';
 import * as actions from '../../../store/action/action';
 
@@ -14,49 +12,203 @@ export default function OrdenCompraCotizacion(){
     const [fechaEntrega, setFechaEntrega] = useState('');
     const [nota, setNota] = useState('');
     const [loading, setLoading] = useState(false);
-    const [generandoPDF, setGenerandoPDF] = useState(false);
     const dispatch = useDispatch();
 
-    const exportToPDF = () => {
-        const input = document.getElementById("orden-compra-pdf");
-        const originalHeight = input.style.height;
-        const originalOverflow = input.style.overflow;
+    const getArmadoPivot = (item) => item?.armadoCotizacion || item?.armadosCotizacion || null;
 
-        input.style.height = 'auto';
-        input.style.overflow = 'visible';
-        setGenerandoPDF(true);
+    const transformarAreas = () => {
+        if (!cotizacion || !cotizacion.areaCotizacions) return [];
 
-        setTimeout(() => {
-            html2canvas(input, { scale: 2 }).then((canvas) => {
-                const imgData = canvas.toDataURL("image/png");
-                const pdf = new jsPDF("p", "pt", "a4");
-                const pageWidth = pdf.internal.pageSize.getWidth();
-                const pageHeight = pdf.internal.pageSize.getHeight();
+        return cotizacion.areaCotizacions.map(area => {
+            const items = []
+                .concat(area.productoCotizacions || [])
+                .concat(area.serviciosCotizados || [])
+                .concat(area.kits || [])
+                .concat(area.armados || []);
 
-                const imgWidth = pageWidth;
-                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            const productos = items.map(item => {
+                let referencia = '';
+                let descripcion = '';
+                let cantidad = 0;
+                let valorUnitario = 0;
+                let subtotal = 0;
+                const armadoPivot = getArmadoPivot(item);
 
-                let heightLeft = imgHeight;
-                let position = 0;
-
-                pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-                heightLeft -= pageHeight;
-
-                while (heightLeft > 0) {
-                    position -= pageHeight;
-                    pdf.addPage();
-                    pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-                    heightLeft -= pageHeight;
+                if (item.kitCotizacion) {
+                    referencia = `${item.id}`;
+                    descripcion = `${item.name?.toUpperCase() || ''}${item.extension?.name ? ` - ${item.extension.name.toUpperCase()}` : ''}`;
+                    cantidad = Number(item.kitCotizacion.cantidad || 0);
+                    subtotal = Number(item.kitCotizacion.precio || 0);
+                    valorUnitario = cantidad > 0 ? Number((subtotal / cantidad).toFixed(0)) : 0;
+                } else if (armadoPivot) {
+                    referencia = `SP${item.id}`;
+                    descripcion = (item.name || '').toUpperCase();
+                    cantidad = Number(armadoPivot.cantidad || 0);
+                    subtotal = Number(armadoPivot.precio || 0);
+                    valorUnitario = cantidad > 0 ? Number((subtotal / cantidad).toFixed(0)) : 0;
+                } else if (item.cantidad && item.producto) {
+                    referencia = `PT${item.producto.id || item.id}`;
+                    descripcion = `${item.producto.item.toUpperCase()}${item.medida ? ` | ${item.medida}` : ''}`;
+                    cantidad = Number(item.cantidad || 0);
+                    subtotal = Number(item.precio || 0);
+                    valorUnitario = cantidad > 0 ? Number((subtotal / cantidad).toFixed(0)) : 0;
+                } else if (item.cantidad && item.service) {
+                    referencia = `SV${item.service.id || item.id}`;
+                    descripcion = `${item.service.name.toUpperCase()}${item.service.description ? ` - ${item.service.description.toUpperCase()}` : ''}`;
+                    cantidad = Number(item.cantidad || 0);
+                    subtotal = Number(item.precio || 0);
+                    valorUnitario = cantidad > 0 ? Number((subtotal / cantidad).toFixed(0)) : 0;
                 }
 
-                pdf.save(`orden-compra-${cotizacion.client.nombre}-CV${Number(21719)+Number(cotizacion.id)}.pdf`);
+                return {
+                    referencia,
+                    descripcion,
+                    cantidad,
+                    valorUnitario,
+                    subtotal,
+                };
+            }).filter((p) => p.referencia || p.descripcion);
 
-                input.style.height = originalHeight;
-                input.style.overflow = originalOverflow;
-                setGenerandoPDF(false);
-                dispatch(actions.HandleAlerta('Orden de compra generada', 'positive'));
+            const totalArea = productos.reduce((acc, p) => acc + Number(p.subtotal || 0), 0);
+
+            return {
+                nombre: (area.name || '').toUpperCase(),
+                productos,
+                totalArea: Number(totalArea.toFixed(0)),
+            };
+        });
+    };
+
+    const calcularTotales = () => {
+        const valorKits = cotizacion.areaCotizacions?.reduce((accArea, area) => {
+            const suma = area.kits?.reduce((accKit, kit) => {
+                return accKit + Number(kit.kitCotizacion?.precio || 0);
+            }, 0) || 0;
+            return accArea + suma;
+        }, 0) || 0;
+
+        const valorArmados = cotizacion.areaCotizacions?.reduce((accArea, area) => {
+            const suma = area.armados?.reduce((accKit, kit) => {
+                const pivot = getArmadoPivot(kit);
+                return accKit + Number(pivot?.precio || 0);
+            }, 0) || 0;
+            return accArea + suma;
+        }, 0) || 0;
+
+        const valorProductos = cotizacion.areaCotizacions?.reduce((accArea, area) => {
+            const suma = area.productoCotizacions?.reduce((accKit, kit) => {
+                return accKit + Number(kit.precio || 0);
+            }, 0) || 0;
+            return accArea + suma;
+        }, 0) || 0;
+
+        const valorServicios = cotizacion.areaCotizacions?.reduce((accArea, area) => {
+            const suma = area.serviciosCotizados?.reduce((accKit, kit) => {
+                return accKit + Number(kit.precio || 0);
+            }, 0) || 0;
+            return accArea + suma;
+        }, 0) || 0;
+
+        const descuentoKits = cotizacion.areaCotizacions?.reduce((accArea, area) => {
+            const suma = area.kits?.reduce((accKit, kit) => {
+                return accKit + Number(kit.kitCotizacion?.descuento || 0);
+            }, 0) || 0;
+            return accArea + suma;
+        }, 0) || 0;
+
+        const descuentoArmados = cotizacion.areaCotizacions?.reduce((accArea, area) => {
+            const suma = area.armados?.reduce((accKit, kit) => {
+                const pivot = getArmadoPivot(kit);
+                return accKit + Number(pivot?.descuento || 0);
+            }, 0) || 0;
+            return accArea + suma;
+        }, 0) || 0;
+
+        const descuentoProductos = cotizacion.areaCotizacions?.reduce((accArea, area) => {
+            const suma = area.productoCotizacions?.reduce((accKit, kit) => {
+                return accKit + Number(kit.descuento || 0);
+            }, 0) || 0;
+            return accArea + suma;
+        }, 0) || 0;
+
+        const descuentoServicios = cotizacion.areaCotizacions?.reduce((accArea, area) => {
+            const suma = area.serviciosCotizados?.reduce((accKit, kit) => {
+                return accKit + Number(kit.descuento || 0);
+            }, 0) || 0;
+            return accArea + suma;
+        }, 0) || 0;
+
+        const sumaDescuento = descuentoKits + descuentoArmados + descuentoProductos + descuentoServicios;
+        const subTotal = valorKits + valorArmados + valorProductos + valorServicios;
+        const totalSub = subTotal - sumaDescuento;
+        const valorIva = Number(subTotal - sumaDescuento) * (19 / 100);
+        const total = totalSub + valorIva;
+
+        return {
+            subtotal: Number(subTotal.toFixed(0)),
+            descuentos: Number(sumaDescuento.toFixed(0)),
+            subtotalConDescuento: Number(totalSub.toFixed(0)),
+            iva: Number(valorIva.toFixed(0)),
+            total: Number(total.toFixed(0)),
+        };
+    };
+
+    const descargarPDF = async () => {
+        if (!cotizacion || cotizacion === 404 || cotizacion === 'notrequest') {
+            return dispatch(actions.HandleAlerta('No hay cotización para generar la orden', 'mistake'));
+        }
+
+        try {
+            setLoading(true);
+            dispatch(actions.HandleAlerta('Generando orden de compra... Esto puede tomar unos segundos', 'positive'));
+
+            const telefono = cotizacion.client?.fijos?.length
+                ? cotizacion.client.fijos.join(' / ')
+                : (cotizacion.client?.phone || 'N/A');
+
+            const data = {
+                cotizacion: {
+                    numero: `CV${Number(21719) + Number(cotizacion.id)}`,
+                    fecha: cotizacion.time ? cotizacion.time.split('T')[0] : '',
+                    fechaEntrega: fechaEntrega || 'No especificada',
+                },
+                cliente: {
+                    nombre: (cotizacion.client?.nombre || '').toUpperCase(),
+                    nit: cotizacion.client?.nit || 'N/A',
+                    direccion: (cotizacion.client?.direccion || 'N/A').toUpperCase(),
+                    email: cotizacion.client?.email ? cotizacion.client.email.toUpperCase() : 'N/A',
+                    telefono,
+                    ciudad: municipio?.nombre ? municipio.nombre.toUpperCase() : 'N/A',
+                },
+                areas: transformarAreas(),
+                totales: calcularTotales(),
+                nota: nota?.trim() || '',
+            };
+
+            const response = await axios.post('/api/cotizacion/generateOrdenCompraPdf', { data }, {
+                responseType: 'blob',
             });
-        }, 100);
+
+            const blob = new Blob([response.data], { type: 'application/pdf' });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute(
+                'download',
+                `orden-compra-${cotizacion.client?.nombre || 'cliente'}-CV${Number(21719) + Number(cotizacion.id)}.pdf`
+            );
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            window.URL.revokeObjectURL(url);
+
+            dispatch(actions.HandleAlerta('Orden de compra generada', 'positive'));
+        } catch (error) {
+            console.log(error);
+            dispatch(actions.HandleAlerta('No hemos logrado generar la orden de compra', 'mistake'));
+        } finally {
+            setLoading(false);
+        }
     };
 
     const getMun = async (codigo) => {
@@ -68,20 +220,17 @@ export default function OrdenCompraCotizacion(){
             });
 
             if (res.data.length > 0) {
-                const municipio = res.data[0];
+                const municipioData = res.data[0];
                 const resultado = {
-                    nombre: municipio.nom_mpio,
-                    codigo: municipio.cod_mpio,
-                    departamento: municipio.dpto,
-                    cod_departamento: municipio.cod_dpto
+                    nombre: municipioData.nom_mpio,
+                    codigo: municipioData.cod_mpio,
+                    departamento: municipioData.dpto,
+                    cod_departamento: municipioData.cod_dpto
                 };
                 setMuni(resultado);
                 return resultado;
             } else {
-                const resultado = {
-                    nombre: null
-                }
-                setMuni(resultado);
+                setMuni({ nombre: null });
             }
         } catch (error) {
             console.error("Error consultando municipio:", error);
@@ -90,7 +239,7 @@ export default function OrdenCompraCotizacion(){
     };
 
     useEffect(() => {
-        if(cotizacion && cotizacion.client.ciudad){
+        if(cotizacion && cotizacion.client?.ciudad){
             getMun(cotizacion.client.ciudad);
         }
     }, [cotizacion]);
@@ -190,26 +339,23 @@ export default function OrdenCompraCotizacion(){
                                                                             
                                                                             const calcularPrecioTotal = (item) => {
                                                                                 let precioBase = 0;
-                                                                                let descuento = 0;
 
                                                                                 if (item.kitCotizacion) {
                                                                                     precioBase = Number(item.kitCotizacion.precio);
-                                                                                    descuento = Number(item.kitCotizacion.descuento);
-                                                                                } else if (item.armadoCotizacion) {
-                                                                                    precioBase = Number(item.armadoCotizacion.precio);
-                                                                                    descuento = Number(item.armadoCotizacion.descuento);
+                                                                                } else if (item.armadoCotizacion || item.armadosCotizacion) {
+                                                                                    precioBase = Number((item.armadoCotizacion || item.armadosCotizacion).precio);
                                                                                 } else if (item.cantidad) {
                                                                                     precioBase = Number(item.precio);
-                                                                                    descuento = Number(item.descuento);
                                                                                 }
 
-                                                                                const subtotal = precioBase;
-                                                                                return subtotal;
+                                                                                return precioBase;
                                                                             };
 
                                                                             a = itemsDelArea.reduce((acumulador, itemActual) => {
                                                                                 return acumulador + calcularPrecioTotal(itemActual);
                                                                             }, 0);
+
+                                                                            const armadoPivot = getArmadoPivot(it);
                                                                                         
                                                                             return (
                                                                                 <tr key={i+1}>
@@ -230,7 +376,7 @@ export default function OrdenCompraCotizacion(){
                                                                                     it.cantidad && it.service ?
                                                                                         <td className='left Longer'>{it.service.name.toUpperCase()} - {it.service ? it.service.description.toUpperCase() : null}</td>
                                                                                     :
-                                                                                    it.armadoCotizacion ?
+                                                                                    armadoPivot ?
                                                                                         <td className="left Longer">{it.name.toUpperCase()}</td>
                                                                                     :
                                                                                         <td className='left Longer'> {it.name.toUpperCase()} {it.state == `${it.extension.name.toUpperCase()}` ? null : `- ${it.extension.name.toUpperCase()}`} </td>
@@ -244,7 +390,7 @@ export default function OrdenCompraCotizacion(){
                                                                                     it.cantidad && it.service ?
                                                                                         <td className="Cantidad">{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.cantidad).toFixed(0))}</td>
                                                                                     :
-                                                                                        <td className="Cantidad">{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.cantidad).toFixed(0))}</td>
+                                                                                        <td className="Cantidad">{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(armadoPivot?.cantidad || 0).toFixed(0))}</td>
                                                                                     }
                                                                                     {it.kitCotizacion ?
                                                                                         <td className="Valor">{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number((it.kitCotizacion.precio) / it.kitCotizacion.cantidad).toFixed(0))}</td>
@@ -252,7 +398,7 @@ export default function OrdenCompraCotizacion(){
                                                                                     it.cantidad ?
                                                                                         <td className="Valor">{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number((it.precio) / it.cantidad).toFixed(0))}</td>
                                                                                     :
-                                                                                        <td className="Valor">{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number((it.armadoCotizacion.precio) / it.armadoCotizacion.cantidad).toFixed(0))}</td>
+                                                                                        <td className="Valor">{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number((armadoPivot?.precio || 0) / (armadoPivot?.cantidad || 1)).toFixed(0))}</td>
                                                                                     }
                                                                                     {it.kitCotizacion ?
                                                                                         <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.kitCotizacion.precio).toFixed(0))}</td>
@@ -260,7 +406,7 @@ export default function OrdenCompraCotizacion(){
                                                                                     it.cantidad ?
                                                                                         <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.precio).toFixed(0))}</td>
                                                                                     :
-                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(it.armadoCotizacion.precio).toFixed(0))}</td>
+                                                                                        <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(armadoPivot?.precio || 0).toFixed(0))}</td>
                                                                                     }
                                                                                 </tr>
                                                                             )
@@ -312,77 +458,94 @@ export default function OrdenCompraCotizacion(){
                                 </div>
                             </div>
 
-                            <div style={{marginTop:'30px', padding:'20px', border: generandoPDF ? 'none' : '1px solid #ddd', borderRadius:'5px'}}>
+                            <div style={{marginTop:'30px', padding:'20px', border: '1px solid #ddd', borderRadius:'5px'}}>
                                 <div style={{marginBottom:'20px'}}>
                                     <label style={{display:'block', marginBottom:'5px', fontWeight:'bold'}}>
                                         FECHA DE ENTREGA:
                                     </label>
-                                    {generandoPDF ? (
-                                        <div style={{
+                                    <input 
+                                        type="date" 
+                                        value={fechaEntrega}
+                                        onChange={(e) => setFechaEntrega(e.target.value)}
+                                        style={{
                                             width:'100%',
                                             padding:'8px',
-                                            minHeight:'20px',
-                                            fontSize:'14px'
-                                        }}>
-                                            {fechaEntrega || 'No especificada'}
-                                        </div>
-                                    ) : (
-                                        <input 
-                                            type="date" 
-                                            value={fechaEntrega}
-                                            onChange={(e) => setFechaEntrega(e.target.value)}
-                                            style={{
-                                                width:'100%',
-                                                padding:'8px',
-                                                border:'1px solid #ccc',
-                                                borderRadius:'4px'
-                                            }}
-                                        />
-                                    )}
+                                            border:'1px solid #ccc',
+                                            borderRadius:'4px'
+                                        }}
+                                    />
                                 </div>
 
                                 <div>
                                     <label style={{display:'block', marginBottom:'5px', fontWeight:'bold'}}>
                                         NOTAS ADICIONALES:
                                     </label>
-                                    {generandoPDF ? (
-                                        <div style={{
+                                    <textarea 
+                                        value={nota}
+                                        onChange={(e) => setNota(e.target.value)}
+                                        placeholder="Ingrese notas adicionales para la orden de compra..."
+                                        style={{
                                             width:'100%',
                                             padding:'8px',
+                                            border:'1px solid #ccc',
+                                            borderRadius:'4px',
                                             minHeight:'100px',
-                                            fontSize:'14px',
-                                            whiteSpace: 'pre-wrap'
-                                        }}>
-                                            {nota || 'Sin notas adicionales'}
-                                        </div>
-                                    ) : (
-                                        <textarea 
-                                            value={nota}
-                                            onChange={(e) => setNota(e.target.value)}
-                                            placeholder="Ingrese notas adicionales para la orden de compra..."
-                                            style={{
-                                                width:'100%',
-                                                padding:'8px',
-                                                border:'1px solid #ccc',
-                                                borderRadius:'4px',
-                                                minHeight:'100px',
-                                                resize:'vertical'
-                                            }}
-                                        />
-                                    )}
+                                            resize:'vertical'
+                                        }}
+                                    />
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div className="optionDownload" style={{marginTop:'0px'}}>
-                        <button onClick={() => {
-                            if(!loading){
-                                exportToPDF();
-                            }
-                        }}>
-                            <span>{loading ? 'Generando PDF' : 'Descargar Orden de Compra'}</span>
+                    <div className="optionDownload" style={{marginTop:'0px', display:'flex', flexDirection:'column', gap:'10px', alignItems:'stretch'}}>
+                        {loading && (
+                            <div
+                                style={{
+                                    display:'flex',
+                                    alignItems:'center',
+                                    gap:'10px',
+                                    padding:'12px 14px',
+                                    background:'#eef6fb',
+                                    border:'1px solid #b7d7ea',
+                                    borderRadius:'8px',
+                                    color:'#046290',
+                                    fontSize:'14px',
+                                }}
+                            >
+                                <span
+                                    style={{
+                                        width:'16px',
+                                        height:'16px',
+                                        border:'2px solid #b7d7ea',
+                                        borderTopColor:'#046290',
+                                        borderRadius:'50%',
+                                        display:'inline-block',
+                                        animation:'ordenCompraSpin 0.8s linear infinite',
+                                        flexShrink:0,
+                                    }}
+                                />
+                                <span>
+                                    <strong>Descargando...</strong> Estamos generando el PDF de la orden de compra.
+                                </span>
+                            </div>
+                        )}
+                        <button
+                            disabled={loading}
+                            onClick={() => {
+                                if(!loading){
+                                    descargarPDF();
+                                }
+                            }}
+                            style={loading ? { opacity: 0.7, cursor: 'not-allowed' } : undefined}
+                        >
+                            <span>{loading ? 'Generando PDF...' : 'Descargar Orden de Compra'}</span>
                         </button>
+                        <style>{`
+                            @keyframes ordenCompraSpin {
+                                to { transform: rotate(360deg); }
+                            }
+                        `}</style>
                     </div>
                 </div>
             }
@@ -391,6 +554,8 @@ export default function OrdenCompraCotizacion(){
 }
 
 function TotalSub({ cotizacion }){
+    const getArmadoPivot = (item) => item?.armadoCotizacion || item?.armadosCotizacion || null;
+
     const valorKits = cotizacion.areaCotizacions?.reduce((accArea, area) => {
         const suma = area.kits?.reduce((accKit, kit) => {
             return accKit + Number(kit.kitCotizacion?.precio || 0);
@@ -400,7 +565,7 @@ function TotalSub({ cotizacion }){
 
     const valorArmados = cotizacion.areaCotizacions?.reduce((accArea, area) => {
         const suma = area.armados?.reduce((accKit, kit) => {
-            return accKit + Number(kit.armadosCotizacion?.precio || 0);
+            return accKit + Number(getArmadoPivot(kit)?.precio || 0);
         }, 0) || 0;
         return accArea + suma;
     }, 0) || 0;
@@ -428,7 +593,7 @@ function TotalSub({ cotizacion }){
 
     const descuentoArmados = cotizacion.areaCotizacions?.reduce((accArea, area) => {
         const suma = area.armados?.reduce((accKit, kit) => {
-            return accKit + Number(kit.armadosCotizacion?.descuento || 0);
+            return accKit + Number(getArmadoPivot(kit)?.descuento || 0);
         }, 0) || 0;
         return accArea + suma;
     }, 0) || 0;
@@ -461,5 +626,5 @@ function TotalSub({ cotizacion }){
             <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(valorIva).toFixed(0))} COP</td>
             <td>{new Intl.NumberFormat('es-CO', {currency:'COP'}).format(Number(total).toFixed(0))} COP</td>
         </tr>
-    ) 
+    )
 }

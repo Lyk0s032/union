@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { MdCheck } from 'react-icons/md';
 import ItemToSelect from './itemToSelect';
 import * as actions from '../../../store/action/action';
@@ -8,7 +9,7 @@ import SearchKitsComercial from './searchKits';
 import axios from 'axios';
 import SearchSuperKitsComercial from './superKits';
 import SearchProductoTerminado from './productoTerminado';
-import { BsPencil, BsPlus, BsPlusLg, BsThreeDotsVertical } from 'react-icons/bs';
+import { BsPencil, BsPlus, BsPlusLg, BsSearch, BsThreeDotsVertical, BsX } from 'react-icons/bs';
 import { useSearchParams } from 'react-router-dom';
 import MoveArea from './moveArea';
 import AddNotes from './addNotesAndImg';
@@ -787,197 +788,295 @@ function SolicitarKitPanel({ user, onClose, cotizacion }) {
 }
 
 function ModalServices({ number, cotizacion, closeOpen }){
-    const [loading, setLoading] = useState(false); 
+    const [loading, setLoading] = useState(false);
     const [services, setServices] = useState(null);
     const [loadingServices, setLoadingServices] = useState(false);
     const [nuevo, setNew] = useState(false);
-
+    const [query, setQuery] = useState('');
+    const [selectedId, setSelectedId] = useState(null);
+    const [cantidad, setCantidad] = useState('1');
+    const [valor, setValor] = useState('');
     const [form, setForm] = useState({
-        name: null,
-        description:null
+        name: '',
+        description: ''
     });
 
     const dispatch = useDispatch();
 
     const searchServices = async () => {
-        setLoadingServices(true)
+        setLoadingServices(true);
         const send = await axios.get('/api/materia/services/search')
-        .then((res) => {
-            setServices(res.data)
-        }).catch(err => {
-            setServices(404)
-            return err
-        })
-        .finally(() => {
-            setLoadingServices(false)
-        })
+            .then((res) => {
+                setServices(res.data);
+            }).catch(err => {
+                setServices(404);
+                return err;
+            })
+            .finally(() => {
+                setLoadingServices(false);
+            });
         return send;
-    }
+    };
 
     const newServicio = async () => {
-        if(!form.name || !form.description) return dispatch(actions.HandleAlerta('No puedes dejar campos vacios', 'mistake'))
-        setLoading(true);
-        let body = {
-            name: form.name,
-            description: form.description
+        if (!form.name?.trim() || !form.description?.trim()) {
+            return dispatch(actions.HandleAlerta('Completa nombre y descripción', 'mistake'));
         }
-        const sendCreate = await axios.post('/api/materia/service/new', body)
-        .then((res) => {
-            searchServices();
-            dispatch(actions.HandleAlerta('Servicio anexado con éxito', 'positive'));
-            setNew(false); 
-            return res;
-        })
-        .catch(err => {
-            dispatch(actions.HandleAlerta('No hemos logrado anexar este servicio.', 'mistake'))
-            return err;
-        })
-        .finally(() => {
-            setLoading(false);
-        })
-        return sendCreate;
-    }
-
-    const addService = async (howMany, valor, serviceId) => {
-        if(!howMany || !valor) return dispatch(actions.HandleAlerta('No puedes dejar campos vacios', 'mistake'))
         setLoading(true);
-        let body = {
-            cotizacionId: number ? number : null,
-            servicioId: serviceId,
-            cantidad: howMany,
-            precio: valor
-        } 
-        const sendCreate = await axios.post('/api/cotizacion/add/service/item', body)
-        .then((res) => {
-            searchServices();
-            dispatch(actions.axiosToGetCotizacion(false, cotizacion.id ))
-            dispatch(actions.HandleAlerta('Servicio anexado con éxito', 'positive'));
-            setNew(false); 
-            return res;
-        })
-        .catch(err => {
-            dispatch(actions.HandleAlerta('No hemos logrado anexar este servicio.', 'mistake'))
-            return err;
-        })
-        .finally(() => {
-            setLoading(false);
-        })
+        const body = {
+            name: form.name.trim(),
+            description: form.description.trim()
+        };
+        const sendCreate = await axios.post('/api/materia/service/new', body)
+            .then((res) => {
+                searchServices();
+                dispatch(actions.HandleAlerta('Servicio creado con éxito', 'positive'));
+                setForm({ name: '', description: '' });
+                setNew(false);
+                return res;
+            })
+            .catch(err => {
+                dispatch(actions.HandleAlerta('No hemos logrado crear este servicio.', 'mistake'));
+                return err;
+            })
+            .finally(() => {
+                setLoading(false);
+            });
         return sendCreate;
-    }
+    };
+
+    const addService = async () => {
+        if (!number) {
+            return dispatch(actions.HandleAlerta('Selecciona un área de la cotización antes de agregar el servicio', 'mistake'));
+        }
+        if (!selectedId) {
+            return dispatch(actions.HandleAlerta('Selecciona un servicio de la lista', 'mistake'));
+        }
+        if (!cantidad || !valor) {
+            return dispatch(actions.HandleAlerta('Ingresa cantidad y valor', 'mistake'));
+        }
+        setLoading(true);
+        const body = {
+            cotizacionId: number,
+            servicioId: selectedId,
+            cantidad,
+            precio: valor
+        };
+        const sendCreate = await axios.post('/api/cotizacion/add/service/item', body)
+            .then((res) => {
+                dispatch(actions.axiosToGetCotizacion(false, cotizacion.id));
+                dispatch(actions.HandleAlerta('Servicio anexado a la cotización', 'positive'));
+                setCantidad('1');
+                setValor('');
+                setSelectedId(null);
+                return res;
+            })
+            .catch(err => {
+                dispatch(actions.HandleAlerta('No hemos logrado anexar este servicio.', 'mistake'));
+                return err;
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+        return sendCreate;
+    };
+
     useEffect(() => {
-        searchServices()
-    }, [])
-    return (
-            <div className="modal" style={{zIndex:5}}>
-                <div className="hiddenModal" onClick={() => closeOpen()}></div>
-                    <div className="containerModal Small" style={{width:'55%'}}>
-                        <div className="headerModal" style={{paddingLeft:40}}>
-                            <div className="divide">
-                                <h3>Servicios</h3>
-                                <div className="boton">
-                                    <button onClick={() => {
-                                        setNew(!nuevo)
-                                    }}>
-                                        <span style={{color: 'white'}}>{!nuevo ? 'Nuevo servicio' : 'Cancelar'}</span>
+        searchServices();
+    }, []);
+
+    const lista = Array.isArray(services)
+        ? services.filter((sv) => {
+            if (!query.trim()) return true;
+            const q = query.trim().toLowerCase();
+            return (
+                String(sv.name || '').toLowerCase().includes(q) ||
+                String(sv.description || '').toLowerCase().includes(q)
+            );
+        })
+        : [];
+
+    const selected = Array.isArray(services)
+        ? services.find((sv) => sv.id === selectedId)
+        : null;
+
+    const selectService = (sv) => {
+        setSelectedId(sv.id);
+        setNew(false);
+        setCantidad('1');
+        setValor('');
+    };
+
+    return createPortal(
+        <div className="modal BIGGEST modalServiciosOverlay" style={{ zIndex: 999999 }}>
+            <div className="hiddenModal" onClick={() => closeOpen()}></div>
+            <div className="containerModal Small modalServiciosSheet" style={{ zIndex: 1000000 }}>
+                <div className="modalServiciosHeader">
+                    <div>
+                        <h3>Agregar servicio</h3>
+                        <p>Busca un servicio del catálogo e incorpóralo al área activa.</p>
+                    </div>
+                    <button type="button" className="modalServiciosClose" onClick={() => closeOpen()} aria-label="Cerrar">
+                        <BsX />
+                    </button>
+                </div>
+
+                {!number && (
+                    <div className="modalServiciosAlert">
+                        Selecciona un área en la cotización para poder anexar el servicio.
+                    </div>
+                )}
+
+                <div className="modalServiciosToolbar">
+                    <div className="modalServiciosSearch">
+                        <BsSearch className="modalServiciosSearchIcon" />
+                        <input
+                            type="text"
+                            placeholder="Buscar por nombre o descripción..."
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                        />
+                    </div>
+                    <button
+                        type="button"
+                        className={`modalServiciosBtn ${nuevo ? 'isGhost' : 'isPrimary'}`}
+                        onClick={() => {
+                            setNew(!nuevo);
+                            if (!nuevo) setSelectedId(null);
+                        }}
+                    >
+                        {nuevo ? 'Ver catálogo' : (<><BsPlus /> Nuevo</>)}
+                    </button>
+                </div>
+
+                <div className={`modalServiciosBody ${nuevo ? 'isCreate' : ''}`}>
+                    <div className="modalServiciosListPane">
+                        {nuevo ? (
+                            <div className="modalServiciosCreate">
+                                <h4>Crear servicio en catálogo</h4>
+                                <p>Quedará disponible para esta y futuras cotizaciones.</p>
+                                <label>
+                                    Nombre
+                                    <input
+                                        type="text"
+                                        value={form.name}
+                                        onChange={(e) => setForm({ ...form, name: e.target.value })}
+                                        placeholder="Ej. Transporte"
+                                    />
+                                </label>
+                                <label>
+                                    Descripción
+                                    <textarea
+                                        rows={3}
+                                        value={form.description}
+                                        onChange={(e) => setForm({ ...form, description: e.target.value })}
+                                        placeholder="Detalle breve del servicio"
+                                    />
+                                </label>
+                                <div className="modalServiciosCreateActions">
+                                    <button
+                                        type="button"
+                                        className="modalServiciosBtn isGhost"
+                                        disabled={loading}
+                                        onClick={() => {
+                                            setNew(false);
+                                            setForm({ name: '', description: '' });
+                                        }}
+                                    >
+                                        Cancelar
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="modalServiciosBtn isPrimary"
+                                        disabled={loading}
+                                        onClick={() => { if (!loading) newServicio(); }}
+                                    >
+                                        {loading ? 'Creando...' : 'Crear servicio'}
                                     </button>
                                 </div>
                             </div>
-                        </div>
-                        <div className="bodyModalTable" style={{width:'100%',overflowX: 'hidden', overflowY: 'scroll', height:'85%',boxSizing: 'border-box'}}>
-                            <div className="dataScroll" >
-                                
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Nombre</th>
-                                                <th>Descripción</th>
-                                                <th>Cantidad</th>
-                                                <th>Valor</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {
-                                                nuevo ?
-                                                    <tr>
-                                                        <td>
-                                                            <label htmlFor="">Nombre</label><br />
-                                                            <input type="text" onChange={(e) => {
-                                                                setForm({
-                                                                    ...form,
-                                                                    name: e.target.value
-                                                                })
-                                                            }} value={form.name}/>
-                                                        </td>
-                                                        <td>
-                                                            <label htmlFor="">Descripción</label><br />
-                                                            <input type="text" onChange={(e) => {
-                                                                setForm({
-                                                                    ...form,
-                                                                    description: e.target.value
-                                                                })
-                                                            }} value={form.description}/>
-                                                        </td>
-                                                        <td onClick={() => {
-                                                            if(!loading){
-                                                                newServicio()
-                                                            }
-                                                        }}>
-                                                            <button>{!loading ? 'Anexar' : 'Anexando...'}</button>
-                                                        </td>
-                                                        <td>
-                                                            {
-                                                                !loading ?
-                                                                <button onClick={() => {
-                                                                    setNew(false);
-                                                                }}>Cancelar</button>
-                                                                :null
-                                                            }
-                                                        </td>
-                                                    </tr>
-                                                : null
-                                            }
-                                            {
-                                                !services || loadingServices ?
-                                                <h1>Cargando...</h1>
-                                                :
-                                                services == 404 ? <h1>No hay</h1>
-                                                :
-                                                services?.map((sv, i) => {
-                                                    return (
-                                                        <tr key={i+1}>
-                                                            <td>{sv.name}</td>
-                                                            <td>{sv.description}</td>
-                                                            <td style={{width:50}}>
-                                                                <label htmlFor="">Cantidad</label>
-                                                                <input type="text" id={`${sv.id}-cantidad`} />
-                                                            </td>
-                                                            <td>
-                                                                <label htmlFor="">Valor</label>
-                                                                <input type="text" id={`${sv.id}-valor`} />
-                                                            </td>
-                                                            <td>
-                                                                <button onClick={() => {
-                                                                    let canti = document.getElementById(`${sv.id}-cantidad`).value
-                                                                    let val = document.getElementById(`${sv.id}-valor`).value
-                                                                    addService(canti, val, sv.id)
-                                                                }}>
-                                                                    <span>Enviar</span>
-                                                                </button> 
-                                                            </td>
-                                                        </tr>
-                                                    )
-                                                })
-                                            }
-                                            
-                                        </tbody>
-                                    </table>
+                        ) : loadingServices || !services ? (
+                            <div className="modalServiciosEmpty">Cargando servicios...</div>
+                        ) : services === 404 ? (
+                            <div className="modalServiciosEmpty">No hay servicios en el catálogo.</div>
+                        ) : lista.length === 0 ? (
+                            <div className="modalServiciosEmpty">
+                                {query.trim()
+                                    ? `Sin resultados para “${query.trim()}”.`
+                                    : 'No hay servicios para mostrar.'}
                             </div>
+                        ) : (
+                            <ul className="modalServiciosList">
+                                {lista.map((sv) => (
+                                    <li key={sv.id}>
+                                        <button
+                                            type="button"
+                                            className={`modalServiciosItem ${selectedId === sv.id ? 'isActive' : ''}`}
+                                            onClick={() => selectService(sv)}
+                                        >
+                                            <strong>{sv.name}</strong>
+                                            <span>{sv.description || 'Sin descripción'}</span>
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
+
+                    {!nuevo && (
+                        <div className="modalServiciosDetail">
+                            {selected ? (
+                                <>
+                                    <div className="modalServiciosDetailHead">
+                                        <span className="modalServiciosBadge">Seleccionado</span>
+                                        <h4>{selected.name}</h4>
+                                        <p>{selected.description || 'Sin descripción'}</p>
+                                    </div>
+                                    <div className="modalServiciosFields">
+                                        <label>
+                                            Cantidad
+                                            <input
+                                                type="number"
+                                                min="1"
+                                                step="1"
+                                                value={cantidad}
+                                                onChange={(e) => setCantidad(e.target.value)}
+                                            />
+                                        </label>
+                                        <label>
+                                            Valor total
+                                            <input
+                                                type="text"
+                                                inputMode="numeric"
+                                                placeholder="0"
+                                                value={valor}
+                                                onChange={(e) => setValor(e.target.value)}
+                                            />
+                                        </label>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        className="modalServiciosBtn isPrimary modalServiciosSubmit"
+                                        disabled={loading || !number}
+                                        onClick={() => { if (!loading) addService(); }}
+                                    >
+                                        {loading ? 'Agregando...' : 'Agregar a cotización'}
+                                    </button>
+                                </>
+                            ) : (
+                                <div className="modalServiciosEmptyDetail">
+                                    <h4>Elige un servicio</h4>
+                                    <p>Selecciona uno de la lista para definir cantidad y valor.</p>
+                                </div>
+                            )}
                         </div>
+                    )}
                 </div>
             </div>
-    )
-} 
+        </div>,
+        document.body
+    );
+}
 function PriceCotizacion(props) { 
     const kits = props.cotizacion;
     const superK = props.coti;

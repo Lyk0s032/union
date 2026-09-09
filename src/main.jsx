@@ -12,7 +12,7 @@ axios.defaults.baseURL = 'https://unionapi-production.up.railway.app/';
 // axios.defaults.baseURL = 'http://192.168.1.22:3000';   
 // axios.defaults.baseURL = 'http://192.168.1.5:3000';    
 // axios.defaults.baseURL = 'http://192.168.20.110:3000';
-
+// axios.defaults.baseURL = 'http://192.168.1.27:3000';
 
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>

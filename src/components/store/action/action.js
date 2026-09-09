@@ -1308,9 +1308,19 @@ export function gettingRequerimiento(carga){
 }
 
 export function axiosToGetRequerimientos(carga, vista = 'comercial'){
-    return function(dispatch){ 
+    return function(dispatch, getState){ 
         dispatch(gettingRequerimiento(carga))
-        axios.get(`/api/kit/requerimientos/get/all?vista=${vista}`)
+        let url = `/api/kit/requerimientos/get/all?vista=${vista}`;
+
+        // Asesores en comercial: solo sus propias solicitudes
+        if (vista === 'comercial') {
+            const currentUser = getState()?.usuario?.user?.user;
+            if (currentUser?.rango === 'asesor' && currentUser?.id) {
+                url += `&userId=${currentUser.id}`;
+            }
+        }
+
+        axios.get(url)
         .then((info) => info.data) 
         .then(inf => {
             return dispatch(getRequerimientos(inf))
