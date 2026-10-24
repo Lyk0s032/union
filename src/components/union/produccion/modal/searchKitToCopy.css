@@ -185,6 +185,13 @@
     font-weight: 600;
 }
 
+.kit-meta-copy {
+    margin: 4px 0 0;
+    color: #667eea;
+    font-size: 12px;
+    font-weight: 500;
+}
+
 .kit-description-copy {
     margin: 0;
     color: #6b7280;

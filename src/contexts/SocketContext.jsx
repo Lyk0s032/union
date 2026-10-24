@@ -179,9 +179,21 @@ export function SocketProvider({ children }) {
     };
   }, [user]);
 
-  const clearNotifications = () => {
-    setNotifications([]);
-    setUnseenCount(0);
+  const clearNotifications = async () => {
+    try {
+      const token = JSON.parse(localStorage.getItem('loggedPeople'));
+      if (token) {
+        await axios.delete('/api/notifications/clear-all', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      }
+      setNotifications([]);
+      setUnseenCount(0);
+    } catch (error) {
+      console.error('Error al limpiar notificaciones:', error);
+    }
   };
 
   const removeNotification = (index) =>

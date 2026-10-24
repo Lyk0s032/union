@@ -8,6 +8,7 @@ import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import 'dayjs/locale/es'
 import * as actions from '../../../../store/action/action'
+import { getPromedioPrecioConIva } from '../../utils/proveedorPriceUtils'
 
 dayjs.extend(customParseFormat)
 dayjs.locale('es')
@@ -354,11 +355,7 @@ function SortableRow({ req, index, openMenuId, toggleMenu, isSelected, ultimaSel
             const items = realData.consolidado
                 .filter((item: any) => item.tipo === 'materia' || item.tipo === 'producto')
                 .map((item: any) => {
-                    let precioUnitario = 0;
-                    if (item.precios && Array.isArray(item.precios) && item.precios.length > 0) {
-                        const activePrice = item.precios.find((p: any) => p.state === 'active') || item.precios[0];
-                        precioUnitario = Number(activePrice?.precio || activePrice?.price || activePrice?.valor || 0);
-                    }
+                    const precioUnitario = getPromedioPrecioConIva(item.precios);
                     
                     let medidaOriginal = '';
                     if (item.medida && item.unidad) {

@@ -297,9 +297,7 @@ const PdfDocumentOrden = React.memo(({ ordenCompras, resumenOrden, tieneIva }: P
                             <Text style={pdfStyles.colTotal}>Total</Text>
                         </View>
                         {items.map((item: any, index: number) => {
-                            const materia = item.materium || {};
-                            const producto = item.producto || {};
-                            const nombre = producto.item || materia.description || 'Sin nombre';
+                            const nombre = getComprasItemDisplayName(item);
                             
                             // Convertir valores a números - usar la misma lógica que en la interfaz
                             const cantidad = Number(item.cantidad || 0);

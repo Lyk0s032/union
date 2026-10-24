@@ -14,6 +14,7 @@ import ItemNecesidadMPKG from './itemNecesidadKg';
 import ItemNecesidadMPMT from './itemNecesidadMt';
 import ItemNecesidadMPMT2 from './itemNecesidadMt2';
 import { calcularMt2MateriaPrima } from './calcularMt2MateriaPrima';
+import { getPromedioPrecioConIva } from '../../../utils/proveedorPriceUtils';
 import { descargarExcelDesglosado } from './exportarExcelDesglosado';
 import { useSearchParams } from 'react-router-dom';
 
@@ -49,12 +50,7 @@ export default function NecesidadRequisicion(){
         return realData.consolidado
             .filter((item: any) => item.tipo === 'materia' || item.tipo === 'producto')
             .map((item: any) => {
-                // Obtener precio unitario
-                let precioUnitario = 0;
-                if (item.precios && Array.isArray(item.precios) && item.precios.length > 0) {
-                    const activePrice = item.precios.find((p: any) => p.state === 'active') || item.precios[0];
-                    precioUnitario = Number(activePrice?.precio || activePrice?.price || activePrice?.valor || 0);
-                }
+                const precioUnitario = getPromedioPrecioConIva(item.precios);
                 
                 // Obtener categoría desde línea - usar el nombre real de las líneas del estado
                 let categoria = 'General';

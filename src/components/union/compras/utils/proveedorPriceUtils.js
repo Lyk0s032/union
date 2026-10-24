@@ -1,4 +1,17 @@
 /**
+ * Promedio con IVA alineado con Compras → Materia prima (addPrice / itemMp):
+ * media de `valor` de todos los precios del ítem en el consolidado.
+ */
+export const getPromedioPrecioConIva = (precios) => {
+    if (!precios?.length) return 0;
+    const sum = precios.reduce(
+        (acc, p) => acc + Number(p.valor ?? p.precio ?? p.price ?? 0),
+        0
+    );
+    return sum / precios.length;
+};
+
+/**
  * Precio base sin IVA desde catálogo proveedor (MP: price, PT: productPrice).
  * En BD el base imponible está en `descuentos` (nombre legacy, no es descuento comercial).
  */

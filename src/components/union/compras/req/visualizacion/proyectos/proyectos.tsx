@@ -5,6 +5,7 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import ItemProyecto from './itemProyecto';
 import { Proyecto } from '../types';
+import { getPromedioPrecioConIva } from '../../../utils/proveedorPriceUtils';
 
 // Función para calcular el costo total del proyecto basado en necesidadProyectos
 function calcTotal(project: any) {
@@ -207,22 +208,15 @@ export default function ProyectosRequisicion(){
                     const cantidadEntrega = Number(item.cantidadEntrega || 0);
                     
                     let precio = 0;
-                    if (item.materium && item.materium.prices && item.materium.prices.length > 0) {
-                        const activePrice = item.materium.prices.find((p: any) => p.state === 'active') || item.materium.prices[0];
-                        const precioBase = Number(activePrice?.valor || activePrice?.valor || 0);
-                        console.log('precio base', precioBase);
-                        
-                        // Si la unidad es 'kg', dividir el precio por la medida para obtener precio por kilo
-                        if(item?.materium?.unidad == 'kg' && item.materium.medida > 0){
+                    if (item.materium?.prices?.length) {
+                        const precioBase = getPromedioPrecioConIva(item.materium.prices);
+                        if (item.materium.unidad === 'kg' && item.materium.medida > 0) {
                             precio = precioBase / Number(item.materium.medida);
-                            console.log('Precio con kg', precio);
                         } else {
-                            console.log('precio base', precioBase);
                             precio = precioBase;
                         }
-                    } else if (item.producto && item.producto.productPrices && item.producto.productPrices.length > 0) {
-                        const activePrice = item.producto.productPrices.find((p: any) => p.state === 'active') || item.producto.productPrices[0];
-                        precio = Number(activePrice?.precio || activePrice?.price || 0);
+                    } else if (item.producto?.productPrices?.length) {
+                        precio = getPromedioPrecioConIva(item.producto.productPrices);
                     }
                     
                     console.log('item', item);

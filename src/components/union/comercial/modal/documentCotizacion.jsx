@@ -8,6 +8,97 @@ import axios from 'axios';
 import fileDownload from 'js-file-download';
 import * as actions from '../../../store/action/action';
 
+/** Totales para el PDF (misma lógica que TotalSub, sin depender del estado React). */
+function calcularTotalesParaPdf(cotizacion) {
+    const valorKits = cotizacion.areaCotizacions?.reduce((accArea, area) => {
+        const suma = area.kits?.reduce((accKit, kit) => {
+            return accKit + Number(kit.kitCotizacion?.precio || 0);
+        }, 0) || 0;
+        return accArea + suma;
+    }, 0) || 0;
+
+    const valorArmados = cotizacion.areaCotizacions?.reduce((accArea, area) => {
+        const suma = area.armados?.reduce((accKit, kit) => {
+            return accKit + Number(kit.armadoCotizacion?.precio || 0);
+        }, 0) || 0;
+        return accArea + suma;
+    }, 0) || 0;
+
+    const valorProductos = cotizacion.areaCotizacions?.reduce((accArea, area) => {
+        const suma = area.productoCotizacions?.reduce((accKit, kit) => {
+            return accKit + Number(kit.precio || 0);
+        }, 0) || 0;
+        return accArea + suma;
+    }, 0) || 0;
+
+    const valorServicios = cotizacion.areaCotizacions?.reduce((accArea, area) => {
+        const suma = area.serviciosCotizados?.reduce((accKit, kit) => {
+            return accKit + Number(kit.precio || 0);
+        }, 0) || 0;
+        return accArea + suma;
+    }, 0) || 0;
+
+    const descuentoKits = cotizacion.areaCotizacions?.reduce((accArea, area) => {
+        const suma = area.kits?.reduce((accKit, kit) => {
+            return accKit + Number(kit.kitCotizacion?.descuento || 0);
+        }, 0) || 0;
+        return accArea + suma;
+    }, 0) || 0;
+
+    const descuentoArmados = cotizacion.areaCotizacions?.reduce((accArea, area) => {
+        const suma = area.armados?.reduce((accKit, kit) => {
+            return accKit + Number(kit.armadoCotizacion?.descuento || 0);
+        }, 0) || 0;
+        return accArea + suma;
+    }, 0) || 0;
+
+    const descuentoProductos = cotizacion.areaCotizacions?.reduce((accArea, area) => {
+        const suma = area.productoCotizacions?.reduce((accKit, kit) => {
+            return accKit + Number(kit.descuento || 0);
+        }, 0) || 0;
+        return accArea + suma;
+    }, 0) || 0;
+
+    const descuentoServicios = cotizacion.areaCotizacions?.reduce((accArea, area) => {
+        const suma = area.serviciosCotizados?.reduce((accKit, kit) => {
+            return accKit + Number(kit.descuento || 0);
+        }, 0) || 0;
+        return accArea + suma;
+    }, 0) || 0;
+
+    const sumaDescuento = descuentoKits + descuentoArmados + descuentoProductos + descuentoServicios;
+    const subTotal = valorKits + valorArmados + valorProductos + valorServicios;
+    const totalSub = subTotal - sumaDescuento;
+    const valorIva = Number(subTotal - sumaDescuento) * (19 / 100);
+    const total = totalSub + valorIva;
+
+    return {
+        subtotal: subTotal.toFixed(0),
+        descuentos: sumaDescuento.toFixed(0),
+        subtotalConDescuento: totalSub.toFixed(0),
+        iva: valorIva.toFixed(0),
+        total: total.toFixed(0),
+    };
+}
+
+function notasParaPdf(notaCotizacions) {
+    if (!Array.isArray(notaCotizacions) || !notaCotizacions.length) return [];
+    return notaCotizacions.map((n) => ({
+        texto: String(n?.texto ?? n?.text ?? "").trim(),
+    })).filter((n) => n.texto);
+}
+
+function telefonoClientePdf(client) {
+    if (!client) return "—";
+    if (Array.isArray(client.fijos) && client.fijos.length) {
+        return String(client.fijos[0]);
+    }
+    if (client.phone != null && String(client.phone).trim() !== "") {
+        return String(client.phone);
+    }
+    return "—";
+}
+
 export default function DocumentCotizacion(){
     const [params, setParams] = useSearchParams(); 
 
@@ -67,49 +158,93 @@ export default function DocumentCotizacion(){
 
     const [loading, setLoading] = useState(false);
     const getPDF = async () => {
-        try{
-            setLoading(true)
-            let data = {
-                cotizacion: { numero: `MDC-CV-${cotizacion.id + 21719}'`, fecha: cotizacion.time.split('T')[0] },
-                asesor: {nombre: `${cotizacion.user.name.toUpperCase()} ${cotizacion.user.lastName.toUpperCase()}`, correo: `${cotizacion.user.email.toUpperCase()}`, telefono: cotizacion.user.phone},
-                cliente: { nombre: `${cotizacion.client.nombre.toUpperCase()}`, 
-                telefono: '3165519920', 
-                direccion: cotizacion.client.direccion.toUpperCase(), 
-                ciudad:  municipio && municipio.nombre ? municipio.nombre.toUpperCase() : null },
-                condiciones: { validez: cotizacion.validez, entrega: cotizacion.days, formaPago: cotizacion.condicionesPago ? cotizacion.condicionesPago.nombre.toUpperCase() : null },
-                areas: datos,
-                totales,
-                notas: cotizacion.notaCotizacions
+        try {
+            setLoading(true);
+
+            const areas = transformarAreas();
+            const totalesPdf = calcularTotalesParaPdf(cotizacion);
+
+            if (!areas.length || !areas.some((a) => a.productos?.length)) {
+                dispatch(
+                    actions.HandleAlerta(
+                        "La cotización no tiene ítems para generar el PDF",
+                        "mistake"
+                    )
+                );
+                return;
+            }
+
+            const data = {
+                cotizacion: {
+                    numero: `MDC-CV-${Number(cotizacion.id) + 21719}`,
+                    fecha: cotizacion.time.split("T")[0],
+                },
+                asesor: {
+                    nombre: `${cotizacion.user.name.toUpperCase()} ${cotizacion.user.lastName.toUpperCase()}`.trim(),
+                    correo: `${cotizacion.user.email.toUpperCase()}`,
+                    telefono: cotizacion.user.phone != null ? String(cotizacion.user.phone) : "",
+                },
+                cliente: {
+                    nombre: `${cotizacion.client.nombre.toUpperCase()}`,
+                    telefono: telefonoClientePdf(cotizacion.client),
+                    direccion: String(cotizacion.client.direccion || "—").toUpperCase(),
+                    ciudad:
+                        municipio && municipio.nombre
+                            ? municipio.nombre.toUpperCase()
+                            : null,
+                },
+                condiciones: {
+                    validez: cotizacion.validez,
+                    entrega: cotizacion.days,
+                    formaPago: cotizacion.condicionesPago
+                        ? cotizacion.condicionesPago.nombre.toUpperCase()
+                        : null,
+                },
+                areas,
+                totales: totalesPdf,
+                notas: notasParaPdf(cotizacion.notaCotizacions),
             };
 
-            const response = await axios.post('/api/cotizacion/generatePdf', { data }, {
-            responseType: 'blob', // 👈 necesario para recibir el PDF como binario
-            })
-            .then((res) => {
-                setLoading(false)
-                return res;
-            })
+            const response = await axios.post(
+                "/api/cotizacion/generatePdf",
+                { data },
+                { responseType: "blob" }
+            );
 
-            const blob = new Blob([response.data], { type: 'application/pdf' });
+            const contentType = response.headers?.["content-type"] || "";
+            if (!contentType.includes("application/pdf")) {
+                const text =
+                    typeof response.data?.text === "function"
+                        ? await response.data.text()
+                        : String(response.data);
+                throw new Error(text || "Respuesta inválida del servidor");
+            }
+
+            const blob = new Blob([response.data], { type: "application/pdf" });
             const url = window.URL.createObjectURL(blob);
 
-            const link = document.createElement('a');
+            const link = document.createElement("a");
             link.href = url;
-            link.setAttribute('download', 'cotizacion.pdf');
+            link.setAttribute(
+                "download",
+                `cotizacion-${cotizacion.client.nombre}-${Number(21719) + Number(cotizacion.id)}.pdf`
+            );
             document.body.appendChild(link);
             link.click();
             link.remove();
-            dispatch(actions.HandleAlerta('PDF GENERADO', 'positive'))
-
-        }catch(error){
-            console.log(error) 
-            dispatch(actions.HandleAlerta('No hemos logrado generar pdf', 'mistake'))
+            window.URL.revokeObjectURL(url);
+            dispatch(actions.HandleAlerta("PDF GENERADO", "positive"));
+        } catch (error) {
+            console.error(error);
+            dispatch(actions.HandleAlerta("No hemos logrado generar pdf", "mistake"));
             if (error.response) {
-            console.log('➡️ Detalles:', error.response.data);
-            console.log('📦 Status:', error.response.status);
-    }
+                console.log("Detalles:", error.response.data);
+                console.log("Status:", error.response.status);
+            }
+        } finally {
+            setLoading(false);
         }
-    }
+    };
 
     const valores = (valor) => {
         setTotales(valor)
@@ -134,7 +269,12 @@ export default function DocumentCotizacion(){
 
             if (item.kitCotizacion) {
                 referencia = `0${item.id}`;
-                descripcion = `${item.name.toUpperCase()} - ${item.extension.name.toUpperCase()}`;
+                const extName = item.extension?.name
+                    ? item.extension.name.toUpperCase()
+                    : "";
+                descripcion = extName
+                    ? `${String(item.name || "").toUpperCase()} - ${extName}`
+                    : String(item.name || "").toUpperCase();
                 cantidad = Number(item.kitCotizacion.cantidad);
                 valorUnitario = Number(item.kitCotizacion.precio / cantidad).toFixed(0);
                 subtotal = Number(item.kitCotizacion.precio).toFixed(0);
@@ -660,7 +800,7 @@ function TotalSub({ cotizacion, valores }){
     // Valor de armados por área
     const valorArmados = cotizacion.areaCotizacions?.reduce((accArea, area) => {
     const suma = area.armados?.reduce((accKit, kit) => {
-            return accKit + Number(kit.armadosCotizacion?.precio || 0);
+            return accKit + Number(kit.armadoCotizacion?.precio || 0);
         }, 0) || 0;
         return accArea + suma;
     }, 0) || 0;
@@ -691,7 +831,7 @@ function TotalSub({ cotizacion, valores }){
 
     const descuentoArmados = cotizacion.areaCotizacions?.reduce((accArea, area) => {
     const suma = area.armados?.reduce((accKit, kit) => {
-            return accKit + Number(kit.armadosCotizacion?.descuento || 0);
+            return accKit + Number(kit.armadoCotizacion?.descuento || 0);
         }, 0) || 0;
         return accArea + suma;
     }, 0) || 0;

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import { getComprasItemDisplayName } from '../../utils/comprasCotizacionItemUtils';
 
 // Estilos del PDF (mismo diseño que rightDataOrden.tsx)
 const pdfStyles = StyleSheet.create({
@@ -289,9 +290,7 @@ const PdfDocument = ({
                             <Text style={pdfStyles.colTotal}>Total</Text>
                         </View>
                         {items.map((item, index) => {
-                            const materia = item.materium || {};
-                            const producto = item.producto || {};
-                            const nombre = producto.item || materia.description || 'Sin nombre';
+                            const nombre = getComprasItemDisplayName(item);
                             
                             // Convertir valores a números
                             const cantidad = Number(item.cantidad || 0);

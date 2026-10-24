@@ -164,6 +164,15 @@ export async function descargarCotizacionRapidaPdf({ items, cliente, user }) {
     { responseType: "blob" }
   );
 
+  const contentType = response.headers?.["content-type"] || "";
+  if (!contentType.includes("application/pdf")) {
+    const text =
+      typeof response.data?.text === "function"
+        ? await response.data.text()
+        : String(response.data);
+    throw new Error(text || "Respuesta inválida del servidor al generar PDF");
+  }
+
   const blob = new Blob([response.data], { type: "application/pdf" });
   const url = window.URL.createObjectURL(blob);
   const link = document.createElement("a");

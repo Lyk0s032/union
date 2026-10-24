@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { getComprasItemDisplayName } from '../../../utils/comprasCotizacionItemUtils';
 
 interface ItemOrdenCompraProps {
     orden: any;
@@ -160,9 +161,7 @@ export default function ItemOrdenCompra({ orden }: ItemOrdenCompraProps) {
             if (items.length > 0 && Array.isArray(items)) {
                 const head = [['Descripción', 'Cantidad', 'Precio', 'Descuento', 'Total']];
                 const body = items.map((item: any) => {
-                    const materia = item.materium || {};
-                    const producto = item.producto || {};
-                    const nombre = producto.item || materia.description || 'Sin nombre';
+                    const nombre = getComprasItemDisplayName(item);
                     const cantidad = Number(item.cantidad || 0);
                     const precio = Number(item.precio || 0);
                     const descuento = Number(item.descuento || 0);

@@ -164,6 +164,12 @@ const NotificationBell = ({ className = '' }) => {
     }
   };
 
+  const handleClearAll = async (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    await clearNotifications();
+  };
+
   const formatTime = (timestamp) => {
     if (!timestamp) return 'Hace un momento';
     
@@ -220,9 +226,10 @@ const NotificationBell = ({ className = '' }) => {
             <div className="wa-bell-dropdown__actions">
               <SoundToggle />
               {notifications.length > 0 && (
-                <button 
+                <button
+                  type="button"
                   className="wa-bell-dropdown__clear-btn"
-                  onClick={clearNotifications}
+                  onClick={handleClearAll}
                 >
                   Limpiar todo
                 </button>
