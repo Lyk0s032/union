@@ -4,6 +4,46 @@ import * as actions from '../../../../store/action/action';
 import RemisionItems from './remisionItems';
 import RemisionModal from './remisionModal';
 
+const OFFSET_NUMERO_COTIZACION = 21719;
+const OFFSET_NUMERO_REMISION = 4890;
+
+function remisionCoincideBusqueda(rem, term) {
+    const searchRaw = term.trim();
+    if (!searchRaw) return true;
+
+    const searchLower = searchRaw.toLowerCase();
+    const cotizacionId = rem.requisicion?.cotizacionId ?? rem.requisicion?.cotizacion?.id;
+    const numeroCotizacion = cotizacionId != null
+        ? String(Number(cotizacionId) + OFFSET_NUMERO_COTIZACION)
+        : '';
+    const numeroRemisionVisible = rem.id != null
+        ? String(Number(rem.id) + OFFSET_NUMERO_REMISION)
+        : '';
+
+    const cliente = (
+        rem.requisicion?.cotizacion?.client?.nombre ||
+        rem.requisicion?.cotizacion?.client?.name ||
+        ''
+    ).toLowerCase();
+
+    const proyecto = (rem.requisicion?.nombre || '').toLowerCase();
+
+    const coincideItem = (rem.itemRemisions || []).some((item) =>
+        item.kit?.description?.toLowerCase().includes(searchLower) ||
+        item.producto?.item?.toLowerCase().includes(searchLower)
+    );
+
+    return (
+        rem.numeroRemision?.toLowerCase().includes(searchLower) ||
+        numeroRemisionVisible.includes(searchRaw) ||
+        numeroCotizacion.includes(searchRaw) ||
+        (cotizacionId != null && String(cotizacionId).includes(searchRaw)) ||
+        proyecto.includes(searchLower) ||
+        cliente.includes(searchLower) ||
+        coincideItem
+    );
+}
+
 export default function GeneralRemisiones() {
     const dispatch = useDispatch();
     const remisionesState = useSelector(store => store.remisiones || {});
@@ -46,9 +86,9 @@ export default function GeneralRemisiones() {
             ['Número', 'Nombre', 'Proyecto', 'Cliente', 'Estado', 'Cantidad', 'Fecha'].join(','),
             ...remisiones.remisiones.map(r => [
                 r.numeroRemision,
-                r.necesidadProyecto?.kit?.name || r.necesidadProyecto?.producto?.item || 'N/A',
-                r.necesidadProyecto?.requisicion?.nombre || 'N/A',
-                r.necesidadProyecto?.requisicion?.cotizacion?.client?.name || 'N/A',
+                r.itemRemisions?.[0]?.kit?.description || r.itemRemisions?.[0]?.producto?.item || 'N/A',
+                r.requisicion?.nombre || 'N/A',
+                r.requisicion?.cotizacion?.client?.nombre || r.requisicion?.cotizacion?.client?.name || 'N/A',
                 r.estado,
                 r.cantidad,
                 new Date(r.createdAt).toLocaleDateString('es-ES')
@@ -100,16 +140,8 @@ export default function GeneralRemisiones() {
     // Filtrar remisiones por búsqueda y estado
     const remisionesFiltradas = remisiones?.remisiones?.filter(r => {
         // Filtro por búsqueda
-        if (busqueda) {
-            const searchLower = busqueda.toLowerCase();
-            const coincideBusqueda = (
-                r.numeroRemision?.toLowerCase().includes(searchLower) ||
-                r.necesidadProyecto?.kit?.name?.toLowerCase().includes(searchLower) ||
-                r.necesidadProyecto?.producto?.item?.toLowerCase().includes(searchLower) ||
-                r.necesidadProyecto?.requisicion?.nombre?.toLowerCase().includes(searchLower) ||
-                r.necesidadProyecto?.requisicion?.cotizacion?.client?.name?.toLowerCase().includes(searchLower)
-            );
-            if (!coincideBusqueda) return false;
+        if (busqueda && !remisionCoincideBusqueda(r, busqueda)) {
+            return false;
         }
 
         // Filtro por estado
@@ -160,7 +192,7 @@ export default function GeneralRemisiones() {
             }}>
                 <input
                     type="text"
-                    placeholder="Buscar por número, nombre, proyecto o cliente..."
+                    placeholder="Buscar por remisión, Nro. cotización, proyecto, cliente o ítem..."
                     value={busqueda}
                     onChange={(e) => setBusqueda(e.target.value)}
                     style={{

@@ -153,11 +153,14 @@ export default function TableReq({ searchText, activeFilter, requisiciones: init
         const codigoCalculado = !isNaN(codigoNum) ? String(codigoNum + 21719) : '';
         
         // 2. Verificamos coincidencias
-        const codigoMatch = codigoCalculado ? codigoCalculado.includes(searchLower) : false;
+        const codigoVisibleMatch = codigoCalculado ? codigoCalculado.includes(searchLower) : false;
+        const codigoInternoMatch = !isNaN(codigoNum) && String(codigoNum).includes(searchLower);
+        const requisicionIdMatch = String(req.id).includes(searchLower)
+            || (req.numero != null && String(req.numero).includes(searchLower));
         const proyectoMatch = req.proyecto?.toLowerCase().includes(searchLower);
         const clienteMatch = req.cliente?.toLowerCase().includes(searchLower);
         
-        return codigoMatch || proyectoMatch || clienteMatch;
+        return codigoVisibleMatch || codigoInternoMatch || requisicionIdMatch || proyectoMatch || clienteMatch;
     };
 
     // Aplicar filtros
