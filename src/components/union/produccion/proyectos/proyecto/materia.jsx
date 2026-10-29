@@ -1,23 +1,15 @@
 import React from "react";
-import ItemProjectNecesidad from "./itemNecesidad";
-import DataProject from "./dataProject";
 import { useSearchParams } from "react-router-dom";
 import ItemCompromisoCotizacion from "./itemCompromisoCotizacion";
+import MoveModalRigth from "./moveModalRight";
+import { calcAvanceCompromisosCapped } from "./compromisoMateriaUtils";
 
 export default function MateriaProject({ project }){
-    const [params, setParams] = useSearchParams();
+    const [params] = useSearchParams();
 
-        const compromiso = project?.cotizacion?.cotizacion_compromisos.reduce(
-        (acc, item) => acc + Number(item.cantidadComprometida),
-        0
-    );   
-    
-    const entregada = project?.cotizacion?.cotizacion_compromisos.reduce(
-        (acc, item) => acc + Number(item.cantidadEntregada),
-        0
-    );  
- 
-    const avance = Number(Number(entregada / compromiso) * 100).toFixed(0)
+    const compromisos = project?.cotizacion?.cotizacion_compromisos || [];
+    const avance = calcAvanceCompromisosCapped(compromisos);
+
     return (
         <div className="generalComprar">
             <div className="containerGeneral">
@@ -69,10 +61,10 @@ export default function MateriaProject({ project }){
                                                         </thead>
                                                         <tbody>
                                                             {
-                                                                project?.cotizacion?.cotizacion_compromisos?.length ?
-                                                                    project.cotizacion.cotizacion_compromisos.map((r, i) => {
+                                                                compromisos.length ?
+                                                                    compromisos.map((r, i) => {
                                                                         return (
-                                                                            <ItemCompromisoCotizacion item={r} key={i+1} />
+                                                                            <ItemCompromisoCotizacion item={r} key={r.id ?? i} />
                                                                         )
                                                                     })
                                                                 : null
