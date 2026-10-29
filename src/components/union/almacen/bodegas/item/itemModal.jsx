@@ -47,6 +47,13 @@ export default function ItemModal({ item, bodegaId, onClose, onOperacionExitosa,
                 params.materiaPrimaId = item.materiumId;
             } else if (item.kitId) {
                 params.kitId = item.kitId;
+            } else if (item.itemId) {
+                if (item.tipo === 'PR' || item.tipo === 'PT') {
+                    params.productoId = item.itemId;
+                    if (item.medida) params.medida = item.medida;
+                } else {
+                    params.materiaPrimaId = item.itemId;
+                }
             }
 
             // Llamada a la API real

@@ -137,9 +137,12 @@ export default function GeneralAlmacen() {
       }
 
       // Si no existe, normalizar los datos de búsqueda con estructura esperada
+      const materiaIdResolved = item.id || item.materiaId || item.materiumId || item.materiaPrimaId;
       const normalized: any = {
-        id: item.id || item.materiaId || item.productoId,
-        itemId: item.id || item.materiaId || item.productoId,
+        id: materiaIdResolved || item.productoId,
+        itemId: materiaIdResolved || item.productoId,
+        materiumId: materiaIdResolved || null,
+        productoId: null,
         nombre: item.nombre || item.name || item.description || item.item || '',
         cantidad: cantidadDesdeApi !== null ? cantidadDesdeApi : 0,
         medida: item.medida || null,
@@ -171,9 +174,16 @@ export default function GeneralAlmacen() {
       const endpoint = selectedBodega === 'PT'
         ? '/api/materia/producto/searching'
         : '/api/materia/searchByQuery';
+
+      const searchParams: Record<string, string | number> = { q: searchQuery.trim() };
+      if (selectedBodega === 'MP') {
+        searchParams.ubicacionId = 1;
+      } else if (selectedBodega === 'CO') {
+        searchParams.ubicacionId = 3;
+      }
       
       const response = await axios.get(endpoint, {
-        params: { q: searchQuery.trim() }
+        params: searchParams
       });
 
       // Obtener resultados crudos
